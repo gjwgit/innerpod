@@ -9,9 +9,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  audioplayers: ^5.2.1
   cupertino_icons: ^1.0.2
+  neon_circular_timer: ^0.0.7
   solid:
     path: solid
+  wakelock_plus: ^1.1.4
 
 dev_dependencies:
   flutter_test:
@@ -25,6 +28,7 @@ flutter:
   assets:
     - assets/icon/icon.png
     - assets/images/inner_image.jpg
+    - assets/sounds/dong.ogg
 
 flutter_launcher_icons:
   android: "launcher_icon"
