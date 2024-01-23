@@ -296,5 +296,5 @@ VERSEQ=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f2 | awk '{print $$1+
 
 push::
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
-	git commit -m "Update package version sequence to $(VERSEQ)" pubspec.yaml
+	git commit -m "Bump package version sequence to $(VERSEQ)" pubspec.yaml
 
