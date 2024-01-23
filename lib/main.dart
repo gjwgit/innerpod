@@ -1,6 +1,6 @@
 /// Main program for the inner pod app.
 //
-// Time-stamp: <Monday 2024-01-22 20:54:18 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-01-23 11:07:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: Graham Williams
+library;
 
 import 'package:flutter/material.dart';
 
@@ -30,25 +31,40 @@ import 'package:flutter/material.dart';
 import 'package:innerpod/timer.dart';
 
 void main() {
-  runApp(const InnerPod());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(InnerPod());
 }
 
 class InnerPod extends StatelessWidget {
-  const InnerPod({super.key});
+  InnerPod({super.key});
 
-  // This widget is the root of your application.
+  // Construct the Scaffold as the main window to display after logging in to
+  // the Solid Pod.
+
+  final home = Scaffold(
+    backgroundColor: Colors.blueGrey.shade700,
+    appBar: AppBar(
+      title: const Text('Inner Pod Meditation Timer'),
+      backgroundColor: Colors.blueGrey,
+      foregroundColor: Colors.white,
+    ),
+    body: Center(
+      child: Timer(),
+    ),
+  );
+
+  // This widget is the root of the application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Inner Pod',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Inner Pod Meditation Timer'),
-        ),
-        body: Center(
-          child: Timer(),
-        ),
-      ),
+      color: Colors.purple,
+
+      // Build the actual home widget. Because our app requires access to the
+      // data stored within the user's POD for any of its functionality, we wrap
+
+      home: home,
       // home: const SolidLogin(
       //   // Images generated using Bing Image Creator from Designer, powered by
       //   // DALL-E3.
@@ -57,7 +73,7 @@ class InnerPod extends StatelessWidget {
       //   logo: AssetImage('assets/icon/icon.png'),
       //   title: 'MANAGE YOUR INNER POD',
       //   link: 'https://github.com/gjwgit/inner',
-      //   child: Scaffold(body: Text('Inner Pod Placeholder')),
+      //   child: home,
       // ),
     );
   }
