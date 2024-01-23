@@ -1,6 +1,6 @@
 /// DESCRIPTION
 //
-// Time-stamp: <Monday 2024-01-22 20:53:21 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-01-23 11:01:01 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -22,3 +22,5 @@
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
 /// Authors: AUTHORS
+
+library;
