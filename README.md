@@ -1,3 +1,3 @@
 # InnerPod
 
-A session timer with sessions stored within your Solid Pod.
+A session timer with sessions logged to your Solid Pod.
