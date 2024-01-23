@@ -288,3 +288,10 @@ $(APP)-$(VER)-linux-x86_64.tar.gz:
 realclean::
 	flutter clean
 	flutter pub get
+
+# Update the version sequence number for each push.
+
+VERSEQ=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f2 | awk '{print $$1+1}')
+
+push::
+	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
