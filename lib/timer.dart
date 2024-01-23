@@ -1,6 +1,6 @@
 /// A countdown timer for a meditation session.
 //
-// Time-stamp: <Monday 2024-01-22 20:55:48 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-01-23 11:14:47 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -23,6 +23,8 @@
 ///
 /// Authors: Graham Williams
 
+library;
+
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -30,10 +32,13 @@ import 'package:neon_circular_timer/neon_circular_timer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 class Timer extends StatelessWidget {
-  final CountDownController controller = CountDownController();
+  Timer({super.key});
+
+  final controller = CountDownController();
   final player = AudioPlayer();
 
-  Timer({super.key});
+  // Break this out into its own function because of the need for it to be
+  // async through the await.
 
   Future<void> _dingDong() async {
     await player.play(AssetSource('sounds/dong.ogg'));
@@ -42,9 +47,14 @@ class Timer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NeonCircularTimer(
-      width: 200,
+      width: 250,
       duration: 20 * 60,
       controller: controller,
+      backgroudColor: Colors.blueGrey.shade600,
+      textStyle: const TextStyle(
+        color: Colors.white,
+        fontSize: 55,
+      ),
       onStart: () {
         WakelockPlus.enable();
         _dingDong();
@@ -55,6 +65,18 @@ class Timer extends StatelessWidget {
       },
       isReverse: true,
       isReverseAnimation: true,
+      innerFillGradient: LinearGradient(
+        colors: [
+          Colors.blueAccent.shade100,
+          Colors.blueAccent.shade700,
+        ],
+      ),
+      neonGradient: LinearGradient(
+        colors: [
+          Colors.blueAccent.shade100,
+          Colors.blueAccent.shade700,
+        ],
+      ),
       // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
     );
   }

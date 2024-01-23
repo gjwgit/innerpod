@@ -60,7 +60,7 @@ qstatus:
 enter:: status fetch rebase
 exit:: status push
 
-push:
+push::
 	@echo "-------------------------------------------------------"
 	git push
 	@echo "-------------------------------------------------------"
