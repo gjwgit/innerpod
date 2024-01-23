@@ -1,3 +1,3 @@
 # innerpod
 
-A meditation timer and recorder stored within your Solid Pod.
+A session timer with sessions stored within your Solid Pod.
