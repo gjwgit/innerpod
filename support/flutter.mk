@@ -290,11 +290,11 @@ realclean::
 	flutter pub get
 
 # Update the version sequence number prior to a push (relies on the
-# git.mk being loaded after this flutter.mk).
+# git.mk being loaded after this flutter.mk). This is only undertaken
+# through `make push` rather than a `git push` in any other way.
 
 VERSEQ=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f2 | awk '{print $$1+1}')
 
 push::
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
 	git commit -m "Bump package version sequence to $(VERSEQ)" pubspec.yaml
-
