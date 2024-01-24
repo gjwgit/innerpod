@@ -30,9 +30,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icon/icon.png
+    - assets/images/inner_icon.png
     - assets/images/inner_image.jpg
     - assets/sounds/dong.ogg
+    - assets/sounds/intro.ogg
 
 flutter_launcher_icons:
   android: "launcher_icon"

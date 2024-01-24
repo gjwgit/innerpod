@@ -1,6 +1,6 @@
 /// A countdown timer and Start button for a session.
 //
-// Time-stamp: <Wednesday 2024-01-24 19:01:59 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-01-25 05:33:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -66,10 +66,15 @@ class Timer extends StatelessWidget {
   // The sound to be played at the beginning and end of a session, being a
   // [Source] from audioplayers.
 
+  final instruct = AssetSource('sounds/intro.ogg');
   final dong = AssetSource('sounds/dong.ogg');
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
+
+  Future<void> _instruct() async {
+    await player.play(instruct);
+  }
 
   Future<void> _dingDong() async {
     await player.play(dong);
@@ -77,6 +82,68 @@ class Timer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Define the various buttons.
+
+    final startButton = SizedBox(
+      height: 45,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: buttonTextStyle,
+        ),
+        onPressed: () {
+          _dingDong();
+          controller.restart();
+          WakelockPlus.enable();
+        },
+        child: const Text('Start'),
+      ),
+    );
+
+    final pauseButton = SizedBox(
+      height: 45,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: buttonTextStyle,
+        ),
+        onPressed: () {
+          controller.pause();
+          WakelockPlus.disable();
+        },
+        child: const Text('Pause'),
+      ),
+    );
+
+    final resumeButton = SizedBox(
+      height: 45,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: buttonTextStyle,
+        ),
+        onPressed: () {
+          controller.resume();
+          WakelockPlus.enable();
+        },
+        child: const Text('Resume'),
+      ),
+    );
+
+    final introButton = SizedBox(
+      height: 45,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: buttonTextStyle,
+        ),
+        onPressed: () {
+          _instruct();
+        },
+        child: const Text('Intro'),
+      ),
+    );
+
     return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: Column(
@@ -117,69 +184,18 @@ class Timer extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 45,
-                width: 170,
-                child: ElevatedButton(
-                  style: TextButton.styleFrom(
-                    textStyle: buttonTextStyle,
-                  ),
-                  onPressed: () {
-                    _dingDong();
-                    controller.restart();
-                    WakelockPlus.enable();
-                  },
-                  child: const Text('Start'),
-                ),
-              ),
+              introButton,
               widthSpacer,
-              SizedBox(
-                height: 45,
-                width: 170,
-                child: ElevatedButton(
-                  style: TextButton.styleFrom(
-                    textStyle: buttonTextStyle,
-                  ),
-                  onPressed: () {
-                    controller.pause();
-                    WakelockPlus.disable();
-                  },
-                  child: const Text('Pause'),
-                ),
-              ),
+              startButton,
             ],
           ),
           heightSpacer,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              heightSpacer,
-              SizedBox(
-                height: 45,
-                width: 170,
-                child: ElevatedButton(
-                  style: TextButton.styleFrom(
-                    textStyle: buttonTextStyle,
-                  ),
-                  onPressed: () {
-                    controller.resume();
-                    WakelockPlus.enable();
-                  },
-                  child: const Text('Resume'),
-                ),
-              ),
+              pauseButton,
               widthSpacer,
-              SizedBox(
-                height: 45,
-                width: 170,
-                child: ElevatedButton(
-                  style: TextButton.styleFrom(
-                    textStyle: buttonTextStyle,
-                  ),
-                  onPressed: () {},
-                  child: const Text('Session'),
-                ),
-              ),
+              resumeButton,
             ],
           ),
         ],
