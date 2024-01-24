@@ -1,6 +1,6 @@
 /// A countdown timer and Start button for a session.
 //
-// Time-stamp: <Wednesday 2024-01-24 09:49:40 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-01-24 19:01:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -41,14 +41,27 @@ class Timer extends StatelessWidget {
   // example.
 
   final duration = (20 * 60) + 1;
+  // final duration = 41;
 
   // Set the style for the text of the buttons.
 
   final buttonTextStyle = const TextStyle(fontSize: 30);
 
-  // A small spacer for the buttons.
+  // Set the button size.
 
-  final spacer = const SizedBox(width: 20);
+  final buttonTheme = ButtonTheme(
+    minWidth: 200.0,
+    height: 100.0,
+    child: ElevatedButton(
+      onPressed: () {},
+      child: const Text('test'),
+    ),
+  );
+
+  // A small spacer for layout gaps.
+
+  final widthSpacer = const SizedBox(width: 20);
+  final heightSpacer = const SizedBox(height: 20);
 
   // The sound to be played at the beginning and end of a session, being a
   // [Source] from audioplayers.
@@ -99,12 +112,15 @@ class Timer extends StatelessWidget {
             ),
             // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
           ),
-          Padding(
-            padding: const EdgeInsets.all(60),
-            child: Row(
-              children: [
-                spacer,
-                ElevatedButton(
+          heightSpacer,
+          heightSpacer,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 45,
+                width: 170,
+                child: ElevatedButton(
                   style: TextButton.styleFrom(
                     textStyle: buttonTextStyle,
                   ),
@@ -115,8 +131,12 @@ class Timer extends StatelessWidget {
                   },
                   child: const Text('Start'),
                 ),
-                spacer,
-                ElevatedButton(
+              ),
+              widthSpacer,
+              SizedBox(
+                height: 45,
+                width: 170,
+                child: ElevatedButton(
                   style: TextButton.styleFrom(
                     textStyle: buttonTextStyle,
                   ),
@@ -124,10 +144,43 @@ class Timer extends StatelessWidget {
                     controller.pause();
                     WakelockPlus.disable();
                   },
-                  child: const Text('Stop'),
+                  child: const Text('Pause'),
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
+          heightSpacer,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              heightSpacer,
+              SizedBox(
+                height: 45,
+                width: 170,
+                child: ElevatedButton(
+                  style: TextButton.styleFrom(
+                    textStyle: buttonTextStyle,
+                  ),
+                  onPressed: () {
+                    controller.resume();
+                    WakelockPlus.enable();
+                  },
+                  child: const Text('Resume'),
+                ),
+              ),
+              widthSpacer,
+              SizedBox(
+                height: 45,
+                width: 170,
+                child: ElevatedButton(
+                  style: TextButton.styleFrom(
+                    textStyle: buttonTextStyle,
+                  ),
+                  onPressed: () {},
+                  child: const Text('Session'),
+                ),
+              ),
+            ],
           ),
         ],
       ),
