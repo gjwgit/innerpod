@@ -60,6 +60,8 @@ qstatus:
 enter:: status fetch rebase
 exit:: status push
 
+# Use :: to allow push to be augmented in other makefiles.
+
 push::
 	@echo "-------------------------------------------------------"
 	git push
