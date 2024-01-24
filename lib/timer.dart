@@ -1,6 +1,6 @@
 /// A countdown timer and Start button for a session.
 //
-// Time-stamp: <Thursday 2024-01-25 05:33:45 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-01-25 10:08:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -137,9 +137,7 @@ class Timer extends StatelessWidget {
         style: TextButton.styleFrom(
           textStyle: buttonTextStyle,
         ),
-        onPressed: () {
-          _instruct();
-        },
+        onPressed: _instruct,
         child: const Text('Intro'),
       ),
     );
