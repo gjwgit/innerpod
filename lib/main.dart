@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Thursday 2024-01-25 05:34:19 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-01-25 21:10:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-// import 'package:solid/solid.dart';
+import 'package:solid/solid.dart';
 
 import 'package:innerpod/timer.dart';
 
@@ -36,13 +36,17 @@ void main() {
   runApp(InnerPod());
 }
 
+/// The root widget for the app.
+
 class InnerPod extends StatelessWidget {
+  /// Initialise the class.
+
   InnerPod({super.key});
 
   // Construct the Scaffold as the main window to display after logging in to
   // the Solid Pod.
 
-  final home = Scaffold(
+  final _home = Scaffold(
     backgroundColor: Colors.blueGrey.shade700,
     appBar: AppBar(
       title: const Text('Inner Pod Session Timer'),
@@ -62,20 +66,21 @@ class InnerPod extends StatelessWidget {
       title: 'Inner Pod',
       color: Colors.purple,
 
-      // Build the actual home widget. Because our app requires access to the
-      // data stored within the user's POD for any of its functionality, we wrap
+      // Build the actual home widget. Our app has functionality that does not
+      // require access to Pod data (a session timer). If the user does connect
+      // to their Pod then the session information will be saved.
 
-      home: home,
-      // home: const SolidLogin(
-      //   // Images generated using Bing Image Creator from Designer, powered by
-      //   // DALL-E3.
+      home: SolidLogin(
+        // Images generated using Bing Image Creator from Designer, powered by
+        // DALL-E3.
 
-      //   image: AssetImage('assets/images/inner_image.jpg'),
-      //   logo: AssetImage('assets/images/inner_icon.png'),
-      //   title: 'MANAGE YOUR INNER POD',
-      //   link: 'https://github.com/gjwgit/inner',
-      //   child: home,
-      // ),
+        title: 'MANAGE YOUR INNER POD',
+        requireLogin: false,
+        image: const AssetImage('assets/images/inner_image.jpg'),
+        logo: const AssetImage('assets/images/inner_icon.png'),
+        link: 'https://github.com/gjwgit/inner',
+        child: _home,
+      ),
     );
   }
 }
