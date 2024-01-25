@@ -1,3 +1,7 @@
+# 1.1.0 2024-01-25 21:14
+
++ Add SolidLogin() functionality.
+
 # 1.0.0 2024-01-25 05:40
 
 + This is a usable first release.
