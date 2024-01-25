@@ -1,6 +1,6 @@
 /// A countdown timer and Start button for a session.
 //
-// Time-stamp: <Thursday 2024-01-25 10:08:27 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-01-25 21:09:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,23 +31,27 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:neon_circular_timer/neon_circular_timer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+/// Buld a widget for the home page time and buttons.
+
 class Timer extends StatelessWidget {
+  /// Initialise the timer.
+
   Timer({super.key});
 
-  final controller = CountDownController();
-  final player = AudioPlayer();
+  final _controller = CountDownController();
+  final _player = AudioPlayer();
 
-  // Add 1 to the duration to see 20:00 momentarily rather than 19:59, for
-  // example.
+  /// Add 1 to the duration to see 20:00 momentarily rather than 19:59, for
+  /// example.
 
   final duration = (20 * 60) + 1;
   // final duration = 41;
 
-  // Set the style for the text of the buttons.
+  /// Set the style for the text of the buttons.
 
   final buttonTextStyle = const TextStyle(fontSize: 30);
 
-  // Set the button size.
+  /// Set the button size.
 
   final buttonTheme = ButtonTheme(
     minWidth: 200.0,
@@ -60,24 +64,24 @@ class Timer extends StatelessWidget {
 
   // A small spacer for layout gaps.
 
-  final widthSpacer = const SizedBox(width: 20);
-  final heightSpacer = const SizedBox(height: 20);
+  final _widthSpacer = const SizedBox(width: 20);
+  final _heightSpacer = const SizedBox(height: 20);
 
   // The sound to be played at the beginning and end of a session, being a
   // [Source] from audioplayers.
 
-  final instruct = AssetSource('sounds/intro.ogg');
-  final dong = AssetSource('sounds/dong.ogg');
+  final _instruct = AssetSource('sounds/intro.ogg');
+  final _dong = AssetSource('sounds/dong.ogg');
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
 
-  Future<void> _instruct() async {
-    await player.play(instruct);
+  Future<void> _intro() async {
+    await _player.play(_instruct);
   }
 
   Future<void> _dingDong() async {
-    await player.play(dong);
+    await _player.play(_dong);
   }
 
   @override
@@ -93,7 +97,7 @@ class Timer extends StatelessWidget {
         ),
         onPressed: () {
           _dingDong();
-          controller.restart();
+          _controller.restart();
           WakelockPlus.enable();
         },
         child: const Text('Start'),
@@ -108,7 +112,7 @@ class Timer extends StatelessWidget {
           textStyle: buttonTextStyle,
         ),
         onPressed: () {
-          controller.pause();
+          _controller.pause();
           WakelockPlus.disable();
         },
         child: const Text('Pause'),
@@ -123,7 +127,7 @@ class Timer extends StatelessWidget {
           textStyle: buttonTextStyle,
         ),
         onPressed: () {
-          controller.resume();
+          _controller.resume();
           WakelockPlus.enable();
         },
         child: const Text('Resume'),
@@ -137,7 +141,7 @@ class Timer extends StatelessWidget {
         style: TextButton.styleFrom(
           textStyle: buttonTextStyle,
         ),
-        onPressed: _instruct,
+        onPressed: _intro,
         child: const Text('Intro'),
       ),
     );
@@ -150,7 +154,7 @@ class Timer extends StatelessWidget {
           NeonCircularTimer(
             width: 250,
             duration: duration,
-            controller: controller,
+            controller: _controller,
             autoStart: false,
             backgroudColor: Colors.blueGrey.shade600,
             textStyle: const TextStyle(
@@ -177,22 +181,22 @@ class Timer extends StatelessWidget {
             ),
             // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
           ),
-          heightSpacer,
-          heightSpacer,
+          _heightSpacer,
+          _heightSpacer,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               introButton,
-              widthSpacer,
+              _widthSpacer,
               startButton,
             ],
           ),
-          heightSpacer,
+          _heightSpacer,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               pauseButton,
-              widthSpacer,
+              _widthSpacer,
               resumeButton,
             ],
           ),
