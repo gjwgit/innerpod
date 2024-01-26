@@ -1,6 +1,6 @@
-/// A countdown timer and Start button for a session.
+/// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2024-01-25 21:09:10 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-01-26 12:29:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,7 +31,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:neon_circular_timer/neon_circular_timer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
-/// Buld a widget for the home page time and buttons.
+/// A countdown timer widget with buttons for the home page.
 
 class Timer extends StatelessWidget {
   /// Initialise the timer.
@@ -41,26 +41,19 @@ class Timer extends StatelessWidget {
   final _controller = CountDownController();
   final _player = AudioPlayer();
 
-  /// Add 1 to the duration to see 20:00 momentarily rather than 19:59, for
-  /// example.
+  // Add 1 to the duration to see 20:00 momentarily rather than 19:59, for
+  // example. It is 'disturbing' to not initially see the full timer duration on
+  // starting.
 
-  final duration = (20 * 60) + 1;
-  // final duration = 41;
+  final _duration = (20 * 60) + 1;
 
-  /// Set the style for the text of the buttons.
+  // For testing use a short duration.
 
-  final buttonTextStyle = const TextStyle(fontSize: 30);
+  // final _duration = 41;
 
-  /// Set the button size.
+  // Set the style for the text of the buttons.
 
-  final buttonTheme = ButtonTheme(
-    minWidth: 200.0,
-    height: 100.0,
-    child: ElevatedButton(
-      onPressed: () {},
-      child: const Text('test'),
-    ),
-  );
+  final _buttonTextStyle = const TextStyle(fontSize: 20);
 
   // A small spacer for layout gaps.
 
@@ -72,6 +65,13 @@ class Timer extends StatelessWidget {
 
   final _instruct = AssetSource('sounds/intro.ogg');
   final _dong = AssetSource('sounds/dong.ogg');
+
+  // Choose colours for the internal background of the timer and the gradient of
+  // the timer neon.
+
+  static const _background = Color(0xFFE6B276);
+  static const _spin1 = Color(0xFFFFB31A);
+  static const _spin2 = Color(0xFFB08261);
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
@@ -93,7 +93,7 @@ class Timer extends StatelessWidget {
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
-          textStyle: buttonTextStyle,
+          textStyle: _buttonTextStyle,
         ),
         onPressed: () {
           _dingDong();
@@ -109,7 +109,7 @@ class Timer extends StatelessWidget {
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
-          textStyle: buttonTextStyle,
+          textStyle: _buttonTextStyle,
         ),
         onPressed: () {
           _controller.pause();
@@ -124,7 +124,7 @@ class Timer extends StatelessWidget {
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
-          textStyle: buttonTextStyle,
+          textStyle: _buttonTextStyle,
         ),
         onPressed: () {
           _controller.resume();
@@ -139,7 +139,7 @@ class Timer extends StatelessWidget {
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
-          textStyle: buttonTextStyle,
+          textStyle: _buttonTextStyle,
         ),
         onPressed: _intro,
         child: const Text('Intro'),
@@ -153,10 +153,11 @@ class Timer extends StatelessWidget {
         children: [
           NeonCircularTimer(
             width: 250,
-            duration: duration,
+            duration: _duration,
             controller: _controller,
             autoStart: false,
-            backgroudColor: Colors.blueGrey.shade600,
+            // backgroudColor: Colors.blueGrey.shade600,
+            backgroudColor: _background,
             textStyle: const TextStyle(
               color: Colors.white,
               fontSize: 55,
@@ -167,17 +168,11 @@ class Timer extends StatelessWidget {
             },
             isReverse: true,
             isReverseAnimation: true,
-            innerFillGradient: LinearGradient(
-              colors: [
-                Colors.blueAccent.shade100,
-                Colors.blueAccent.shade700,
-              ],
+            innerFillGradient: const LinearGradient(
+              colors: [_spin1, _spin2],
             ),
-            neonGradient: LinearGradient(
-              colors: [
-                Colors.blueAccent.shade100,
-                Colors.blueAccent.shade700,
-              ],
+            neonGradient: const LinearGradient(
+              colors: [_spin1, _spin2],
             ),
             // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
           ),

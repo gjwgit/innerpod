@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Thursday 2024-01-25 21:10:57 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-01-26 12:25:12 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -43,15 +43,17 @@ class InnerPod extends StatelessWidget {
 
   InnerPod({super.key});
 
+  static const _background = Color(0xFFE6B276);
+
   // Construct the Scaffold as the main window to display after logging in to
   // the Solid Pod.
 
   final _home = Scaffold(
-    backgroundColor: Colors.blueGrey.shade700,
+    backgroundColor: _background,
     appBar: AppBar(
       title: const Text('Inner Pod Session Timer'),
-      backgroundColor: Colors.blueGrey,
-      foregroundColor: Colors.white,
+      backgroundColor: const Color(0XFFFAE5BF),
+      foregroundColor: Colors.black,
     ),
     body: Center(
       child: Timer(),
