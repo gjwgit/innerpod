@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Friday 2024-01-26 12:25:12 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-01-26 15:15:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -57,6 +57,23 @@ class InnerPod extends StatelessWidget {
     ),
     body: Center(
       child: Timer(),
+    ),
+    bottomNavigationBar: BottomNavigationBar(
+      backgroundColor: const Color(0XFFFAE5BF),
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.text_snippet),
+          label: 'Text',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'About',
+        ),
+      ],
     ),
   );
 
