@@ -1,3 +1,7 @@
+# 1.1.1 2024-01-26 12:33
+
++ Update colour scheme to be more earthly sympathetic.
+
 # 1.1.0 2024-01-25 21:14
 
 + Add SolidLogin() functionality.
