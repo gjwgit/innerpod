@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2024-01-26 12:29:24 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-01-27 07:50:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -65,13 +65,6 @@ class Timer extends StatelessWidget {
 
   final _instruct = AssetSource('sounds/intro.ogg');
   final _dong = AssetSource('sounds/dong.ogg');
-
-  // Choose colours for the internal background of the timer and the gradient of
-  // the timer neon.
-
-  static const _background = Color(0xFFE6B276);
-  static const _spin1 = Color(0xFFFFB31A);
-  static const _spin2 = Color(0xFFB08261);
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
@@ -146,6 +139,21 @@ class Timer extends StatelessWidget {
       ),
     );
 
+    // Choose colours for the internal background of the timer and the gradient
+    // of the timer neon.
+
+    // final background = Colors.blueGrey;
+
+    const background = Color(0xFFE6B276);
+
+    const text = Colors.black;
+
+    // const spin1 = Color(0xFFFFB31A);
+    // const spin2 = Color(0xFFB08261);
+
+    final spin1 = Colors.blueAccent.shade100;
+    final spin2 = Colors.blueAccent.shade700;
+
     return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: Column(
@@ -157,9 +165,9 @@ class Timer extends StatelessWidget {
             controller: _controller,
             autoStart: false,
             // backgroudColor: Colors.blueGrey.shade600,
-            backgroudColor: _background,
+            backgroudColor: background,
             textStyle: const TextStyle(
-              color: Colors.white,
+              color: text,
               fontSize: 55,
             ),
             onComplete: () {
@@ -168,11 +176,11 @@ class Timer extends StatelessWidget {
             },
             isReverse: true,
             isReverseAnimation: true,
-            innerFillGradient: const LinearGradient(
-              colors: [_spin1, _spin2],
+            innerFillGradient: LinearGradient(
+              colors: [spin1, spin2],
             ),
-            neonGradient: const LinearGradient(
-              colors: [_spin1, _spin2],
+            neonGradient: LinearGradient(
+              colors: [spin1, spin2],
             ),
             // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
           ),
