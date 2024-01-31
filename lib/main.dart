@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Wednesday 2024-01-31 13:40:26 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-02-01 08:30:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:solid/solid.dart';
 
+import 'package:innerpod/constants.dart';
 import 'package:innerpod/timer.dart';
 
 void main() {
@@ -43,24 +44,21 @@ class InnerPod extends StatelessWidget {
 
   InnerPod({super.key});
 
-  static const _background = Color(0xFFE6B276);
-  static const _border = Color(0xFFFAE5BF);
-
   // Construct the Scaffold as the main window to display after logging in to
   // the Solid Pod.
 
   final _home = Scaffold(
-    backgroundColor: _background,
+    backgroundColor: background,
     appBar: AppBar(
       title: const Text('Inner Pod Session Timer'),
-      backgroundColor: _border,
+      backgroundColor: border,
       foregroundColor: Colors.black,
     ),
     body: Center(
       child: Timer(),
     ),
     bottomNavigationBar: BottomNavigationBar(
-      backgroundColor: const Color(0XFFFAE5BF),
+      backgroundColor: border,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -84,11 +82,12 @@ class InnerPod extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Inner Pod',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // Change the theme for the app here.
 
         cardTheme: const CardTheme(
-          color: _border,
+          color: border,
         ),
       ),
 
@@ -105,7 +104,7 @@ class InnerPod extends StatelessWidget {
         image: const AssetImage('assets/images/inner_image.jpg'),
         logo: const AssetImage('assets/images/inner_icon.png'),
         continueText: 'SESSION',
-        podText: 'REGISTER',
+        registerText: 'REGISTER',
         link: 'https://github.com/gjwgit/inner',
         child: _home,
       ),

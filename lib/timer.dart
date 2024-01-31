@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2024-01-31 13:35:20 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-02-01 08:08:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,6 +30,8 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:neon_circular_timer/neon_circular_timer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+
+import 'package:innerpod/constants.dart';
 
 /// A countdown timer widget with buttons for the home page.
 
@@ -143,10 +145,6 @@ class Timer extends StatelessWidget {
 
     // Choose colours for the internal background of the timer and the gradient
     // of the timer neon.
-
-    // final background = Colors.blueGrey;
-
-    const background = Color(0xFFE6B276);
 
     const text = Colors.black;
 
