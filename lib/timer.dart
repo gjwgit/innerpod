@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-01-27 07:50:39 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-01-31 13:35:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -106,6 +106,7 @@ class Timer extends StatelessWidget {
         ),
         onPressed: () {
           _controller.pause();
+          _player.pause();
           WakelockPlus.disable();
         },
         child: const Text('Pause'),
@@ -121,6 +122,7 @@ class Timer extends StatelessWidget {
         ),
         onPressed: () {
           _controller.resume();
+          _player.resume();
           WakelockPlus.enable();
         },
         child: const Text('Resume'),
