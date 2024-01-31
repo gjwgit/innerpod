@@ -1,6 +1,7 @@
-# 1.1.1 2024-01-26 12:33
+# 1.1.2 2024-01-31 13:44
 
-+ Update colour scheme to be more earthly sympathetic.
++ Fine tuning
++ Add audio pause and resume.
 
 # 1.1.0 2024-01-25 21:14
 
