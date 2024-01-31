@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Friday 2024-01-26 15:15:10 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-01-31 13:40:26 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,6 +44,7 @@ class InnerPod extends StatelessWidget {
   InnerPod({super.key});
 
   static const _background = Color(0xFFE6B276);
+  static const _border = Color(0xFFFAE5BF);
 
   // Construct the Scaffold as the main window to display after logging in to
   // the Solid Pod.
@@ -52,7 +53,7 @@ class InnerPod extends StatelessWidget {
     backgroundColor: _background,
     appBar: AppBar(
       title: const Text('Inner Pod Session Timer'),
-      backgroundColor: const Color(0XFFFAE5BF),
+      backgroundColor: _border,
       foregroundColor: Colors.black,
     ),
     body: Center(
@@ -83,7 +84,13 @@ class InnerPod extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Inner Pod',
-      color: Colors.purple,
+      theme: ThemeData(
+        // Change the theme for the app here.
+
+        cardTheme: const CardTheme(
+          color: _border,
+        ),
+      ),
 
       // Build the actual home widget. Our app has functionality that does not
       // require access to Pod data (a session timer). If the user does connect
@@ -97,6 +104,8 @@ class InnerPod extends StatelessWidget {
         requireLogin: false,
         image: const AssetImage('assets/images/inner_image.jpg'),
         logo: const AssetImage('assets/images/inner_icon.png'),
+        continueText: 'SESSION',
+        podText: 'REGISTER',
         link: 'https://github.com/gjwgit/inner',
         child: _home,
       ),
