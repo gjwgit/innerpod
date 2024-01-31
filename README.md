@@ -11,7 +11,7 @@ meditation or just having a rest.
 The app is written in
 [Flutter](https://survivor.togaware.com/gnulinux/flutter.html) and the
 open source code is available from
-[github](https://github.com/gjwgit/innerpod](github)
+[github](https://github.com/gjwgit/innerpod).
 
 ## Using the App
 
