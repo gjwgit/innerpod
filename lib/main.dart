@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Thursday 2024-02-01 08:30:35 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-02-01 09:10:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -105,7 +105,7 @@ class InnerPod extends StatelessWidget {
         logo: const AssetImage('assets/images/inner_icon.png'),
         continueText: 'SESSION',
         registerText: 'REGISTER',
-        link: 'https://github.com/gjwgit/inner',
+        link: 'https://github.com/gjwgit/innerpod/blob/main/README.md',
         child: _home,
       ),
     );
