@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2024-01-22 12:10:38 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-02-01 09:14:40 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -98,3 +98,6 @@ solidcommunity:
 	--exclude .dart_tool --exclude build --exclude ios --exclude macos \
 	--exclude linux --exclude windows --exclude android
 	ssh solidcommunity.au '(cd projects/$(APP); flutter upgrade; make prod)'
+
+clean::
+	rm README.html
