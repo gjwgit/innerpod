@@ -1,12 +1,13 @@
 # InnerPod
 
-A session timer with sessions logged to your Solid Pod.
+A session timer with sessions logged to your [Solid
+Pod](https://solidproject.org/about).
 
 You can try it out online at https://innerpod.solidcommunity.au.
 
 InnerPod is an app for timing sessions and storing sessions in your
 Pod. A session can be anything though the app is commonly used for
-meditation or just having a rest. 
+meditation.
 
 The app is written in
 [Flutter](https://survivor.togaware.com/gnulinux/flutter.html) and the
@@ -42,3 +43,17 @@ short guide on how to meditate from [John
 Main](https://en.wikipedia.org/wiki/John_Main).
 
 ![](screenshots/pod_session_12.png)
+
+## Acknowledgements
+
+The app was implemented by [Graham
+Williams](https://togaware.com/graham.williams.html) using [Solid Pod
+libraries](https://github.com/anusii/solidpod) developed by the ANU's
+[Software Innovation Institute](https://sii.anu.edu.au).
+
+The graphics (login page picture and logo/icon) were generated using
+Bing's Copilot.
+
+The **Intro** instructions for meditating by John Main are from
+[WCCM](https://wccm.org).
+
