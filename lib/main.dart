@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Thursday 2024-02-01 09:10:22 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-02-03 17:40:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,47 +34,75 @@ import 'package:innerpod/timer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(InnerPod());
+  runApp(const InnerPod());
 }
 
 /// The root widget for the app.
 
-class InnerPod extends StatelessWidget {
+class InnerPod extends StatefulWidget {
   /// Initialise the class.
 
-  InnerPod({super.key});
+  const InnerPod({Key? key}) : super(key: key);
 
+  @override
+  _InnerPodState createState() => _InnerPodState();
+}
+
+class _InnerPodState extends State<InnerPod> {
   // Construct the Scaffold as the main window to display after logging in to
   // the Solid Pod.
 
-  final _home = Scaffold(
-    backgroundColor: background,
-    appBar: AppBar(
-      title: const Text('Inner Pod Session Timer'),
-      backgroundColor: border,
-      foregroundColor: Colors.black,
-    ),
-    body: Center(
-      child: Timer(),
-    ),
-    bottomNavigationBar: BottomNavigationBar(
-      backgroundColor: border,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.text_snippet),
-          label: 'Text',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'About',
-        ),
-      ],
-    ),
-  );
+  // TODO 20240203 gjw THE bottomNagivationBar WILL NEED TO BECOME A CLASS TO
+  // SUPPORT THE showAboutDialog OR EMBED DIRECTLY IN THE AMTERIAL APP. MAYBE
+  // THE LATTER.
+
+  int _selectedIndex = 0;
+
+  // final _home = Scaffold(
+  //   backgroundColor: background,
+  //   appBar: AppBar(
+  //     title: const Text('Inner Pod Session Timer'),
+  //     backgroundColor: border,
+  //     foregroundColor: Colors.black,
+  //   ),
+  //   body: Center(
+  //     child: Timer(),
+  //   ),
+  //   bottomNavigationBar: BottomNavigationBar(
+  //     backgroundColor: border,
+  //     items: const <BottomNavigationBarItem>[
+  //       BottomNavigationBarItem(
+  //         icon: Icon(Icons.home),
+  //         label: 'Home',
+  //       ),
+  //       BottomNavigationBarItem(
+  //         icon: Icon(Icons.text_snippet),
+  //         label: 'Text',
+  //       ),
+  //       BottomNavigationBarItem(
+  //         icon: Icon(Icons.settings),
+  //         label: 'About',
+  //       ),
+  //     ],
+  //     // currentIndex: _selectedIndex,
+  //     // onTap: (index) {
+  //     //   setState(() {
+  //     //     _selectedIndex = index;
+  //     //   });
+  //     //   if (index == 1) {
+  //     //     showAboutDialog(
+  //     //       context: context,
+  //     //       applicationName: 'My App',
+  //     //       applicationVersion: '1.0.0',
+  //     //       applicationIcon: const Icon(Icons.android),
+  //     //       children: [
+  //     //         const Text('This is my app.'),
+  //     //       ],
+  //     //     );
+  //     //   }
+  //     // },
+  //   ),
+  // );
 
   // This widget is the root of the application.
 
@@ -106,7 +134,51 @@ class InnerPod extends StatelessWidget {
         continueText: 'SESSION',
         registerText: 'REGISTER',
         link: 'https://github.com/gjwgit/innerpod/blob/main/README.md',
-        child: _home,
+        child: Scaffold(
+          backgroundColor: background,
+          appBar: AppBar(
+            title: const Text('Inner Pod Session Timer'),
+            backgroundColor: border,
+            foregroundColor: Colors.black,
+          ),
+          body: Center(
+            child: Timer(),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: border,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.text_snippet),
+                label: 'Text',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'About',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+              if (index == 2) {
+                showAboutDialog(
+                  context: context,
+                  applicationName: 'My App',
+                  applicationVersion: '1.0.0',
+                  applicationIcon: const Icon(Icons.android),
+                  children: [
+                    const Text('This is my app.'),
+                  ],
+                );
+              }
+            },
+          ),
+        ),
       ),
     );
   }
