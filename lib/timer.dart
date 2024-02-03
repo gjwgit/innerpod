@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2024-02-01 08:08:17 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-02-03 10:32:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,6 +25,8 @@
 
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -47,7 +49,7 @@ class Timer extends StatelessWidget {
   // example. It is 'disturbing' to not initially see the full timer duration on
   // starting.
 
-  final _duration = (20 * 60) + 1;
+  final _duration = (20 * 60); // + 1;
 
   // For testing use a short duration.
 
@@ -67,6 +69,7 @@ class Timer extends StatelessWidget {
 
   final _instruct = AssetSource('sounds/intro.ogg');
   final _dong = AssetSource('sounds/dong.ogg');
+  final _guide = AssetSource('sounds/00_meditation_session.mp3');
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
@@ -77,6 +80,14 @@ class Timer extends StatelessWidget {
 
   Future<void> _dingDong() async {
     await _player.play(_dong);
+  }
+
+  Future<void> _guided() async {
+    _controller.pause();
+    _controller.restart();
+    await _player.play(_guide);
+    sleep(const Duration(seconds: 5));
+    _controller.start();
   }
 
   @override
@@ -131,6 +142,23 @@ class Timer extends StatelessWidget {
       ),
     );
 
+    final resetButton = SizedBox(
+      height: 45,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: _buttonTextStyle,
+        ),
+        onPressed: () {
+          _controller.restart();
+          _controller.pause();
+          _player.stop();
+          WakelockPlus.enable();
+        },
+        child: const Text('Reset'),
+      ),
+    );
+
     final introButton = SizedBox(
       height: 45,
       width: 170,
@@ -140,6 +168,18 @@ class Timer extends StatelessWidget {
         ),
         onPressed: _intro,
         child: const Text('Intro'),
+      ),
+    );
+
+    final guidedButton = SizedBox(
+      height: 45,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: _buttonTextStyle,
+        ),
+        onPressed: _guided,
+        child: const Text('Guided'),
       ),
     );
 
@@ -201,6 +241,15 @@ class Timer extends StatelessWidget {
               pauseButton,
               _widthSpacer,
               resumeButton,
+            ],
+          ),
+          _heightSpacer,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              guidedButton,
+              _widthSpacer,
+              resetButton,
             ],
           ),
         ],

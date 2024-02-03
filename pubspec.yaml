@@ -35,6 +35,7 @@ flutter:
     - assets/images/inner_image.jpg
     - assets/sounds/dong.ogg
     - assets/sounds/intro.ogg
+    - assets/sounds/00_meditation_session.mp3
 
 flutter_launcher_icons:
   android: "launcher_icon"
