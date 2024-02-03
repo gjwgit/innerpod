@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-02-03 14:41:20 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-02-03 17:54:58 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -90,15 +90,15 @@ class Timer extends StatelessWidget {
 
   Future<void> _guided() async {
     _isGuided = true;
-    _controller.restart();
-    _controller.pause();
+    //_controller.restart();
+    //_controller.pause();
     await _player.stop();
     await _player.play(_guide);
     //sleep(const Duration(seconds: 275));
-    sleep(const Duration(seconds: 10));
-    _controller.restart();
-    _controller.pause();
-    _controller.resume();
+    //sleep(const Duration(seconds: 10));
+    //_controller.restart();
+    //_controller.pause();
+    //_controller.resume();
     await WakelockPlus.enable();
   }
 
