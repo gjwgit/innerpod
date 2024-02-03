@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Sunday 2024-02-04 05:55:27 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-02-04 06:10:24 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,12 +39,12 @@ void main() {
   runApp(MaterialApp(
       title: 'Inner Pod',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // Change the theme for the app here.
-        cardTheme: const CardTheme(
-          color: border,
-        ),
-      ),
+      //     theme: ThemeData(
+      //         // Change the theme for the app here.
+//        cardTheme: const CardTheme(
+//          color: border,
+//        ),
+//          ),
       home: const InnerPod()));
 }
 
@@ -74,13 +74,15 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
       appBar: AppBar(
         title: const Text('Inner Pod Session Timer'),
         backgroundColor: border,
-        foregroundColor: Colors.black,
+//        foregroundColor: Colors.black,
       ),
       body: Center(
         child: Timer(),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: border,
+        //      backgroundColor: Colors.red, // border,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.black,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.black),
