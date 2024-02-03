@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Saturday 2024-02-03 21:39:59 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-02-04 05:55:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -83,7 +83,7 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
         backgroundColor: border,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home, color: Colors.black),
             label: 'Home',
           ),
           BottomNavigationBarItem(
@@ -112,7 +112,7 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
               applicationIcon:
                   ImageIcon(AssetImage('assets/images/inner_icon.png')),
               children: [
-                const Text('A session timer with logging.\n\n'
+                const SelectableText('A session timer with logging.\n\n'
                     'Inner Pod is an app for timing sessions and storing'
                     ' sessions to your Pod. A session can be anything though'
                     ' the app is commonly used for contemplative'
