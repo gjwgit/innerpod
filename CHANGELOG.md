@@ -1,3 +1,7 @@
+# 1.1.4 2024-02-03 14:04
+
++ Add GUIDED and RESET buttons.
+
 # 1.1.3 2024-02-01 08:41
 
 + Refine choice of colours.
