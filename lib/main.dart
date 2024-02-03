@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Saturday 2024-02-03 19:21:37 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-02-03 20:10:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -95,19 +95,21 @@ class InnerPod extends StatelessWidget {
       // require access to Pod data (a session timer). If the user does connect
       // to their Pod then the session information will be saved.
 
-      home: SolidLogin(
-        // Images generated using Bing Image Creator from Designer, powered by
-        // DALL-E3.
+      home: _home,
 
-        title: 'MANAGE YOUR INNER POD',
-        requireLogin: false,
-        image: const AssetImage('assets/images/inner_image.jpg'),
-        logo: const AssetImage('assets/images/inner_icon.png'),
-        continueText: 'SESSION',
-        registerText: 'REGISTER',
-        link: 'https://github.com/gjwgit/innerpod/blob/main/README.md',
-        child: _home,
-      ),
+      // SolidLogin(
+      //   // Images generated using Bing Image Creator from Designer, powered by
+      //   // DALL-E3.
+
+      //   title: 'MANAGE YOUR INNER POD',
+      //   requireLogin: false,
+      //   image: const AssetImage('assets/images/inner_image.jpg'),
+      //   logo: const AssetImage('assets/images/inner_icon.png'),
+      //   continueText: 'SESSION',
+      //   registerText: 'REGISTER',
+      //   link: 'https://github.com/gjwgit/innerpod/blob/main/README.md',
+      //   child: _home,
+      // ),
     );
   }
 }
