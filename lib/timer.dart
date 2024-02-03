@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-02-03 10:32:55 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-02-03 14:41:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -58,6 +58,10 @@ class Timer extends StatelessWidget {
   // Set the style for the text of the buttons.
 
   final _buttonTextStyle = const TextStyle(fontSize: 20);
+  final _buttonTextStyleBold = const TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
 
   // A small spacer for layout gaps.
 
@@ -71,6 +75,8 @@ class Timer extends StatelessWidget {
   final _dong = AssetSource('sounds/dong.ogg');
   final _guide = AssetSource('sounds/00_meditation_session.mp3');
 
+  var _isGuided = false;
+
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
 
@@ -83,11 +89,17 @@ class Timer extends StatelessWidget {
   }
 
   Future<void> _guided() async {
-    _controller.pause();
+    _isGuided = true;
     _controller.restart();
+    _controller.pause();
+    await _player.stop();
     await _player.play(_guide);
-    sleep(const Duration(seconds: 5));
-    _controller.start();
+    //sleep(const Duration(seconds: 275));
+    sleep(const Duration(seconds: 10));
+    _controller.restart();
+    _controller.pause();
+    _controller.resume();
+    await WakelockPlus.enable();
   }
 
   @override
@@ -99,9 +111,11 @@ class Timer extends StatelessWidget {
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
+          textStyle: _buttonTextStyleBold,
+          backgroundColor: Colors.lightGreenAccent,
         ),
         onPressed: () {
+          _isGuided = false;
           _dingDong();
           _controller.restart();
           WakelockPlus.enable();
@@ -211,7 +225,10 @@ class Timer extends StatelessWidget {
               fontSize: 55,
             ),
             onComplete: () {
-              _dingDong();
+              if (!_isGuided) {
+                _dingDong();
+              }
+              ;
               WakelockPlus.disable();
             },
             isReverse: true,
