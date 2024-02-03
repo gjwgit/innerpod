@@ -12,8 +12,8 @@ dependencies:
   audioplayers: ^5.2.1
   cupertino_icons: ^1.0.2
   neon_circular_timer: ^0.0.7
-  solid:
-    path: solid
+  solidpod:
+    path: solidpod
   wakelock_plus: ^1.1.4
 
 dev_dependencies:
