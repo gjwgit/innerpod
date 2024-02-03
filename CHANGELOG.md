@@ -1,3 +1,7 @@
+# 1.2.0 2024-02-03 20:13
+
++ Skip SolidLogin for now.
+
 # 1.1.5 2024-02-03 14:04
 
 + The package solid has been renamed to solidpod.
