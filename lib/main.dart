@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Saturday 2024-02-03 20:10:57 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-02-04 11:31:44 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,89 +27,106 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:solidpod/solid.dart';
+// import 'package:solidpod/solid.dart';
 
 import 'package:innerpod/constants.dart';
 import 'package:innerpod/timer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(InnerPod());
+
+  // Call MaterialApp() here rather than within InnerPod so that
+  // MaterialLocalizations is found when firing off the showAboutDialog.
+
+  runApp(
+    const MaterialApp(
+        title: 'Inner Pod',
+        debugShowCheckedModeBanner: false,
+        home: InnerPod()),
+  );
 }
 
-/// The root widget for the app.
+/// The primary widget for the app.
 
 class InnerPod extends StatelessWidget {
-  /// Initialise the class.
+  /// The primary app widget.
 
-  InnerPod({super.key});
-
-  // Construct the Scaffold as the main window to display after logging in to
-  // the Solid Pod.
-
-  final _home = Scaffold(
-    backgroundColor: background,
-    appBar: AppBar(
-      title: const Text('Inner Pod Session Timer'),
-      backgroundColor: border,
-      foregroundColor: Colors.black,
-    ),
-    body: Center(
-      child: Timer(),
-    ),
-    bottomNavigationBar: BottomNavigationBar(
-      backgroundColor: border,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.text_snippet),
-          label: 'Text',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'About',
-        ),
-      ],
-    ),
-  );
-
-  // This widget is the root of the application.
+  const InnerPod({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Inner Pod',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // Change the theme for the app here.
+    // Wrap the actual home widget within a SolidLogin. Our app has
+    // functionality that does not require access to Pod data (a session
+    // timer). If the user does connect to their Pod then the session
+    // information will be saved. Eventually we will have a Save Session and
+    // View History functionality that will then prompt to login to the POD at
+    // that time.
 
-        cardTheme: const CardTheme(
-          color: border,
-        ),
+    // TODO 20240204 gjw NOT USING SolidLogin() FOR NOW.
+
+    // return const SolidLogin(
+    //   title: 'MANAGE YOUR INNER POD',
+    //   requireLogin: false,
+    //   image: AssetImage('assets/images/inner_image.jpg'),
+    //   logo: AssetImage('assets/images/inner_icon.png'),
+    //   continueText: 'SESSION',
+    //   registerText: 'REGISTER',
+    //   link: 'https://github.com/gjwgit/innerpod/blob/main/README.md',
+    //   child: _InnerPodScaffold(),
+    // );
+
+    return Scaffold(
+      backgroundColor: background,
+      appBar: AppBar(
+        title: const Text('Inner Pod'),
+        backgroundColor: border,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info),
+            onPressed: () {
+              showAboutDialog(
+                context: context,
+                applicationName: 'Inner Pod',
+                applicationVersion: '0.0.0',
+                applicationIcon:
+                    const ImageIcon(AssetImage('assets/images/inner_icon.png')),
+                children: [
+                  const SelectableText('A session timer with logging.\n\n'
+                      'Inner Pod is an app for timing sessions and storing'
+                      ' sessions to your Pod. A session can be anything though'
+                      ' the app is commonly used for contemplative'
+                      ' meditation.\n\n'
+                      'The app is written in Flutter and the open source code'
+                      ' is available from github at'
+                      ' https://github.com/gjwgit/innerpod.'
+                      ' You can try it out online at'
+                      ' https://innerpod.solidcommunity.au.\n\n'
+                      ' Authors: Graham Williams.'),
+                ],
+              );
+            },
+            tooltip: 'Popup a window about the app.',
+          ),
+        ],
       ),
-
-      // Build the actual home widget. Our app has functionality that does not
-      // require access to Pod data (a session timer). If the user does connect
-      // to their Pod then the session information will be saved.
-
-      home: _home,
-
-      // SolidLogin(
-      //   // Images generated using Bing Image Creator from Designer, powered by
-      //   // DALL-E3.
-
-      //   title: 'MANAGE YOUR INNER POD',
-      //   requireLogin: false,
-      //   image: const AssetImage('assets/images/inner_image.jpg'),
-      //   logo: const AssetImage('assets/images/inner_icon.png'),
-      //   continueText: 'SESSION',
-      //   registerText: 'REGISTER',
-      //   link: 'https://github.com/gjwgit/innerpod/blob/main/README.md',
-      //   child: _home,
-      // ),
+      body: Center(child: Timer()),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: border,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.black),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.text_snippet),
+            label: 'Text',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'History',
+          ),
+        ],
+      ),
     );
   }
 }

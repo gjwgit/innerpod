@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-02-03 17:54:58 +1100 Graham Williams>
+// Time-stamp: <Saturday 2024-02-03 21:35:09 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -36,6 +34,9 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:innerpod/constants.dart';
 
 /// A countdown timer widget with buttons for the home page.
+
+// TODO 20240203 gjw THIS NEEDS TO BE A STATEFULL WIDGET SINCE IT TRACKS WHETHER
+// GUIDED IS CHOSEN AND SO NOT TO DO THE FINAL DING.
 
 class Timer extends StatelessWidget {
   /// Initialise the timer.
@@ -49,7 +50,7 @@ class Timer extends StatelessWidget {
   // example. It is 'disturbing' to not initially see the full timer duration on
   // starting.
 
-  final _duration = (20 * 60); // + 1;
+  final _duration = 20 * 60; // + 1;
 
   // For testing use a short duration.
 
@@ -228,7 +229,6 @@ class Timer extends StatelessWidget {
               if (!_isGuided) {
                 _dingDong();
               }
-              ;
               WakelockPlus.disable();
             },
             isReverse: true,
