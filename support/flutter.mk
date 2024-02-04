@@ -289,12 +289,17 @@ realclean::
 	flutter clean
 	flutter pub get
 
-# Update the version sequence number prior to a push (relies on the
-# git.mk being loaded after this flutter.mk). This is only undertaken
-# through `make push` rather than a `git push` in any other way.
+# For the `dev` branch only, update the version sequence number prior
+# to a push (relies on the git.mk being loaded after this
+# flutter.mk). This is only undertaken through `make push` rather than
+# a `git push` in any other way.
 
 VERSEQ=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f2 | awk '{print $$1+1}')
 
+BRANCH := $(shell git branch --show-current)
+
+ifeq ($(BRANCH),dev)
 push::
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
 	git commit -m "Bump sequence $(VERSEQ)" pubspec.yaml
+endif
