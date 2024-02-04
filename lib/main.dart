@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Sunday 2024-02-04 11:05:57 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-02-04 11:18:02 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -65,8 +65,6 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
   // Construct the Scaffold as the main window to display after logging in to
   // the Solid Pod.
 
-  int _selectedIndex = 0;
-
   // This widget is the root of the application.
 
   @override
@@ -77,6 +75,41 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
         title: const Text('Inner Pod Session Timer'),
         backgroundColor: border,
 //        foregroundColor: Colors.black,
+        actions: [
+          // RUN
+
+          IconButton(
+            key: const Key('run_button'),
+            icon: const Icon(
+              //Icons.directions_run,
+              Icons.info,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              showAboutDialog(
+                context: context,
+                applicationName: 'Inner Pod',
+                applicationVersion: '0.0.0',
+                applicationIcon:
+                    const ImageIcon(AssetImage('assets/images/inner_icon.png')),
+                children: [
+                  const SelectableText('A session timer with logging.\n\n'
+                      'Inner Pod is an app for timing sessions and storing'
+                      ' sessions to your Pod. A session can be anything though'
+                      ' the app is commonly used for contemplative'
+                      ' meditation.\n\n'
+                      'The app is written in Flutter and the open source code'
+                      ' is available from github at'
+                      ' https://github.com/gjwgit/innerpod.'
+                      ' You can try it out online at'
+                      ' https://innerpod.solidcommunity.au.\n\n'
+                      ' This app is written by Graham Williams.'),
+                ],
+              );
+            },
+            tooltip: 'Popup a window about the app.',
+          ),
+        ],
       ),
       body: Center(
         child: Timer(),
@@ -94,37 +127,9 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'About',
+            label: 'History',
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          if (index == 3) {
-            showAboutDialog(
-              context: context,
-              applicationName: 'Inner Pod',
-              applicationVersion: '0.0.0',
-              applicationIcon:
-                  ImageIcon(AssetImage('assets/images/inner_icon.png')),
-              children: [
-                const SelectableText('A session timer with logging.\n\n'
-                    'Inner Pod is an app for timing sessions and storing'
-                    ' sessions to your Pod. A session can be anything though'
-                    ' the app is commonly used for contemplative'
-                    ' meditation.\n\n'
-                    'The app is written in Flutter and the open source code'
-                    ' is available from github at'
-                    ' https://github.com/gjwgit/innerpod.'
-                    ' You can try it out online at'
-                    ' https://innerpod.solidcommunity.au.\n\n'
-                    ' This app is written by Graham Williams.'),
-              ],
-            );
-          }
-        },
       ),
     );
   }
