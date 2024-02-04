@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Sunday 2024-02-04 06:13:24 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-02-04 11:05:57 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -82,9 +82,7 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
         child: Timer(),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        //      backgroundColor: Colors.red, // border,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.black,
+        backgroundColor: border,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.black),
@@ -93,10 +91,6 @@ class _InnerPodScaffoldState extends State<_InnerPodScaffold> {
           BottomNavigationBarItem(
             icon: Icon(Icons.text_snippet),
             label: 'Text',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.text_snippet),
-            label: 'History',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
