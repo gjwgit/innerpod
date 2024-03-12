@@ -1,6 +1,6 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.2.0+27
 
 environment:
@@ -35,7 +35,7 @@ flutter:
     - assets/images/inner_image.jpg
     - assets/sounds/dong.ogg
     - assets/sounds/intro.ogg
-    - assets/sounds/00_meditation_session.mp3
+    - assets/sounds/session.ogg
 
 flutter_launcher_icons:
   android: "launcher_icon"
