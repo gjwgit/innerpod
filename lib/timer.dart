@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-02-03 21:35:09 +1100 Graham Williams>
+// Time-stamp: <Monday 2024-03-11 11:51:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -74,7 +74,7 @@ class Timer extends StatelessWidget {
 
   final _instruct = AssetSource('sounds/intro.ogg');
   final _dong = AssetSource('sounds/dong.ogg');
-  final _guide = AssetSource('sounds/00_meditation_session.mp3');
+  final _guide = AssetSource('sounds/session.ogg');
 
   var _isGuided = false;
 
