@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Sunday 2024-03-17 12:00:24 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-03-17 17:41:08 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
