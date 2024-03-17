@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-03-13 09:52:37 +1100 Graham Williams>
+# Time-stamp: <Sunday 2024-03-17 17:20:37 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -103,7 +103,7 @@ solidcommunity:
 	ssh solidcommunity.au '(cd projects/$(APP); flutter upgrade; make prod)'
 
 clean::
-	rm README.html
+	rm -f README.html
 
 newaudio:
 	cp ignore/intro.ogg assets/sounds/intro.ogg
