@@ -17,10 +17,10 @@ dependencies:
   wakelock_plus: ^1.1.4
 
 dev_dependencies:
-  dart_code_metrics:
-    git:
-      url: https://github.com/anusii/dart-code-metrics.git
-      ref: main
+  # dart_code_metrics:
+  #   git:
+  #     url: https://github.com/anusii/dart-code-metrics.git
+  #     ref: main
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
