@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Monday 2024-03-11 11:51:42 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-03-17 17:02:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -107,8 +107,12 @@ class Timer extends StatelessWidget {
   Widget build(BuildContext context) {
     // Define the various buttons.
 
+    // TODO 20240317 gjw The button height should be a constant rather than the
+    // literal listed here. Also, Google PLay Store noted accessibility
+    // guidelines suggest the height should be at least 48.
+
     final startButton = SizedBox(
-      height: 45,
+      height: 48,
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
@@ -126,7 +130,7 @@ class Timer extends StatelessWidget {
     );
 
     final pauseButton = SizedBox(
-      height: 45,
+      height: 48,
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
@@ -142,7 +146,7 @@ class Timer extends StatelessWidget {
     );
 
     final resumeButton = SizedBox(
-      height: 45,
+      height: 48,
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
@@ -158,7 +162,7 @@ class Timer extends StatelessWidget {
     );
 
     final resetButton = SizedBox(
-      height: 45,
+      height: 48,
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
@@ -175,7 +179,7 @@ class Timer extends StatelessWidget {
     );
 
     final introButton = SizedBox(
-      height: 45,
+      height: 48,
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
@@ -187,7 +191,7 @@ class Timer extends StatelessWidget {
     );
 
     final guidedButton = SizedBox(
-      height: 45,
+      height: 48,
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
