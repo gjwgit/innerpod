@@ -16,11 +16,16 @@ open source code is available from
 
 ## Using the App
 
-The login screen is displayed on startup and is used to (optionally)
-connect to your Solid Pod, if you have one. Tap REGISTER to sign up
-for your personally private Solid Pod. All data is encrypted on the
-Pod and only you have access to the data on your device, unless you
-explicitly share the data.
+In Version 1.3.0 and later a login screen is displayed on startup.
+
+If you do not wish to record your session to your Solid Pod simply tap
+SESSION. The session timer is fully functional without a connection
+and no data is collected or stored.
+
+Otherwise, from the login screen you can connect to your Solid Pod, if
+you have one. Tap REGISTER to sign up for your personally private
+Solid Pod. All data is encrypted on the Pod and only you have access
+to the data on your device, unless you explicitly share the data.
 
 Tap on LOGIN to establish a connection to your Solid Pod. Once a
 connection is made then the session will be logged and previous
