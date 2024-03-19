@@ -3,11 +3,13 @@
 A session timer with sessions logged to your [Solid
 Pod](https://solidproject.org/about).
 
-You can try it out online at https://innerpod.solidcommunity.au.
+You can try it out online at https://innerpod.solidcommunity.au. We
+also welcome testers of the Android app at
+https://play.google.com/store/apps/details?id=com.togaware.innerpod
 
-InnerPod is an app for timing sessions and storing sessions in your
-Pod. A session can be anything though the app is commonly used for
-meditation.
+InnerPod is an app for timing sessions and storing (not yet released)
+sessions in your Solid Pod. A session can be anything though the app
+is commonly used for meditation.
 
 The app is written in
 [Flutter](https://survivor.togaware.com/gnulinux/flutter.html) and the
@@ -16,18 +18,20 @@ open source code is available from
 
 ## Using the App
 
-The login screen is displayed on startup and is used to (optionally)
-connect to your Solid Pod, if you have one. Tap REGISTER to sign up
-for your personally private Solid Pod. All data is encrypted on the
-Pod and only you have access to the data on your device, unless you
-explicitly share the data.
+In Version 1.3 a login screen is displayed on startup.
+
+If you do not wish to record your session to your Solid Pod simply tap
+SESSION. The session timer is fully functional without a connection
+and no data is collected or stored.
+
+Otherwise, from the login screen you can connect to your Solid Pod, if
+you have one. Tap REGISTER to sign up for your personally private
+Solid Pod. All data is encrypted on the Pod and only you have access
+to the data on your device, unless you explicitly share the data.
 
 Tap on LOGIN to establish a connection to your Solid Pod. Once a
 connection is made then the session will be logged and previous
 sessions will be available for visualising.
-
-Tap on SESSION to skip the connection. The session timer is fully
-functional without a connection.
 
 To get your own new pod on https://pods.solidcommunity.au tap on
 REGISTER.
