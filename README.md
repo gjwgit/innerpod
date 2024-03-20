@@ -18,7 +18,7 @@ open source code is available from
 
 ## Using the App
 
-In Version 1.3 a login screen is displayed on startup.
+In Version 1.3.0 and later a login screen is displayed on startup.
 
 If you do not wish to record your session to your Solid Pod simply tap
 SESSION. The session timer is fully functional without a connection
@@ -56,8 +56,9 @@ libraries](https://github.com/anusii/solidpod) developed by the ANU's
 [Software Innovation Institute](https://sii.anu.edu.au).
 
 The graphics (login page picture and logo/icon) were generated using
-Bing's Copilot.
+Bing's Copilot. The audio was generated using ElevenLabs text to
+speech.
 
-The **Intro** instructions for meditating by John Main are from
+The instructions for meditating by John Main are from
 [WCCM](https://wccm.org).
 
