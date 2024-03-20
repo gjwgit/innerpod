@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Tuesday 2024-03-19 20:05:32 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-03-20 09:59:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:solidpod/solid.dart';
+import 'package:solidpod/solidpod.dart';
 
 import 'package:innerpod/constants.dart';
 import 'package:innerpod/timer.dart';
