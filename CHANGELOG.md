@@ -1,3 +1,7 @@
+# 1.3.0 2024-03-20 12:22
+
++ Update audio to AI generated.
+
 # 1.2.0 2024-02-03 20:13
 
 + Skip SolidLogin for now.
