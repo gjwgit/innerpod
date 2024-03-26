@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Sunday 2024-03-17 17:41:08 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-03-26 15:19:41 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-// import 'package:solidpod/solid.dart';
+import 'package:solidpod/solidpod.dart';
 
 import 'package:innerpod/constants.dart';
 import 'package:innerpod/timer.dart';
@@ -83,11 +83,12 @@ class InnerPod extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.info),
-            onPressed: () {
+            onPressed: () async {
+              final appNameVersion = await getAppNameVersion();
               showAboutDialog(
                 context: context,
-                applicationName: 'Inner Pod',
-                applicationVersion: '1.2.0',
+                applicationName: appNameVersion[0],
+                applicationVersion: appNameVersion[1],
                 applicationIcon:
                     const ImageIcon(AssetImage('assets/images/inner_icon.png')),
                 children: [
