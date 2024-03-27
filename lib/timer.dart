@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2024-03-27 15:48:49 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-03-27 18:38:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -58,8 +58,10 @@ class Timer extends StatelessWidget {
 
   // final _duration = 41;
 
-  final _guidedIntro = 278;
-  final _guidedOutro = 322;
+  // A particular session has the following intro and outro timing.
+
+  final _guidedIntro = 4 * 60 + 45;
+  final _guidedOutro = 5 * 60 + 25;
 
   // Set the style for the text of the buttons.
 
@@ -108,9 +110,11 @@ class Timer extends StatelessWidget {
     _isGuided = true;
     await _player.stop();
     await _player.play(_guide);
+    await WakelockPlus.enable();
     await Future.delayed(Duration(seconds: _guidedIntro));
     _controller.restart();
-    await WakelockPlus.enable();
+    // This now displays 0 until the end of the session whereby the countdown
+    // timer is sleeping for the outro.
   }
 
   @override
@@ -234,7 +238,6 @@ class Timer extends StatelessWidget {
             duration: _duration,
             controller: _controller,
             autoStart: false,
-            // backgroudColor: Colors.blueGrey.shade600,
             backgroundColor: background,
             ringColor: spin1,
             fillColor: spin2,
@@ -249,6 +252,10 @@ class Timer extends StatelessWidget {
               } else {
                 _dingDong();
               }
+              // Reset the timer so we see 20:00.
+              _controller.restart();
+              _controller.pause();
+              // Allow the device to sleep.
               WakelockPlus.disable();
             },
             isReverse: true,
