@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2024-03-27 15:38:49 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-03-27 15:48:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -81,12 +81,17 @@ class Timer extends StatelessWidget {
   final _dong = AssetSource('sounds/dong.ogg');
   final _guide = AssetSource('sounds/session.ogg');
 
+  // For the guided session we play the dong after a delay to match the
+  // audio. Gor non-guided sessions we dong immediately at the termination of the
+  // countdown timer.
+
   var _isGuided = false;
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
 
   Future<void> _intro() async {
+    _isGuided = false;
     await _player.play(_instruct);
     // TODO 20240327 gjw How to wait until the audio is finished?
     await Future.delayed(const Duration(seconds: 19));
@@ -101,14 +106,10 @@ class Timer extends StatelessWidget {
 
   Future<void> _guided() async {
     _isGuided = true;
-    //_controller.restart();
-    //_controller.pause();
     await _player.stop();
     await _player.play(_guide);
     await Future.delayed(Duration(seconds: _guidedIntro));
     _controller.restart();
-    //_controller.pause();
-    //_controller.resume();
     await WakelockPlus.enable();
   }
 
@@ -244,7 +245,7 @@ class Timer extends StatelessWidget {
             ),
             onComplete: () {
               if (_isGuided) {
-                sleep(const Duration(seconds: _guidedOutro));
+                sleep(Duration(seconds: _guidedOutro));
               } else {
                 _dingDong();
               }
