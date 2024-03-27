@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-03-17 17:02:59 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-03-27 15:38:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,10 +25,12 @@
 
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:neon_circular_timer/neon_circular_timer.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants.dart';
@@ -55,6 +57,9 @@ class Timer extends StatelessWidget {
   // For testing use a short duration.
 
   // final _duration = 41;
+
+  final _guidedIntro = 278;
+  final _guidedOutro = 322;
 
   // Set the style for the text of the buttons.
 
@@ -83,6 +88,11 @@ class Timer extends StatelessWidget {
 
   Future<void> _intro() async {
     await _player.play(_instruct);
+    // TODO 20240327 gjw How to wait until the audio is finished?
+    await Future.delayed(const Duration(seconds: 19));
+    await _dingDong();
+    _controller.restart();
+    await WakelockPlus.enable();
   }
 
   Future<void> _dingDong() async {
@@ -95,9 +105,8 @@ class Timer extends StatelessWidget {
     //_controller.pause();
     await _player.stop();
     await _player.play(_guide);
-    //sleep(const Duration(seconds: 275));
-    //sleep(const Duration(seconds: 10));
-    //_controller.restart();
+    await Future.delayed(Duration(seconds: _guidedIntro));
+    _controller.restart();
     //_controller.pause();
     //_controller.resume();
     await WakelockPlus.enable();
@@ -210,7 +219,7 @@ class Timer extends StatelessWidget {
     // const spin1 = Color(0xFFFFB31A);
     // const spin2 = Color(0xFFB08261);
 
-    final spin1 = Colors.blueAccent.shade100;
+    const spin1 = Colors.white;
     final spin2 = Colors.blueAccent.shade700;
 
     return Padding(
@@ -218,31 +227,37 @@ class Timer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          NeonCircularTimer(
+          CircularCountDownTimer(
             width: 250,
+            height: 250,
             duration: _duration,
             controller: _controller,
             autoStart: false,
             // backgroudColor: Colors.blueGrey.shade600,
-            backgroudColor: background,
+            backgroundColor: background,
+            ringColor: spin1,
+            fillColor: spin2,
+            strokeWidth: 10.0,
             textStyle: const TextStyle(
               color: text,
               fontSize: 55,
             ),
             onComplete: () {
-              if (!_isGuided) {
+              if (_isGuided) {
+                sleep(const Duration(seconds: _guidedOutro));
+              } else {
                 _dingDong();
               }
               WakelockPlus.disable();
             },
             isReverse: true,
             isReverseAnimation: true,
-            innerFillGradient: LinearGradient(
-              colors: [spin1, spin2],
-            ),
-            neonGradient: LinearGradient(
-              colors: [spin1, spin2],
-            ),
+            //innerFillGradient: LinearGradient(
+            //  colors: [spin1, spin2],
+            //),
+            //neonGradient: LinearGradient(
+            //  colors: [spin1, spin2],
+            //),
             // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
           ),
           _heightSpacer,
