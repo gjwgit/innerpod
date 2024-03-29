@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2024-03-27 18:38:14 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-03-29 16:43:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -58,10 +58,16 @@ class Timer extends StatelessWidget {
 
   // final _duration = 41;
 
-  // A particular session has the following intro and outro timing.
+  // The full JM session has the following intro and outro timing.
 
-  final _guidedIntro = 4 * 60 + 45;
-  final _guidedOutro = 5 * 60 + 25;
+  // final _guidedIntro = 4 * 60 + 45; //JM
+  // final _guidedOutro = 5 * 60 + 25; //JM
+
+  // The developing AI session.
+
+  final _introTime = 17; //AI
+  final _guidedIntro = 60 + 25; //AI
+  final _guidedOutro = 0; //AI
 
   // Set the style for the text of the buttons.
 
@@ -84,7 +90,7 @@ class Timer extends StatelessWidget {
   final _guide = AssetSource('sounds/session.ogg');
 
   // For the guided session we play the dong after a delay to match the
-  // audio. Gor non-guided sessions we dong immediately at the termination of the
+  // audio. For non-guided sessions we dong immediately at the termination of the
   // countdown timer.
 
   var _isGuided = false;
@@ -94,27 +100,51 @@ class Timer extends StatelessWidget {
 
   Future<void> _intro() async {
     _isGuided = false;
+    // Good to wait a second before starting the audio after tapping the button,
+    // otherwise it feels rushed.
+    await Future.delayed(const Duration(seconds: 1));
+    await _player.stop();
     await _player.play(_instruct);
-    // TODO 20240327 gjw How to wait until the audio is finished?
-    await Future.delayed(const Duration(seconds: 19));
+    // Wait now while the intro audio is played before the dong when the timer
+    // then actually starts.
+    await Future.delayed(Duration(seconds: _introTime));
+    // Good to wait another 2 seconds here before the dings after the
+    // introduction audio, otherwise it feels rushed.
+    await Future.delayed(const Duration(seconds: 2));
     await _dingDong();
     _controller.restart();
+    // Turn off device sleeping.
     await WakelockPlus.enable();
   }
 
   Future<void> _dingDong() async {
+    // Always stop the player first in case there is some other audio still
+    // playing.
+    await _player.stop();
     await _player.play(_dong);
   }
 
   Future<void> _guided() async {
     _isGuided = true;
+    // Good to wait a second before starting the audio after tapping the button,
+    // otherwise it feels rushed.
+    await Future.delayed(const Duration(seconds: 1));
     await _player.stop();
     await _player.play(_guide);
-    await WakelockPlus.enable();
-    await Future.delayed(Duration(seconds: _guidedIntro));
+    // Always reset (by doing a restart and then pause) any current session.
     _controller.restart();
+    _controller.pause();
+    // Turn off device sleeping.
+    await WakelockPlus.enable();
+    // Wait for the intro to complete.
+    await Future.delayed(Duration(seconds: _guidedIntro));
+    // Good to wait another 2 seconds here before the dings after the
+    // intro audio, otherwise it feels rushed.
+    await Future.delayed(const Duration(seconds: 2));
+    await _dingDong(); //AI
+    _controller.restart(); //AI
     // This now displays 0 until the end of the session whereby the countdown
-    // timer is sleeping for the outro.
+    // timer is sleeping for the outro to finish for the JM version.
   }
 
   @override
@@ -186,7 +216,7 @@ class Timer extends StatelessWidget {
           _controller.restart();
           _controller.pause();
           _player.stop();
-          WakelockPlus.enable();
+          WakelockPlus.disable();
         },
         child: const Text('Reset'),
       ),
@@ -248,6 +278,9 @@ class Timer extends StatelessWidget {
             ),
             onComplete: () {
               if (_isGuided) {
+                // TODO 20240329 gjw It would be better to check if the audio
+                // has finished then wait for it to do so, and once finished to
+                // then proceed.
                 sleep(Duration(seconds: _guidedOutro));
               } else {
                 _dingDong();
@@ -260,13 +293,6 @@ class Timer extends StatelessWidget {
             },
             isReverse: true,
             isReverseAnimation: true,
-            //innerFillGradient: LinearGradient(
-            //  colors: [spin1, spin2],
-            //),
-            //neonGradient: LinearGradient(
-            //  colors: [spin1, spin2],
-            //),
-            // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
           ),
           _heightSpacer,
           _heightSpacer,
