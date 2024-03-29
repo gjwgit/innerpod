@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2024-03-29 16:43:15 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-03-29 20:52:55 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -48,26 +48,36 @@ class Timer extends StatelessWidget {
   final _controller = CountDownController();
   final _player = AudioPlayer();
 
-  // Add 1 to the duration to see 20:00 momentarily rather than 19:59, for
-  // example. It is 'disturbing' to not initially see the full timer duration on
-  // starting.
+  // TODO 20240329 gjw Introduce a duration selection for 20, 30, 40 minutes
+  // instead of this hard coded choice.
 
-  final _duration = 20 * 60; // + 1;
+  final _duration = 20 * 60;
 
-  // For testing use a short duration.
+  // For the guided session we play the dong after a delay to match the
+  // audio. For non-guided sessions we dong immediately at the termination of the
+  // countdown timer.
 
-  // final _duration = 41;
+  var _isGuided = false;
 
-  // The full JM session has the following intro and outro timing.
+  // The intro is always the AI intro now.
 
-  // final _guidedIntro = 4 * 60 + 45; //JM
-  // final _guidedOutro = 5 * 60 + 25; //JM
+  final _introTime = 18;
 
-  // The developing AI session.
+  // The guided version is either AI or JM. Let's assume JM for now. New issue
+  // to slplit JM into introInstructions, IntroMusic, outroMuisc. Then
+  // dynamically determin lengths, and use that here
 
-  final _introTime = 17; //AI
-  final _guidedIntro = 60 + 25; //AI
-  final _guidedOutro = 0; //AI
+  // The developing AI session has the following intro time and no outro at
+  // present. The intro time is the time to wait until the dings in the audio
+  // occur.
+
+  // final _guidedIntro = 60 + 25;
+  // final _guidedOutro = 0;
+
+  // The current full JM session has the following intro and outro timing.
+
+  final _guidedIntro = 4 * 60 + 45; //JM
+  final _guidedOutro = 5 * 60 + 25; //JM
 
   // Set the style for the text of the buttons.
 
@@ -89,33 +99,10 @@ class Timer extends StatelessWidget {
   final _dong = AssetSource('sounds/dong.ogg');
   final _guide = AssetSource('sounds/session.ogg');
 
-  // For the guided session we play the dong after a delay to match the
-  // audio. For non-guided sessions we dong immediately at the termination of the
-  // countdown timer.
-
-  var _isGuided = false;
+  var _audioDuration = Duration.zero;
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
-
-  Future<void> _intro() async {
-    _isGuided = false;
-    // Good to wait a second before starting the audio after tapping the button,
-    // otherwise it feels rushed.
-    await Future.delayed(const Duration(seconds: 1));
-    await _player.stop();
-    await _player.play(_instruct);
-    // Wait now while the intro audio is played before the dong when the timer
-    // then actually starts.
-    await Future.delayed(Duration(seconds: _introTime));
-    // Good to wait another 2 seconds here before the dings after the
-    // introduction audio, otherwise it feels rushed.
-    await Future.delayed(const Duration(seconds: 2));
-    await _dingDong();
-    _controller.restart();
-    // Turn off device sleeping.
-    await WakelockPlus.enable();
-  }
 
   Future<void> _dingDong() async {
     // Always stop the player first in case there is some other audio still
@@ -124,25 +111,72 @@ class Timer extends StatelessWidget {
     await _player.play(_dong);
   }
 
+  Future<void> _intro() async {
+    _isGuided = false;
+
+    _controller.restart();
+    _controller.pause();
+
+    // Good to wait a second before starting the audio after tapping the button,
+    // otherwise it feels rushed.
+
+    await Future.delayed(const Duration(seconds: 1));
+    await _player.stop();
+    await _player.play(_instruct);
+
+    // TODO 20240329 gjw This is just a demo of getting the audio duration.
+
+    _player.onDurationChanged.listen((d) {
+      _audioDuration = d;
+    });
+
+    // Not yet working. The first time this is 0!
+
+    // print('Intro duration: $_audioDuration');
+
+    // Wait now while the intro audio is played before the dong when the timer
+    // then actually starts.
+
+    await Future.delayed(Duration(seconds: _guidedIntro));
+
+    // Good to wait another 1 second here before the dings after the
+    // introduction audio, otherwise it feels rushed.
+
+    await Future.delayed(const Duration(seconds: 2));
+    await _dingDong();
+    _controller.restart();
+
+    // Turn off device sleeping. I.e., lock the device into being awake.
+
+    await WakelockPlus.enable();
+  }
+
   Future<void> _guided() async {
+    // TODO 20240329 gjw This is just a demo of getting the audio duration.
+
+    _player.onDurationChanged.listen((d) {
+      print('Max duration: $d');
+    });
+
     _isGuided = true;
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
     await Future.delayed(const Duration(seconds: 1));
+    // Ensure any playing sudio is stopped.
     await _player.stop();
     await _player.play(_guide);
-    // Always reset (by doing a restart and then pause) any current session.
+    // Always reset (by doing a restart and then pause) any current timer
+    // session.
     _controller.restart();
     _controller.pause();
     // Turn off device sleeping.
     await WakelockPlus.enable();
-    // Wait for the intro to complete.
+    // Wait for the intro of the guided session to complete.
     await Future.delayed(Duration(seconds: _guidedIntro));
     // Good to wait another 2 seconds here before the dings after the
     // intro audio, otherwise it feels rushed.
     await Future.delayed(const Duration(seconds: 2));
-    await _dingDong(); //AI
-    _controller.restart(); //AI
+    _controller.restart();
     // This now displays 0 until the end of the session whereby the countdown
     // timer is sleeping for the outro to finish for the JM version.
   }
