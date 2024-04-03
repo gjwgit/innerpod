@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-03-17 17:02:59 +1100 Graham Williams>
+// Time-stamp: <Sunday 2024-03-31 20:44:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,10 +25,12 @@
 
 library;
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:neon_circular_timer/neon_circular_timer.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants.dart';
@@ -46,15 +48,36 @@ class Timer extends StatelessWidget {
   final _controller = CountDownController();
   final _player = AudioPlayer();
 
-  // Add 1 to the duration to see 20:00 momentarily rather than 19:59, for
-  // example. It is 'disturbing' to not initially see the full timer duration on
-  // starting.
+  // TODO 20240329 gjw Introduce a duration selection for 20, 30, 40 minutes
+  // instead of this hard coded choice.
 
-  final _duration = 20 * 60; // + 1;
+  final _duration = 20 * 60;
 
-  // For testing use a short duration.
+  // For the guided session we play the dong after a delay to match the
+  // audio. For non-guided sessions we dong immediately at the termination of the
+  // countdown timer.
 
-  // final _duration = 41;
+  var _isGuided = false;
+
+  // The intro is always the AI intro now.
+
+  // DETERMINED DYNAMICALLY final _introTime = 18;
+
+  // The guided version is either AI or JM. Let's assume JM for now. New issue
+  // to slplit JM into introInstructions, IntroMusic, outroMuisc. Then
+  // dynamically determin lengths, and use that here
+
+  // The developing AI session has the following intro time and no outro at
+  // present. The intro time is the time to wait until the dings in the audio
+  // occur.
+
+  // final _guidedIntro = 60 + 25;
+  // final _guidedOutro = 0;
+
+  // The current full JM session has the following intro and outro timing.
+
+  final _guidedIntroTime = 4 * 60 + 45; //JM
+  final _guidedOutroTime = 5 * 60 + 25; //JM
 
   // Set the style for the text of the buttons.
 
@@ -72,35 +95,121 @@ class Timer extends StatelessWidget {
   // The sound to be played at the beginning and end of a session, being a
   // [Source] from audioplayers.
 
-  final _instruct = AssetSource('sounds/intro.ogg');
   final _dong = AssetSource('sounds/dong.ogg');
-  final _guide = AssetSource('sounds/session.ogg');
+  final _introAudio = AssetSource('sounds/intro.ogg');
+  final _guidedAudio = AssetSource('sounds/session.ogg');
 
-  var _isGuided = false;
+  var _audioDuration = Duration.zero;
 
   // We encapsulate the playing of the dong into its own function because of the
   // need for it to be async through the await.
 
-  Future<void> _intro() async {
-    await _player.play(_instruct);
-  }
-
   Future<void> _dingDong() async {
+    // Always stop the player first in case there is some other audio still
+    // playing.
+    await _player.stop();
     await _player.play(_dong);
   }
 
-  Future<void> _guided() async {
-    _isGuided = true;
-    //_controller.restart();
-    //_controller.pause();
+  Future<void> _intro() async {
+    // The audio is played and then we begin the session.
+
+    // Add a listener for a change in the duration of the playing audio
+    // file. When the audio is loaded from file then take note of the duration
+    // of the audio.
+
+    _player.onDurationChanged.listen((d) {
+      _audioDuration = d;
+      print('INTRO: insider duration=$_audioDuration');
+    });
+
+    // Not yet working. The first time this is 0!
+
+    print('INTRO: outsider duration: $_audioDuration');
+
+    // We want the dongs at the end of the session because unlike the current
+    // guided audio the intro audio does not contain its own dongs. This will
+    // change eventually when the different sections of the guided audio will be
+    // orchestrted in the code rather than a single session file.
+
+    _isGuided = false;
+
+    // Make sure we are ready for a session and the duration is shown.
+
+    _controller.restart();
+    _controller.pause();
+
+    // Good to wait a second before starting the audio after tapping the button,
+    // otherwise it feels rushed.
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    // Make sure there is no other audio playing just now and then start the
+    // intro audio.
+
     await _player.stop();
-    await _player.play(_guide);
-    //sleep(const Duration(seconds: 275));
-    //sleep(const Duration(seconds: 10));
-    //_controller.restart();
-    //_controller.pause();
-    //_controller.resume();
+    await _player.play(_introAudio);
+
+    print('INTRO: latest duration: $_audioDuration');
+
+    // Wait now while the intro audio is played before the dong when the timer
+    // then actually starts.
+
+    //await Future.delayed(Duration(seconds: _introTime));
+    await Future.delayed(_audioDuration);
+
+    // Good to wait another 1 second here before the dings after the
+    // introduction audio, otherwise it feels rushed.
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    // Turn off device sleeping. I.e., lock the device into being awake.
+
     await WakelockPlus.enable();
+
+    await _dingDong();
+    _controller.restart();
+  }
+
+  Future<void> _guided() async {
+    // TODO 20240329 gjw This is a demo of getting the audio duration.
+
+    _player.onDurationChanged.listen((d) {
+      _audioDuration = d;
+      print('GUIDED: insider duration: $_audioDuration');
+    });
+
+    print('GUIDED: outsider duration: $_audioDuration');
+
+    _isGuided = true;
+
+    // Good to wait a second before starting the audio after tapping the button,
+    // otherwise it feels rushed.
+
+    await Future.delayed(const Duration(seconds: 1));
+
+    // Ensure any playing sudio is stopped.
+
+    await _player.stop();
+    await _player.play(_guidedAudio);
+
+    print('GUIDED: latest duration: $_audioDuration');
+
+    // Always reset (by doing a restart and then pause) any current timer
+    // session.
+
+    _controller.restart();
+    _controller.pause();
+
+    // Turn off device sleeping.
+
+    await WakelockPlus.enable();
+
+    // Wait for the intro of the guided session to complete.
+
+    await Future.delayed(Duration(seconds: _guidedIntroTime));
+
+    _controller.restart();
   }
 
   @override
@@ -172,7 +281,7 @@ class Timer extends StatelessWidget {
           _controller.restart();
           _controller.pause();
           _player.stop();
-          WakelockPlus.enable();
+          WakelockPlus.disable();
         },
         child: const Text('Reset'),
       ),
@@ -210,7 +319,7 @@ class Timer extends StatelessWidget {
     // const spin1 = Color(0xFFFFB31A);
     // const spin2 = Color(0xFFB08261);
 
-    final spin1 = Colors.blueAccent.shade100;
+    const spin1 = Colors.white;
     final spin2 = Colors.blueAccent.shade700;
 
     return Padding(
@@ -218,32 +327,37 @@ class Timer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          NeonCircularTimer(
+          CircularCountDownTimer(
             width: 250,
+            height: 250,
             duration: _duration,
             controller: _controller,
             autoStart: false,
-            // backgroudColor: Colors.blueGrey.shade600,
-            backgroudColor: background,
+            backgroundColor: background,
+            ringColor: spin1,
+            fillColor: spin2,
+            strokeWidth: 10.0,
             textStyle: const TextStyle(
               color: text,
               fontSize: 55,
             ),
             onComplete: () {
-              if (!_isGuided) {
+              if (_isGuided) {
+                // TODO 20240329 gjw It would be better to check if the audio
+                // has finished then wait for it to do so, and once finished to
+                // then proceed.
+                sleep(Duration(seconds: _guidedOutroTime));
+              } else {
                 _dingDong();
               }
+              // Reset the timer so we see 20:00.
+              _controller.restart();
+              _controller.pause();
+              // Allow the device to sleep.
               WakelockPlus.disable();
             },
             isReverse: true,
             isReverseAnimation: true,
-            innerFillGradient: LinearGradient(
-              colors: [spin1, spin2],
-            ),
-            neonGradient: LinearGradient(
-              colors: [spin1, spin2],
-            ),
-            // initialDuration: 5, // THIS IS THE TIME ALREADY COMPLETED
           ),
           _heightSpacer,
           _heightSpacer,

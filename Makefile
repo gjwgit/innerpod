@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-03-20 11:53:30 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-03-27 15:41:23 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -60,8 +60,9 @@ $(APP):
   solidcommunity	Install to https://$(APP).solidcommunity.au
   wc                    Count the number of lines of code.
 
-  newaudio		Experimenting with full session audio
-  gjaudio		GJ basic intro audio
+  newaudio		AI intro and JM session
+  gjaudio		GJ basic intro and session
+  aiaudio		AI generated intro and session
 
 endef
 export HELP
