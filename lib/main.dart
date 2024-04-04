@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Thursday 2024-04-04 20:38:20 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-04-04 20:44:20 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -85,14 +85,18 @@ class InnerPod extends StatelessWidget {
             icon: const Icon(Icons.info),
             onPressed: () async {
               final appNameVersion = await getAppNameVersion();
+
               // Note the use of the conditional with `context.mounted` to avoid
               // the "Don't use 'BuildContext's across async gaps" warning.
+
               if (context.mounted) {
                 showAboutDialog(
                   context: context,
+
                   // Note the `.toString()` is used to avoid the warning about
                   // "The argument type 'dynamic' can't be assigned to the
                   // parameter type 'String'"
+
                   applicationName: appNameVersion[0].toString(),
                   applicationVersion: appNameVersion[1].toString(),
                   applicationIcon: const ImageIcon(
