@@ -4,7 +4,7 @@ about: A task for the Kanban
 title: ''
 labels: ''
 assignees: ''
-projects: 'Gurriny'
+projects: 'InnerPod'
 status: 'New'
 
 ---
@@ -20,7 +20,7 @@ it will add to the project.
 
 ## Closing Criteria
 
-Clearly identify when the task can be closed.
+- [ ] Clearly identify when the task can be closed.
 
 ## Details
 
