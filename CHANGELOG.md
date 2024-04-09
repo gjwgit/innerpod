@@ -1,16 +1,25 @@
-# 1.4
+# InnerPod Changelog
 
-+ Replace neon countdown timer with plain timer - works better.
+Recorded here are the high level changes for the InnerPod app.
 
-# 1.3 2024-03-20 12:22
+Instructions: Add the updates beyond, for example, 0.6.0 under the 0.7
+heading, adding to the top of the list, and recording minor version
+numbers.
+
+## 1.4
+
++ Restructure code [1.4.1]
++ Replace neon countdown timer with plain timer - works better. [1.4.0]
+
+## 1.3
 
 + Update audio to AI generated.
 
-# 1.2 2024-02-03 20:13
+## 1.2
 
 + Skip SolidLogin for now.
 
-# 1.1 2024-02-03 14:04
+## 1.1
 
 + The package solid has been renamed to solidpod.
 + Add GUIDED and RESET buttons.
@@ -22,7 +31,7 @@
 + Add Intro to introduce how to meditate.
 + Rename buttons: Intro, Start, Pause, Resume.
 
-# 0.0 2024-01-24 11:08
+## 0.0
 
 + Add Start and Stop buttons.
 + Do not start on app load.
