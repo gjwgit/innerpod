@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: 'none'
-version: 1.4.0+34
+version: 1.4.1+34
 
 environment:
   sdk: '>=3.2.5 <4.0.0'
@@ -12,6 +12,7 @@ dependencies:
   audioplayers: ^5.2.1
   cupertino_icons: ^1.0.2
   circular_countdown_timer: ^0.2.3
+  intl: 
   solidpod:
     path: solidpod
   wakelock_plus: ^1.1.4
