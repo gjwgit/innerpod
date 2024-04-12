@@ -17,6 +17,9 @@ dependencies:
     path: solidpod
   wakelock_plus: ^1.1.4
 
+dependency_overrides:
+  intl: ^0.19.0  # Eventually remove. Through solidpod, solid-auth depends on intl-0.19.0
+  
 dev_dependencies:
   # dart_code_metrics:
   #   git:
