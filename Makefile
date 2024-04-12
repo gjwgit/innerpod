@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-03-27 15:41:23 +1100 Graham Williams>
+# Time-stamp: <Saturday 2024-04-13 08:34:44 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -118,3 +118,7 @@ aiaudio:
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
 	cp ignore/session_elevenlabs_emily.ogg assets/sounds/session.ogg
 
+
+apk:
+	flutter build apk
+	cp build/app/outputs/flutter-apk/app-release.apk installers/innerpod.apk
