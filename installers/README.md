@@ -31,3 +31,8 @@ Also, your Web browser will provide an option in its menus to install
 the app locally, which can add an icon to your home screen to start
 the web-based app directly.
 
+## Windows Installer
+
+Download and run the `innerpod.exe` to self install the app on
+Windows.
+
