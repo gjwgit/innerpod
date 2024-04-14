@@ -282,7 +282,7 @@ $(APP)-$(VER)-linux-x86_64.tar.gz:
 	rm -rf build/linux/x64/release
 	flutter build linux
 	tar --transform 's|^build/linux/x64/release/bundle|$(APP)|' -czvf $@ build/linux/x64/release/bundle
-	mv $@ installers/
+	mv $@ installers/$(APP).tar.gz
 
 
 realclean::
