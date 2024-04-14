@@ -53,7 +53,8 @@ flutter:
   desktops  Set up for all desktop platforms (linux, windows, macos)
 
   distributions
-    targz   Builds $(APP)-$(VER)-linux-x86_64.tar.gz
+    apk	    Builds installers/$(APP).apk
+    targz   Builds installers/$(APP).tar.gz
 
 Also supported:
 
@@ -283,6 +284,10 @@ $(APP)-$(VER)-linux-x86_64.tar.gz:
 	flutter build linux
 	tar --transform 's|^build/linux/x64/release/bundle|$(APP)|' -czvf $@ build/linux/x64/release/bundle
 	mv $@ installers/$(APP).tar.gz
+
+apk:
+	flutter build apk
+	cp build/app/outputs/flutter-apk/app-release.apk installers/innerpod.apk
 
 
 realclean::
