@@ -27,6 +27,7 @@ flutter:
   qlinux    Run with the linux device and debugPrint() turned off;
 
   prep      Prep for PR by running tests, checks, docs.
+  push      Do a git push and bump the build number if there is one.
 
   docs	    Run `dart doc` to create documentation.
 
@@ -55,6 +56,8 @@ flutter:
   distributions
     apk	    Builds installers/$(APP).apk
     targz   Builds installers/$(APP).tar.gz
+
+  publish   Publish a package to pub.dev
 
 Also supported:
 
@@ -287,7 +290,7 @@ $(APP)-$(VER)-linux-x86_64.tar.gz:
 
 apk:
 	flutter build apk
-	cp build/app/outputs/flutter-apk/app-release.apk installers/innerpod.apk
+	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
 
 
 realclean::
@@ -297,7 +300,9 @@ realclean::
 # For the `dev` branch only, update the version sequence number prior
 # to a push (relies on the git.mk being loaded after this
 # flutter.mk). This is only undertaken through `make push` rather than
-# a `git push` in any other way.
+# a `git push` in any other way. If
+# the pubspec.yaml is not using a build number then do not push to bump
+# the build number.
 
 VERSEQ=$(shell grep '^version: ' pubspec.yaml | cut -d'+' -f2 | awk '{print $$1+1}')
 
@@ -306,5 +311,10 @@ BRANCH := $(shell git branch --show-current)
 ifeq ($(BRANCH),dev)
 push::
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
+	-egrep '^version: .*\+.*' pubspec.yaml && \
 	git commit -m "Bump sequence $(VERSEQ)" pubspec.yaml
 endif
+
+.PHONY: publish
+publish:
+	dart pub publish
