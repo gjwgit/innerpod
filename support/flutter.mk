@@ -55,7 +55,7 @@ flutter:
 
   distributions
     apk	    Builds installers/$(APP).apk
-    targz   Builds installers/$(APP).tar.gz
+    tgz     Builds installers/$(APP).tar.gz
 
   publish   Publish a package to pub.dev
 
@@ -279,19 +279,22 @@ coview:
 realclean::
 	rm -rf coverage
 
-targz: $(APP)-$(VER)-linux-x86_64.tar.gz
+# Crate an installer for Linux as a tar.gz archive.
+
+tgz: $(APP)-$(VER)-linux-x86_64.tar.gz
 
 $(APP)-$(VER)-linux-x86_64.tar.gz:
 	mkdir -p installers
 	rm -rf build/linux/x64/release
-	flutter build linux
+	flutter build linux --release
 	tar --transform 's|^build/linux/x64/release/bundle|$(APP)|' -czvf $@ build/linux/x64/release/bundle
+	cp $@ installers/
 	mv $@ installers/$(APP).tar.gz
 
 apk:
-	flutter build apk
+	flutter build apk --release
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
-
+	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
 
 realclean::
 	flutter clean
