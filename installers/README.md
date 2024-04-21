@@ -3,7 +3,8 @@
 Flutter supports multiple platform targets and the app will run native
 on Android, iOS, Linux, MacOS, and Windows, as well as directly in a
 browser from the web. The functionality is identical across all
-platforms.
+platforms. The latest version is simply identify as `innerpod` below,
+and corresponds to the latest versioned release in the same folder.
 
 ## Android Side Load
 
