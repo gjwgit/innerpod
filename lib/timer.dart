@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-03-31 20:44:42 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-04-30 14:31:34 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,9 +31,15 @@ import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:intl/intl.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants.dart';
+
+void _logit(String msg) {
+  final ts = DateTime.now();
+  debugPrint('LOG TO POD: ${DateFormat("yMMddTHHmmss").format(ts)} $msg');
+}
 
 /// A countdown timer widget with buttons for the home page.
 
@@ -114,18 +120,20 @@ class Timer extends StatelessWidget {
   Future<void> _intro() async {
     // The audio is played and then we begin the session.
 
+    _logit('Start Intro');
+
     // Add a listener for a change in the duration of the playing audio
     // file. When the audio is loaded from file then take note of the duration
     // of the audio.
 
     _player.onDurationChanged.listen((d) {
       _audioDuration = d;
-      print('INTRO: insider duration=$_audioDuration');
+      debugPrint('INTRO: insider duration=$_audioDuration');
     });
 
     // Not yet working. The first time this is 0!
 
-    print('INTRO: outsider duration: $_audioDuration');
+    debugPrint('INTRO: outsider duration: $_audioDuration');
 
     // We want the dongs at the end of the session because unlike the current
     // guided audio the intro audio does not contain its own dongs. This will
@@ -150,7 +158,7 @@ class Timer extends StatelessWidget {
     await _player.stop();
     await _player.play(_introAudio);
 
-    print('INTRO: latest duration: $_audioDuration');
+    debugPrint('INTRO: latest duration: $_audioDuration');
 
     // Wait now while the intro audio is played before the dong when the timer
     // then actually starts.
@@ -167,19 +175,23 @@ class Timer extends StatelessWidget {
 
     await WakelockPlus.enable();
 
+    _logit('Start Intro Session');
+
     await _dingDong();
     _controller.restart();
   }
 
   Future<void> _guided() async {
+    _logit('Start Guided');
+
     // TODO 20240329 gjw This is a demo of getting the audio duration.
 
     _player.onDurationChanged.listen((d) {
       _audioDuration = d;
-      print('GUIDED: insider duration: $_audioDuration');
+      debugPrint('GUIDED: insider duration: $_audioDuration');
     });
 
-    print('GUIDED: outsider duration: $_audioDuration');
+    debugPrint('GUIDED: outsider duration: $_audioDuration');
 
     _isGuided = true;
 
@@ -193,7 +205,7 @@ class Timer extends StatelessWidget {
     await _player.stop();
     await _player.play(_guidedAudio);
 
-    print('GUIDED: latest duration: $_audioDuration');
+    debugPrint('GUIDED: latest duration: $_audioDuration');
 
     // Always reset (by doing a restart and then pause) any current timer
     // session.
@@ -233,6 +245,7 @@ class Timer extends StatelessWidget {
           _dingDong();
           _controller.restart();
           WakelockPlus.enable();
+          _logit('Start Session');
         },
         child: const Text('Start'),
       ),
