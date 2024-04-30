@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Friday 2024-04-05 09:22:52 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-04-30 13:36:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -78,8 +78,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   // "The argument type 'dynamic' can't be assigned to the
                   // parameter type 'String'"
 
-                  applicationName: appNameVersion[0].toString(),
-                  applicationVersion: appNameVersion[1].toString(),
+                  applicationName: appNameVersion.name,
+                  applicationVersion: appNameVersion.version,
                   applicationIcon: const ImageIcon(
                       AssetImage('assets/images/inner_icon.png')),
                   children: [
