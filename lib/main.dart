@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Monday 2024-04-22 15:35:48 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-05-11 16:25:35 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,10 +40,7 @@ void main() {
   // MaterialLocalizations is found when firing off the showAboutDialog.
 
   runApp(
-    const MaterialApp(
-        title: 'Inner Pod',
-        debugShowCheckedModeBanner: false,
-        home: InnerPod()),
+    const MaterialApp(title: 'Inner Pod', home: InnerPod()),
   );
 }
 
@@ -58,32 +55,21 @@ class InnerPod extends StatelessWidget {
   Widget build(BuildContext context) {
     // Wrap the actual home widget within a SolidLogin. Our app has
     // functionality that does not require access to Pod data (a session
-    // timer). If the user does connect to their Pod then the session
-    // information will be saved. Eventually we will have a Save Session and
-    // View History functionality that will then prompt to login to the POD at
-    // that time.
+    // timer). If the user connects to their Pod then the session information
+    // will be saved. Eventually we will have a Save Session and View History
+    // functionality that will then prompt to login to the POD at that time.
 
-    // TODO 20240204 gjw NOT USING SolidLogin() FOR NOW.
-
-    // return const SolidLogin(
-    //   title: 'MANAGE YOUR INNER POD',
-    //   requireLogin: false,
-    //   image: AssetImage('assets/images/inner_image.jpg'),
-    //   logo: AssetImage('assets/images/inner_icon.png'),
-    //   continueText: 'SESSION',
-    //   registerText: 'REGISTER',
-    //   link: 'https://github.com/gjwgit/innerpod/blob/main/README.md',
-    //   child: _InnerPodScaffold(),
-    // );
-
-    return SolidLogin(
+    return const SolidLogin(
       title: 'MANAGE YOUR INNER POD',
       required: false,
-      image: const AssetImage('assets/images/inner_image.jpg'),
-      logo: const AssetImage('assets/images/inner_icon.png'),
-      continueButtonStyle: const ContinueButtonStyle(
-        text: 'SESSION',
+      image: AssetImage('assets/images/inner_image.jpg'),
+      logo: AssetImage('assets/images/inner_icon.png'),
+      continueButtonStyle: ContinueButtonStyle(
+        text: 'Session',
         background: Colors.lightGreenAccent,
+      ),
+      infoButtonStyle: InfoButtonStyle(
+        tooltip: 'Browse to the InnerPod home page.',
       ),
       // registerButtonStyle: registerButtonStyle(
       //   text: 'REG',
