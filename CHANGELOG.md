@@ -8,6 +8,7 @@ numbers.
 
 ## 1.4
 
++ Add Text page. [1.4.2]
 + Restructure code [1.4.1]
 + Replace neon countdown timer with plain timer - works better. [1.4.0]
 + Restore SolidLogin() in prep for saving session data.
