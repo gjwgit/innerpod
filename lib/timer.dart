@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-05-11 21:15:58 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-05-11 21:24:43 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -46,16 +46,14 @@ void _logit(String msg) {
 // TODO 20240203 gjw THIS NEEDS TO BE A STATEFULL WIDGET SINCE IT TRACKS WHETHER
 // GUIDED IS CHOSEN AND SO NOT TO DO THE FINAL DING.
 
-// class Timer extends StatelessWidget {
 class Timer extends StatefulWidget {
+  const Timer({Key? key}) : super(key: key);
+
+  @override
   _TimerState createState() => _TimerState();
 }
 
 class _TimerState extends State<Timer> {
-  // Initialise the timer.
-
-  //Timer({super.key});
-
   final _controller = CountDownController();
   final _player = AudioPlayer();
 
