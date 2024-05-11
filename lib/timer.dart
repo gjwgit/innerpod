@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-05-11 21:27:44 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-05-11 21:29:24 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -433,7 +433,7 @@ class _TimerState extends State<Timer> {
             ],
           ),
           // const Text('a'),
-          const SizedBox(height: 20),
+          _heightSpacer,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
