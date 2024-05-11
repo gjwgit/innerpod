@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Tuesday 2024-04-30 13:36:41 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-05-11 19:26:26 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,10 +27,10 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
 
 import 'package:innerpod/constants.dart';
+import 'package:innerpod/instructions.dart';
 import 'package:innerpod/timer.dart';
 
 /// A widget for the actuall app's main home page.
@@ -52,9 +52,26 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.initState();
   }
 
+  // Track which item is selected in the nav bar.
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _pages = <Widget>[
+    Timer(),
+    instructions,
+    // const Icon(Icons.camera, size: 150),
+    const Icon(Icons.chat, size: 150),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
+    // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     return Scaffold(
       backgroundColor: background,
@@ -104,13 +121,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ],
       ),
-      body: Center(child: Timer()),
+      body: Center(child: _pages.elementAt(_selectedIndex)), //Timer()),
       // 20240311 TODO gjw Remove for now for initial release.
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: border,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
+            icon: Icon(Icons.home), //, color: Colors.black),
             label: 'Home',
           ),
           BottomNavigationBarItem(
@@ -122,6 +139,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             label: 'History',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
