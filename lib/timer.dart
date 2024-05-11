@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-05-11 21:24:43 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-05-11 21:27:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -54,6 +54,8 @@ class Timer extends StatefulWidget {
 }
 
 class _TimerState extends State<Timer> {
+  //
+
   final _controller = CountDownController();
   final _player = AudioPlayer();
 
