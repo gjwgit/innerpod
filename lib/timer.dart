@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Tuesday 2024-04-30 14:31:34 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-05-11 21:15:58 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -46,10 +46,15 @@ void _logit(String msg) {
 // TODO 20240203 gjw THIS NEEDS TO BE A STATEFULL WIDGET SINCE IT TRACKS WHETHER
 // GUIDED IS CHOSEN AND SO NOT TO DO THE FINAL DING.
 
-class Timer extends StatelessWidget {
-  /// Initialise the timer.
+// class Timer extends StatelessWidget {
+class Timer extends StatefulWidget {
+  _TimerState createState() => _TimerState();
+}
 
-  Timer({super.key});
+class _TimerState extends State<Timer> {
+  // Initialise the timer.
+
+  //Timer({super.key});
 
   final _controller = CountDownController();
   final _player = AudioPlayer();
@@ -57,7 +62,7 @@ class Timer extends StatelessWidget {
   // TODO 20240329 gjw Introduce a duration selection for 20, 30, 40 minutes
   // instead of this hard coded choice.
 
-  final _duration = 20 * 60;
+  var _duration = 20 * 60;
 
   // For the guided session we play the dong after a delay to match the
   // audio. For non-guided sessions we dong immediately at the termination of the
@@ -208,9 +213,11 @@ class Timer extends StatelessWidget {
     debugPrint('GUIDED: latest duration: $_audioDuration');
 
     // Always reset (by doing a restart and then pause) any current timer
-    // session.
+    // session. For now with the fixed whole session audio, it includes a 20
+    // minute session so we make sure that is the case here
 
-    _controller.restart();
+    _duration = 20 * 60;
+    _controller.restart(duration: _duration);
     _controller.pause();
 
     // Turn off device sleeping.
@@ -324,7 +331,32 @@ class Timer extends StatelessWidget {
       ),
     );
 
-    // Choose colours for the internal background of the timer and the gradient
+    final Widget durationChoice = Wrap(
+      spacing: 8.0, // Gap between adjacent chips.
+      runSpacing: 4.0, // Gap between lines.
+      children: [10, 15, 20, 30].map((number) {
+        return ChoiceChip(
+          label: Text(number.toString()),
+          selected: _duration == number * 60,
+          selectedColor: Colors.lightGreenAccent,
+          showCheckmark: false, // This will hide the tick mark.
+          onSelected: (selected) {
+            setState(() {
+              if (selected) {
+                _duration = number * 60;
+                debugPrint('Reset duration to $_duration');
+                _controller.restart(duration: _duration);
+                _controller.pause();
+                _player.stop();
+                WakelockPlus.disable();
+              }
+            });
+          },
+        );
+      }).toList(),
+    );
+
+// Choose colours for the internal background of the timer and the gradient
     // of the timer neon.
 
     const text = Colors.black;
@@ -398,6 +430,18 @@ class Timer extends StatelessWidget {
               guidedButton,
               _widthSpacer,
               resetButton,
+            ],
+          ),
+          // const Text('a'),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Minutes:    ',
+                style: TextStyle(fontSize: 20.0, color: Colors.grey),
+              ),
+              durationChoice,
             ],
           ),
         ],
