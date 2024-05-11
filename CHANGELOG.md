@@ -6,11 +6,16 @@ Instructions: Add the updates beyond, for example, 0.6.0 under the 0.7
 heading, adding to the top of the list, and recording minor version
 numbers.
 
+## 1.5 Future
+
++ Add session length chooser [1.4.3]
++ Add Text page [1.4.2]
++ Restructure code [1.4.1]
++ Replace neon countdown timer with plain timer - works
+  better. [1.4.0]
+  
 ## 1.4
 
-+ Add Text page. [1.4.2]
-+ Restructure code [1.4.1]
-+ Replace neon countdown timer with plain timer - works better. [1.4.0]
 + Restore SolidLogin() in prep for saving session data.
 
 ## 1.3
