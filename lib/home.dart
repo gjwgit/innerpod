@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Saturday 2024-05-11 19:26:26 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-05-17 15:09:57 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -63,7 +63,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   final List<Widget> _pages = <Widget>[
-    Timer(),
+    const Timer(),
     instructions,
     // const Icon(Icons.camera, size: 150),
     const Icon(Icons.chat, size: 150),
@@ -82,7 +82,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           IconButton(
             icon: const Icon(Icons.info),
             onPressed: () async {
-              final appNameVersion = await getAppNameVersion();
+              final appInfo = await getAppNameVersion();
+              final appName = appInfo.name;
 
               // Note the use of the conditional with `context.mounted` to avoid
               // the "Don't use 'BuildContext's across async gaps" warning.
@@ -90,13 +91,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               if (context.mounted) {
                 showAboutDialog(
                   context: context,
-
-                  // Note the `.toString()` is used to avoid the warning about
-                  // "The argument type 'dynamic' can't be assigned to the
-                  // parameter type 'String'"
-
-                  applicationName: appNameVersion.name,
-                  applicationVersion: appNameVersion.version,
+                  applicationLegalese: '© 2024 Togaware',
+                  applicationName:
+                      '${appName[0].toUpperCase()}${appName.substring(1)}',
+                  applicationVersion: appInfo.version,
                   applicationIcon: const ImageIcon(
                       AssetImage('assets/images/inner_icon.png')),
                   children: [
