@@ -6,7 +6,7 @@ Instructions: Add the updates beyond, for example, 0.6.0 under the 0.7
 heading, adding to the top of the list, and recording minor version
 numbers.
 
-## 1.5 Future
+## 1.5.0 20240517
 
 + Add session length chooser [1.4.3]
 + Add Text page [1.4.2]
