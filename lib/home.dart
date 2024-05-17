@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Friday 2024-05-17 15:09:57 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-05-17 15:19:19 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -98,7 +98,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   applicationIcon: const ImageIcon(
                       AssetImage('assets/images/inner_icon.png')),
                   children: [
-                    const SelectableText('A session timer with logging.\n\n'
+                    const SelectableText('\nA meditation timer.\n\n'
                         'Inner Pod is an app for timing sessions and storing'
                         ' sessions to your Pod. A session can be anything though'
                         ' the app is commonly used for contemplative'
