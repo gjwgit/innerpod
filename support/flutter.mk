@@ -296,6 +296,9 @@ apk:
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
 
+appbundle:
+	flutter build appbundle --release
+
 realclean::
 	flutter clean
 	flutter pub get
