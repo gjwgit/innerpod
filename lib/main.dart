@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Saturday 2024-05-11 16:25:35 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-05-17 15:17:59 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -53,29 +53,35 @@ class InnerPod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // EITHER
+
     // Wrap the actual home widget within a SolidLogin. Our app has
     // functionality that does not require access to Pod data (a session
     // timer). If the user connects to their Pod then the session information
     // will be saved. Eventually we will have a Save Session and View History
     // functionality that will then prompt to login to the POD at that time.
 
-    return const SolidLogin(
-      title: 'MANAGE YOUR INNER POD',
-      required: false,
-      image: AssetImage('assets/images/inner_image.jpg'),
-      logo: AssetImage('assets/images/inner_icon.png'),
-      continueButtonStyle: ContinueButtonStyle(
-        text: 'Session',
-        background: Colors.lightGreenAccent,
-      ),
-      infoButtonStyle: InfoButtonStyle(
-        tooltip: 'Browse to the InnerPod home page.',
-      ),
-      // registerButtonStyle: registerButtonStyle(
-      //   text: 'REG',
-      // ),
-      link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
-      child: Home(),
-    );
+    // return const SolidLogin(
+    //   title: 'MANAGE YOUR INNER POD',
+    //   required: false,
+    //   image: AssetImage('assets/images/inner_image.jpg'),
+    //   logo: AssetImage('assets/images/inner_icon.png'),
+    //   continueButtonStyle: ContinueButtonStyle(
+    //     text: 'Session',
+    //     background: Colors.lightGreenAccent,
+    //   ),
+    //   infoButtonStyle: InfoButtonStyle(
+    //     tooltip: 'Browse to the InnerPod home page.',
+    //   ),
+    //   // registerButtonStyle: registerButtonStyle(
+    //   //   text: 'REG',
+    //   // ),
+    //   link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
+    //   child: Home(),
+    // );
+
+    // OR
+
+    return const Home();
   }
 }
