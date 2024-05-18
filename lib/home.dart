@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Friday 2024-05-17 15:19:19 +1000 Graham Williams>
+// Time-stamp: <Saturday 2024-05-18 10:56:07 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -64,8 +64,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   final List<Widget> _pages = <Widget>[
     const Timer(),
-    instructions,
-    // const Icon(Icons.camera, size: 150),
+    const Instructions(),
     const Icon(Icons.chat, size: 150),
   ];
 
