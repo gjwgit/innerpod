@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-05-22 14:41:29 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-05-22 15:09:10 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -99,7 +99,9 @@ aiaudio:
 apk::
 	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
 	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
+	ssh solidcommunity.au chmod go=x /var/www/html/installers/
 
 tgz::
 	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
 	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
+	ssh solidcommunity.au chmod go=x /var/www/html/installers/
