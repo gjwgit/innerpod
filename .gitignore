@@ -2,6 +2,7 @@
 
 solidpod
 ignore
+installers/innerpod-*
 *~
 !lib
 
