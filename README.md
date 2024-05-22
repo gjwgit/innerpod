@@ -1,5 +1,15 @@
 # InnerPod
 
+**A Togaware app using Solid Pods**
+
+*Author: Graham Williams*
+
+*[Togaware](https://togaware.com.au)*
+
+*License: GNU GPL V3*
+
+## Introduction
+
 InnerPod is a session timer with sessions optionally logged to your
 [Solid Pod](https://solidproject.org/about). A session can be anything
 though the app is commonly used for silent meditation.
