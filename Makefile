@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2024-04-14 20:51:03 +1000 Graham Williams>
+# Time-stamp: <Wednesday 2024-05-22 14:41:29 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -57,9 +57,6 @@ endif
 define HELP
 $(APP):
 
-  solidcommunity	Install to https://$(APP).solidcommunity.au
-  wc                    Count the number of lines of code.
-
   newaudio		AI intro and JM session
   gjaudio		GJ basic intro and session
   aiaudio		AI generated intro and session
@@ -80,28 +77,9 @@ locals:
 docs::
 	rsync -avzh doc/api/ root@solidcommunity.au:/var/www/html/docs/$(APP)/
 
-.PHONY: versions
-versions:
-	perl -pi -e 's|applicationVersion = ".*";|applicationVersion = "$(VER)";|' \
-	lib/constants/app.dart
-
-.PHONY: wc
-wc:
-	@cat lib/*.dart lib/*/*.dart lib/*/*/*.dart \
-	| egrep -v '^/' \
-	| egrep -v '^ *$$' \
-	| wc -l
-
 #
 # Manage the production install on the remote server.
 #
-
-.PHONY: solidcommunity
-solidcommunity:
-	rsync -avzh ./ solidcommunity.au:projects/$(APP)/ \
-	--exclude .dart_tool --exclude build --exclude ios --exclude macos \
-	--exclude linux --exclude windows --exclude android
-	ssh solidcommunity.au '(cd projects/$(APP); flutter upgrade; make prod)'
 
 clean::
 	rm -f README.html
@@ -117,3 +95,11 @@ gjaudio:
 aiaudio:
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
 	cp ignore/session_elevenlabs_emily.ogg assets/sounds/session.ogg
+
+apk::
+	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
+	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
+
+tgz::
+	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
+	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/

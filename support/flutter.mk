@@ -281,7 +281,7 @@ realclean::
 
 # Crate an installer for Linux as a tar.gz archive.
 
-tgz: $(APP)-$(VER)-linux-x86_64.tar.gz
+tgz:: $(APP)-$(VER)-linux-x86_64.tar.gz
 
 $(APP)-$(VER)-linux-x86_64.tar.gz:
 	mkdir -p installers
@@ -291,7 +291,7 @@ $(APP)-$(VER)-linux-x86_64.tar.gz:
 	cp $@ installers/
 	mv $@ installers/$(APP).tar.gz
 
-apk:
+apk::
 	flutter build apk --release
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
@@ -324,3 +324,33 @@ endif
 .PHONY: publish
 publish:
 	dart pub publish
+
+### TODO THESE SHOULD BE CHECKED AND CLEANED UP
+
+
+.PHONY: docs
+docs::
+	rsync -avzh doc/api/ root@solidcommunity.au:/var/www/html/docs/$(APP)/
+
+.PHONY: versions
+versions:
+	perl -pi -e 's|applicationVersion = ".*";|applicationVersion = "$(VER)";|' \
+	lib/constants/app.dart
+
+.PHONY: wc
+wc: lib/*.dart
+	@cat lib/*.dart lib/*/*.dart lib/*/*/*.dart \
+	| egrep -v '^/' \
+	| egrep -v '^ *$$' \
+	| wc -l
+
+#
+# Manage the production install on the remote server.
+#
+
+.PHONY: solidcommunity
+solidcommunity:
+	rsync -avzh ./ solidcommunity.au:projects/$(APP)/ \
+	--exclude .dart_tool --exclude build --exclude ios --exclude macos \
+	--exclude linux --exclude windows --exclude android
+	ssh solidcommunity.au '(cd projects/$(APP); flutter upgrade; make prod)'
