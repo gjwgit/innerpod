@@ -2,7 +2,8 @@
 
 Flutter supports multiple platform targets and Flutter based apps will
 run native on Android, iOS, Linux, MacOS, and Windows, as well as
-directly in a browser from the web.
+directly in a browser from the web. The functionality is identical across all
+platforms.
 
 ## Android Side Load
 
