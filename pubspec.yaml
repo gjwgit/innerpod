@@ -12,7 +12,7 @@ dependencies:
   audioplayers: ^5.2.1
   cupertino_icons: ^1.0.2
   circular_countdown_timer: ^0.2.3
-  flutter_markdown: ^0.6.17
+  flutter_markdown: ^0.6.18
   intl: 
   solidpod:
     path: solidpod
