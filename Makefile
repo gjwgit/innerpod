@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-05-22 15:09:10 +1000 Graham Williams>
+# Time-stamp: <Saturday 2024-06-15 10:45:23 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -31,6 +31,7 @@ DEST=/var/www/html/$(APP)
 # Often the support Makefiles will be in the local support folder, or
 # else installed in the local user's shares.
 
+INC_BASE=$(HOME)/.local/share/make
 INC_BASE=support
 
 # Specific Makefiles will be loaded if they are found in
@@ -40,6 +41,7 @@ INC_BASE=support
 
 INC_DOCKER=skip
 INC_MLHUB=skip
+INC_WEBCAM=skip
 
 # Load any modules available.
 
@@ -60,6 +62,9 @@ $(APP):
   newaudio		AI intro and JM session
   gjaudio		GJ basic intro and session
   aiaudio		AI generated intro and session
+
+  local	     Install to $(HOME)/.local/share/$(APP)
+  tgz	     Upload the installer to access.togaware.com
 
 endef
 export HELP
@@ -105,3 +110,9 @@ tgz::
 	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
 	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
 	ssh solidcommunity.au chmod go=x /var/www/html/installers/
+
+# Install locally for linux.
+
+local: tgz
+	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
+
