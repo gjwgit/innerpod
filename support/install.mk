@@ -2,7 +2,7 @@
 #
 # Makefile template for Installations
 #
-# Time-stamp: <Thursday 2023-11-23 17:16:47 +1100 >
+# Time-stamp: <Wednesday 2024-03-20 12:10:51 +1100 >
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -42,11 +42,11 @@ help::
 
 install: $(USER).install
 
-ifeq ($(BRANCH),main)
+#ifeq ($(BRANCH),main)
 prod: $(APP).install
-else
-prod: $(USER).install
-endif
+#else
+#prod: $(USER).install
+#endif
 
 %.install:
 	cp web/index.html web/index.html.bak
