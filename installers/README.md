@@ -45,14 +45,19 @@ sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/innerpod.desktop
 mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
 wget https://github.com/gjwgit/innerpod/raw/dev/installers/innerpod.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/innerpod.png```
 
-Or, for a system-wide install:
+To install for any user on the computer:
 
 ```bash
+wget https://solidcommunity.au/installers/innerpod.tar.gz
 sudo tar zxvf innerpod.tar.gz -C /opt/
 sudo ln -s /opt/innerpod/innerpod /usr/local/bin/
 ``` 
 
-Once installed you can run the app as Alt-F2 and type `innerpod` then
+The `rattle.desktop` and app icon can be installed into
+`/usr/local/share/applications/` and `/usr/local/share/icons/`
+respectively.
+
+Once installed you can run the app as Alt-F2 and type `APP` then
 Enter.
 
 ## MacOS
