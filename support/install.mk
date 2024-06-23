@@ -2,7 +2,7 @@
 #
 # Makefile template for Installations
 #
-# Time-stamp: <Wednesday 2024-03-20 12:10:51 +1100 >
+# Time-stamp: <Sunday 2024-06-23 10:35:02 +1000 >
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -42,11 +42,13 @@ help::
 
 install: $(USER).install
 
-#ifeq ($(BRANCH),main)
+ifeq ($(BRANCH),main)
 prod: $(APP).install
-#else
-#prod: $(USER).install
-#endif
+else if eq ($(BRANCH),dev)
+prod: $(APP).install
+else
+prod: $(USER).install
+endif
 
 %.install:
 	cp web/index.html web/index.html.bak
@@ -56,5 +58,5 @@ prod: $(APP).install
 	if [ ! -e $(DEST:$(APP)=$*) ]; then \
 		sudo mkdir $(DEST:$(APP)=$*); \
 	fi
-	sudo rsync -azvh build/web/ $(DEST:$(APP)=$*)
+	sudo rsync -azvh build/web/ $(DEST:$(APP)=$*) --exclude *~ --exclude *.bak
 	sudo chmod -R a+rX $(DEST:$(APP)=$*)
