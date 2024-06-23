@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-06-23 20:49:48 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-23 20:57:22 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -256,7 +256,6 @@ class _TimerState extends State<Timer> {
           _logit('Start Session');
         },
         child: DelayedTooltip(
-          //margin: const EdgeInsets.only(left: 50, right: 50),
           message: 'Tap here to begin a session of silence for '
               '${(_duration / 60).round()} minutes,\n'
               'beginning and ending with three dings.',
@@ -277,7 +276,12 @@ class _TimerState extends State<Timer> {
           _player.pause();
           WakelockPlus.disable();
         },
-        child: const Text('Pause'),
+        child: const DelayedTooltip(
+          message:
+              'Tap here to Pause the timer and the audio. They can be resumed\n'
+              'with a tap of the Resume button.',
+          child: Text('Pause'),
+        ),
       ),
     );
 
@@ -293,7 +297,11 @@ class _TimerState extends State<Timer> {
           _player.resume();
           WakelockPlus.enable();
         },
-        child: const Text('Resume'),
+        child: const DelayedTooltip(
+          message: 'After a Pause the timer and the audio can be resumed\n'
+              'with a tap of the Resume button.',
+          child: Text('Resume'),
+        ),
       ),
     );
 
@@ -310,7 +318,11 @@ class _TimerState extends State<Timer> {
           _player.stop();
           WakelockPlus.disable();
         },
-        child: const Text('Reset'),
+        child: const DelayedTooltip(
+          message: 'Tap here to reset the session. The count down timer\n'
+              'and the audio is stopped.',
+          child: Text('Reset'),
+        ),
       ),
     );
 
@@ -323,7 +335,6 @@ class _TimerState extends State<Timer> {
         ),
         onPressed: _intro,
         child: DelayedTooltip(
-          // margin: const EdgeInsets.only(left: 50, right: 50),
           message: 'Tap here to play a short introduction for a session.\n'
               'After the introduction a ${(_duration / 60).round()} minute\n'
               'session will begin and end with three dings.',
@@ -341,7 +352,6 @@ class _TimerState extends State<Timer> {
         ),
         onPressed: _guided,
         child: const DelayedTooltip(
-          // margin: EdgeInsets.only(left: 50, right: 50),
           message: 'Tap here to play a full 30 minute guided session.\n\n'
               'The session begins with instructions for meditation from John Main.\n'
               'Introductory and final music tracks are played between which\n'
