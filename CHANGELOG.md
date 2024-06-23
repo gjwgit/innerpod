@@ -8,6 +8,7 @@ numbers.
 
 ## 1.6 FUTURE
 
++ Move to DelayedTooltips. [1.5.4]
 + Add tooltips. Add version to topbar. [1.5.3]
 + Configure for linux install and update install instructions [1.5.2]
 + Add quotes [1.5.1]
