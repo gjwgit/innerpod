@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Saturday 2024-05-18 10:56:07 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-23 14:12:13 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -27,6 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:solidpod/solidpod.dart';
 
 import 'package:innerpod/constants.dart';
@@ -47,9 +48,26 @@ class Home extends StatefulWidget {
 ///
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  // We will populate the app version shortly.
+
+  var _appVersion = 'Unknown';
+
+  // Helper function to load the app name and version.
+
+  Future<void> _loadAppInfo() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = packageInfo.version; // Set app version from package info
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+
+    // Get the app name and version.
+
+    _loadAppInfo();
   }
 
   // Track which item is selected in the nav bar.
@@ -78,6 +96,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         title: const Text('Inner Pod'),
         backgroundColor: border,
         actions: [
+          Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
+          const SizedBox(width: 50),
           IconButton(
             icon: const Icon(Icons.info),
             onPressed: () async {

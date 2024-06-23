@@ -13,7 +13,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   circular_countdown_timer: ^0.2.3
   flutter_markdown: ^0.6.18
-  intl: 
+  intl:
+  package_info_plus:
   solidpod:
     path: solidpod
   wakelock_plus: ^1.1.4
