@@ -43,7 +43,8 @@ ln -s ${HOME}/.local/share/innerpod/innerpod ${HOME}/.local/bin/
 wget https://raw.githubusercontent.com/gjwgit/innerpod/dev/installers/innerpod.desktop -O ${HOME}/.local/share/applications/innerpod.desktop
 sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/innerpod.desktop
 mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
-wget https://github.com/gjwgit/innerpod/raw/dev/installers/innerpod.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/innerpod.png```
+wget https://github.com/gjwgit/innerpod/raw/dev/installers/innerpod.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/innerpod.png
+```
 
 To install for any user on the computer:
 
