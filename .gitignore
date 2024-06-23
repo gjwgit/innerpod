@@ -2,7 +2,8 @@
 
 solidpod
 ignore
-installers
+installers/*.tar.gz
+installers/*.apk
 *~
 !lib
 

@@ -78,9 +78,6 @@ help::
 locals:
 	@echo "This might be the instructions to install $(APP)"
 
-.PHONY: docs
-docs::
-	rsync -avzh doc/api/ root@solidcommunity.au:/var/www/html/docs/$(APP)/
 
 #
 # Manage the production install on the remote server.
@@ -88,6 +85,26 @@ docs::
 
 clean::
 	rm -f README.html
+
+# Android: Upload to Solid Community installers for general access.
+
+apk::
+	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
+	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
+	ssh solidcommunity.au chmod go=x /var/www/html/installers/
+
+# Linux: Install locally.
+
+local: tgz
+	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
+
+# Linux: Upload to Solid Community installers for general access.
+
+tgz::
+	chmod a+r installers/*.tar.gz
+	rsync -avzh installers/*.tar.gz solidcommunity.au:/var/www/html/installers/
+
+# Manage the audio tracks to use.
 
 newaudio:
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
@@ -100,19 +117,4 @@ gjaudio:
 aiaudio:
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
 	cp ignore/session_elevenlabs_emily.ogg assets/sounds/session.ogg
-
-apk::
-	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
-	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
-	ssh solidcommunity.au chmod go=x /var/www/html/installers/
-
-tgz::
-	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
-	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
-	ssh solidcommunity.au chmod go=x /var/www/html/installers/
-
-# Install locally for linux.
-
-local: tgz
-	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
 

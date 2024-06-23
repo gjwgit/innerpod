@@ -8,6 +8,9 @@
 
 *License: GNU GPL V3*
 
+Contributions are welcome. From the github repository feel free to
+	fork, update and submit a Pull Request.
+
 ## Introduction
 
 InnerPod is a session timer with sessions optionally logged to your
