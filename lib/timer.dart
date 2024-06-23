@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-06-23 10:36:20 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-23 14:02:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -87,7 +87,7 @@ class _TimerState extends State<Timer> {
 
   // The current full JM session has the following intro and outro timing.
 
-  final _guidedIntroTime = 4 * 60 + 38; //JM
+  final _guidedIntroTime = 5 * 60 + 0; //JM
   final _guidedOutroTime = 5 * 60 + 25; //JM
 
   // Set the style for the text of the buttons.
@@ -239,22 +239,28 @@ class _TimerState extends State<Timer> {
     // literal listed here. Also, Google PLay Store noted accessibility
     // guidelines suggest the height should be at least 48.
 
-    final startButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyleBold,
-          backgroundColor: Colors.lightGreenAccent,
+    final startButton = Tooltip(
+      margin: const EdgeInsets.only(left: 50, right: 50),
+      message: 'Tap here to begin a session of silence for '
+          '${(_duration / 60).round()} minutes, '
+          'beginning and ending with three dings.',
+      child: SizedBox(
+        height: 48,
+        width: 170,
+        child: ElevatedButton(
+          style: TextButton.styleFrom(
+            textStyle: _buttonTextStyleBold,
+            backgroundColor: Colors.lightGreenAccent,
+          ),
+          onPressed: () {
+            _isGuided = false;
+            _dingDong();
+            _controller.restart();
+            WakelockPlus.enable();
+            _logit('Start Session');
+          },
+          child: const Text('Start'),
         ),
-        onPressed: () {
-          _isGuided = false;
-          _dingDong();
-          _controller.restart();
-          WakelockPlus.enable();
-          _logit('Start Session');
-        },
-        child: const Text('Start'),
       ),
     );
 
@@ -307,27 +313,41 @@ class _TimerState extends State<Timer> {
       ),
     );
 
-    final introButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
+    final introButton = Tooltip(
+      margin: const EdgeInsets.only(left: 50, right: 50),
+      message: 'Tap here to play a short introduction for a session. '
+          'After the introduction a ${(_duration / 60).round()} minute '
+          'session will begin and end with three dings.',
+      child: SizedBox(
+        height: 48,
+        width: 170,
+        child: ElevatedButton(
+          style: TextButton.styleFrom(
+            textStyle: _buttonTextStyle,
+          ),
+          onPressed: _intro,
+          child: const Text('Intro'),
         ),
-        onPressed: _intro,
-        child: const Text('Intro'),
       ),
     );
 
-    final guidedButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
+    final guidedButton = Tooltip(
+      margin: const EdgeInsets.only(left: 50, right: 50),
+      message: 'Tap here to play a full 30 minute session. '
+          'The session begins with instructions for meditation from John Main. '
+          'Introductory and final music tracks are played between which '
+          '20 minutes of silence is introduced and finished with three dings.\n\n'
+          'The audio may take a little time to download for the Web version',
+      child: SizedBox(
+        height: 48,
+        width: 170,
+        child: ElevatedButton(
+          style: TextButton.styleFrom(
+            textStyle: _buttonTextStyle,
+          ),
+          onPressed: _guided,
+          child: const Text('Guided'),
         ),
-        onPressed: _guided,
-        child: const Text('Guided'),
       ),
     );
 
