@@ -8,9 +8,10 @@ numbers.
 
 ## 1.6 FUTURE
 
++ Configure for linux install and update install instructions [1.5.2]
 + Add quotes [1.5.1]
 
-## 1.5.0 20240517
+## 1.5 20240517
 
 + Add session length chooser [1.4.3]
 + Add Text page [1.4.2]
