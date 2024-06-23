@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2024-05-11 21:29:24 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-23 10:36:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -87,7 +87,7 @@ class _TimerState extends State<Timer> {
 
   // The current full JM session has the following intro and outro timing.
 
-  final _guidedIntroTime = 4 * 60 + 45; //JM
+  final _guidedIntroTime = 4 * 60 + 38; //JM
   final _guidedOutroTime = 5 * 60 + 25; //JM
 
   // Set the style for the text of the buttons.
