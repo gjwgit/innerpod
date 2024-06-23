@@ -4,5 +4,5 @@ Version=1.0
 Terminal=false
 Type=Application
 Name=InnerPod
-Exec=.local/bin/inner
+Exec=.local/bin/innerpod
 Icon=/home/USER/.local/share/icons/hicolor/256x256/apps/innerpod.png
