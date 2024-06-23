@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-06-23 14:02:39 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-06-23 20:49:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,6 +35,7 @@ import 'package:intl/intl.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants.dart';
+import 'package:innerpod/widgets/delayed_tooltip.dart' show DelayedTooltip;
 
 void _logit(String msg) {
   final ts = DateTime.now();
@@ -239,26 +240,26 @@ class _TimerState extends State<Timer> {
     // literal listed here. Also, Google PLay Store noted accessibility
     // guidelines suggest the height should be at least 48.
 
-    final startButton = Tooltip(
-      margin: const EdgeInsets.only(left: 50, right: 50),
-      message: 'Tap here to begin a session of silence for '
-          '${(_duration / 60).round()} minutes, '
-          'beginning and ending with three dings.',
-      child: SizedBox(
-        height: 48,
-        width: 170,
-        child: ElevatedButton(
-          style: TextButton.styleFrom(
-            textStyle: _buttonTextStyleBold,
-            backgroundColor: Colors.lightGreenAccent,
-          ),
-          onPressed: () {
-            _isGuided = false;
-            _dingDong();
-            _controller.restart();
-            WakelockPlus.enable();
-            _logit('Start Session');
-          },
+    final startButton = SizedBox(
+      height: 48,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: _buttonTextStyleBold,
+          backgroundColor: Colors.lightGreenAccent,
+        ),
+        onPressed: () {
+          _isGuided = false;
+          _dingDong();
+          _controller.restart();
+          WakelockPlus.enable();
+          _logit('Start Session');
+        },
+        child: DelayedTooltip(
+          //margin: const EdgeInsets.only(left: 50, right: 50),
+          message: 'Tap here to begin a session of silence for '
+              '${(_duration / 60).round()} minutes,\n'
+              'beginning and ending with three dings.',
           child: const Text('Start'),
         ),
       ),
@@ -313,40 +314,40 @@ class _TimerState extends State<Timer> {
       ),
     );
 
-    final introButton = Tooltip(
-      margin: const EdgeInsets.only(left: 50, right: 50),
-      message: 'Tap here to play a short introduction for a session. '
-          'After the introduction a ${(_duration / 60).round()} minute '
-          'session will begin and end with three dings.',
-      child: SizedBox(
-        height: 48,
-        width: 170,
-        child: ElevatedButton(
-          style: TextButton.styleFrom(
-            textStyle: _buttonTextStyle,
-          ),
-          onPressed: _intro,
+    final introButton = SizedBox(
+      height: 48,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: _buttonTextStyle,
+        ),
+        onPressed: _intro,
+        child: DelayedTooltip(
+          // margin: const EdgeInsets.only(left: 50, right: 50),
+          message: 'Tap here to play a short introduction for a session.\n'
+              'After the introduction a ${(_duration / 60).round()} minute\n'
+              'session will begin and end with three dings.',
           child: const Text('Intro'),
         ),
       ),
     );
 
-    final guidedButton = Tooltip(
-      margin: const EdgeInsets.only(left: 50, right: 50),
-      message: 'Tap here to play a full 30 minute session. '
-          'The session begins with instructions for meditation from John Main. '
-          'Introductory and final music tracks are played between which '
-          '20 minutes of silence is introduced and finished with three dings.\n\n'
-          'The audio may take a little time to download for the Web version',
-      child: SizedBox(
-        height: 48,
-        width: 170,
-        child: ElevatedButton(
-          style: TextButton.styleFrom(
-            textStyle: _buttonTextStyle,
-          ),
-          onPressed: _guided,
-          child: const Text('Guided'),
+    final guidedButton = SizedBox(
+      height: 48,
+      width: 170,
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          textStyle: _buttonTextStyle,
+        ),
+        onPressed: _guided,
+        child: const DelayedTooltip(
+          // margin: EdgeInsets.only(left: 50, right: 50),
+          message: 'Tap here to play a full 30 minute guided session.\n\n'
+              'The session begins with instructions for meditation from John Main.\n'
+              'Introductory and final music tracks are played between which\n'
+              '20 minutes of silence is introduced and finished with three dings.\n\n'
+              'The audio may take a little time to download for the Web version',
+          child: Text('Guided'),
         ),
       ),
     );
