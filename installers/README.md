@@ -37,7 +37,7 @@ To install for the local user and to make it known to Gnome and KDE,
 with a desktop icon:
 
 ```bash
-wget https://solidcommunity.au/installers/innerpod.tar.gz
+wget https://solidcommunity.au/installers/innerpod.tar.gz -O innerpod.tar.gz
 tar zxvf innerpod.tar.gz -C ${HOME}/.local/share/
 ln -s ${HOME}/.local/share/innerpod/innerpod ${HOME}/.local/bin/
 wget https://raw.githubusercontent.com/gjwgit/innerpod/dev/installers/innerpod.desktop -O ${HOME}/.local/share/applications/innerpod.desktop
