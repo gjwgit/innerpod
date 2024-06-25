@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-06-23 20:57:22 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 09:32:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,8 @@ import 'package:intl/intl.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants.dart';
-import 'package:innerpod/widgets/delayed_tooltip.dart' show DelayedTooltip;
+import 'package:innerpod/widgets/delayed_tooltip.dart';
+import 'package:innerpod/widgets/app_button.dart';
 
 void _logit(String msg) {
   final ts = DateTime.now();
@@ -48,13 +49,17 @@ void _logit(String msg) {
 // GUIDED IS CHOSEN AND SO NOT TO DO THE FINAL DING.
 
 class Timer extends StatefulWidget {
-  const Timer({Key? key}) : super(key: key);
+  /// Intialise the timer state.
+
+  const Timer({super.key});
 
   @override
-  _TimerState createState() => _TimerState();
+  TimerState createState() => TimerState();
 }
 
-class _TimerState extends State<Timer> {
+/// The timer state.
+
+class TimerState extends State<Timer> {
   //
 
   final _controller = CountDownController();
@@ -240,50 +245,66 @@ class _TimerState extends State<Timer> {
     // literal listed here. Also, Google PLay Store noted accessibility
     // guidelines suggest the height should be at least 48.
 
-    final startButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyleBold,
-          backgroundColor: Colors.lightGreenAccent,
-        ),
-        onPressed: () {
-          _isGuided = false;
-          _dingDong();
-          _controller.restart();
-          WakelockPlus.enable();
-          _logit('Start Session');
-        },
-        child: DelayedTooltip(
-          message: 'Tap here to begin a session of silence for '
-              '${(_duration / 60).round()} minutes,\n'
-              'beginning and ending with three dings.',
-          child: const Text('Start'),
-        ),
-      ),
+    // TODO 20240626 gjw DRY The button definitions A VERY REPetitive and should
+    // be vaptured as a function that returns a SizedBox or else a Widget in its
+    // own right.
+
+    const startButton = AppButton(
+      title: 'Start',
+      tooltip: 'Tap here to begin a session of silence for '
+          'the desired number of minutes,\n'
+          // TODO 20240626 gjw THE FOLLOWING NON_CONSTANT IS NOT ALLOWED THE WAY
+          // I HAVE DEFINED THE CLASS AppButon. THIS NEEDS TO BE FIXED.
+
+          // '${(_duration / 60).round()} minutes,\n'
+          'beginning and ending with three dings.',
+      onPressed: () {
+        _isGuided = false;
+        _dingDong();
+        _controller.restart();
+        WakelockPlus.enable();
+        _logit('Start Session');
+      },
+      fontWeight: FontWeight.bold,
+      backgroundColor: Colors.lightGreenAccent,
+    );
+    //   height: 48,
+    //   width: 170,
+    //   child: ElevatedButton(
+    //     style: TextButton.styleFrom(
+    //       textStyle: _buttonTextStyleBold,
+    //       backgroundColor: Colors.lightGreenAccent,
+    //     ),
+    //     child: DelayedTooltip(
+    //       child: const Text('Start'),
+    //     ),
+    //   ),
+    // );
+
+    const pauseButton = AppButton(
+      title: 'Pause',
+      tooltip: 'Tap here to Pause the timer and the audio.\n'
+          'They can be resumed with a tap\n'
+          'of the Resume button.',
+      onPressed: () {
+        _controller.pause();
+        _player.pause();
+        WakelockPlus.disable();
+      },
     );
 
-    final pauseButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
-        ),
-        onPressed: () {
-          _controller.pause();
-          _player.pause();
-          WakelockPlus.disable();
-        },
-        child: const DelayedTooltip(
-          message:
-              'Tap here to Pause the timer and the audio. They can be resumed\n'
-              'with a tap of the Resume button.',
-          child: Text('Pause'),
-        ),
-      ),
-    );
+    // SizedBox(
+    //   height: 48,
+    //   width: 170,
+    //   child: ElevatedButton(
+    //     style: TextButton.styleFrom(
+    //       textStyle: _buttonTextStyle,
+    //     ),
+    //     child: const DelayedTooltip(
+    //       child: Text('Pause'),
+    //     ),
+    //   ),
+    // );
 
     final resumeButton = SizedBox(
       height: 48,
