@@ -58,7 +58,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
 
   final int duration;
 
-  /// The controller of the conunt down timer.
+  /// The controller of the count down timer.
 
   final CountDownController controller;
 

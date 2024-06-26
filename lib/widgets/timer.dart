@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2024-06-26 12:32:26 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 15:28:48 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -79,8 +79,10 @@ class TimerState extends State<Timer> {
 
   // The GUIDED version is JM for now.
 
-  // TODO 20240626 gjw SPLIT JM INTO introInstructions, introMusic, AND
-  // outroMuisc. THEN DYNAMICALLY DETERMINE LENGTHS AND USE THAT HERE.
+  // TODO 20240626 gjw SPLIT JM AUDIO INTO THREE.
+  //
+  // SPLIT INTO introInstructions, introMusic, AND outroMuisc. THEN DYNAMICALLY
+  // DETERMINE LENGTHS AND USE THAT HERE.
 
   // The AI generated voice session has the following intro time and no outro at
   // present. The intro time is the time to wait until the dings in the audio
@@ -167,9 +169,10 @@ class TimerState extends State<Timer> {
   Future<void> _guided() async {
     logMessage('Start Guided');
 
-    // TODO 20240329 gjw THIS IS A DEMO OF GETTING THE AUDIO
-    // DURATION. PRESUMABLY I CAN GET RID OF THE debugPrint() calls BUT STILL
-    // NEED THE audioDuration ASSIGNEMNT TO KEEP THINGS WORKING.
+    // 20240329 gjw Retieve the audio file duration which will then be used (but
+    // not yet) for different delays. For example, the INTRO duration is used to
+    // delay the dong until the audio has finished. Perhaps there are other ways
+    // to trigger once the audio has finished playing.
 
     _player.onDurationChanged.listen((d) {
       _audioDuration = d;
@@ -335,9 +338,10 @@ class TimerState extends State<Timer> {
             controller: _controller,
             onComplete: () {
               if (_isGuided) {
-                // TODO 20240329 gjw It would be better to check if the audio
-                // has finished then wait for it to do so, and once finished to
-                // then proceed.
+                // TODO 20240329 gjw HOW TO CHECK IF AUDIO HAS FINISHED.
+                //
+                // Then wait for it to do so, and once finished to then proceed.
+
                 sleep(Duration(seconds: _guidedOutroTime));
               } else {
                 dingDong(_player);

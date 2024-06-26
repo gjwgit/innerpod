@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Wednesday 2024-06-26 12:34:19 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 17:08:15 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -139,7 +139,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ],
       ),
       body: Center(child: _pages.elementAt(_selectedIndex)), //Timer()),
-      // 20240311 TODO gjw Remove for now for initial release.
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: border,
         items: const <BottomNavigationBarItem>[
