@@ -50,22 +50,21 @@ class AppCircularCountDownTimer extends StatelessWidget {
   const AppCircularCountDownTimer({
     required this.duration,
     required this.onComplete,
+    required this.controller,
     super.key,
-    this.controller,
   });
 
-  /// The text to be displayed on the button.
+  /// The duration for the count down in minutes.
 
   final int duration;
 
-  /// The required tooltip for the button. I require every button to have a
-  /// tooltip.
+  /// The controller of the conunt down timer.
 
-  final CountDownController? controller;
+  final CountDownController controller;
 
   /// The action to undertake on a button tap.
 
-  final Function()? onComplete;
+  final Function() onComplete;
 
   @override
   Widget build(BuildContext context) {

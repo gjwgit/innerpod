@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2024-06-26 12:18:02 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 12:32:26 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,19 +31,14 @@ import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:intl/intl.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
+import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
-
-void _logit(String msg) {
-  final ts = DateTime.now();
-  debugPrint('LOG TO POD: ${DateFormat("yMMddTHHmmss").format(ts)} $msg');
-}
 
 /// A countdown timer widget with buttons for the home page.
 
@@ -108,7 +103,7 @@ class TimerState extends State<Timer> {
   Future<void> _intro() async {
     // The audio is played and then we begin the session.
 
-    _logit('Start Intro');
+    logMessage('Start Intro');
 
     // Add a listener for a change in the duration of the playing audio
     // file. When the audio is loaded from file then take note of the duration
@@ -163,14 +158,14 @@ class TimerState extends State<Timer> {
 
     await WakelockPlus.enable();
 
-    _logit('Start Intro Session');
+    logMessage('Start Intro Session');
 
     await dingDong(_player);
     _controller.restart();
   }
 
   Future<void> _guided() async {
-    _logit('Start Guided');
+    logMessage('Start Guided');
 
     // TODO 20240329 gjw THIS IS A DEMO OF GETTING THE AUDIO
     // DURATION. PRESUMABLY I CAN GET RID OF THE debugPrint() calls BUT STILL
@@ -238,7 +233,7 @@ class TimerState extends State<Timer> {
         dingDong(_player);
         _controller.restart();
         WakelockPlus.enable();
-        _logit('Start Session');
+        logMessage('Start Session');
       },
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.lightGreenAccent,

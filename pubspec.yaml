@@ -23,10 +23,15 @@ dependency_overrides:
   intl: ^0.19.0  # Eventually remove. Through solidpod, solid-auth depends on intl-0.19.0
   
 dev_dependencies:
-  # dart_code_metrics:
-  #   git:
-  #     url: https://github.com/anusii/dart-code-metrics.git
-  #     ref: main
+  # The original `dart-code-metrics` is end of live and has migrated to
+  # a paid service. This fork maintains it's compatibility with the
+  # latest flutter.
+
+  dart_code_metrics:
+    git:
+      url: https://github.com/Zheyuan-Robert-Xu/dart-code-metrics.git
+      ref: master
+
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1

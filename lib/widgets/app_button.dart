@@ -53,7 +53,7 @@ class AppButton extends StatelessWidget {
 
   /// The action to undertake on a button tap.
 
-  final VoidCallback? onPressed;
+  final VoidCallback onPressed;
 
   /// The button's background colour.
 
