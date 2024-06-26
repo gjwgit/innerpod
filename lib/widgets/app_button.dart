@@ -70,6 +70,9 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      // 20240317 gjw Google Play Store noted accessibility guidelines suggest
+      // the height should be at least 48.
+
       height: 48,
       width: 170,
       child: ElevatedButton(
@@ -81,13 +84,7 @@ class AppButton extends StatelessWidget {
           ),
           backgroundColor: backgroundColor,
         ),
-        onPressed: () {
-          //   _isGuided = false;
-          //   _dingDong();
-          //   _controller.restart();
-          //   WakelockPlus.enable();
-          //   _logit('Start Session');
-        },
+        onPressed: onPressed,
         child: DelayedTooltip(
           message: tooltip,
           //'Tap here to begin a session of silence for '
