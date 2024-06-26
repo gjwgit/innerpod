@@ -1,6 +1,6 @@
 /// Play the ding dong audio file.
 //
-// Time-stamp: <Wednesday 2024-06-26 12:21:59 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 12:22:30 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://www.gnu.org/licenses/>.
 ///
-/// Authors: AUTHORS
+/// Authors: Graham Williams
 
 library;
 
