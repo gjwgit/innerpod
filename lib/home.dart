@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Sunday 2024-06-23 14:12:13 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 11:56:19 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:solidpod/solidpod.dart';
 
-import 'package:innerpod/constants.dart';
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/instructions.dart';
 import 'package:innerpod/timer.dart';
 

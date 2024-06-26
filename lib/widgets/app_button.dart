@@ -96,26 +96,3 @@ class AppButton extends StatelessWidget {
     );
   }
 }
-
-//           child: ElevatedButton(
-//             style: TextButton.styleFrom(
-//               textStyle: _buttonTextStyleBold,
-//               backgroundColor: Colors.lightGreenAccent,
-//             ),
-//             onPressed: () {
-//               _isGuided = false;
-//               _dingDong();
-//               _controller.restart();
-//               WakelockPlus.enable();
-//               _logit('Start Session');
-//             },
-//             child: DelayedTooltip(
-//               message: 'Tap here to begin a session of silence for '
-//               '${(_duration / 60).round()} minutes,\n'
-//               'beginning and ending with three dings.',
-//               child: Text(title),
-//             ),
-//           ),
-//         );
-//     }
-//     }

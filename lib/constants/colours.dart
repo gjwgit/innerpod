@@ -1,6 +1,6 @@
-/// Constants used throughout the app.
+/// Color constants used throughout the app.
 //
-// Time-stamp: <Thursday 2024-02-01 08:11:44 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 11:52:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,9 +31,9 @@ import 'package:flutter/material.dart';
 
 // const _background = Color(0xFFE6B276);
 // const background = Color(0xFFF5E0C8);
+
 const background = Color(0xFFF0D1AD);
 
 /// A lighter colour for the top and bottom (navbar) elements of the app.
 
-// const border = Color(0xFFFAE5BF);
 const border = Color(0xFFF5E0C8);
