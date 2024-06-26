@@ -1,6 +1,6 @@
 /// Play the ding dong audio file.
 //
-// Time-stamp: <Wednesday 2024-06-26 12:22:30 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 12:25:20 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,13 +25,15 @@
 
 library;
 
+import 'package:audioplayers/audioplayers.dart';
+
 import 'package:innerpod/constants/audio.dart';
 
 /// Encapsulate the playing of the dong into its own function because of the
 /// need for it to be async through the await and it is called upon multiple
 /// times.
 
-Future<void> dingDong(player) async {
+Future<void> dingDong(AudioPlayer player) async {
   // Always stop the player first in case there is some other audio still
   // playing.
   await player.stop();
