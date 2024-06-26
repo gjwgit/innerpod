@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-06-23 20:57:22 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2024-06-26 10:19:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,7 +35,7 @@ import 'package:intl/intl.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants.dart';
-import 'package:innerpod/widgets/delayed_tooltip.dart' show DelayedTooltip;
+import 'package:innerpod/widgets/app_button.dart';
 
 void _logit(String msg) {
   final ts = DateTime.now();
@@ -48,13 +48,17 @@ void _logit(String msg) {
 // GUIDED IS CHOSEN AND SO NOT TO DO THE FINAL DING.
 
 class Timer extends StatefulWidget {
-  const Timer({Key? key}) : super(key: key);
+  /// Intialise the timer state.
+
+  const Timer({super.key});
 
   @override
-  _TimerState createState() => _TimerState();
+  TimerState createState() => TimerState();
 }
 
-class _TimerState extends State<Timer> {
+/// The timer state.
+
+class TimerState extends State<Timer> {
   //
 
   final _controller = CountDownController();
@@ -90,14 +94,6 @@ class _TimerState extends State<Timer> {
 
   final _guidedIntroTime = 5 * 60 + 0; //JM
   final _guidedOutroTime = 5 * 60 + 25; //JM
-
-  // Set the style for the text of the buttons.
-
-  final _buttonTextStyle = const TextStyle(fontSize: 20);
-  final _buttonTextStyleBold = const TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  );
 
   // A small spacer for layout gaps.
 
@@ -234,133 +230,82 @@ class _TimerState extends State<Timer> {
 
   @override
   Widget build(BuildContext context) {
-    // Define the various buttons.
+    // APP BUTTONS
+    //
+    // We begin with building the six main app buttons that are displayed on the
+    // home screen. Each button has a label, tootltip, and a callback for when
+    // the button is pressed.
 
-    // TODO 20240317 gjw The button height should be a constant rather than the
-    // literal listed here. Also, Google PLay Store noted accessibility
-    // guidelines suggest the height should be at least 48.
-
-    final startButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyleBold,
-          backgroundColor: Colors.lightGreenAccent,
-        ),
-        onPressed: () {
-          _isGuided = false;
-          _dingDong();
-          _controller.restart();
-          WakelockPlus.enable();
-          _logit('Start Session');
-        },
-        child: DelayedTooltip(
-          message: 'Tap here to begin a session of silence for '
-              '${(_duration / 60).round()} minutes,\n'
-              'beginning and ending with three dings.',
-          child: const Text('Start'),
-        ),
-      ),
+    final startButton = AppButton(
+      title: 'Start',
+      tooltip: 'Press here to begin a session of silence for '
+          '${(_duration / 60).round()} minutes,\n'
+          'beginning and ending with three dings.',
+      onPressed: () {
+        _isGuided = false;
+        _dingDong();
+        _controller.restart();
+        WakelockPlus.enable();
+        _logit('Start Session');
+      },
+      fontWeight: FontWeight.bold,
+      backgroundColor: Colors.lightGreenAccent,
     );
 
-    final pauseButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
-        ),
-        onPressed: () {
-          _controller.pause();
-          _player.pause();
-          WakelockPlus.disable();
-        },
-        child: const DelayedTooltip(
-          message:
-              'Tap here to Pause the timer and the audio. They can be resumed\n'
-              'with a tap of the Resume button.',
-          child: Text('Pause'),
-        ),
-      ),
+    final pauseButton = AppButton(
+      title: 'Pause',
+      tooltip: 'Press here to Pause the timer and the audio.\n'
+          'They can be resumed with a press\n'
+          'of the Resume button.',
+      onPressed: () {
+        _controller.pause();
+        _player.pause();
+        WakelockPlus.disable();
+      },
     );
 
-    final resumeButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
-        ),
-        onPressed: () {
-          _controller.resume();
-          _player.resume();
-          WakelockPlus.enable();
-        },
-        child: const DelayedTooltip(
-          message: 'After a Pause the timer and the audio can be resumed\n'
-              'with a tap of the Resume button.',
-          child: Text('Resume'),
-        ),
-      ),
+    final resumeButton = AppButton(
+      title: 'Resume',
+      tooltip: 'After a Pause the timer and the audio can be resumed\n'
+          'with a press of the Resume button.',
+      onPressed: () {
+        _controller.resume();
+        _player.resume();
+        WakelockPlus.enable();
+      },
     );
 
-    final resetButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
-        ),
-        onPressed: () {
-          _controller.restart();
-          _controller.pause();
-          _player.stop();
-          WakelockPlus.disable();
-        },
-        child: const DelayedTooltip(
-          message: 'Tap here to reset the session. The count down timer\n'
-              'and the audio is stopped.',
-          child: Text('Reset'),
-        ),
-      ),
+    final resetButton = AppButton(
+      title: 'Reset',
+      tooltip: 'Press here to reset the session. The count down timer\n'
+          'and the audio is stopped.',
+      onPressed: () {
+        _controller.restart();
+        _controller.pause();
+        _player.stop();
+        WakelockPlus.disable();
+      },
     );
 
-    final introButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
-        ),
-        onPressed: _intro,
-        child: DelayedTooltip(
-          message: 'Tap here to play a short introduction for a session.\n'
-              'After the introduction a ${(_duration / 60).round()} minute\n'
-              'session will begin and end with three dings.',
-          child: const Text('Intro'),
-        ),
-      ),
+    final introButton = AppButton(
+      title: 'Intro',
+      tooltip: 'Press here to play a short introduction for a session.\n'
+          'After the introduction a ${(_duration / 60).round()} minute\n'
+          'session will begin and end with three dings.',
+      onPressed: _intro,
     );
 
-    final guidedButton = SizedBox(
-      height: 48,
-      width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          textStyle: _buttonTextStyle,
-        ),
-        onPressed: _guided,
-        child: const DelayedTooltip(
-          message: 'Tap here to play a full 30 minute guided session.\n\n'
-              'The session begins with instructions for meditation from John Main.\n'
-              'Introductory and final music tracks are played between which\n'
-              '20 minutes of silence is introduced and finished with three dings.\n\n'
-              'The audio may take a little time to download for the Web version',
-          child: Text('Guided'),
-        ),
-      ),
+    final guidedButton = AppButton(
+      title: 'Guided',
+      tooltip: 'Press here to play a full 30 minute guided session.\n\n'
+          'The session begins with instructions for meditation from John Main.\n'
+          'Introductory and final music tracks are played between which\n'
+          '20 minutes of silence is introduced and finished with three dings.\n\n'
+          'The audio may take a little time to download for the Web version',
+      onPressed: _guided,
     );
+
+    // DURATION CHOICE
 
     final Widget durationChoice = Wrap(
       spacing: 8.0, // Gap between adjacent chips.
@@ -387,7 +332,9 @@ class _TimerState extends State<Timer> {
       }).toList(),
     );
 
-// Choose colours for the internal background of the timer and the gradient
+    // CIRCULAR TIMER COLOURS
+
+    // Choose colours for the internal background of the timer and the gradient
     // of the timer neon.
 
     const text = Colors.black;
@@ -398,11 +345,17 @@ class _TimerState extends State<Timer> {
     const spin1 = Colors.white;
     final spin2 = Colors.blueAccent.shade700;
 
+    // BUILD THE MAIN WIDGET
+
     return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // TODO 20240626 gjw MOVE THIS TO app_circular_countdown_timer.dart
+          // WITH PARAMETERS duration, controller, AND onComplete. THIS WILL
+          // REDUCE THE NUMBER OF LINES HERE AND MAKE CLEARER THE STRUCTURE OF
+          // THE MAIN WIDGET HERE.
           CircularCountDownTimer(
             width: 250,
             height: 250,

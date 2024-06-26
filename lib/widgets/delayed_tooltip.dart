@@ -25,17 +25,29 @@ library;
 
 import 'package:flutter/material.dart';
 
+/// A [Tooltip] that is delayed before being displayed.
+
 class DelayedTooltip extends StatelessWidget {
-  final Widget child;
-  final String message;
-  final Duration wait;
+  /// Idetntify the required parameters.
 
   const DelayedTooltip({
-    super.key,
     required this.child,
     required this.message,
+    super.key,
     this.wait = const Duration(seconds: 1),
   });
+
+  /// The widget to be displayed as the tooltip.
+
+  final Widget child;
+
+  /// the message to be displayed.
+
+  final String message;
+
+  /// How long to delay before displayiung the tooltip.
+
+  final Duration wait;
 
   @override
   Widget build(BuildContext context) {
