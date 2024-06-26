@@ -1,6 +1,6 @@
 /// DESCRIPTION
 //
-// Time-stamp: <Saturday 2024-05-18 10:32:06 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-27 05:44:05 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -134,7 +134,7 @@ class Instructions extends StatelessWidget {
                     '  \n'
                     'May those who pray here be strengthened '
                     'by the Holy Spirit to serve all who come '
-                    'and receive them as Christ himself.  \n'
+                    'and to receive them as Christ himself.  \n'
                     '  \n'
                     'In the silence of this group may all the suffering, '
                     'violence and confusion of the world encounter '
@@ -146,7 +146,7 @@ class Instructions extends StatelessWidget {
                     'each other, in love and peace, justice and human '
                     'dignity.  \n'
                     '  \n'
-                    'May all the beauty of the Divine Life fill the hearts of '
+                    'May the beauty of the Divine Life fill the hearts of '
                     'all who pray here with joyful hope. '
                     '  \n'
                     'May all who come here weighed down by the '
