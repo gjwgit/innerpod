@@ -1,6 +1,6 @@
 # InnerPod Changelog
 
-Recorded here are the high level changes for the InnerPod app.
+Recorded here are the end user focused changes for the InnerPod app.
 
 Instructions: Add the updates beyond, for example, 0.6.0 under the 0.7
 heading, adding to the top of the list, and recording minor version
@@ -8,6 +8,7 @@ numbers.
 
 ## 1.6 FUTURE
 
++ Refactor code [1.5.5]
 + Move to DelayedTooltips. [1.5.4]
 + Add tooltips. Add version to topbar. [1.5.3]
 + Configure for linux install and update install instructions [1.5.2]
