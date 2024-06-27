@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Wednesday 2024-06-26 17:08:15 +1000 Graham Williams>
+// Time-stamp: <Thursday 2024-06-27 13:34:21 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -110,12 +110,15 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               if (context.mounted) {
                 showAboutDialog(
                   context: context,
-                  applicationLegalese: '© 2024 Togaware',
+                  applicationIcon: Image.asset(
+                    'assets/images/inner_icon.png',
+                    width: 100,
+                    height: 100,
+                  ),
                   applicationName:
                       '${appName[0].toUpperCase()}${appName.substring(1)}',
                   applicationVersion: appInfo.version,
-                  applicationIcon: const ImageIcon(
-                      AssetImage('assets/images/inner_icon.png')),
+                  applicationLegalese: '© 2024 Togaware',
                   children: [
                     const SelectableText('\nA meditation timer.\n\n'
                         'Inner Pod is an app for timing sessions and storing'
