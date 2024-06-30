@@ -2,9 +2,9 @@
 
 Recorded here are the end user focused changes for the InnerPod app.
 
-Instructions: Add the updates beyond, for example, 0.6.0 under the 0.7
-heading, adding to the top of the list, and recording minor version
-numbers.
+Guide: Each version update is recorded here with a short user-oriented
+description of the update. Updates in the 1.5.n series are heading
+toward a 1.6 release.
 
 ## 1.6 FUTURE
 
