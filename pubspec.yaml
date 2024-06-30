@@ -46,7 +46,9 @@ flutter:
     - assets/images/inner_image.jpg
     - assets/sounds/dong.ogg
     - assets/sounds/intro.ogg
-    - assets/sounds/session.ogg
+    - assets/sounds/session_guide.ogg
+    - assets/sounds/session_intro.ogg
+    - assets/sounds/session_outro.ogg
 
 flutter_launcher_icons:
   android: "launcher_icon"

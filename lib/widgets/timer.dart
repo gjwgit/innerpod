@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2024-06-26 15:28:48 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 09:20:42 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -25,8 +25,6 @@
 
 library;
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -40,15 +38,20 @@ import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
 
+/// The default session length is 20 minutes.That seems to be a world wide
+/// default.
+
+const defaultSessionSeconds = 20 * 60;
+
 /// A countdown timer widget with buttons for the home page.
 
-// 20240203 gjw This is a statefull widget so as to track whether GUIDED is
-// chosen and so not to do the final ding. Once we break GUIDED audio into
-// individual tracks (currently 20240626) it is one 30 minute file) then revisit
-// this decision of a stateful widget.
+// This is a statefull widget so as to track whether GUIDED is chosen and so not
+// to do the final ding. Once we break GUIDED audio into individual tracks
+// (currently 20240626) it is one 30 minute file) then revisit this decision of
+// a stateful widget. 20240203 gjw
 
 class Timer extends StatefulWidget {
-  /// Intialise the timer state.
+  ///
 
   const Timer({super.key});
 
@@ -59,20 +62,25 @@ class Timer extends StatefulWidget {
 /// The timer state.
 
 class TimerState extends State<Timer> {
-  //
-
-  final _controller = CountDownController();
-  final _player = AudioPlayer();
-
-  // The default duration is 20 minutes. That seems to be a world wide default.
-
-  var _duration = 20 * 60;
-
-  // For the guided session we play the dong after a delay to match the
-  // audio. For non-guided sessions we dong immediately at the termination of the
-  // countdown timer.
+  // Here we create the variables to record the state. Originally state was
+  // recoreded for _isGuided but we no longer need this. Do we still need state?
+  // 20240701 gjw.
 
   var _isGuided = false;
+
+  // The [CountDownController] supports operations on the countdown timer
+  // itself.
+
+  final _controller = CountDownController();
+
+  // The [AudioPlayer] supports playing audio files.
+
+  final _player = AudioPlayer();
+
+  // The duration is the currently selected duration for the session recorded in
+  // seconds.
+
+  var _duration = defaultSessionSeconds;
 
   // The INTRO choice is the AI generated voice intro and it's duration is
   // determined dynamically as 17.632 seconds.
@@ -97,40 +105,39 @@ class TimerState extends State<Timer> {
   // close. The dings in the recording come some 30 seconds after the countdown
   // timer reaches 0.
 
-  final _guidedIntroTime = 5 * 60 + 0; //JM
-  final _guidedOutroTime = 5 * 60 + 25; //JM
+  // final _guidedIntroTime = 5 * 60 + 0; //JM
+  // final _guidedOutroTime = 5 * 60 + 25; //JM
 
   var _audioDuration = Duration.zero;
+
+  // Turn on device sleeping. I.e., disable the lock so the device can sleep.
+
+  void _allowSleep() => WakelockPlus.disable();
+
+  // Turn off device sleeping. I.e., lock the device into being awake.
+
+  void _stopSleep() => WakelockPlus.enable();
+
+  ////////////////////////////////////////////////////////////////////////
+  // RESET
+  ////////////////////////////////////////////////////////////////////////
+
+  void _reset() {
+    _player.stop();
+    _controller.restart();
+    _controller.pause();
+    _isGuided = false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // INTRO
+  ////////////////////////////////////////////////////////////////////////
 
   Future<void> _intro() async {
     // The audio is played and then we begin the session.
 
-    logMessage('Start Intro');
-
-    // Add a listener for a change in the duration of the playing audio
-    // file. When the audio is loaded from file then take note of the duration
-    // of the audio.
-
-    _player.onDurationChanged.listen((d) {
-      _audioDuration = d;
-      debugPrint('INTRO: insider duration=$_audioDuration');
-    });
-
-    // Not yet working. The first time this is 0!
-
-    debugPrint('INTRO: outsider duration: $_audioDuration');
-
-    // We want the dongs at the end of the session because unlike the current
-    // guided audio the intro audio does not contain its own dongs. This will
-    // change eventually when the different sections of the guided audio will be
-    // orchestrted in the code rather than a single session file.
-
-    _isGuided = false;
-
-    // Make sure we are ready for a session and the duration is shown.
-
-    _controller.restart();
-    _controller.pause();
+    logMessage('Start Intro Session');
+    _reset();
 
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
@@ -143,7 +150,7 @@ class TimerState extends State<Timer> {
     await _player.stop();
     await _player.play(introAudio);
 
-    debugPrint('INTRO: latest duration: $_audioDuration');
+    debugPrint('INTRO: waiting $_audioDuration');
 
     // Wait now while the intro audio is played before the dong when the timer
     // then actually starts.
@@ -156,31 +163,20 @@ class TimerState extends State<Timer> {
 
     await Future.delayed(const Duration(seconds: 1));
 
-    // Turn off device sleeping. I.e., lock the device into being awake.
-
-    await WakelockPlus.enable();
-
-    logMessage('Start Intro Session');
-
+    _stopSleep();
     await dingDong(_player);
     _controller.restart();
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  // GUIDED
+  ////////////////////////////////////////////////////////////////////////
+
   Future<void> _guided() async {
-    logMessage('Start Guided');
+    // Ensure any currently playing audio and the countdown timer are stopped.
 
-    // 20240329 gjw Retieve the audio file duration which will then be used (but
-    // not yet) for different delays. For example, the INTRO duration is used to
-    // delay the dong until the audio has finished. Perhaps there are other ways
-    // to trigger once the audio has finished playing.
-
-    _player.onDurationChanged.listen((d) {
-      _audioDuration = d;
-      debugPrint('GUIDED: insider duration: $_audioDuration');
-    });
-
-    debugPrint('GUIDED: outsider duration: $_audioDuration');
-
+    logMessage('Start Guided Session');
+    _reset();
     _isGuided = true;
 
     // Good to wait a second before starting the audio after tapping the button,
@@ -188,43 +184,73 @@ class TimerState extends State<Timer> {
 
     await Future.delayed(const Duration(seconds: 1));
 
-    // Ensure any playing sudio is stopped.
+    // Play and wait for the session guide audio to finish.
 
-    await _player.stop();
-    await _player.play(guidedAudio);
+    await _player.play(sessionGuide);
+    debugPrint('GUIDED: waiting $_audioDuration');
+    await Future.delayed(_audioDuration);
 
-    debugPrint('GUIDED: latest duration: $_audioDuration');
+    // Play and wait for the intro music to finish.
 
-    // Always reset (by doing a restart and then pause) any current timer
-    // session. For now with the fixed whole session audio, it includes a 20
-    // minute session so we make sure that is the case here
+    await _player.play(sessionIntro);
+    debugPrint('GUIDED: waiting: $_audioDuration');
+    await Future.delayed(_audioDuration);
 
-    _duration = 20 * 60;
-    _controller.restart(duration: _duration);
-    _controller.pause();
+    // Good to wait a second before the dings otherwise it feels rushed coming
+    // straight from the music.
 
-    // Turn off device sleeping.
+    await Future.delayed(const Duration(seconds: 1));
 
-    await WakelockPlus.enable();
+    // The introductions are complete. We now tell the device not to sleep, play
+    // the dings, and start the timer.
 
-    // Wait for the intro of the guided session to complete.
-
-    await Future.delayed(Duration(seconds: _guidedIntroTime));
-
+    _stopSleep();
+    await dingDong(_player);
     _controller.restart();
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  // COMPLETE
+  ////////////////////////////////////////////////////////////////////////
+
+  Future<void> _complete() async {
+    logMessage('Session Completed');
+    await _player.play(dong);
+    debugPrint('COMPLETE: waiting: $_audioDuration');
+    await Future.delayed(_audioDuration);
+
+    if (_isGuided) {
+      await _player.play(sessionOutro);
+      debugPrint('COMPLETE: waiting: $_audioDuration');
+      await Future.delayed(_audioDuration);
+    }
+
+    _reset();
+    _allowSleep();
   }
 
   @override
   Widget build(BuildContext context) {
     // Build the GUI
 
+    // Add a listener for a change in the duration of the playing audio
+    // file. When the audio is loaded from file then take note of the duration
+    // of the audio which will then be used to pause until the audio is
+    // complete. 20240329 gjw
+
+    _player.onDurationChanged.listen((d) {
+      _audioDuration = d;
+    });
+
+    //_duration = 5; // TESTING
+
     ////////////////////////////////////////////////////////////////////////
     // APP BUTTONS
-    //
+    ////////////////////////////////////////////////////////////////////////
+
     // We begin with building the six main app buttons that are displayed on the
     // home screen. Each button has a label, tootltip, and a callback for when
     // the button is pressed.
-    ////////////////////////////////////////////////////////////////////////
 
     final startButton = AppButton(
       title: 'Start',
@@ -232,11 +258,11 @@ class TimerState extends State<Timer> {
           '${(_duration / 60).round()} minutes,\n'
           'beginning and ending with three dings.',
       onPressed: () {
-        _isGuided = false;
+        logMessage('Start Session');
+        _reset();
         dingDong(_player);
         _controller.restart();
-        WakelockPlus.enable();
-        logMessage('Start Session');
+        _stopSleep();
       },
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.lightGreenAccent,
@@ -250,7 +276,7 @@ class TimerState extends State<Timer> {
       onPressed: () {
         _controller.pause();
         _player.pause();
-        WakelockPlus.disable();
+        _allowSleep();
       },
     );
 
@@ -261,21 +287,18 @@ class TimerState extends State<Timer> {
       onPressed: () {
         _controller.resume();
         _player.resume();
-        WakelockPlus.enable();
+        _stopSleep();
       },
     );
 
     final resetButton = AppButton(
-      title: 'Reset',
-      tooltip: 'Press here to reset the session. The count down timer\n'
-          'and the audio is stopped.',
-      onPressed: () {
-        _controller.restart();
-        _controller.pause();
-        _player.stop();
-        WakelockPlus.disable();
-      },
-    );
+        title: 'Reset',
+        tooltip: 'Press here to reset the session. The count down timer\n'
+            'and the audio is stopped.',
+        onPressed: () {
+          _reset();
+          _allowSleep();
+        });
 
     final introButton = AppButton(
       title: 'Intro',
@@ -302,7 +325,7 @@ class TimerState extends State<Timer> {
     final Widget durationChoice = Wrap(
       spacing: 8.0, // Gap between adjacent chips.
       runSpacing: 4.0, // Gap between lines.
-      children: [10, 15, 20, 30].map((number) {
+      children: [10, 15, 20, 25, 30].map((number) {
         return ChoiceChip(
           label: Text(number.toString()),
           selected: _duration == number * 60,
@@ -312,11 +335,11 @@ class TimerState extends State<Timer> {
             setState(() {
               if (selected) {
                 _duration = number * 60;
-                debugPrint('Reset duration to $_duration');
+                debugPrint('CHOOSE: duration $_duration');
                 _controller.restart(duration: _duration);
                 _controller.pause();
                 _player.stop();
-                WakelockPlus.disable();
+                _allowSleep();
               }
             });
           },
@@ -328,71 +351,53 @@ class TimerState extends State<Timer> {
     // BUILD THE MAIN WIDGET
     ////////////////////////////////////////////////////////////////////////
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppCircularCountDownTimer(
-            duration: _duration,
-            controller: _controller,
-            onComplete: () {
-              if (_isGuided) {
-                // TODO 20240329 gjw HOW TO CHECK IF AUDIO HAS FINISHED.
-                //
-                // Then wait for it to do so, and once finished to then proceed.
-
-                sleep(Duration(seconds: _guidedOutroTime));
-              } else {
-                dingDong(_player);
-              }
-              // Reset the timer so we see 20:00.
-              _controller.restart();
-              _controller.pause();
-              // Allow the device to sleep.
-              WakelockPlus.disable();
-            },
-          ),
-          const SizedBox(height: 2 * heightSpacer),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              introButton,
-              const SizedBox(width: widthSpacer),
-              startButton,
-            ],
-          ),
-          const SizedBox(height: heightSpacer),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              pauseButton,
-              const SizedBox(width: widthSpacer),
-              resumeButton,
-            ],
-          ),
-          const SizedBox(height: heightSpacer),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              guidedButton,
-              const SizedBox(width: widthSpacer),
-              resetButton,
-            ],
-          ),
-          const SizedBox(height: heightSpacer),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Minutes:    ',
-                style: TextStyle(fontSize: 20.0, color: Colors.grey),
-              ),
-              durationChoice,
-            ],
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        AppCircularCountDownTimer(
+          duration: _duration,
+          controller: _controller,
+          onComplete: _complete,
+        ),
+        const SizedBox(height: 2 * heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            introButton,
+            const SizedBox(width: widthSpacer),
+            startButton,
+          ],
+        ),
+        const SizedBox(height: heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            pauseButton,
+            const SizedBox(width: widthSpacer),
+            resumeButton,
+          ],
+        ),
+        const SizedBox(height: heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            guidedButton,
+            const SizedBox(width: widthSpacer),
+            resetButton,
+          ],
+        ),
+        const SizedBox(height: heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Minutes:    ',
+              style: TextStyle(fontSize: 20.0, color: Colors.grey),
+            ),
+            durationChoice,
+          ],
+        ),
+      ],
     );
   }
 }

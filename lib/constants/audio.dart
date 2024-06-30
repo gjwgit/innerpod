@@ -1,6 +1,6 @@
-/// Aduio related constantsused across the app.
+/// Aduio related constants used across the app.
 //
-// Time-stamp: <Wednesday 2024-06-26 12:17:46 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 07:27:16 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -44,4 +44,12 @@ final introAudio = AssetSource('sounds/intro.ogg');
 /// The GUIDED audio is currently, as of 20240626, the full 30 minute JM
 /// meditation session.
 
-final guidedAudio = AssetSource('sounds/session.ogg');
+final sessionGuide = AssetSource('sounds/session_guide.ogg');
+
+///
+
+final sessionIntro = AssetSource('sounds/session_intro.ogg');
+
+///
+
+final sessionOutro = AssetSource('sounds/session_outro.ogg');
