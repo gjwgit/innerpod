@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Monday 2024-07-01 09:20:42 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 09:29:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -193,7 +193,7 @@ class TimerState extends State<Timer> {
     // Play and wait for the intro music to finish.
 
     await _player.play(sessionIntro);
-    debugPrint('GUIDED: waiting: $_audioDuration');
+    debugPrint('GUIDED: waiting $_audioDuration');
     await Future.delayed(_audioDuration);
 
     // Good to wait a second before the dings otherwise it feels rushed coming
@@ -206,6 +206,7 @@ class TimerState extends State<Timer> {
 
     _stopSleep();
     await dingDong(_player);
+    debugPrint('GUIDED: waiting $_audioDuration');
     _controller.restart();
   }
 
