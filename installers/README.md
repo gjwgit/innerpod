@@ -6,6 +6,8 @@ browser from the web. Flutter functionality is essentially identical
 across all platforms so the experience across different platforms will
 be very similar.
 
+Visit the [CHANGELOG](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
+
 ## Prerequisite
 
 There are no specific prerequisites for InnerPod.
