@@ -6,8 +6,13 @@ Guide: Each version update is recorded here with a short user-oriented
 description of the update. Updates in the 1.5.n series are heading
 toward a 1.6 release.
 
++ Need to get RESET/PAUSE/RESUME working
+
 ## 1.6 FUTURE
 
++ Heading toward separation of GUIDED.
+
++ Split GUIDED into: instructions, intro music, outro music [1.5.6]
 + Refactor code [1.5.5]
 + Move to DelayedTooltips. [1.5.4]
 + Add tooltips. Add version to topbar. [1.5.3]
