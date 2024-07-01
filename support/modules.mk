@@ -35,9 +35,6 @@ endif
 ifneq ("$(wildcard $(INC_PANDOC))","")
   include $(INC_PANDOC)
 endif
-ifneq ("$(wildcard $(INC_FLUTTER))","")
-  include $(INC_FLUTTER)
-endif
 ifneq ("$(wildcard $(INC_GIT))","")
   include $(INC_GIT)
 endif
@@ -61,6 +58,9 @@ ifneq ("$(wildcard $(INC_MLHUB))","")
 endif
 ifneq ("$(wildcard $(INC_WEBCAM))","")
   include $(INC_WEBCAM)
+endif
+ifneq ("$(wildcard $(INC_FLUTTER))","")
+  include $(INC_FLUTTER)
 endif
 ifneq ("$(wildcard $(INC_INSTALL))","")
   include $(INC_INSTALL)

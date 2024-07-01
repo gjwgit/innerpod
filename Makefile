@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2024-07-01 09:35:23 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-07-01 11:50:53 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -65,7 +65,8 @@ $(APP):
   aiaudio		AI generated intro and session
 
   local	     Install to $(HOME)/.local/share/$(APP)
-  tgz	     Upload the installer to access.togaware.com
+    tgz	     Upload the installer to solidcommunity.com
+  apk	     Upload the installer to solidcommunity.com
 
 endef
 export HELP
@@ -75,10 +76,6 @@ help::
 
 ########################################################################
 # LOCAL TARGETS
-
-locals:
-	@echo "This might be the instructions to install $(APP)"
-
 
 #
 # Manage the production install on the remote server.
