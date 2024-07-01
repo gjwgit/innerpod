@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Monday 2024-07-01 11:33:00 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 12:12:27 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -266,7 +266,7 @@ class TimerState extends State<Timer> {
         _stopSleep();
       },
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.lightGreenAccent,
+      backgroundColor: Colors.lightGreenAccent.shade100,
     );
 
     final pauseButton = AppButton(
@@ -307,6 +307,8 @@ class TimerState extends State<Timer> {
           'After the introduction a ${(_duration / 60).round()} minute\n'
           'session will begin and end with three dings.',
       onPressed: _intro,
+      fontWeight: FontWeight.bold,
+      backgroundColor: Colors.blue.shade100,
     );
 
     final guidedButton = AppButton(
@@ -317,6 +319,8 @@ class TimerState extends State<Timer> {
           '20 minutes of silence is introduced and finished with three dings.\n\n'
           'The audio may take a little time to download for the Web version',
       onPressed: _guided,
+      fontWeight: FontWeight.bold,
+      backgroundColor: Colors.purple.shade100,
     );
 
     ////////////////////////////////////////////////////////////////////////
@@ -378,18 +382,18 @@ class TimerState extends State<Timer> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                pauseButton,
+                guidedButton,
                 const SizedBox(width: widthSpacer),
-                resumeButton,
+                resetButton,
               ],
             ),
             const SizedBox(height: heightSpacer),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                guidedButton,
+                pauseButton,
                 const SizedBox(width: widthSpacer),
-                resetButton,
+                resumeButton,
               ],
             ),
             const SizedBox(height: heightSpacer),
