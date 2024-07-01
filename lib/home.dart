@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Monday 2024-07-01 09:41:52 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 11:23:01 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -120,9 +120,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   applicationVersion: appInfo.version,
                   applicationLegalese: '© 2024 Togaware',
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 300, // Limit the width of the about dialog.
-                      child: const SelectableText('\nA meditation timer.\n\n'
+                      child: SelectableText('\nA meditation timer.\n\n'
                           'Inner Pod is an app for timing sessions and storing'
                           ' sessions to your Pod. A session can be anything though'
                           ' the app is commonly used for contemplative'
