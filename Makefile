@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2024-07-01 08:51:45 +1000 Graham Williams>
+# Time-stamp: <Monday 2024-07-01 09:35:23 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -60,6 +60,7 @@ define HELP
 $(APP):
 
   newaudio		AI intro and JM session
+  testaudio		Short audio clips for testing
   gjaudio		GJ basic intro and session
   aiaudio		AI generated intro and session
 
