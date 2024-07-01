@@ -43,6 +43,8 @@ Tap on the **INFO** button to review this guide.
 Once you connect to the app the session manager displays a countdown
 timer and buttons to interact and manage the session. 
 
+![](screenshots/app_home_screen.png)
+
 When a silent meditation session begins three dings are donged. The
 three dings get donged again at the end of the session. 
 
