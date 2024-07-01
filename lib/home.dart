@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Monday 2024-07-01 11:23:01 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 17:05:06 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -122,11 +122,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   children: [
                     const SizedBox(
                       width: 300, // Limit the width of the about dialog.
-                      child: SelectableText('\nA meditation timer.\n\n'
-                          'Inner Pod is an app for timing sessions and storing'
-                          ' sessions to your Pod. A session can be anything though'
-                          ' the app is commonly used for contemplative'
-                          ' meditation.\n\n'
+                      child: SelectableText(
+                          '\nA meditation timer and session log.\n\n'
+                          'Inner Pod is an app for timing meditation sessions and, '
+                          'optionally, storing alog of your meditation'
+                          ' sessions to your Pod. A session, in fact, can be anything.'
+                          ' The app is commonly used for contemplative or silent'
+                          ' meditation as is the tradition in many cultures and religions.\n\n'
                           'The app is written in Flutter and the open source code'
                           ' is available from github at'
                           ' https://github.com/gjwgit/innerpod.'
