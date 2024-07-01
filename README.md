@@ -69,10 +69,10 @@ for the meditation.
 
 Pushing the purple **Guided** button plays an introductory guide to
 meditating from [John Main](https://en.wikipedia.org/wiki/John_Main),
-following by a short musical chant before the meditation session
-begins. At the conclusion another short musical interlude is played as
-you emerge from your meditation. This is particularly handy in a group
-meditation session.
+following by a short musical chant as you prepare yourself for the
+meditation session. At the conclusion another short musical interlude
+is played as you emerge from the silence of your meditation. This is
+particularly handy in a group meditation session.
 
 ## The App Itself
 
