@@ -12,6 +12,7 @@ toward a 1.6 release.
 
 + Heading toward separation of GUIDED.
 
++ Scroll the timer page and improve layout [1.5.7]
 + Split GUIDED into: instructions, intro music, outro music [1.5.6]
 + Refactor code [1.5.5]
 + Move to DelayedTooltips. [1.5.4]
