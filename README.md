@@ -1,15 +1,27 @@
-# InnerPod
+# InnerPod - A Meditation Timer and Session Log
 
 **A Togaware app using Solid Pods**
 
+**An ANU Software Innovation Institute demo project for Solid Pods**
+
 *Author: Graham Williams*
+
+*[ANU Software Innovation Institute](https://sii.anu.edu.au)*
 
 *[Togaware](https://togaware.com.au)*
 
 *License: GNU GPL V3*
 
-Contributions are welcome. From the github repository feel free to
-	fork, update and submit a Pull Request.
+## Quick Start
+
+To run the app **now* visit https://innerpod.solidcommunity.au. To
+install the app on your desktop or mobile device, visit
+[Installers](https://github.com/gjwgit/innerpod/blob/dev/installers/README.md).
+
+Contributions are welcome. Visit the [github
+repository](https://github.com/gjwgit/innerpod) and feel free to
+submit an issue, or, even better, fork the repository yourself, update
+the code, and submit a Pull Request. Thanks.
 
 ## Introduction
 
@@ -45,15 +57,22 @@ timer and buttons to interact and manage the session.
 
 ![](screenshots/app_home_screen.png)
 
-When a silent meditation session begins three dings are donged. The
-three dings get donged again at the end of the session. 
+A silent meditation session begins with the sounding of a bell and
+finishes with the same bell. 
 
-The **START** button will simply initiate a 20 minute session.
+Pushing the green **Start** button will simply initiate a 20 minute session
+(or however long you have chosen using the Chips at the bottom of the
+screen).
 
-The **INTRO** button plays a short guide on how to meditate from [John
-Main](https://en.wikipedia.org/wiki/John_Main).
+Pushing the blue **Intro** button plays a short opening in preparation
+for the meditation.
 
-![](screenshots/pod_session_12.png)
+Pushing the purple **Guided** button plays an introductory guide to
+meditating from [John Main](https://en.wikipedia.org/wiki/John_Main),
+following by a short musical chant before the meditation session
+begins. At the conclusion another short musical interlude is played as
+you emerge from your meditation. This is particularly handy in a group
+meditation session.
 
 ## The App Itself
 
