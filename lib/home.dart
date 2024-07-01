@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Monday 2024-07-01 17:05:06 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 17:08:12 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -93,7 +93,17 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
-        title: const Text('Inner Pod'),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/inner_icon.png',
+              width: 40,
+              height: 40,
+            ),
+            const SizedBox(width: 20),
+            const Text('Inner Pod'),
+          ],
+        ),
         backgroundColor: border,
         actions: [
           Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
