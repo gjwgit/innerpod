@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Monday 2024-07-01 09:29:39 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 11:33:00 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -352,53 +352,60 @@ class TimerState extends State<Timer> {
     // BUILD THE MAIN WIDGET
     ////////////////////////////////////////////////////////////////////////
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AppCircularCountDownTimer(
-          duration: _duration,
-          controller: _controller,
-          onComplete: _complete,
-        ),
-        const SizedBox(height: 2 * heightSpacer),
-        Row(
+    return SingleChildScrollView(
+      child: Padding(
+        // Add some top and bottom padding so the timer is not clipped at the
+        // top nor the chips at the bottom.
+        padding: const EdgeInsets.only(top: 10, bottom: 5),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            introButton,
-            const SizedBox(width: widthSpacer),
-            startButton,
-          ],
-        ),
-        const SizedBox(height: heightSpacer),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            pauseButton,
-            const SizedBox(width: widthSpacer),
-            resumeButton,
-          ],
-        ),
-        const SizedBox(height: heightSpacer),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            guidedButton,
-            const SizedBox(width: widthSpacer),
-            resetButton,
-          ],
-        ),
-        const SizedBox(height: heightSpacer),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Minutes:    ',
-              style: TextStyle(fontSize: 20.0, color: Colors.grey),
+            AppCircularCountDownTimer(
+              duration: _duration,
+              controller: _controller,
+              onComplete: _complete,
             ),
-            durationChoice,
+            const SizedBox(height: 2 * heightSpacer),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                introButton,
+                const SizedBox(width: widthSpacer),
+                startButton,
+              ],
+            ),
+            const SizedBox(height: heightSpacer),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                pauseButton,
+                const SizedBox(width: widthSpacer),
+                resumeButton,
+              ],
+            ),
+            const SizedBox(height: heightSpacer),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                guidedButton,
+                const SizedBox(width: widthSpacer),
+                resetButton,
+              ],
+            ),
+            const SizedBox(height: heightSpacer),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Minutes:    ',
+                  style: TextStyle(fontSize: 20.0, color: Colors.grey),
+                ),
+                durationChoice,
+              ],
+            ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
