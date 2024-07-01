@@ -1,6 +1,6 @@
 /// DESCRIPTION
 //
-// Time-stamp: <Thursday 2024-06-27 05:44:05 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 12:52:18 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -169,6 +169,11 @@ class Instructions extends StatelessWidget {
                     '> and you in me, and I in you.\n'
                     '  \n'
                     '*John 14:20*\n'
+                    '---\n'
+                    '  \n'
+                    '> Quiet the mind and the soul will speak.\n'
+                    '  \n'
+                    '*Buddha*\n'
                     '---\n'
                     '  \n',
                 styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
