@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Monday 2024-07-01 17:08:12 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-01 17:09:55 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -135,7 +135,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: SelectableText(
                           '\nA meditation timer and session log.\n\n'
                           'Inner Pod is an app for timing meditation sessions and, '
-                          'optionally, storing alog of your meditation'
+                          'optionally, storing a log of your meditation'
                           ' sessions to your Pod. A session, in fact, can be anything.'
                           ' The app is commonly used for contemplative or silent'
                           ' meditation as is the tradition in many cultures and religions.\n\n'
