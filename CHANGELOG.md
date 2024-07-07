@@ -10,8 +10,8 @@ toward a 1.6 release.
 
 ## 1.6 FUTURE
 
-+ Heading toward separation of GUIDED.
-
++ Improved tooltip style. [1.5.10]
++ Remove REST and RESUME - plan for them with PAUSE. [1.5.9]
 + Re-arrange buttons and colour code for reference. [1.5.8]
 + Scroll the timer page and improve layout [1.5.7]
 + Split GUIDED into: instructions, intro music, outro music [1.5.6]
