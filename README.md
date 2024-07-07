@@ -1,14 +1,11 @@
 # InnerPod - A Meditation Timer and Session Log
 
-**A Togaware app using Solid Pods**
+**A [Togaware](https://togaware.com.au) app using Solid Pods**
 
-**An ANU Software Innovation Institute demo project for Solid Pods**
+**An [ANU Software Innovation Institute](https://sii.anu.edu.au)
+demonstrator for [solidpod](https://github.com/anusii/solidpod)**
 
 *Author: Graham Williams*
-
-*[ANU Software Innovation Institute](https://sii.anu.edu.au)*
-
-*[Togaware](https://togaware.com.au)*
 
 *License: GNU GPL V3*
 
@@ -26,8 +23,8 @@ the code, and submit a Pull Request. Thanks.
 ## Introduction
 
 InnerPod is a session timer with sessions optionally logged to your
-[Solid Pod](https://solidproject.org/about). A session can be anything
-though the app is commonly used for silent meditation.
+[Solid Pod](https://solidproject.au). A session can be anything though
+the app is commonly used for silent meditation.
 
 ## Using the App
 
@@ -79,11 +76,15 @@ particularly handy in a group meditation session.
 The app is written in
 [Flutter](https://survivor.togaware.com/gnulinux/flutter.html) and the
 open source code is available from
-[github](https://github.com/gjwgit/innerpod).
+[github](https://github.com/gjwgit/innerpod). We utilise the
+[solidpod](https://pub.dev/packages/solidpod) package for Flutter.
 
 You can try it out online at https://innerpod.solidcommunity.au. We
 also welcome testers of the Android app at
 https://play.google.com/store/apps/details?id=com.togaware.innerpod
+
+For more information on the Solid project visit the [Solid Project
+AU](https://solidporject.au) site.
 
 ## Acknowledgements
 
