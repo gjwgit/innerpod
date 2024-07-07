@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Monday 2024-07-01 11:50:53 +1000 Graham Williams>
+# Time-stamp: <Sunday 2024-07-07 10:09:56 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -123,5 +123,8 @@ gjaudio:
 	cp ignore/intro_gjw_8db.ogg assets/sounds/session.ogg
 
 aiaudio:
+	cp ignore/dong.ogg assets/sounds/dong.ogg
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/session_elevenlabs_emily.ogg assets/sounds/session.ogg
+	cp ignore/session_elevenlabs_emily.ogg assets/sounds/session_guide.ogg
+	cp ignore/session_intro_music.ogg assets/sounds/session_intro.ogg
+	cp ignore/session_outro_music.ogg assets/sounds/session_outro.ogg
