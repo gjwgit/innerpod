@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-07-07 11:07:23 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-07 11:19:39 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -313,10 +313,12 @@ class TimerState extends State<Timer> {
 
     final guidedButton = AppButton(
       title: 'Guided',
-      tooltip: 'Press here to play a full 30 minute guided session. '
+      tooltip: 'Press here to play a ${10 + (_duration / 60).round()} '
+          'minute guided session. '
           'The session begins with instructions for meditation from John Main. '
-          'Introductory and final music tracks are played between which '
-          '20 minutes of silence is introduced and finished with three dings. '
+          'Introductory music is followed by 3 dings and a '
+          '${(_duration / 60).round()} minute silent session which is then '
+          'finished with another three dings. '
           'The audio may take a little time to download for the Web version.',
       onPressed: _guided,
       fontWeight: FontWeight.bold,
