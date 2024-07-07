@@ -52,8 +52,34 @@ class DelayedTooltip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: message,
+      richMessage: WidgetSpan(
+        alignment: PlaceholderAlignment.baseline,
+        baseline: TextBaseline.alphabetic,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          constraints: const BoxConstraints(maxWidth: 350),
+          child: Text(
+            message,
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+          ),
+        ),
+      ),
+      //message: message,
+      // TODO 20240707 gjw THIS exitDuration WORKS ON DESKTOP BUT DOES NOT SEEM
+      // TO HAVE A AFFECT ON ANDROID.
+      showDuration: const Duration(seconds: 5),
       waitDuration: wait,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: const Color(0XFFDFE0FF), //Colors.amber,
+        // gradient:
+        //     const LinearGradient(colors: <Color>[Colors.amber, Colors.red]),
+      ),
+      // textStyle: const TextStyle(
+      //   fontSize: 18,
+      // ),
       child: child,
     );
   }
