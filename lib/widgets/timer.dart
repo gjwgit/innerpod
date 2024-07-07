@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Monday 2024-07-01 12:12:27 +1000 Graham Williams>
+// Time-stamp: <Sunday 2024-07-07 11:07:23 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -256,7 +256,7 @@ class TimerState extends State<Timer> {
     final startButton = AppButton(
       title: 'Start',
       tooltip: 'Press here to begin a session of silence for '
-          '${(_duration / 60).round()} minutes,\n'
+          '${(_duration / 60).round()} minutes, '
           'beginning and ending with three dings.',
       onPressed: () {
         logMessage('Start Session');
@@ -271,8 +271,8 @@ class TimerState extends State<Timer> {
 
     final pauseButton = AppButton(
       title: 'Pause',
-      tooltip: 'Press here to Pause the timer and the audio.\n'
-          'They can be resumed with a press\n'
+      tooltip: 'Press here to Pause the timer and the audio. '
+          'They can be resumed with a press '
           'of the Resume button.',
       onPressed: () {
         _controller.pause();
@@ -281,31 +281,31 @@ class TimerState extends State<Timer> {
       },
     );
 
-    final resumeButton = AppButton(
-      title: 'Resume',
-      tooltip: 'After a Pause the timer and the audio can be resumed\n'
-          'with a press of the Resume button.',
-      onPressed: () {
-        _controller.resume();
-        _player.resume();
-        _stopSleep();
-      },
-    );
+    // final resumeButton = AppButton(
+    //   title: 'Resume',
+    //   tooltip: 'After a Pause the timer and the audio can be resumed '
+    //       'with a press of the Resume button.',
+    //   onPressed: () {
+    //     _controller.resume();
+    //     _player.resume();
+    //     _stopSleep();
+    //   },
+    // );
 
-    final resetButton = AppButton(
-        title: 'Reset',
-        tooltip: 'Press here to reset the session. The count down timer\n'
-            'and the audio is stopped.',
-        onPressed: () {
-          _reset();
-          _allowSleep();
-        });
+    // final resetButton = AppButton(
+    //     title: 'Reset',
+    //     tooltip: 'Press here to reset the session. The count down timer '
+    //         'and the audio is stopped.',
+    //     onPressed: () {
+    //       _reset();
+    //       _allowSleep();
+    //     });
 
     final introButton = AppButton(
       title: 'Intro',
-      tooltip: 'Press here to play a short introduction for a session.\n'
-          'After the introduction a ${(_duration / 60).round()} minute\n'
-          'session will begin and end with three dings.',
+      tooltip: 'Press here to play a short introduction for a session. '
+          'After the introduction a ${(_duration / 60).round()} minute '
+          'session of silence will begin and end with three dings.',
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.blue.shade100,
@@ -313,11 +313,11 @@ class TimerState extends State<Timer> {
 
     final guidedButton = AppButton(
       title: 'Guided',
-      tooltip: 'Press here to play a full 30 minute guided session.\n\n'
-          'The session begins with instructions for meditation from John Main.\n'
-          'Introductory and final music tracks are played between which\n'
-          '20 minutes of silence is introduced and finished with three dings.\n\n'
-          'The audio may take a little time to download for the Web version',
+      tooltip: 'Press here to play a full 30 minute guided session. '
+          'The session begins with instructions for meditation from John Main. '
+          'Introductory and final music tracks are played between which '
+          '20 minutes of silence is introduced and finished with three dings. '
+          'The audio may take a little time to download for the Web version.',
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.purple.shade100,
@@ -384,19 +384,23 @@ class TimerState extends State<Timer> {
               children: [
                 guidedButton,
                 const SizedBox(width: widthSpacer),
-                resetButton,
-              ],
-            ),
-            const SizedBox(height: heightSpacer),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
                 pauseButton,
-                const SizedBox(width: widthSpacer),
-                resumeButton,
               ],
             ),
-            const SizedBox(height: heightSpacer),
+            // TODO 20240707 gjw EVENTUALLY PUT RESUME AND RESET INTO THE PAUSE
+            // BUTTON. A LONG PRESS WILL BE RESET. ON TAP APSUE TURN THE BUTTON
+            // INTO RESUME.
+            //
+            // const SizedBox(height: heightSpacer),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     resetButton,
+            //     const SizedBox(width: widthSpacer),
+            //     resumeButton,
+            //   ],
+            // ),
+            const SizedBox(height: 2 * heightSpacer),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
