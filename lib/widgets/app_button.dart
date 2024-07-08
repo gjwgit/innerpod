@@ -87,9 +87,6 @@ class AppButton extends StatelessWidget {
         onPressed: onPressed,
         child: DelayedTooltip(
           message: tooltip,
-          //'Tap here to begin a session of silence for '
-          // '${(_duration / 60).round()} minutes,\n'
-          //    'beginning and ending with three dings.',
           child: Text(title),
         ),
       ),

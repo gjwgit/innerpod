@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Sunday 2024-07-07 11:19:39 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-08 12:01:41 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -38,17 +38,15 @@ import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
 
-/// The default session length is 20 minutes.That seems to be a world wide
-/// default.
+/// The default session length is 20 minutes. That seems to be a world wide
+/// default. We only utilise this constant in this file (at least for now).
 
 const defaultSessionSeconds = 20 * 60;
 
 /// A countdown timer widget with buttons for the home page.
 
-// This is a statefull widget so as to track whether GUIDED is chosen and so not
-// to do the final ding. Once we break GUIDED audio into individual tracks
-// (currently 20240626) it is one 30 minute file) then revisit this decision of
-// a stateful widget. 20240203 gjw
+// This is a statefull widget so as to track whether GUIDED is chosen and so to
+// play an additional auiod at the end of the session.
 
 class Timer extends StatefulWidget {
   ///
@@ -62,11 +60,27 @@ class Timer extends StatefulWidget {
 /// The timer state.
 
 class TimerState extends State<Timer> {
-  // Here we create the variables to record the state. Originally state was
-  // recoreded for _isGuided but we no longer need this. Do we still need state?
-  // 20240701 gjw.
+  ////////////////////////////////////////////////////////////////////////
+  // STATE
+  ////////////////////////////////////////////////////////////////////////
+
+  // Track whether a final audio is required at the end of a session.
 
   var _isGuided = false;
+
+  // Record the currently selected duration for the session, as seconds.
+
+  var _duration = defaultSessionSeconds;
+
+  // Track the duration of a loaded audio file.
+
+  var _audioDuration = Duration.zero;
+
+  ////////////////////////////////////////////////////////////////////////
+  // CONSTANTS
+  ////////////////////////////////////////////////////////////////////////
+
+  // Identify constants used within this file.
 
   // The [CountDownController] supports operations on the countdown timer
   // itself.
@@ -77,38 +91,9 @@ class TimerState extends State<Timer> {
 
   final _player = AudioPlayer();
 
-  // The duration is the currently selected duration for the session recorded in
-  // seconds.
-
-  var _duration = defaultSessionSeconds;
-
-  // The INTRO choice is the AI generated voice intro and it's duration is
-  // determined dynamically as 17.632 seconds.
-
-  // The GUIDED version is JM for now.
-
-  // TODO 20240626 gjw SPLIT JM AUDIO INTO THREE.
-  //
-  // SPLIT INTO introInstructions, introMusic, AND outroMuisc. THEN DYNAMICALLY
-  // DETERMINE LENGTHS AND USE THAT HERE.
-
-  // The AI generated voice session has the following intro time and no outro at
-  // present. The intro time is the time to wait until the dings in the audio
-  // occur.
-
-  // final _guidedIntro = 60 + 25;
-  // final _guidedOutro = 0;
-
-  // The full JM session has the following intro and outro timing. The intro
-  // timing is used to identify when the start the timer count down. It is not
-  // an exact match with start and end for the 20 minutes separated dong, but
-  // close. The dings in the recording come some 30 seconds after the countdown
-  // timer reaches 0.
-
-  // final _guidedIntroTime = 5 * 60 + 0; //JM
-  // final _guidedOutroTime = 5 * 60 + 25; //JM
-
-  var _audioDuration = Duration.zero;
+  ////////////////////////////////////////////////////////////////////////
+  // SLEEP
+  ////////////////////////////////////////////////////////////////////////
 
   // Turn on device sleeping. I.e., disable the lock so the device can sleep.
 
@@ -134,7 +119,7 @@ class TimerState extends State<Timer> {
   ////////////////////////////////////////////////////////////////////////
 
   Future<void> _intro() async {
-    // The audio is played and then we begin the session.
+    // An audio is played and then we begin the session.
 
     logMessage('Start Intro Session');
     _reset();
@@ -173,7 +158,8 @@ class TimerState extends State<Timer> {
   ////////////////////////////////////////////////////////////////////////
 
   Future<void> _guided() async {
-    // Ensure any currently playing audio and the countdown timer are stopped.
+    // A guide audio is played, then a musical interlude, the session, then
+    // another musical interlude.
 
     logMessage('Start Guided Session');
     _reset();
@@ -215,6 +201,8 @@ class TimerState extends State<Timer> {
   ////////////////////////////////////////////////////////////////////////
 
   Future<void> _complete() async {
+    // What to do at the end of a session.
+
     logMessage('Session Completed');
     await _player.play(dong);
     debugPrint('COMPLETE: waiting: $_audioDuration');
@@ -230,9 +218,13 @@ class TimerState extends State<Timer> {
     _allowSleep();
   }
 
+  ////////////////////////////////////////////////////////////////////////
+  // BUILD
+  ////////////////////////////////////////////////////////////////////////
+
   @override
   Widget build(BuildContext context) {
-    // Build the GUI
+    // Build the Timer Widget.
 
     // Add a listener for a change in the duration of the playing audio
     // file. When the audio is loaded from file then take note of the duration
@@ -243,11 +235,9 @@ class TimerState extends State<Timer> {
       _audioDuration = d;
     });
 
-    //_duration = 5; // TESTING
-
-    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////
     // APP BUTTONS
-    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////
 
     // We begin with building the six main app buttons that are displayed on the
     // home screen. Each button has a label, tootltip, and a callback for when
@@ -255,9 +245,12 @@ class TimerState extends State<Timer> {
 
     final startButton = AppButton(
       title: 'Start',
-      tooltip: 'Press here to begin a session of silence for '
-          '${(_duration / 60).round()} minutes, '
-          'beginning and ending with three dings.',
+      tooltip: '''
+
+Press here to begin a session of silence for ${(_duration / 60).round()}
+minutes, beginning and ending with three dings.
+
+''',
       onPressed: () {
         logMessage('Start Session');
         _reset();
@@ -271,15 +264,23 @@ class TimerState extends State<Timer> {
 
     final pauseButton = AppButton(
       title: 'Pause',
-      tooltip: 'Press here to Pause the timer and the audio. '
-          'They can be resumed with a press '
-          'of the Resume button.',
+      tooltip: '''
+
+Press here to Pause the timer and the audio.  They can be resumed with a press
+of the Resume button.
+
+''',
       onPressed: () {
         _controller.pause();
         _player.pause();
         _allowSleep();
       },
     );
+
+    // TODO 20240708 gjw COMMENT OUT BUTTONS UNTIL FUINCTIONALITY MIGRATED
+    //
+    // I originally had these extra two buttons but UX suggests one buttont to
+    // PAUSE whcih when tapped becomes RESUME and if long held it is RESET.
 
     // final resumeButton = AppButton(
     //   title: 'Resume',
@@ -303,9 +304,13 @@ class TimerState extends State<Timer> {
 
     final introButton = AppButton(
       title: 'Intro',
-      tooltip: 'Press here to play a short introduction for a session. '
-          'After the introduction a ${(_duration / 60).round()} minute '
-          'session of silence will begin and end with three dings.',
+      tooltip: '''
+
+Press here to play a short introduction for a session.  After the introduction a
+${(_duration / 60).round()} minute session of silence will begin and end with
+three dings.
+
+''',
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.blue.shade100,
@@ -313,21 +318,23 @@ class TimerState extends State<Timer> {
 
     final guidedButton = AppButton(
       title: 'Guided',
-      tooltip: 'Press here to play a ${10 + (_duration / 60).round()} '
-          'minute guided session. '
-          'The session begins with instructions for meditation from John Main. '
-          'Introductory music is followed by 3 dings and a '
-          '${(_duration / 60).round()} minute silent session which is then '
-          'finished with another three dings. '
-          'The audio may take a little time to download for the Web version.',
+      tooltip: '''
+
+Press here to play a ${10 + (_duration / 60).round()} minute guided session.
+The session begins with instructions for meditation from John Main.
+Introductory music is followed by 3 dings and a ${(_duration / 60).round()}
+minute silent session which is then finished with another three dings.  The
+audio may take a little time to download for the Web version.
+
+''',
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.purple.shade100,
     );
 
-    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////
     // DURATION CHOICE
-    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////
 
     final Widget durationChoice = Wrap(
       spacing: 8.0, // Gap between adjacent chips.
@@ -354,9 +361,9 @@ class TimerState extends State<Timer> {
       }).toList(),
     );
 
-    ////////////////////////////////////////////////////////////////////////
-    // BUILD THE MAIN WIDGET
-    ////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////
+    // RETURN
+    ////////////////////////////////////
 
     return SingleChildScrollView(
       child: Padding(
@@ -389,9 +396,10 @@ class TimerState extends State<Timer> {
                 pauseButton,
               ],
             ),
-            // TODO 20240707 gjw EVENTUALLY PUT RESUME AND RESET INTO THE PAUSE
-            // BUTTON. A LONG PRESS WILL BE RESET. ON TAP APSUE TURN THE BUTTON
-            // INTO RESUME.
+            // TODO 20240707 gjw EVENTUALLY PUT RESUME AND RESET INTO PAUSE.
+            //
+            // A long press will be RESET. On tap PASUE turn the button
+            // into RESUME.
             //
             // const SizedBox(height: heightSpacer),
             // Row(

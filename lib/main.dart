@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Friday 2024-05-17 15:17:59 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-08 12:07:03 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -51,13 +51,16 @@ class InnerPod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // EITHER
+    /// We wrap the actual home widget within a [SolidLogin]. If the app has
+    /// functionality that does not require access to Pod data then [required]
+    /// can be `false`. If the user connects to their Pod then we can ensure
+    /// their session information will be saved. If we aim to save the data to
+    /// the Pod or view data from the Pod, then if the user did not log i during
+    /// startup then we can call [SolidLoginPopup] to establish the connection
+    /// at that time. The login token and the security key are (optionally)
+    /// cached so that the login information is not required every time.
 
-    // Wrap the actual home widget within a SolidLogin. Our app has
-    // functionality that does not require access to Pod data (a session
-    // timer). If the user connects to their Pod then the session information
-    // will be saved. Eventually we will have a Save Session and View History
-    // functionality that will then prompt to login to the POD at that time.
+    // TODO 20240708 gjw COMMENTED OUT FOR NOW BUT INTEND TO USE.
 
     // return const SolidLogin(
     //   title: 'MANAGE YOUR INNER POD',
