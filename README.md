@@ -11,7 +11,7 @@ demonstrator for [solidpod](https://github.com/anusii/solidpod)**
 
 ## Quick Start
 
-To run the app **now* visit https://innerpod.solidcommunity.au. To
+To run the app **now** visit https://innerpod.solidcommunity.au. To
 install the app on your desktop or mobile device, visit
 [Installers](https://github.com/gjwgit/innerpod/blob/dev/installers/README.md).
 
