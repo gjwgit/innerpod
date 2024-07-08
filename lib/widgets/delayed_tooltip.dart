@@ -28,7 +28,7 @@ import 'package:flutter/material.dart';
 /// A [Tooltip] that is delayed before being displayed.
 
 class DelayedTooltip extends StatelessWidget {
-  /// Idetntify the required parameters.
+  /// Identify the required parameters.
 
   const DelayedTooltip({
     required this.child,
@@ -59,27 +59,25 @@ class DelayedTooltip extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           constraints: const BoxConstraints(maxWidth: 350),
           child: Text(
-            message,
+            // Replace newlines with spaces int he tooltips. This allows the
+            // message to be a triple quote block which will have embedded
+            // newlines. Tooltips would not be expected to have embedded
+            // newlines in general in my view.
+
+            message.replaceAll('\n', ' '),
+
             style: const TextStyle(
               fontSize: 18,
             ),
           ),
         ),
       ),
-      //message: message,
-      // TODO 20240707 gjw THIS exitDuration WORKS ON DESKTOP BUT DOES NOT SEEM
-      // TO HAVE A AFFECT ON ANDROID.
       showDuration: const Duration(seconds: 5),
       waitDuration: wait,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         color: const Color(0XFFDFE0FF), //Colors.amber,
-        // gradient:
-        //     const LinearGradient(colors: <Color>[Colors.amber, Colors.red]),
       ),
-      // textStyle: const TextStyle(
-      //   fontSize: 18,
-      // ),
       child: child,
     );
   }
