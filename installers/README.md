@@ -38,11 +38,19 @@ innerpod/innerpod
 ```
 
 To install for the local user and to make it known to Gnome and KDE,
-with a desktop icon:
+with a desktop icon, begin by downloading the **.tar.gz** and
+installing that:
 
 ```bash
 wget https://solidcommunity.au/installers/innerpod.tar.gz -O innerpod.tar.gz
 tar zxvf innerpod.tar.gz -C ${HOME}/.local/share/
+```
+
+Those two steps can also be repeated to update your installation.
+
+Then set up your local installation (only required once):
+
+```bash
 ln -s ${HOME}/.local/share/innerpod/innerpod ${HOME}/.local/bin/
 wget https://raw.githubusercontent.com/gjwgit/innerpod/dev/installers/innerpod.desktop -O ${HOME}/.local/share/applications/innerpod.desktop
 sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/innerpod.desktop

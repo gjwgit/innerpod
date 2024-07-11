@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Monday 2024-07-01 17:09:55 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2024-07-09 17:27:02 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,7 +37,7 @@ import 'package:innerpod/widgets/timer.dart';
 /// A widget for the actuall app's main home page.
 
 class Home extends StatefulWidget {
-  /// Initialise widget variables
+  /// Constructor for the home screen.
 
   const Home({super.key});
 

@@ -1,12 +1,12 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Monday 2024-07-08 12:07:03 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-07-08 13:29:54 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
+/// Licensed under the GNU General Public License, Version 3 (the "License").
 ///
-/// License: https://www.gnu.org/licenses/gpl-3.0.en.html
+/// License: https://www.gnu.org/licenses/gpl-3.0.en.html.
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software

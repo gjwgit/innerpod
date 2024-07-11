@@ -101,7 +101,8 @@ local: tgz
 tgz::
 	chmod a+r installers/*.tar.gz
 	rsync -avzh installers/*.tar.gz solidcommunity.au:/var/www/html/installers/
-
+	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
+	ssh solidcommunity.au chmod go=x /var/www/html/installers/
 # Manage the audio tracks to use.
 
 newaudio:
