@@ -1,6 +1,6 @@
 /// DESCRIPTION
 //
-// Time-stamp: <Monday 2024-07-01 12:52:18 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-21 15:54:44 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -49,8 +49,8 @@ class Instructions extends StatelessWidget {
                 indicatorColor: Colors.amberAccent,
                 indicatorWeight: 5,
                 tabs: [
-                  Tab(text: 'Opening'),
                   Tab(text: 'Guide'),
+                  Tab(text: 'Opening'),
                   Tab(text: 'Closing'),
                   Tab(text: 'Quotes'),
                 ],
@@ -60,26 +60,6 @@ class Instructions extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Markdown(
-                data: '# Opening Prayer\n'
-                    '---\n'
-                    'Heavenly Father.  \n'
-                    '  \n'
-                    'Open our hearts to the silent '
-                    'presence of the spirit of your son.  \n'
-                    '  \n'
-                    'Lead us into that mysterious silence '
-                    'where your love is revealed to all who call.  \n'
-                    '  \n'
-                    'Maranatha.  \n'
-                    'Come Lord Jesus.  \n'
-                    '  \n'
-                    '---\n'
-                    '  \n'
-                    '*John Main OSB*',
-                styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
-                    textTheme: const TextTheme(
-                        bodyMedium: TextStyle(fontSize: 20.0))))),
             Markdown(
                 data: '# How to Meditate\n'
                     '  \n'
@@ -116,6 +96,26 @@ class Instructions extends StatelessWidget {
                     'Maranatha.  \n'
                     '  \n'
                     'And that\'s all you have to do.  \n'
+                    '  \n'
+                    '---\n'
+                    '  \n'
+                    '*John Main OSB*',
+                styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
+                    textTheme: const TextTheme(
+                        bodyMedium: TextStyle(fontSize: 20.0))))),
+            Markdown(
+                data: '# Opening Prayer\n'
+                    '---\n'
+                    'Heavenly Father.  \n'
+                    '  \n'
+                    'Open our hearts to the silent '
+                    'presence of the spirit of your son.  \n'
+                    '  \n'
+                    'Lead us into that mysterious silence '
+                    'where your love is revealed to all who call.  \n'
+                    '  \n'
+                    'Maranatha.  \n'
+                    'Come Lord Jesus.  \n'
                     '  \n'
                     '---\n'
                     '  \n'
