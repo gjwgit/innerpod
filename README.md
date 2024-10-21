@@ -94,9 +94,8 @@ libraries](https://github.com/anusii/solidpod) developed by the ANU's
 [Software Innovation Institute](https://sii.anu.edu.au).
 
 The graphics (login page picture and logo/icon) were generated using
-Microsoft's Designer
-(https://designer.microsoft.com/image-creator). The audio was
-generated using ElevenLabs text to speech.
+Microsoft's Designer https://designer.microsoft.com/image-creator. The
+audio was generated using ElevenLabs text to speech.
 
 The instructions for meditating by John Main are from
 [WCCM](https://wccm.org).
