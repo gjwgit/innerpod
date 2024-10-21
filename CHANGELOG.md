@@ -8,7 +8,7 @@ toward a 1.6 release.
 
 + Need to get RESET/PAUSE/RESUME working
 
-## 1.6 FUTURE
+## 1.6 20241021
 
 + Improved tooltip style. [1.5.10]
 + Remove REST and RESUME - plan for them with PAUSE. [1.5.9]
