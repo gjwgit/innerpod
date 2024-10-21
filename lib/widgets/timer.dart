@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Monday 2024-07-08 12:01:41 +1000 Graham Williams>
+// Time-stamp: <Monday 2024-10-21 15:58:06 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -123,6 +123,7 @@ class TimerState extends State<Timer> {
 
     logMessage('Start Intro Session');
     _reset();
+    _stopSleep();
 
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
@@ -148,7 +149,6 @@ class TimerState extends State<Timer> {
 
     await Future.delayed(const Duration(seconds: 1));
 
-    _stopSleep();
     await dingDong(_player);
     _controller.restart();
   }
@@ -163,6 +163,7 @@ class TimerState extends State<Timer> {
 
     logMessage('Start Guided Session');
     _reset();
+    _stopSleep();
     _isGuided = true;
 
     // Good to wait a second before starting the audio after tapping the button,
@@ -190,7 +191,6 @@ class TimerState extends State<Timer> {
     // The introductions are complete. We now tell the device not to sleep, play
     // the dings, and start the timer.
 
-    _stopSleep();
     await dingDong(_player);
     debugPrint('GUIDED: waiting $_audioDuration');
     _controller.restart();
@@ -248,7 +248,7 @@ class TimerState extends State<Timer> {
       tooltip: '''
 
 Press here to begin a session of silence for ${(_duration / 60).round()}
-minutes, beginning and ending with three dings.
+minutes, beginning and ending with three chimes.
 
 ''',
       onPressed: () {
@@ -322,8 +322,8 @@ three dings.
 
 Press here to play a ${10 + (_duration / 60).round()} minute guided session.
 The session begins with instructions for meditation from John Main.
-Introductory music is followed by 3 dings and a ${(_duration / 60).round()}
-minute silent session which is then finished with another three dings.  The
+Introductory music is followed by three chimes and a ${(_duration / 60).round()}
+minute silent session which is then finished with another three chimes.  The
 audio may take a little time to download for the Web version.
 
 ''',
