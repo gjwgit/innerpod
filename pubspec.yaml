@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: 'none'
-version: 1.5.10+54
+version: 1.6.0+56
 
 environment:
   sdk: '>=3.2.5 <4.0.0'
@@ -16,7 +16,6 @@ dependencies:
   intl:
   package_info_plus: 
   solidpod:
-    path: solidpod
   wakelock_plus: ^1.1.4
 
 dependency_overrides:
@@ -27,10 +26,10 @@ dev_dependencies:
   # a paid service. This fork maintains it's compatibility with the
   # latest flutter.
 
-  dart_code_metrics:
-    git:
-      url: https://github.com/Zheyuan-Robert-Xu/dart-code-metrics.git
-      ref: master
+  # dart_code_metrics:
+  #   git:
+  #     url: https://github.com/Zheyuan-Robert-Xu/dart-code-metrics.git
+  #     ref: master
 
   flutter_test:
     sdk: flutter
