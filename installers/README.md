@@ -1,10 +1,10 @@
 # InnerPod Installers
 
-Flutter supports multiple platform targets and the app will run native
-on Android, iOS, Linux, MacOS, and Windows, as well as directly in a
-browser from the web. Flutter functionality is essentially identical
-across all platforms so the experience across different platforms will
-be very similar.
+Flutter supports multiple platform targets and Flutter based apps will
+run native on Android, iOS, Linux, MacOS, and Windows, as well as
+directly in a browser from the web. Flutter functionality is
+essentially identical across all platforms so the experience across
+different platforms will be very similar.
 
 Visit the
 [CHANGELOG](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
@@ -14,18 +14,23 @@ for the latest updates.
 
 There are no specific prerequisites for InnerPod.
 
-## Android Side Load
+## Android
 
-For this SolidCommunity app, from your Android device's browser, simply visit 
-the Solid Community [Installer](https://solidcommunity.au/installers/innerpod.apk] 
-for InnerPod.
+The official Android app is available on the [Google Play
+Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod).
 
-On your Android device simply browse to this folder and click on the
-`innerpod.apk` file. Your browser will ask if you are comfortable to
-install the app locally. Choose to do so and you will have an Android
-native install of the app.
+You can also side load the latest version of the app by visiting the
+[Installer](https://solidcommunity.au/installers/innerpod.apk) from
+your Android device's browser. This will download the app to your
+Android device where you can click on the `innerpod.apk` file. Your
+browser will ask if you are comfortable to install the app locally. If
+you are comfortable with side loading the app then choose to do so.
 
-## Linux tar Archive
+## Linux
+
+### Prerequisite
+
+### Tar Install
 
 Download [innerpod.tar.gz](https://solidcommunity.au/installers/innerpod.tar.gz)
 
@@ -37,8 +42,8 @@ tar zxvf innerpod.tar.gz
 innerpod/innerpod
 ```
 
-To install for the local user and to make it known to Gnome and KDE,
-with a desktop icon, begin by downloading the **.tar.gz** and
+To install for the local user and to make it known to GNOME and KDE,
+with a desktop icon for their desktop, begin by downloading the **.tar.gz** and
 installing that:
 
 ```bash
@@ -70,7 +75,7 @@ The `rattle.desktop` and app icon can be installed into
 `/usr/local/share/applications/` and `/usr/local/share/icons/`
 respectively.
 
-Once installed you can run the app as Alt-F2 and type `APP` then
+Once installed you can run the app from the GNOME desktop through Alt-F2 and type `innerpod` then
 Enter.
 
 ## MacOS
