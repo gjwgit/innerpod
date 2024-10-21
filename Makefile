@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2024-07-07 10:09:56 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-22 09:37:44 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -62,7 +62,7 @@ $(APP):
   newaudio		AI intro and JM session
   testaudio		Short audio clips for testing
   gjaudio		GJ basic intro and session
-  aiaudio		AI generated intro and session
+  aiaudio		AI generated intro and session (Play Store)
 
   local	     Install to $(HOME)/.local/share/$(APP)
     tgz	     Upload the installer to solidcommunity.com
@@ -106,7 +106,7 @@ tgz::
 # Manage the audio tracks to use.
 
 newaudio:
-	cp ignore/dong.ogg assets/sounds/dong.ogg
+	cp ignore/dong_50.ogg assets/sounds/dong.ogg
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
 	cp ignore/session_guide.ogg assets/sounds/session_guide.ogg
 	cp ignore/session_intro_music.ogg assets/sounds/session_intro.ogg
@@ -120,12 +120,15 @@ testaudio:
 	cp ignore/testing_outro_music.ogg assets/sounds/session_outro.ogg
 
 gjaudio:
-	cp ignore/intro_gjw_8db.ogg assets/sounds/intro.ogg
-	cp ignore/intro_gjw_8db.ogg assets/sounds/session.ogg
+	cp ignore/dong_50.ogg assets/sounds/dong.ogg
+	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
+	cp ignore/intro_gjw_8db.ogg assets/sounds/session_guide.ogg
+	cp ignore/silence.ogg assets/sounds/session_intro.ogg
+	cp ignore/silence.ogg assets/sounds/session_outro.ogg
 
 aiaudio:
-	cp ignore/dong.ogg assets/sounds/dong.ogg
+	cp ignore/dong_50.ogg assets/sounds/dong.ogg
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/session_elevenlabs_emily.ogg assets/sounds/session_guide.ogg
-	cp ignore/session_intro_music.ogg assets/sounds/session_intro.ogg
-	cp ignore/session_outro_music.ogg assets/sounds/session_outro.ogg
+	cp ignore/session_elevenlabs_emily_80.ogg assets/sounds/session_guide.ogg
+	cp ignore/silence.ogg assets/sounds/session_intro.ogg
+	cp ignore/silence.ogg assets/sounds/session_outro.ogg
