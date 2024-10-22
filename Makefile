@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2024-10-22 09:37:44 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-10-22 19:21:44 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -132,3 +132,6 @@ aiaudio:
 	cp ignore/session_elevenlabs_emily_80.ogg assets/sounds/session_guide.ogg
 	cp ignore/silence.ogg assets/sounds/session_intro.ogg
 	cp ignore/silence.ogg assets/sounds/session_outro.ogg
+
+ginstall:
+	(cd installers; make $@)

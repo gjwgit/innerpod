@@ -51,8 +51,8 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     mv ${APP}-0.0.0.exe ${APP}-${version}-windows-inno.exe
     cp ${APP}-${version}-windows-inno.exe ${APP}-dev-windows-inno.exe
     chmod a+r ${APP}*-inno.exe
-    rsync -avzh ${APP}-${version}-windows-inno.exe togaware.com:apps/access/
-    ssh togaware.com "cd apps/access; cp -f ${APP}-${version}-windows-inno.exe ${APP}-dev-windows-inno.exe"
+    rsync -avzh ${APP}-${version}-windows-inno.exe ${DEST}
+    ssh ${HOST} "cd ${FLDR}; cp -f ${APP}-${version}-windows-inno.exe ${APP}-dev-windows-inno.exe"
 
     echo ""
 
@@ -69,12 +69,13 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     # MacOS
 
     gh run download ${bumpId} --name ${APP}-macos-zip
-    mv ${APP}-dev-macos.zip ${APP}-dev-macos.zip
     cp ${APP}-dev-macos.zip ${APP}-${version}-macos.zip
     chmod a+r ${APP}*.zip
     rsync -avzh ${APP}-${version}-macos.zip ${DEST}
     ssh ${HOST} "cd ${FLDR}; cp -f ${APP}-${version}-macos.zip ${APP}-dev-macos.zip"
 
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-*.zip ${APP}-*.exe"
+    
 else
     echo "Latest github actions has not completed. Exiting."
     exit 1
