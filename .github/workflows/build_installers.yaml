@@ -44,23 +44,18 @@ jobs:
       - name: Build Artifact
         run: flutter build linux --release
 
-      - name: Set version
-        run: |
-          echo "APP_VERSION=$(grep version pubspec.yaml |cut -d ':' -f 2 | sed 's/ //g')" >> $GITHUB_ENV
-          echo $APP_VERSION
-
       - name: Zip Bundle
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: innerpod-${{ env.APP_VERSION }}-linux.zip
+          filename: innerpod-${{ github.ref_name }}-linux.zip
           directory: build/linux/x64/release/bundle
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: innerpod-linux-zip
-          path: build/linux/x64/release/bundle/innerpod-${{ env.APP_VERSION }}-linux.zip
+          path: build/linux/x64/release/bundle/innerpod-${{ github.ref_name }}-linux.zip
 
 ########################################################################
 
@@ -124,14 +119,11 @@ jobs:
         run: flutter config --enable-windows-desktop
       - name: Build artifacts
         run: flutter build windows --release
-      - name: Set version
-        run: |
-          echo "APP_VERSION=$(grep version pubspec.yaml |cut -d ':' -f 2 | sed 's/ //g')" >> $GITHUB_ENV
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: innerpod-${{ env.APP_VERSION }}-windows.zip
+          filename: innerpod-${{github.ref_name}}-windows.zip
           directory: build/windows/x64/runner/Release
       - name: Windows Release
         uses: softprops/action-gh-release@v2
@@ -139,7 +131,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: build/windows/x64/runner/Release/innerpod-${{ env.APP_VERSION }}-windows.zip
+          files: build/windows/x64/runner/Release/innerpod-${{github.ref_name}}-windows.zip
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -165,15 +157,12 @@ jobs:
         run: flutter config --enable-macos-desktop
       - name: Build artifacts
         run: flutter build macos --release
-      - name: Set version
-        run: |
-          echo "APP_VERSION=$(grep version pubspec.yaml |cut -d ':' -f 2 | sed 's/ //g')" >> $GITHUB_ENV
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           directory: build/macos/Build/Products/Release
-          filename: innerpod-${{ env.APP_VERSION }}-macos.zip
+          filename: innerpod-${{github.ref_name}}-macos.zip
       - run: ls -lh build/macos/Build/Products/Release
       - name: macOS Release
         uses: softprops/action-gh-release@v2
@@ -181,9 +170,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          files: build/macos/Build/Products/Release/innerpod-${{ env.APP_VERSION }}-macos.zip
+          files: build/macos/Build/Products/Release/innerpod-${{github.ref_name}}-macos.zip
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: innerpod-macos-zip
-          path: build/macos/Build/Products/Release/innerpod-${{ env.APP_VERSION }}-macos.zip
+          path: build/macos/Build/Products/Release/innerpod-${{github.ref_name}}-macos.zip
