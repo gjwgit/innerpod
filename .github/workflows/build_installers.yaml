@@ -98,7 +98,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: innerpod-windows-inno
-          path: D:\a\innerpodng\innerpodng\installers\installers\innerpod-0.0.0.exe
+          path: D:\a\innerpod\innerpod\installers\installers\innerpod-0.0.0.exe
 
 ########################################################################
 
