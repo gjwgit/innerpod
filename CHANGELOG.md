@@ -3,10 +3,14 @@
 Recorded here are the end user focused changes for the InnerPod app.
 
 Guide: Each version update is recorded here with a short user-oriented
-description of the update. Updates in the 1.5.n series are heading
-toward a 1.6 release.
+description of the update. Updates in the 1.6.n series are heading
+toward a 1.7 release.
 
 + Need to get RESET/PAUSE/RESUME working
+
+## 1.7 IN PROGRESS
+
++ Review audio, quieten the bell. [1.6.1 20241023 gjw]
 
 ## 1.6 20241021
 
