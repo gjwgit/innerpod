@@ -1,10 +1,10 @@
 # InnerPod Installers
 
-Flutter supports multiple platform targets and Flutter based apps will
-run native on Android, iOS, Linux, MacOS, and Windows, as well as
-directly in a browser from the web. Flutter functionality is
-essentially identical across all platforms so the experience across
-different platforms will be very similar.
+Flutter supports multiple platform targets. Flutter based apps can run
+native on Android, iOS, Linux, MacOS, and Windows, as well as directly
+in a browser from the web. Flutter functionality is essentially
+identical across all platforms so the experience across different
+platforms will be very similar.
 
 Visit the
 [CHANGELOG](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
@@ -12,7 +12,8 @@ for the latest updates.
 
 ## Prerequisite
 
-There are no specific prerequisites for InnerPod.
+There are no specific prerequisites for installing and running
+InnerPod.
 
 ## Android
 
@@ -28,30 +29,25 @@ you are comfortable with side loading the app then choose to do so.
 
 ## Linux
 
-### Prerequisite
+### Zip Install
 
-### Tar Install
-
-Download [innerpod.tar.gz](https://solidcommunity.au/installers/innerpod.tar.gz)
+Download [innerpod-dev-linux.zip](https://solidcommunity.au/installers/innerpod-dev-linux.zip)
 
 To try it out:
 
 ```bash
-wget https://solidcommunity.au/installers/innerpod.tar.gz
-tar zxvf innerpod.tar.gz
-innerpod/innerpod
+wget https://solidcommunity.au/installers/innerpod-dev-linux.zip -O innerpod-dev-linux.zip
+unzip innerpod-dev-linux.zip -d innerpod
+./innerpod/innerpod
 ```
 
 To install for the local user and to make it known to GNOME and KDE,
-with a desktop icon for their desktop, begin by downloading the **.tar.gz** and
-installing that:
+with a desktop icon for their desktop, begin by downloading the **zip** and
+installing that into a local folder:
 
 ```bash
-wget https://solidcommunity.au/installers/innerpod.tar.gz -O innerpod.tar.gz
-tar zxvf innerpod.tar.gz -C ${HOME}/.local/share/
+unzip innerpod-dev-linux.zip -d ${HOME}/.local/share/innerpod
 ```
-
-Those two steps can also be repeated to update your installation.
 
 Then set up your local installation (only required once):
 
@@ -66,25 +62,27 @@ wget https://github.com/gjwgit/innerpod/raw/dev/installers/innerpod.png -O ${HOM
 To install for any user on the computer:
 
 ```bash
-wget https://solidcommunity.au/installers/innerpod.tar.gz
-sudo tar zxvf innerpod.tar.gz -C /opt/
+sudo unzip innerpod-dev-linux.zip -d /opt/innerpod
 sudo ln -s /opt/innerpod/innerpod /usr/local/bin/
 ``` 
 
-The `rattle.desktop` and app icon can be installed into
-`/usr/local/share/applications/` and `/usr/local/share/icons/`
-respectively.
+The
+[innerpod.desktop](https://solidcommunity.au/installers/innerpod.desktop)
+and [app icon](https://solidcommunity.au/installers/innerpod.png) can
+be installed into `/usr/local/share/applications/` and
+`/usr/local/share/icons/` respectively.
 
-Once installed you can run the app from the GNOME desktop through Alt-F2 and type `innerpod` then
-Enter.
+Once installed you can run the app from the GNOME desktop through
+Alt-F2 and type `innerpod` then Enter.
 
 ## MacOS
 
-The package file `innerpod.dmg` can be installed on MacOS. Download
-the file and open it on your Mac. Then, holding the Control key click
-on the app icon to display a menu. Choose `Open`. Then accept the
-warning to then run the app. The app should then run without the
-warning next time.
+The zip file
+[innerpod-dev-macos.zip](https://solidcommunity.au/installers/innerpod-dev-macos.zip)
+can be installed on MacOS. Download the file and open it on your
+Mac. Then, holding the Control key click on the app icon to display a
+menu. Choose `Open`. Then accept the warning to then run the app. The
+app should then run without the warning next time.
 
 ## Web -- No Installation Required
 
@@ -97,5 +95,6 @@ the web-based app directly.
 
 ## Windows Installer
 
-Download and run the `innerpod.exe` to self install the app on
-Windows.
+Download and run the self extracting archive
+[innerpod-dev-windows-inno.exe](https://solidcommunity.au/installers/innerpod-dev-windows-inno.exe)
+to self install the app on Windows.
