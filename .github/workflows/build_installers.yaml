@@ -7,6 +7,51 @@ on:
 
 jobs:
 
+########################################################################
+  
+  build-android-apk:
+    if: contains(github.event.head_commit.message, 'bump android')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Confirm Branch
+        run: git status
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          architecture: x64
+          flutter-version: 3.24.3
+
+      - name: Confirm Flutter Version
+        run: flutter --version
+
+      - name: Confirm Flutter Installation
+        run: flutter doctor
+
+      - name: Install flutter project dependencies
+        run: flutter pub get
+        
+      - name: Build Artifact
+        run: flutter build apk --release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: innerpod-android-apk
+          path: build/app/outputs/apk/release/app-release.apk
+
+########################################################################
+  
   build-linux-zip:
     if: contains(github.event.head_commit.message, 'bump version')
     runs-on: ubuntu-20.04
