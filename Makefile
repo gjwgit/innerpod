@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2024-10-22 19:21:44 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-10-23 09:37:16 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -59,8 +59,8 @@ endif
 define HELP
 $(APP):
 
-  newaudio		AI intro and JM session
-  testaudio		Short audio clips for testing
+  jmaudio		AI intro and JM session
+  teaudio		Short audio clips for testing
   gjaudio		GJ basic intro and session
   aiaudio		AI generated intro and session (Play Store)
 
@@ -103,16 +103,17 @@ tgz::
 	rsync -avzh installers/*.tar.gz solidcommunity.au:/var/www/html/installers/
 	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
 	ssh solidcommunity.au chmod go=x /var/www/html/installers/
+
 # Manage the audio tracks to use.
 
-newaudio:
-	cp ignore/dong_50.ogg assets/sounds/dong.ogg
+jmaudio:
+	cp ignore/dong40v.ogg assets/sounds/dong.ogg
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/session_guide.ogg assets/sounds/session_guide.ogg
+	cp ignore/session_guide_jm.ogg assets/sounds/session_guide.ogg
 	cp ignore/session_intro_music.ogg assets/sounds/session_intro.ogg
 	cp ignore/session_outro_music.ogg assets/sounds/session_outro.ogg
 
-testaudio:
+teaudio:
 	cp ignore/testing_ding.ogg assets/sounds/dong.ogg
 	cp ignore/testing_intro.ogg assets/sounds/intro.ogg
 	cp ignore/testing_guide.ogg assets/sounds/session_guide.ogg
@@ -120,16 +121,16 @@ testaudio:
 	cp ignore/testing_outro_music.ogg assets/sounds/session_outro.ogg
 
 gjaudio:
-	cp ignore/dong_50.ogg assets/sounds/dong.ogg
+	cp ignore/dongv50.ogg assets/sounds/dong.ogg
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/intro_gjw_8db.ogg assets/sounds/session_guide.ogg
+	cp ignore/session_guide_gjw_8db.ogg assets/sounds/session_guide.ogg
 	cp ignore/silence.ogg assets/sounds/session_intro.ogg
 	cp ignore/silence.ogg assets/sounds/session_outro.ogg
 
 aiaudio:
-	cp ignore/dong_50.ogg assets/sounds/dong.ogg
+	cp ignore/dong40v.ogg assets/sounds/dong.ogg
 	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/session_elevenlabs_emily_80.ogg assets/sounds/session_guide.ogg
+	cp ignore/session_guide_elevenlabs_emily_80.ogg assets/sounds/session_guide.ogg
 	cp ignore/silence.ogg assets/sounds/session_intro.ogg
 	cp ignore/silence.ogg assets/sounds/session_outro.ogg
 
