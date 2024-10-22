@@ -49,7 +49,7 @@ Source: "D:\a\innerpod\innerpod\build\windows\x64\runner\Release\flutter_secure_
 Source: "D:\a\innerpod\innerpod\build\windows\x64\runner\Release\flutter_windows.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\a\innerpod\innerpod\build\windows\x64\runner\Release\librsa_bridge.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "D:\a\innerpod\innerpod\build\windows\x64\runner\Release\url_launcher_windows_plugin.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\a\innerpod\rattleng\build\windows\x64\runner\Release\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\a\innerpod\innerpod\build\windows\x64\runner\Release\data\*"; DestDir: "{app}\data"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
