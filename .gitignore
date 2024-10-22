@@ -6,6 +6,8 @@ installers/*.tar.gz
 installers/*.apk
 *~
 !lib
+*.bak
+*/ARCHIVE
 
 installers/*.exe
 installers/*.snap
