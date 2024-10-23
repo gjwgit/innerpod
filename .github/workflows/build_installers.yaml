@@ -86,7 +86,9 @@ jobs:
         env:
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
 
-      # Set up environment variables for signing
+      # Set up environment variables for signing. If the password
+      # contains special shell characters we need to handle them
+      # specifically. We handle some cases below for illustration.
 
       - name: Set up environment for signing
         run: |
