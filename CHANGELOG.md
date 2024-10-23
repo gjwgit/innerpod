@@ -10,6 +10,7 @@ toward a 1.7 release.
 
 ## 1.7 IN PROGRESS
 
++ Quotes -> Wisdom [1.6.4 20241024 gjw]
 + Update installers [1.6.3 20241023 gjw]
 + Testing [1.6.2 20241023 gjw]
 + Review audio, quieten the bell. [1.6.1 20241023 gjw]
