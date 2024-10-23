@@ -10,6 +10,7 @@ toward a 1.7 release.
 
 ## 1.7 IN PROGRESS
 
++ Testing [1.6.2 20241023 gjw]
 + Review audio, quieten the bell. [1.6.1 20241023 gjw]
 
 ## 1.6 20241021
