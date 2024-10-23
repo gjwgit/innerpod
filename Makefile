@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-10-23 09:37:16 +1100 Graham Williams>
+# Time-stamp: <Wednesday 2024-10-23 14:37:02 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -87,9 +87,8 @@ clean::
 # Android: Upload to Solid Community installers for general access.
 
 apk::
-	rsync -avzh --exclude *~ installers/ solidcommunity.au:/var/www/html/installers/
-	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
-	ssh solidcommunity.au chmod go=x /var/www/html/installers/
+	rsync -avzh installers/innerpod.apk solidcommunity.au:/var/www/html/installers/
+	ssh solidcommunity.au chmod a+r /var/www/html/installers/innerpod.apk
 
 # Linux: Install locally.
 
