@@ -1,6 +1,6 @@
 /// DESCRIPTION
 //
-// Time-stamp: <Monday 2024-10-21 15:54:44 +1100 Graham Williams>
+// Time-stamp: <Thursday 2024-10-24 09:24:41 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -52,7 +52,7 @@ class Instructions extends StatelessWidget {
                   Tab(text: 'Guide'),
                   Tab(text: 'Opening'),
                   Tab(text: 'Closing'),
-                  Tab(text: 'Quotes'),
+                  Tab(text: 'Wisdom'),
                 ],
               ),
             ],
