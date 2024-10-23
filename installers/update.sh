@@ -1,49 +1,44 @@
 #!/bin/bash
 
+# 20241024 gjw After a github action has built the bundles and stored
+# them as artefacts on github, we can upload them to solidcommunity.au for
+# distribution.
+
 APP=innerpod
 
 HOST=solidcommunity.au
 FLDR=/var/www/html/installers/
 DEST=${HOST}:${FLDR}
 
-# Assume the latest is a Bump version - we only run the actions on a bump version.
+# Identify the Bump Version pushes to the repositroy and get the
+# latest one.
 
-if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "completed" ]; then
-    rm -f ${APP}-dev-linux.zip
+bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
+	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
+	     | head -n 1)
 
-    # Identify the latest Bump Version but one. The latest is now the
-    # integration test, and the one before it is the installer build.
+status=$(gh run view ${bumpId} --json status --jq '.status')
+conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
 
-    bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
-		 | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' | head -n 1)
+# Only proceed if the latest action hase been completed successfully
 
-    # Determine the latest version. Assumes the latest action is a
-    # Bump veriosn push.
+if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
+
+    # Determine the latest version from pubspec.yaml. Assumes the
+    # latest Bump Version push is the same version.
     
-    version=$(grep version ../pubspec.yaml |cut -d ':' -f 2 | sed 's/ //g')
+    version=$(grep version ../pubspec.yaml | head -1 | cut -d ':' -f 2 | sed 's/ //g')
 
-	      # gh run list --limit 100 --json databaseId,displayTitle \
-	      # 	  | jq -r '.[] | select(.displayTitle | startswith("Bump version")) | .displayTitle' \
-	      # 	  | head -n 1 \
-	      #     | cut -d' ' -f3)
-
-    # Ubuntu 20.04 20240801
-    
-    # gh run download ${bumpId} --name ${APP}-ubuntu
-    # mv ${APP}-dev-ubuntu.zip ${APP}-dev-ubuntu.zip
-    # cp ${APP}-dev-ubuntu.zip ${APP}-${version}-ubuntu.zip
-    # chmod a+r ${APP}*.zip
-    # rsync -avzh ${APP}-dev-ubuntu.zip ${APP}-${version}-ubuntu.zip togaware.com:apps/access/
-
-    # Linux Ubuntu 20.04 20240801 moved from 22.04
+    echo '***** UPLOAD LINUX ZIP. LOCAL INSTALL'
 
     gh run download ${bumpId} --name ${APP}-linux-zip
     rsync -avzh ${APP}-dev-linux.zip ${DEST}
+    unzip -oq ${APP}-dev-linux.zip -d ${HOME}/.local/share/${APP}/
     mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
 
     echo ""
 
-    # Windows Inno
+    echo '***** UPLOAD WINDOWS INNO'
 
     gh run download ${bumpId} --name ${APP}-windows-inno
     rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
@@ -51,7 +46,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     echo ""
 
-    # Windows Zip
+    echo '***** UPLOAD WINDOWS ZIP'
 
     gh run download ${bumpId} --name ${APP}-windows-zip
     rsync -avzh ${APP}-dev-windows.zip ${DEST}
@@ -59,7 +54,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     
     echo ""
 
-    # MacOS
+    echo '***** UPLOAD MACOS'
 
     gh run download ${bumpId} --name ${APP}-macos-zip
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
@@ -68,6 +63,9 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
     
 else
-    echo "Latest github actions has not completed. Exiting."
+    gh run view ${bumpId}
+    gh run view ${bumpId} --json status,conclusion
+    echo ''
+    echo "Latest github actions has not successfully completed. Exiting."
     exit 1
 fi

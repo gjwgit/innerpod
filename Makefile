@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-10-23 14:37:02 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-10-24 09:15:39 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -64,8 +64,8 @@ $(APP):
   gjaudio		GJ basic intro and session
   aiaudio		AI generated intro and session (Play Store)
 
-  local	     Install to $(HOME)/.local/share/$(APP)
-    tgz	     Upload the installer to solidcommunity.com
+  ginstall   Install to solidcommunity.au and local after a build
+  tgz	     Upload the installer to solidcommunity.com
   apk	     Upload the installer to solidcommunity.com
 
 endef
@@ -83,17 +83,6 @@ help::
 
 clean::
 	rm -f README.html
-
-# Android: Upload to Solid Community installers for general access.
-
-apk::
-	rsync -avzh installers/innerpod.apk solidcommunity.au:/var/www/html/installers/
-	ssh solidcommunity.au chmod a+r /var/www/html/installers/innerpod.apk
-
-# Linux: Install locally.
-
-local: tgz
-	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
 
 # Linux: Upload to Solid Community installers for general access.
 
@@ -133,5 +122,14 @@ aiaudio:
 	cp ignore/silence.ogg assets/sounds/session_intro.ogg
 	cp ignore/silence.ogg assets/sounds/session_outro.ogg
 
-ginstall:
+# Make apk on this machine to deal with signing. Then a ginstall of
+# the built bundles from github, installed to solidcommunity.au and
+# moved into ARCHIVE.
+
+apk::
+	rsync -avzh installers/$(APP).apk solidcommunity.au:/var/www/html/installers/
+	ssh solidcommunity.au chmod a+r /var/www/html/installers/innerpod.apk
+	mv -f installers/$(APP)-*.apk installers/ARCHIVE
+
+ginstall: apk
 	(cd installers; make $@)
