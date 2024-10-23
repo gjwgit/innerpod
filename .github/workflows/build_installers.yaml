@@ -9,42 +9,9 @@ jobs:
 
 ########################################################################
 #
-# 20241023 gjw Currently failing
-#
-# Running Gradle task 'assembleRelease'...                        
-# Warning: Errors during XML parse:
-# Warning: Additionally, the fallback loader failed to parse the XML.
-# Checking the license for package Android SDK Platform-Tools in /usr/local/lib/android/sdk/licenses
-# License for package Android SDK Platform-Tools accepted.
-# Preparing "Install Android SDK Platform-Tools v.35.0.2".
-# "Install Android SDK Platform-Tools v.35.0.2" ready.
-# Installing Android SDK Platform-Tools in /usr/local/lib/android/sdk/platform-tools
-# "Install Android SDK Platform-Tools v.35.0.2" complete.
-# "Install Android SDK Platform-Tools v.35.0.2" finished.
-# warning: [options] source value 8 is obsolete and will be removed in a future release
-# warning: [options] target value 8 is obsolete and will be removed in a future release
-# warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
-# 3 warnings
-# warning: [options] source value 8 is obsolete and will be removed in a future release
-# warning: [options] target value 8 is obsolete and will be removed in a future release
-# warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
-# 3 warnings
-# FAILURE: Build failed with an exception.
-# * What went wrong:
-# Execution failed for task ':path_provider_android:compileReleaseJavaWithJavac'.
-# > Could not resolve all files for configuration ':path_provider_android:androidJdkImage'.
-#    > Failed to transform core-for-system-modules.jar to match attributes {artifactType=_internal_android_jdk_image, org.gradle.libraryelements=jar, org.gradle.usage=java-runtime}.
-#       > Execution failed for JdkImageTransform: /usr/local/lib/android/sdk/platforms/android-34/core-for-system-modules.jar.
-#          > Error while executing process /opt/hostedtoolcache/Java_Zulu_jdk/21.0.5-11/x64/bin/jlink with arguments {--module-path /home/runner/.gradle/caches/transforms-3/382e3d1624dae2bda444ec72ac0c12ac/transformed/output/temp/jmod --add-modules java.base --output /home/runner/.gradle/caches/transforms-3/382e3d1624dae2bda444ec72ac0c12ac/transformed/output/jdkImage --disable-plugin system-modules}
-# * Try:
-# > Run with --stacktrace option to get the stack trace.
-# > Run with --info or --debug option to get more log output.
-# > Run with --scan to get full insights.
-# > Get more help at https://help.gradle.org.
-# BUILD FAILED in 3m 10s
-# Running Gradle task 'assembleRelease'...                          190.8s
-# Gradle task assembleRelease failed with exit code 1
-# Error: Process completed with exit code 1.
+# 20241023 gjw Currently failing due to various things, including the
+# password having special characters. Abort the attempt to build apk
+# for now.
 
   build-android-apk:
     if: contains(github.event.head_commit.message, 'bump android')
