@@ -39,9 +39,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     gh run download ${bumpId} --name ${APP}-linux-zip
     cp ${APP}-dev-linux.zip ${APP}-${version}-linux.zip
-    chmod a+r ${APP}*.zip
-    rsync -avzh ${APP}-${version}-linux.zip ${DEST}
-    ssh ${HOST} "cd ${FLDR}; cp -f ${APP}-${version}-linux.zip ${APP}-dev-linux.zip"
+    rsync -avzh ${APP}-dev-linux.zip ${DEST}
 
     echo ""
 
@@ -50,9 +48,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     gh run download ${bumpId} --name ${APP}-windows-inno
     mv ${APP}-0.0.0.exe ${APP}-${version}-windows-inno.exe
     cp ${APP}-${version}-windows-inno.exe ${APP}-dev-windows-inno.exe
-    chmod a+r ${APP}*-inno.exe
-    rsync -avzh ${APP}-${version}-windows-inno.exe ${DEST}
-    ssh ${HOST} "cd ${FLDR}; cp -f ${APP}-${version}-windows-inno.exe ${APP}-dev-windows-inno.exe"
+    rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
 
     echo ""
 
@@ -60,9 +56,7 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     gh run download ${bumpId} --name ${APP}-windows-zip
     cp ${APP}-dev-windows.zip ${APP}-${version}-windows.zip
-    chmod a+r ${APP}*.zip
-    rsync -avzh ${APP}-${version}-windows.zip ${DEST}
-    ssh ${HOST} "cd ${FLDR}; cp -f ${APP}-${version}-windows.zip ${APP}-dev-windows.zip"
+    rsync -avzh ${APP}-dev-windows.zip ${DEST}
     
     echo ""
 
@@ -70,11 +64,9 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
 
     gh run download ${bumpId} --name ${APP}-macos-zip
     cp ${APP}-dev-macos.zip ${APP}-${version}-macos.zip
-    chmod a+r ${APP}*.zip
-    rsync -avzh ${APP}-${version}-macos.zip ${DEST}
-    ssh ${HOST} "cd ${FLDR}; cp -f ${APP}-${version}-macos.zip ${APP}-dev-macos.zip"
+    rsync -avzh ${APP}-dev-macos.zip ${DEST}
 
-    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-*.zip ${APP}-*.exe"
+    ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
     
 else
     echo "Latest github actions has not completed. Exiting."
