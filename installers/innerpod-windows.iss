@@ -3,7 +3,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "InnerPod"
-#define MyAppVersion "0.0.0"
+#define MyAppVersion "dev-windows-inno"
 #define MyAppPublisher "Togaware"
 #define MyAppURL "https://innerpod.solidcommunity.au/"
 #define MyAppExeName "innerpod.exe"

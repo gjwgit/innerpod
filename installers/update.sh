@@ -38,33 +38,32 @@ if [ "$(gh run list --limit 1 --json databaseId,status --jq '.[0].status')" = "c
     # Linux Ubuntu 20.04 20240801 moved from 22.04
 
     gh run download ${bumpId} --name ${APP}-linux-zip
-    cp ${APP}-dev-linux.zip ${APP}-${version}-linux.zip
     rsync -avzh ${APP}-dev-linux.zip ${DEST}
+    mv -f ${APP}-dev-linux.zip ARCHIVE/${APP}-${version}-linux.zip
 
     echo ""
 
     # Windows Inno
 
     gh run download ${bumpId} --name ${APP}-windows-inno
-    mv ${APP}-0.0.0.exe ${APP}-${version}-windows-inno.exe
-    cp ${APP}-${version}-windows-inno.exe ${APP}-dev-windows-inno.exe
     rsync -avzh ${APP}-dev-windows-inno.exe ${DEST}
+    mv ${APP}-dev-windows-inno.exe ARCHIVE/${APP}-${version}-windows-inno.exe
 
     echo ""
 
     # Windows Zip
 
     gh run download ${bumpId} --name ${APP}-windows-zip
-    cp ${APP}-dev-windows.zip ${APP}-${version}-windows.zip
     rsync -avzh ${APP}-dev-windows.zip ${DEST}
+    mv -f ${APP}-dev-windows.zip ARCHIVE/${APP}-${version}-windows.zip
     
     echo ""
 
     # MacOS
 
     gh run download ${bumpId} --name ${APP}-macos-zip
-    cp ${APP}-dev-macos.zip ${APP}-${version}-macos.zip
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
+    mv ${APP}-dev-macos.zip ARCHIVE/${APP}-${version}-macos.zip
 
     ssh ${HOST} "cd ${FLDR}; chmod a+r ${APP}-dev-*.zip ${APP}-dev-*.exe"
     
