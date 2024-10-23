@@ -83,8 +83,7 @@ jobs:
 
       - name: Decode Keystore
         run: echo $ANDROID_KEYSTORE | base64 -d > android/app/keystore.jks
-        env:
-        ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+        env: ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
 
       # Set up environment variables for signing
 
