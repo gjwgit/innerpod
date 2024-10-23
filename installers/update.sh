@@ -54,7 +54,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     
     echo ""
 
-    echo '***** UPLOAD MACOS'
+    echo '***** UPLOAD MACOS ZIP'
 
     gh run download ${bumpId} --name ${APP}-macos-zip
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
@@ -66,6 +66,7 @@ else
     gh run view ${bumpId}
     gh run view ${bumpId} --json status,conclusion
     echo ''
-    echo "Latest github actions has not successfully completed. Exiting."
+    echo "***** Latest github actions has not successfully completed. Exiting."
+    echo ''
     exit 1
 fi

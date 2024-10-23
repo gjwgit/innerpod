@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2024-10-24 09:15:39 +1100 Graham Williams>
+# Time-stamp: <Thursday 2024-10-24 09:33:32 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -130,6 +130,7 @@ apk::
 	rsync -avzh installers/$(APP).apk solidcommunity.au:/var/www/html/installers/
 	ssh solidcommunity.au chmod a+r /var/www/html/installers/innerpod.apk
 	mv -f installers/$(APP)-*.apk installers/ARCHIVE
+	rm -f installers/$(APP).apk
 
 ginstall: apk
 	(cd installers; make $@)
