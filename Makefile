@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Thursday 2024-10-24 09:33:32 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-10-25 13:30:59 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -95,32 +95,32 @@ tgz::
 # Manage the audio tracks to use.
 
 jmaudio:
-	cp ignore/dong40v.ogg assets/sounds/dong.ogg
-	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/session_guide_jm.ogg assets/sounds/session_guide.ogg
-	cp ignore/session_intro_music.ogg assets/sounds/session_intro.ogg
-	cp ignore/session_outro_music.ogg assets/sounds/session_outro.ogg
+	ffmpeg -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
+	ffmpeg -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
+	ffmpeg -v 0 -i ignore/session_guide_jm.ogg assets/sounds/session_guide.mp3
+	ffmpeg -v 0 -i ignore/session_intro_music.ogg assets/sounds/session_intro.mp3
+	ffmpeg -v 0 -i ignore/session_outro_music.ogg assets/sounds/session_outro.mp3
 
 teaudio:
-	cp ignore/testing_ding.ogg assets/sounds/dong.ogg
-	cp ignore/testing_intro.ogg assets/sounds/intro.ogg
-	cp ignore/testing_guide.ogg assets/sounds/session_guide.ogg
-	cp ignore/testing_intro_music.ogg assets/sounds/session_intro.ogg
-	cp ignore/testing_outro_music.ogg assets/sounds/session_outro.ogg
+	ffmpeg -v 0 -i ignore/testing_ding.ogg assets/sounds/dong.mp3
+	ffmpeg -v 0 -i ignore/testing_intro.ogg assets/sounds/intro.mp3
+	ffmpeg -v 0 -i ignore/testing_guide.ogg assets/sounds/session_guide.mp3
+	ffmpeg -v 0 -i ignore/testing_intro_music.ogg assets/sounds/session_intro.mp3
+	ffmpeg -v 0 -i ignore/testing_outro_music.ogg assets/sounds/session_outro.mp3
 
 gjaudio:
-	cp ignore/dongv50.ogg assets/sounds/dong.ogg
-	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/session_guide_gjw_8db.ogg assets/sounds/session_guide.ogg
-	cp ignore/silence.ogg assets/sounds/session_intro.ogg
-	cp ignore/silence.ogg assets/sounds/session_outro.ogg
+	ffmpeg -v 0 -i ignore/dongv50.ogg assets/sounds/dong.mp3
+	ffmpeg -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
+	ffmpeg -v 0 -i ignore/session_guide_gjw_8db.ogg assets/sounds/session_guide.mp3
+	ffmpeg -v 0 -i ignore/silence.ogg assets/sounds/session_intro.mp3
+	ffmpeg -v 0 -i ignore/silence.ogg assets/sounds/session_outro.mp3
 
 aiaudio:
-	cp ignore/dong40v.ogg assets/sounds/dong.ogg
-	cp ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	cp ignore/session_guide_elevenlabs_emily_80.ogg assets/sounds/session_guide.ogg
-	cp ignore/silence.ogg assets/sounds/session_intro.ogg
-	cp ignore/silence.ogg assets/sounds/session_outro.ogg
+	ffmpeg -v 0 -i ignore/dong40v.ogg assets/sounds/dong.ogg
+	ffmpeg -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
+	ffmpeg -v 0 -i ignore/session_guide_elevenlabs_emily_80.ogg assets/sounds/session_guide.ogg
+	ffmpeg -v 0 -i ignore/silence.ogg assets/sounds/session_intro.ogg
+	ffmpeg -v 0 -i ignore/silence.ogg assets/sounds/session_outro.ogg
 
 # Make apk on this machine to deal with signing. Then a ginstall of
 # the built bundles from github, installed to solidcommunity.au and

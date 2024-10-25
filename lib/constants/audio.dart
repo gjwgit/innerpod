@@ -1,6 +1,6 @@
 /// Aduio related constants used across the app.
 //
-// Time-stamp: <Monday 2024-07-01 07:27:16 +1000 Graham Williams>
+// Time-stamp: <Friday 2024-10-25 13:32:31 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -35,21 +35,21 @@ import 'package:audioplayers/audioplayers.dart';
 
 /// The dong usually consists of three dings.
 
-final dong = AssetSource('sounds/dong.ogg');
+final dong = AssetSource('sounds/dong.mp3');
 
 /// The INTRO audio is often a short introductory prayer to begin the session.
 
-final introAudio = AssetSource('sounds/intro.ogg');
+final introAudio = AssetSource('sounds/intro.mp3');
 
 /// The GUIDED audio is currently, as of 20240626, the full 30 minute JM
 /// meditation session.
 
-final sessionGuide = AssetSource('sounds/session_guide.ogg');
+final sessionGuide = AssetSource('sounds/session_guide.mp3');
 
 ///
 
-final sessionIntro = AssetSource('sounds/session_intro.ogg');
+final sessionIntro = AssetSource('sounds/session_intro.mp3');
 
 ///
 
-final sessionOutro = AssetSource('sounds/session_outro.ogg');
+final sessionOutro = AssetSource('sounds/session_outro.mp3');
