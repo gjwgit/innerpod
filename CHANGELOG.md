@@ -8,7 +8,11 @@ toward a 1.7 release.
 
 + Need to get RESET/PAUSE/RESUME working
 
-## 1.7 IN PROGRESS
+## 1.8 IN PROGRESS
+
++ Move to mp3 rather than ogg for wider OS support [1.7.0 20241025 gjw]
+
+## 1.7 20241025
 
 + Quotes -> Wisdom [1.6.4 20241024 gjw]
 + Update installers [1.6.3 20241023 gjw]
