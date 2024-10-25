@@ -1,9 +1,18 @@
 name: Build Installers
 
+# 20241024 gjw Construct bundles for various distributions. The
+# bundles (as .zip and .exe files) are created as artefacts that can
+# be downloaded locally using the github command line `gh`. I am not
+# utilising github SECRETS yet but could do so to push the packages
+# directly to solidcommunity.au.
+
 on:
   push:
     branches:
       - dev
+
+env:
+  FLUTTER_VERSION: '3.24.3'
 
 jobs:
 
@@ -111,7 +120,7 @@ jobs:
         with:
           channel: stable
           architecture: x64
-          flutter-version: 3.24.3
+          flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Confirm Flutter Version
         run: flutter --version
@@ -123,7 +132,7 @@ jobs:
           sudo apt-get install -y clang cmake
           sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
 
-      - name: Install flutter project dependencies
+      - name: Install Flutter Project Dependencies
         run: flutter pub get
         
       - name: Enable Linux Build
@@ -160,7 +169,7 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
-          flutter-version: '3.24.3'
+          flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Install Project Dependencies
         run: flutter pub get
@@ -188,77 +197,82 @@ jobs:
           name: innerpod-windows-inno
           path: D:\a\innerpod\innerpod\installers\installers\innerpod-dev-windows-inno.exe
 
-########################################################################
+  ########################################################################
 
   build-windows-zip:
     if: contains(github.event.head_commit.message, 'bump version')
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
-          flutter-version: '3.24.3'
+          flutter-version: ${{env.FLUTTER_VERSION}}
+
       - name: Install project dependencies
         run: flutter pub get
+
       - name: Enable windows build
         run: flutter config --enable-windows-desktop
+
       - name: Build artifacts
         run: flutter build windows --release
+
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           filename: innerpod-${{github.ref_name}}-windows.zip
           directory: build/windows/x64/runner/Release
-      - name: Windows Release
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: build/windows/x64/runner/Release/innerpod-${{github.ref_name}}-windows.zip
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: innerpod-windows-zip
           path: build/windows/x64/runner/Release/innerpod-${{github.ref_name}}-windows.zip
 
-########################################################################
+  ########################################################################
 
   build-macos-zip:
     if: contains(github.event.head_commit.message, 'bump version')
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
-          flutter-version: '3.24.3'
-      - name: Install project dependencies
+          flutter-version: ${{env.FLUTTER_VERSION}}
+
+      - name: Install Project Dependencies
         run: flutter pub get
+
       - name: Enable macOS build
         run: flutter config --enable-macos-desktop
+
       - name: Build artifacts
         run: flutter build macos --release
+
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           directory: build/macos/Build/Products/Release
+          path: innerpod.app
           filename: innerpod-${{github.ref_name}}-macos.zip
-      - run: ls -lh build/macos/Build/Products/Release
-      - name: macOS Release
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          files: build/macos/Build/Products/Release/innerpod-${{github.ref_name}}-macos.zip
+
+      - name: Review Bundle Contents
+        run: ls -lh build/macos/Build/Products/Release
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
