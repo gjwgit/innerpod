@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Friday 2024-11-01 13:30:22 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 13:36:17 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -34,7 +34,7 @@ import 'package:solidpod/solidpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:innerpod/constants/colours.dart';
-import 'package:innerpod/utils/word_wrap.dart.~2~';
+import 'package:innerpod/utils/word_wrap.dart';
 import 'package:innerpod/widgets/instructions.dart';
 import 'package:innerpod/widgets/timer.dart';
 
