@@ -1,6 +1,6 @@
 /// Main home page for the app.
 //
-// Time-stamp: <Friday 2024-11-01 13:25:48 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 13:30:22 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -183,13 +183,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   applicationVersion: appInfo.version,
                   applicationLegalese: '© 2024 Togaware',
                   children: [
-                    SizedBox(height: 20),
+                    const Gap(20),
                     MarkdownBody(
                       data: _about,
                       selectable: true,
-                      softLineBreak: false,
                       onTapLink: (text, href, about) {
-                        final Uri url = Uri.parse(href ?? '');
+                        final url = Uri.parse(href ?? '');
                         launchUrl(url);
                       },
                     ),

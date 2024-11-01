@@ -1,6 +1,6 @@
 /// Word wrap a string.
 //
-// Time-stamp: <Friday 2024-11-01 12:36:17 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 13:31:28 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -79,7 +79,7 @@ String wordWrap(
   // them. 20240811 gjw added trim() to remove any white space at the end of the
   // string. Will this affect anythig else?
 
-  text = para.join('\n\n').trim();
+  final result = para.join('\n\n').trim();
 
   // text = result
   //     .replaceAllMapped(pattern, (match) => '${match.group(0)!}\n')
@@ -87,5 +87,5 @@ String wordWrap(
 
   // text = text.replaceAll(RegExp(r'^ +'), '');
 
-  return text;
+  return result;
 }
