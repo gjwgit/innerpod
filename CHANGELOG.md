@@ -1,15 +1,12 @@
 # InnerPod Changelog
 
-Recorded here are the end user focused changes for the InnerPod app.
+Here we record the basic changes made to the InnerPod app.
 
-Guide: Each version update is recorded here with a short user-oriented
-description of the update. Updates in the 1.6.n series are heading
-toward a 1.7 release.
-
-+ Need to get RESET/PAUSE/RESUME working
++ RESET/PAUSE/RESUME is under development.
 
 ## 1.8 IN PROGRESS
 
++ Use markdown for About with active url links [1.7.1 20241101 gjw]
 + Move to mp3 rather than ogg for wider OS support [1.7.0 20241025 gjw]
 
 ## 1.7 20241025
