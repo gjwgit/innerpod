@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Friday 2024-10-25 13:30:59 +1100 Graham Williams>
+# Time-stamp: <Friday 2024-11-01 14:19:24 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -94,8 +94,10 @@ tgz::
 
 # Manage the audio tracks to use.
 
+# ffmpeg -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
+
 jmaudio:
-	ffmpeg -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
+	ffmpeg -v 0 -i ignore/tibet.mp3 assets/sounds/dong.mp3
 	ffmpeg -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
 	ffmpeg -v 0 -i ignore/session_guide_jm.ogg assets/sounds/session_guide.mp3
 	ffmpeg -v 0 -i ignore/session_intro_music.ogg assets/sounds/session_intro.mp3
