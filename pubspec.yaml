@@ -12,24 +12,23 @@ dependencies:
   audioplayers: ^6.1.0
   cupertino_icons: ^1.0.2
   circular_countdown_timer: ^0.2.3
-  flutter_markdown: ^0.6.18
+  flutter_markdown: ^0.7.4
+  gap:
   intl:
   package_info_plus: 
   solidpod:
+  url_launcher: ^6.3.0
   wakelock_plus: ^1.1.4
 
-dependency_overrides:
-  intl: ^0.19.0  # Eventually remove. Through solidpod, solid-auth depends on intl-0.19.0
-  
 dev_dependencies:
   # The original `dart-code-metrics` is end of live and has migrated to
   # a paid service. This fork maintains it's compatibility with the
   # latest flutter.
 
-  # dart_code_metrics:
-  #   git:
-  #     url: https://github.com/Zheyuan-Robert-Xu/dart-code-metrics.git
-  #     ref: master
+  dart_code_metrics:
+    git:
+      url: https://github.com/anusii/dart-code-metrics.git
+      ref: dev
 
   flutter_test:
     sdk: flutter
@@ -37,6 +36,10 @@ dev_dependencies:
   # solid_lints: ^0.1.1
   ubuntu_lints: ^0.3.0
 
+dependency_overrides:
+  # Required for dart-code-metrics.
+  collection: ^1.19.0
+ 
 flutter:
   uses-material-design: true
 
