@@ -6,6 +6,7 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ Updated Tibetan bell from freesound.com [1.7.2 20241101 gjw]
 + Use markdown for About with active url links [1.7.1 20241101 gjw]
 + Move to mp3 rather than ogg for wider OS support [1.7.0 20241025 gjw]
 

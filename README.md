@@ -100,3 +100,5 @@ audio was generated using ElevenLabs text to speech.
 The instructions for meditating by John Main are from
 [WCCM](https://wccm.org).
 
+The bell is Tibetan bowl_left hit.wav by dersinnsspace --
+https://freesound.org/s/417117/ -- License: Creative Commons 0
