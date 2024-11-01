@@ -17,6 +17,11 @@ bumpId=$(gh run list --limit 100 --json databaseId,displayTitle,workflowName \
 	     | jq -r '.[] | select(.workflowName | startswith("Build Installers")) | select(.displayTitle | startswith("Bump version")) | .databaseId' \
 	     | head -n 1)
 
+if [[ -z "${bumpId}" ]]; then
+    echo "No workflow found."
+    exit 1
+fi
+
 status=$(gh run view ${bumpId} --json status --jq '.status')
 conclusion=$(gh run view ${bumpId} --json conclusion --jq '.conclusion')
 
@@ -54,7 +59,7 @@ if [[ "${status}" == "completed" && "${conclusion}" == "success" ]]; then
     
     echo ""
 
-    echo '***** UPLOAD MACOS ZIP'
+    echo '***** UPLOAD MACOS'
 
     gh run download ${bumpId} --name ${APP}-macos-zip
     rsync -avzh ${APP}-dev-macos.zip ${DEST}
