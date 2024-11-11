@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2024-11-12 08:17:26 +1100 >
+# Time-stamp: <Tuesday 2024-11-12 08:44:44 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -111,12 +111,7 @@ weaudio:
 	ffmpeg -y -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
 	ffmpeg -y -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
 	ffmpeg -y -v 0 -i ignore/session_outro_music.ogg assets/sounds/session_outro.mp3
-	ffmpeg -y -v 0 -i ignore/session_guide_jm.ogg f1.mp3
-	ffmpeg -y -v 0 -i ignore/session_intro_music.ogg f2.mp3
-	echo "file 'f1.mp3'" > session.txt
-	echo "file 'f2.mp3'" >> session.txt
-	ffmpeg -y -v 0 -f concat -safe 0 -i session.txt -c copy assets/sounds/session_guide.mp3
-	rm -f session.txt f1.mp3 f2.mp3
+	sox ignore/session_guide_jm.ogg ignore/session_intro_music.ogg assets/sounds/session_guide.mp3
 	sox -n -r 44100 -c 2 assets/sounds/session_intro.mp3 trim 0 1
 
 teaudio:
