@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Wednesday 2024-11-06 17:25:21 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 08:01:40 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -60,6 +60,7 @@ define HELP
 $(APP):
 
   jmaudio		AI intro and JM session
+  weaudio		AI intro and JM session as single intro 
   teaudio		Short audio clips for testing
   gjaudio		GJ basic intro and session
   aiaudio		AI generated intro and session (Play Store)
@@ -102,6 +103,21 @@ jmaudio:
 	ffmpeg -y -v 0 -i ignore/session_guide_jm.ogg assets/sounds/session_guide.mp3
 	ffmpeg -y -v 0 -i ignore/session_intro_music.ogg assets/sounds/session_intro.mp3
 	ffmpeg -y -v 0 -i ignore/session_outro_music.ogg assets/sounds/session_outro.mp3
+
+# 20241112 gjw For some reason web version has no sound for
+# intro. Combine JM and intro into one for now.
+
+weaudio:
+	ffmpeg -y -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
+	ffmpeg -y -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
+	ffmpeg -y -v 0 -i ignore/session_outro_music.ogg assets/sounds/session_outro.mp3
+	ffmpeg -y -v 0 -i ignore/session_guide_jm.ogg f1.mp3
+	ffmpeg -y -v 0 -i ignore/session_intro_music.ogg f2.mp3
+	echo "file 'f1.mp3'" > session.txt
+	echo "file 'f2.mp3'" >> session.txt
+	ffmpeg -y -v 0 -f concat -safe 0 -i session.txt -c copy assets/sounds/session_guide.mp3
+	rm -f session.txt
+	sox -n -r 44100 -c 2 assets/sounds/session_intro.mp3 trim 0 1
 
 teaudio:
 	ffmpeg -y -v 0 -i ignore/testing_ding.ogg assets/sounds/dong.mp3
