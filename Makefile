@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2024-11-12 08:01:40 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 08:17:26 +1100 >
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -116,7 +116,7 @@ weaudio:
 	echo "file 'f1.mp3'" > session.txt
 	echo "file 'f2.mp3'" >> session.txt
 	ffmpeg -y -v 0 -f concat -safe 0 -i session.txt -c copy assets/sounds/session_guide.mp3
-	rm -f session.txt
+	rm -f session.txt f1.mp3 f2.mp3
 	sox -n -r 44100 -c 2 assets/sounds/session_intro.mp3 trim 0 1
 
 teaudio:

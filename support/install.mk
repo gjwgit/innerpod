@@ -2,7 +2,7 @@
 #
 # Makefile template for Installations
 #
-# Time-stamp: <Sunday 2024-06-23 11:33:35 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2024-11-12 08:16:22 +1100 >
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -48,7 +48,12 @@ else
 prod: $(USER).install
 endif
 
-%.install:
+# 20241112 gjw Depend on weaudio for now to combine guide and intro
+# into guide and replace intro with 1s silence. For some reason the
+# intro is not heard after the guide, though it is being played - it
+# is 3m of silence? This required a local copy of ignore.
+
+%.install: weaudio
 	cp web/index.html web/index.html.bak
 	perl -pi -e 's|^  <base href=.*$$|  <base href="/$*/">|' web/index.html
 	flutter build web
