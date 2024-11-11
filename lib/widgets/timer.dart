@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2024-11-01 16:53:27 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-11-12 09:00:54 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -136,7 +136,7 @@ class TimerState extends State<Timer> {
     await _player.stop();
     await _player.play(introAudio);
 
-    debugPrint('INTRO: waiting $_audioDuration');
+    debugPrint('INTRO: intro waiting $_audioDuration');
 
     // Wait now while the intro audio is played before the dong when the timer
     // then actually starts.
@@ -158,8 +158,8 @@ class TimerState extends State<Timer> {
   ////////////////////////////////////////////////////////////////////////
 
   Future<void> _guided() async {
-    // A guide audio is played, then a musical interlude, the session, then
-    // another musical interlude.
+    // An audio guide to meditation is played, then a musical interlude, the
+    // silent session, then another musical interlude.
 
     logMessage('Start Guided Session');
     _reset();
@@ -174,13 +174,13 @@ class TimerState extends State<Timer> {
     // Play and wait for the session guide audio to finish.
 
     await _player.play(sessionGuide);
-    debugPrint('GUIDED: waiting $_audioDuration');
+    debugPrint('GUIDED: guide waiting $_audioDuration');
     await Future.delayed(_audioDuration);
 
     // Play and wait for the intro music to finish.
 
     await _player.play(sessionIntro);
-    debugPrint('GUIDED: waiting $_audioDuration');
+    debugPrint('GUIDED: intro waiting $_audioDuration');
     await Future.delayed(_audioDuration);
 
     // Good to wait a second before the dings otherwise it feels rushed coming
@@ -192,7 +192,7 @@ class TimerState extends State<Timer> {
     // the dings, and start the timer.
 
     await dingDong(_player);
-    debugPrint('GUIDED: waiting $_audioDuration');
+    debugPrint('GUIDED: dong waiting $_audioDuration');
     _controller.restart();
   }
 
@@ -205,12 +205,12 @@ class TimerState extends State<Timer> {
 
     logMessage('Session Completed');
     await _player.play(dong);
-    debugPrint('COMPLETE: waiting: $_audioDuration');
+    debugPrint('COMPLETE: dong waiting: $_audioDuration');
     await Future.delayed(_audioDuration);
 
     if (_isGuided) {
       await _player.play(sessionOutro);
-      debugPrint('COMPLETE: waiting: $_audioDuration');
+      debugPrint('COMPLETE: outro waiting: $_audioDuration');
       await Future.delayed(_audioDuration);
     }
 
