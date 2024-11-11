@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Tuesday 2024-11-12 09:00:54 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2024-11-12 09:15:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -250,7 +250,8 @@ class TimerState extends State<Timer> {
 Tap here to begin a session of silence for ${(_duration / 60).round()}
 minutes, beginning and ending with three chimes.
 
-''',
+'''
+          .trim(),
       onPressed: () {
         logMessage('Start Session');
         _reset();
@@ -269,7 +270,8 @@ minutes, beginning and ending with three chimes.
 Tap here to Pause the timer and the audio.  They can be resumed with a press
 of the Resume button.
 
-''',
+'''
+          .trim(),
       onPressed: () {
         _controller.pause();
         _player.pause();
@@ -310,7 +312,8 @@ Tap here to play a short introduction for a session.  After the introduction a
 ${(_duration / 60).round()} minute session of silence will begin and end with
 three dings.
 
-''',
+'''
+          .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.blue.shade100,
@@ -326,7 +329,8 @@ Introductory music is followed by three chimes and a ${(_duration / 60).round()}
 minute silent session which is then finished with another three chimes.  The
 audio may take a little time to download for the Web version.
 
-''',
+'''
+          .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.purple.shade100,
@@ -339,7 +343,7 @@ audio may take a little time to download for the Web version.
     final Widget durationChoice = Wrap(
       spacing: 8.0, // Gap between adjacent chips.
       runSpacing: 4.0, // Gap between lines.
-      children: [10, 15, 20, 25, 30].map((number) {
+      children: [5, 10, 15, 20, 25, 30].map((number) {
         return ChoiceChip(
           label: Text(number.toString()),
           selected: _duration == number * 60,
@@ -411,13 +415,12 @@ audio may take a little time to download for the Web version.
             //   ],
             // ),
             const SizedBox(height: 2 * heightSpacer),
+            const Text('Select duration in minutes',
+                style: TextStyle(fontSize: 20.0, color: Colors.grey)),
+            const SizedBox(height: 1 * heightSpacer),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Minutes:    ',
-                  style: TextStyle(fontSize: 20.0, color: Colors.grey),
-                ),
                 durationChoice,
               ],
             ),
