@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Monday 2024-10-21 15:58:06 +1100 Graham Williams>
+// Time-stamp: <Friday 2024-11-01 16:53:27 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -247,7 +247,7 @@ class TimerState extends State<Timer> {
       title: 'Start',
       tooltip: '''
 
-Press here to begin a session of silence for ${(_duration / 60).round()}
+Tap here to begin a session of silence for ${(_duration / 60).round()}
 minutes, beginning and ending with three chimes.
 
 ''',
@@ -266,7 +266,7 @@ minutes, beginning and ending with three chimes.
       title: 'Pause',
       tooltip: '''
 
-Press here to Pause the timer and the audio.  They can be resumed with a press
+Tap here to Pause the timer and the audio.  They can be resumed with a press
 of the Resume button.
 
 ''',
@@ -306,7 +306,7 @@ of the Resume button.
       title: 'Intro',
       tooltip: '''
 
-Press here to play a short introduction for a session.  After the introduction a
+Tap here to play a short introduction for a session.  After the introduction a
 ${(_duration / 60).round()} minute session of silence will begin and end with
 three dings.
 
@@ -320,7 +320,7 @@ three dings.
       title: 'Guided',
       tooltip: '''
 
-Press here to play a ${10 + (_duration / 60).round()} minute guided session.
+Tap here to play a ${10 + (_duration / 60).round()} minute guided session.
 The session begins with instructions for meditation from John Main.
 Introductory music is followed by three chimes and a ${(_duration / 60).round()}
 minute silent session which is then finished with another three chimes.  The
