@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2024-11-14 17:05:34 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-02-18 15:16:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -124,6 +124,7 @@ class TimerState extends State<Timer> {
     logMessage('Start Intro Session');
     _reset();
     _stopSleep();
+    _isGuided = false;
 
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
@@ -158,8 +159,9 @@ class TimerState extends State<Timer> {
   ////////////////////////////////////////////////////////////////////////
 
   Future<void> _guided() async {
-    // An audio guide to meditation is played, then a musical interlude, the
-    // silent session, then another musical interlude.
+    // An audio guide to meditation is played that includes the musical
+    // interlude, then the dongs, a silent session, the final dongs, then
+    // another musical interlude.
 
     logMessage('Start Guided Session');
     _reset();
@@ -173,14 +175,11 @@ class TimerState extends State<Timer> {
 
     // Play and wait for the session guide audio to finish.
 
+    await _player.stop();
     await _player.play(sessionGuide);
+
     debugPrint('GUIDED: guide waiting $_audioDuration');
-    await Future.delayed(_audioDuration);
 
-    // Play and wait for the intro music to finish.
-
-    await _player.play(sessionIntro);
-    debugPrint('GUIDED: intro waiting $_audioDuration');
     await Future.delayed(_audioDuration);
 
     // Good to wait a second before the dings otherwise it feels rushed coming

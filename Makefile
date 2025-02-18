@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2024-11-12 08:44:44 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-02-18 16:41:15 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -18,12 +18,19 @@
 #   Trivial update or bug fix
 
 APP=$(shell pwd | xargs basename)
-VER=
+VER = $(shell egrep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
 DATE=$(shell date +%Y-%m-%d)
 
 # Identify a destination used by install.mk
 
 DEST=/var/www/html/$(APP)
+
+# The host for the repository of packages, the path on the server to
+# the download folder, and the URL to the downloads.
+
+REPO=solidcommunity.au
+RLOC=/var/www/html/installers/
+DWLD=https://$(REPO)/installers
 
 ########################################################################
 # Supported Makefile modules.
@@ -60,14 +67,16 @@ define HELP
 $(APP):
 
   jmaudio		AI intro and JM session
-  weaudio		AI intro and JM session as single intro 
+  weaudio		AI intro and JM session as single intro
   teaudio		Short audio clips for testing
   gjaudio		GJ basic intro and session
   aiaudio		AI generated intro and session (Play Store)
 
-  ginstall   Install to solidcommunity.au and local after a build
-  tgz	     Upload the installer to solidcommunity.com
-  apk	     Upload the installer to solidcommunity.com
+  ginstall   After a github build download bundles and upload to $(REPO)
+
+  local	     Install to $(HOME)/.local/share/$(APP)
+    tgz	     Upload the installer to $(REPO)
+  apk	     Upload the installer to $(REPO)
 
 endef
 export HELP
@@ -89,9 +98,9 @@ clean::
 
 tgz::
 	chmod a+r installers/*.tar.gz
-	rsync -avzh installers/*.tar.gz solidcommunity.au:/var/www/html/installers/
-	ssh solidcommunity.au chmod -R go+rX /var/www/html/installers/
-	ssh solidcommunity.au chmod go=x /var/www/html/installers/
+	rsync -avzh installers/*.tar.gz $(REPO):/var/www/html/installers/
+	ssh $(REPO) chmod -R go+rX /var/www/html/installers/
+	ssh $(REPO) chmod go=x /var/www/html/installers/
 
 # Manage the audio tracks to use.
 
@@ -111,8 +120,18 @@ weaudio:
 	ffmpeg -y -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
 	ffmpeg -y -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
 	ffmpeg -y -v 0 -i ignore/session_outro_music.ogg assets/sounds/session_outro.mp3
-	sox ignore/session_guide_jm.ogg ignore/session_intro_music.ogg assets/sounds/session_guide.mp3
-	sox -n -r 44100 -c 2 assets/sounds/session_intro.mp3 trim 0 1
+	ffmpeg -y -i ignore/session_guide_jm.ogg \
+	          -i ignore/session_intro_music.ogg \
+                  -filter_complex "[0:a][1:a]concat=n=2:v=0:a=1[out]" \
+                  -map "[out]" -codec:a \
+                  libmp3lame assets/sounds/session_guide.mp3
+
+# 20250218 gjw Other attempts to concat. Filed to get the duration in
+# the output!
+#
+# ffmpeg -f concat -safe 0 -i ignore/concat_jm_intro.txt -c copy assets/sounds/session_guide.mp3
+# sox ignore/session_guide_jm.ogg ignore/session_intro_music.ogg assets/sounds/session_guide.mp3
+# sox -n -r 44100 -c 2 assets/sounds/session_intro.mp3 trim 0 1
 
 teaudio:
 	ffmpeg -y -v 0 -i ignore/testing_ding.ogg assets/sounds/dong.mp3
@@ -140,10 +159,26 @@ aiaudio:
 # moved into ARCHIVE.
 
 apk::
-	rsync -avzh installers/$(APP).apk solidcommunity.au:/var/www/html/installers/
-	ssh solidcommunity.au chmod a+r /var/www/html/installers/innerpod.apk
+	rsync -avzh installers/$(APP).apk $(REPO):$(RLOC)
+	ssh $(REPO) chmod a+r $(RLOC)/$(APP).apk
 	mv -f installers/$(APP)-*.apk installers/ARCHIVE
 	rm -f installers/$(APP).apk
+
+deb:
+	(cd installers; make $@)
+	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)/$(APP)_amd64.deb
+	ssh $(REPO) chmod a+r $(RLOC)/$(APP)_amd64.deb
+	wget $(DWLD)/$(APP)_amd64.deb -O $(APP)_amd64.deb
+	wajig install $(APP)_amd64.deb
+	rm -f $(APP)_amd64.deb
+	mv -f installers/$(APP)_*.deb installers/ARCHIVE
+
+# 20250110 gjw A ginstall of the github built bundles, and the locally
+# built apk installed to the repository and moved into ARCHIVE.
+#
+# 20250218 gjw Remove the deb buld for now as it is placing the data
+# and lib folders into /ust/bin/ which when we try to add another
+# package also tries to do that, which is how I found the issue.
 
 ginstall: apk
 	(cd installers; make $@)
