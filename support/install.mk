@@ -40,6 +40,10 @@ help::
 ########################################################################
 # LOCAL TARGETS
 
+# Only when the dev branch is present will the app be installed into
+# the appname folder on the server. Otherwise the developer's username
+# is used as the install destination.
+
 install: $(USER).install
 
 ifeq ($(BRANCH),dev)
