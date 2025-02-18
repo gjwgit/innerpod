@@ -103,10 +103,12 @@ jobs:
   # /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found
   # (required by rattle)" On Ubuntu 20.04 the highest version of GLIBC
   # is GLIBC2.30.
+  #
+  # 20250218 gjw github is deprecating Ubuntu 20.04. Moved to 22.04.
 
   build-linux-zip:
     if: contains(github.event.head_commit.message, 'bump version')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Clone Repository
