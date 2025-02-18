@@ -6,6 +6,7 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ For GUIDED concat audio then include in app [1.7.4 20250218 gjw]
 + Review audio. Add 5 minutes option. [1.7.3 20241114 gjw]
 + Updated Tibetan bell from freesound.com [1.7.2 20241101 gjw]
 + Use markdown for About with active url links [1.7.1 20241101 gjw]
@@ -37,7 +38,7 @@ Here we record the basic changes made to the InnerPod app.
 + Add Text page [1.4.2]
 + Restructure code [1.4.1]
 + Plain timer instead of neon countdown time [1.4.0]
-  
+
 ## 1.4
 
 + Restore SolidLogin() in prep for saving session data.
