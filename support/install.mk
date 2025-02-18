@@ -56,8 +56,12 @@ endif
 # into guide and replace intro with 1s silence. For some reason the
 # intro is not heard after the guide, though it is being played - it
 # is 3m of silence? This required a local copy of ignore.
+#
+# 20250218 gjw The default app now concat's the guide and intro music
+# into one mp3 file to play to avoid the issue of the intro music being
+# missed.
 
-%.install: weaudio
+%.install: 
 	cp web/index.html web/index.html.bak
 	perl -pi -e 's|^  <base href=.*$$|  <base href="/$*/">|' web/index.html
 	flutter build web
