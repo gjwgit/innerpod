@@ -12,7 +12,7 @@ on:
       - dev
 
 env:
-  FLUTTER_VERSION: '3.24.3'
+  FLUTTER_VERSION: '3.29.0'
 
 jobs:
 
@@ -85,7 +85,7 @@ jobs:
 
       - name: Install flutter project dependencies
         run: flutter pub get
-        
+
       - name: Build APK Artifact
         run: flutter build apk --release
 
@@ -103,7 +103,7 @@ jobs:
   # /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found
   # (required by rattle)" On Ubuntu 20.04 the highest version of GLIBC
   # is GLIBC2.30.
- 
+
   build-linux-zip:
     if: contains(github.event.head_commit.message, 'bump version')
     runs-on: ubuntu-20.04
@@ -134,7 +134,7 @@ jobs:
 
       - name: Install Flutter Project Dependencies
         run: flutter pub get
-        
+
       - name: Enable Linux Build
         run: flutter config --enable-linux-desktop
 
