@@ -10,6 +10,9 @@
 # 	convert $^ -resize $* rattle02_trans_$*.png
 # 	cp rattle02_trans_$*.png ~/.local/share/icons/hicolor/$*/apps/rattle.png
 
+deb:
+	bash deb.sh
+
 # TESTING AUTOMATING UPLOAD TO DISTRIBUTION SITE
 #
 # Using github actions to generate zip distributions for
