@@ -33,7 +33,7 @@ flutter:
 
   fix             Run `dart fix --apply`.
   format          Run `dart format`.
-  dcm             Run dart code metrics 
+  dcm             Run dart code metrics
     nullable	  Check NULLs from dart_code_metrics.
     unused_code   Check unused code from dart_code_metrics.
     unused_files  Check unused files from dart_code_metrics.
@@ -79,7 +79,7 @@ chrome:
 #
 # dart run build_runner build --delete-conflicting-outputs
 #
-# List the files that are automatically generated. Then they will get 
+# List the files that are automatically generated. Then they will get
 # built as required.
 
 # BUILD_RUNNER = \
@@ -170,13 +170,13 @@ unused_files:
 	-dart run dart_code_metrics:metrics check-unused-files --disable-sunset-warning lib
 	@echo $(SEPARATOR)
 
-.PHONY: metrics 
+.PHONY: metrics
 metrics:
 	@echo "Dart Code Metrics: METRICS"
 	-dart run dart_code_metrics:metrics analyze --disable-sunset-warning lib --reporter=console
 	@echo $(SEPARATOR)
 
-.PHONY: analyze 
+.PHONY: analyze
 analyze:
 	@echo "Futter ANALYZE"
 	-flutter analyze lib
@@ -283,7 +283,7 @@ realclean::
 
 tgz:: $(APP)-$(VER)-linux-x86_64.tar.gz
 
-$(APP)-$(VER)-linux-x86_64.tar.gz:
+$(APP)-$(VER)-linux-x86_64.tar.gz: clean
 	mkdir -p installers
 	rm -rf build/linux/x64/release
 	flutter build linux --release
@@ -316,6 +316,7 @@ BRANCH := $(shell git branch --show-current)
 
 ifeq ($(BRANCH),dev)
 push::
+	@echo $(SEPARATOR)
 	perl -pi -e 's|(^version: .*)\+.*|$$1+$(VERSEQ)|' pubspec.yaml
 	-egrep '^version: .*\+.*' pubspec.yaml && \
 	git commit -m "Bump sequence $(VERSEQ)" pubspec.yaml

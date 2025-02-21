@@ -2,13 +2,7 @@
 
 APP=$(pwd | rev | cut -d'/' -f2 | rev)
 
-## 20250210 gjw Grab the version from pubspec.
-
 VER=$(egrep '^version:' ../pubspec.yaml | cut -d' ' -f2 | cut -d'+' -f1)
-
-echo "NOT PROPERLY CONFIGURED YET - IT INSTALLS data and lib INTO /usr/bin/ ??"
-
-exit 1
 
 # Build the release.
 
@@ -18,13 +12,14 @@ exit 1
 
 mkdir -p ${APP}_${VER}_amd64/DEBIAN
 mkdir -p ${APP}_${VER}_amd64/usr/bin
+mkdir -p ${APP}_${VER}_amd64/usr/lib/${APP}
 mkdir -p ${APP}_${VER}_amd64/usr/share/applications
 mkdir -p ${APP}_${VER}_amd64/usr/share/icons/hicolor/512x512/apps
 
 # Create control file.
 
 cat > ${APP}_${VER}_amd64/DEBIAN/control << EOL
-Package: innerpod
+Package: ${APP}
 Version: ${VER}
 Section: utils
 Priority: optional
@@ -38,12 +33,12 @@ EOL
 
 # Create desktop entry.
 
-cat > ${APP}_${VER}_amd64/usr/share/applications/innerpod.desktop << EOL
+cat > ${APP}_${VER}_amd64/usr/share/applications/${APP}.desktop << EOL
 [Desktop Entry]
 Name=Innerpod
 Comment=Innerpod Meditation Timer
-Exec=/usr/bin/innerpod
-Icon=innerpod
+Exec=/usr/bin/${APP}
+Icon=${APP}
 Terminal=false
 Type=Application
 Categories=Utility;
@@ -51,24 +46,28 @@ EOL
 
 # Copy the built flutter application.
 
-cp -r ../build/linux/x64/release/bundle/* innerpod_${VER}_amd64/usr/bin/
+cp -r ../build/linux/x64/release/bundle/* ${APP}_${VER}_amd64/usr/lib/${APP}/
 
-# Copy the app icon (assuming you have an icon file named ${APP}.png).
+# Ensure /usr/bin/${APP} points to the actual executable.
 
-cp innerpod.png innerpod_${VER}_amd64/usr/share/icons/hicolor/512x512/apps/
+(cd ${APP}_${VER}_amd64/usr/bin; ln -s ../lib/${APP}/${APP} ${APP})
+
+# Copy the app icon which is assumed to be named ${APP}.png in the
+# installers folder.
+
+cp ${APP}.png ${APP}_${VER}_amd64/usr/share/icons/hicolor/512x512/apps/
 
 # Set correct permissions.
 
-chmod 755 innerpod_${VER}_amd64/usr/bin/innerpod
-chmod -R 755 innerpod_${VER}_amd64/DEBIAN
-find innerpod_${VER}_amd64/usr -type d -exec chmod 755 {} \;
-find innerpod_${VER}_amd64/usr -type f -exec chmod 644 {} \;
-chmod 755 innerpod_${VER}_amd64/usr/bin/innerpod
+chmod -R 755 ${APP}_${VER}_amd64/DEBIAN
+find ${APP}_${VER}_amd64/usr -type d -exec chmod 755 {} \;
+find ${APP}_${VER}_amd64/usr -type f -exec chmod 644 {} \;
+chmod 755 ${APP}_${VER}_amd64/usr/lib/${APP}/${APP}
 
 # Build the debian package.
 
-dpkg-deb --build innerpod_${VER}_amd64
+dpkg-deb --build ${APP}_${VER}_amd64
 
 # Cleanup.
 
-#### rm -rf innerpod_${VER}_amd64
+rm -rf ${APP}_${VER}_amd64
