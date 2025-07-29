@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Saturday 2025-02-22 05:14:32 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2025-07-22 21:00:46 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -44,7 +44,7 @@ INC_BASE=support
 # Specific Makefiles will be loaded if they are found in
 # INC_BASE. Sometimes the INC_BASE is shared by multiple local
 # Makefiles and we want to skip specific makes. Simply define the
-# appropriate INC to a non-existant location and it will be skipped.
+# appropriate INC to a non-existent location and it will be skipped.
 
 INC_DOCKER=skip
 INC_MLHUB=skip
@@ -94,11 +94,16 @@ help::
 clean::
 	rm -f README.html
 
-# Linux: Upload to Solid Community installers for general access.
+# Linux: Install locally.
+
+local: tgz
+	tar zxvf installers/$(APP).tar.gz -C $(HOME)/.local/share/
+
+# Linux: Upload the installers for general access from the repository.
 
 tgz::
-	chmod a+r installers/*.tar.gz
-	rsync -avzh installers/*.tar.gz $(REPO):/var/www/html/installers/
+	chmod a+r installers/$(APP)*.tar.gz
+	rsync -avzh installers/$(APP)*.tar.gz $(REPO):/var/www/html/installers/
 	ssh $(REPO) chmod -R go+rX /var/www/html/installers/
 	ssh $(REPO) chmod go=x /var/www/html/installers/
 
@@ -154,24 +159,26 @@ aiaudio:
 	ffmpeg -y -v 0 -i ignore/silence.ogg assets/sounds/session_intro.ogg
 	ffmpeg -y -v 0 -i ignore/silence.ogg assets/sounds/session_outro.ogg
 
+# Android: Upload to Solid Community installers for general access.
+
 # Make apk on this machine to deal with signing. Then a ginstall of
 # the built bundles from github, installed to solidcommunity.au and
 # moved into ARCHIVE.
 
 apk::
 	rsync -avzh installers/$(APP).apk $(REPO):$(RLOC)
-	ssh $(REPO) chmod a+r $(RLOC)/$(APP).apk
-	mv -f installers/$(APP)-*.apk installers/ARCHIVE
+	ssh $(REPO) chmod a+r $(RLOC)$(APP).apk
+	mv -f installers/$(APP)-*.apk installers/ARCHIVE/
 	rm -f installers/$(APP).apk
 
 deb:
 	(cd installers; make $@)
-	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)/$(APP)_amd64.deb
-	ssh $(REPO) chmod a+r $(RLOC)/$(APP)_amd64.deb
+	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)$(APP)_amd64.deb
+	ssh $(REPO) chmod a+r $(RLOC)$(APP)_amd64.deb
 	wget $(DWLD)/$(APP)_amd64.deb -O $(APP)_amd64.deb
 	wajig install $(APP)_amd64.deb
 	rm -f $(APP)_amd64.deb
-	mv -f installers/$(APP)_*.deb installers/ARCHIVE
+	mv -f installers/$(APP)_*.deb installers/ARCHIVE/
 
 # 20250110 gjw A ginstall of the github built bundles, and the locally
 # built apk installed to the repository and moved into ARCHIVE.

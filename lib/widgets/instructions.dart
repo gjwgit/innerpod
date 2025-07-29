@@ -1,6 +1,6 @@
 /// DESCRIPTION
 //
-// Time-stamp: <Thursday 2024-10-24 09:24:41 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2025-07-29 12:46:45 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -164,18 +164,46 @@ class Instructions extends StatelessWidget {
                     textTheme: const TextTheme(
                         bodyMedium: TextStyle(fontSize: 20.0))))),
             Markdown(
-                data: '> Because I live, you too will live.\n'
-                    '> Then you will know that I am in my Father,\n'
-                    '> and you in me, and I in you.\n'
-                    '  \n'
-                    '*John 14:20*\n'
-                    '---\n'
-                    '  \n'
-                    '> Quiet the mind and the soul will speak.\n'
-                    '  \n'
-                    '*Buddha*\n'
-                    '---\n'
-                    '  \n',
+                data: '''
+> Quiet the mind and the soul will speak.
+
+*Buddha*
+---
+
+> When you pray, go into your inner room,
+> close the door and pray to your Father,
+> who is there in that secret place...
+
+*Matthew 6:6*
+---
+
+> When you pray, do not babble like the
+> pagans, who think the more they say the
+> more likely they are to be heard...
+
+*Matthew 6:7*
+---
+
+> Because I live, you too will live.
+> Then you will know that I am in my Father,
+> and you in me, and I in you.
+
+*John 14:20*
+---
+
+''',
+                // data: '> Because I live, you too will live.\n'
+                //     '> Then you will know that I am in my Father,\n'
+                //     '> and you in me, and I in you.\n'
+                //     '  \n'
+                //     '*John 14:20*\n'
+                //     '---\n'
+                //     '  \n'
+                //     '> Quiet the mind and the soul will speak.\n'
+                //     '  \n'
+                //     '*Buddha*\n'
+                //     '---\n'
+                //     '  \n',
                 styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
                     textTheme: const TextTheme(
                         bodyMedium: TextStyle(fontSize: 20.0))))),
