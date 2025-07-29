@@ -25,9 +25,9 @@
 
 library;
 
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
+
+import 'package:intl/intl.dart';
 
 /// Log the [msg] to the user's Solid Pod.
 
