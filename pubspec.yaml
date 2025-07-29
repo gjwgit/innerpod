@@ -1,48 +1,42 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
-publish_to: 'none'
+publish_to: "none"
 version: 1.7.4+71
 
 environment:
-  sdk: '>=3.2.5 <4.0.0'
+  sdk: ">=3.2.5 <4.0.0"
+
+# To automatically upgrade package dependencies:
+#
+#   flutter pub upgrade --major-versions
+#
+# To see which dependencies have newer versions available:
+#
+#   flutter pub outdated
+#
+# (gjw 20250722)
 
 dependencies:
+  audioplayers: ^6.1.0
+  cupertino_icons: ^1.0.2 # An asset repository.
+  circular_countdown_timer: ^0.2.3
   flutter:
     sdk: flutter
-  audioplayers: ^6.1.0
-  cupertino_icons: ^1.0.2
-  circular_countdown_timer: ^0.2.3
   flutter_markdown: ^0.7.4
-  gap:
-  intl:
-  package_info_plus:
-  solidpod:
+  gap: ^3.0.1
+  intl: ^0.20.2
+  package_info_plus: ^8.3.0
+  solidpod: ^0.7.4
   url_launcher: ^6.3.0
   wakelock_plus: ^1.1.4
 
 dev_dependencies:
-  # The original `dart-code-metrics` is end of live and has migrated to
-  # a paid service. This fork maintains it's compatibility with the
-  # latest flutter.
-
-  dart_code_metrics:
-    git:
-      url: https://github.com/anusii/dart-code-metrics.git
-      ref: dev
-
+  flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
-  # solid_lints: ^0.1.1
-  ubuntu_lints: ^0.3.0
-
-dependency_overrides:
-  # Required for dart-code-metrics.
-  collection: ^1.19.0
+  ubuntu_lints: ^0.4.1+1
 
 flutter:
-  uses-material-design: true
-
   assets:
     - assets/images/inner_icon.png
     - assets/images/inner_image.jpg
@@ -51,18 +45,26 @@ flutter:
     - assets/sounds/session_guide.mp3
     - assets/sounds/session_intro.mp3
     - assets/sounds/session_outro.mp3
+  uses-material-design: true
+
+# Define launcher icons for all platforms (except Linux) so icons for
+# the apps can be automatically updated using:
+#
+# `dart run flutter_launcher_icons`
+#
+# (gjw 20250429)
 
 flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
   image_path: "assets/icon/icon.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  android: "launcher_icon"
+  min_sdk_android: 21 # android min sdk min:16, default 21  ios: true
+  ios: true
   remove_alpha_ios: true
   web:
     generate: true
     image_path: "assets/icon/icon.png"
-    #background_color: "#hexcode"
-    #theme_color: "#hexcode"
+    # background_color: "#hexcode"
+    # theme_color: "#hexcode"
   windows:
     generate: true
     image_path: "assets/icon/icon.png"
