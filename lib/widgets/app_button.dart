@@ -25,7 +25,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:innerpod/widgets/delayed_tooltip.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// An [ElevatedButton] with defaults for the app.
 
@@ -85,7 +85,7 @@ class AppButton extends StatelessWidget {
           backgroundColor: backgroundColor,
         ),
         onPressed: onPressed,
-        child: DelayedTooltip(
+        child: MarkdownTooltip(
           message: tooltip,
           child: Text(title),
         ),

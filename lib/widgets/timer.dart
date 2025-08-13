@@ -1,6 +1,6 @@
 /// A countdown timer and buttons for a session.
 //
-// Time-stamp: <Tuesday 2025-02-18 15:16:39 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-07-30 09:25:45 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -414,8 +414,10 @@ audio may take a little time to download for the Web version.
             //   ],
             // ),
             const SizedBox(height: 2 * heightSpacer),
-            const Text('Select duration (minutes)',
-                style: TextStyle(fontSize: 20.0, color: Colors.grey)),
+            const Text(
+              'Select duration (minutes)',
+              style: TextStyle(fontSize: 20.0, color: Colors.grey),
+            ),
             const SizedBox(height: 1 * heightSpacer),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

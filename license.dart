@@ -1,6 +1,6 @@
-/// DESCRIPTION
+/// A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Tuesday 2024-01-23 11:01:01 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-07-30 09:29:44 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
