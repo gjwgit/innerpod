@@ -18,8 +18,8 @@ environment:
 
 dependencies:
   audioplayers: ^6.1.0
-  cupertino_icons: ^1.0.2
   circular_countdown_timer: ^0.2.3
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
   flutter_markdown: ^0.7.4
