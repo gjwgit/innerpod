@@ -29,13 +29,10 @@ dependencies:
   package_info_plus: ^8.3.0
   solidpod: ^0.7.4
   url_launcher: ^6.3.0
-  version_widget: ^1.0.4
   wakelock_plus: ^1.1.4
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
-  flutter_test:
-    sdk: flutter
   ubuntu_lints: ^0.4.1+1
 
 flutter:
