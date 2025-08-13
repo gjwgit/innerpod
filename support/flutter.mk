@@ -75,7 +75,7 @@ help::
 
 .PHONY: chrome
 chrome:
-	flutter run -d chrome
+	flutter run -d chrome --release
 
 # 20220503 gjw The following fails if the target files already exist -
 # just needs to be run once.
@@ -143,6 +143,7 @@ pubspec:
 
 .PHONY: pubspec.local
 pubspec.local:
+	cp --backup pubspec.yaml pubspec.yaml.actual
 	cp --backup pubspec.yaml.local pubspec.yaml
 
 .PHONY: pubspec.actual
@@ -189,7 +190,7 @@ analyze:
 
 .PHONY: depend
 depend:
-	@echo "Review pubspec.yaml dependencies."
+	@echo "Dart: REVIEW DEPENDENCIES."
 	-dependency_validator
 	@echo $(SEPARATOR)
 
@@ -208,7 +209,8 @@ todo:
 .PHONY: license
 license:
 	@echo "Files without a LICENSE:\n"
-	@-find lib -type f -not -name '*~' ! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
+	@-find lib -type f -not -name '*~' -not -name 'README*' \
+	! -exec grep -qE '^(/// .*|/// Copyright|/// Licensed)' {} \; -print | xargs printf "\t%s\n"
 	@echo $(SEPARATOR)
 
 .PHONY: riverpod
@@ -387,13 +389,13 @@ publish:
 .PHONY: import_order
 import_order:
 	@echo "Dart: CHECK IMPORT ORDER"
-	dart run custom_lint
+	import_order --check
 	@echo $(SEPARATOR)
 
 .PHONY: import_order_fix
 import_order_fix:
 	@echo "Dart: FIX IMPORT ORDER"
-	fix_imports --project-name=$(APP) -r lib
+	import_order
 	@echo $(SEPARATOR)
 
 ### TODO THESE SHOULD BE CHECKED AND CLEANED UP
@@ -413,6 +415,7 @@ loc: lib/*.dart
 	@cat $(shell find lib -name '*.dart') \
 	| egrep -v '^ */' \
 	| egrep -v '^ *$$' \
+	| egrep -v '^ *[)},]+, *$$' \
 	| wc -l
 
 #
