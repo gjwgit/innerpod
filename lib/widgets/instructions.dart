@@ -1,8 +1,8 @@
-/// DESCRIPTION
+/// Text instructions and support.
 //
-// Time-stamp: <Wednesday 2025-07-30 09:07:05 +1000 Graham Williams>
+// Time-stamp: <Wednesday 2025-09-03 12:52:02 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -204,6 +204,19 @@ class Instructions extends StatelessWidget {
 > and you in me, and I in you.
 
 *John 14:20*
+---
+
+> Remain in me, as I in you. As a branch
+> cannot bear fruit all by itself, unless it
+> remains part of the vine, neither can you
+> unless you remain in me. I am the vine,
+> you are the branches. Whoever remains in
+> me, with me in him, bears fruit in plenty;
+> for cut off from me you can do nothing.
+> I have loved you just as the Father has
+> loved me. Remain in my love.
+
+*John 15:4-5,9*
 ---
 
 ''',
