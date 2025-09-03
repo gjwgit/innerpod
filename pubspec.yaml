@@ -33,7 +33,8 @@ dependencies:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
-  ubuntu_lints: ^0.4.1+1
+  flutter_lints: any
+  ubuntu_lints: any
 
 flutter:
   assets:
