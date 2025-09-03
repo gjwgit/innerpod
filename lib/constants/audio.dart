@@ -1,6 +1,6 @@
 /// Aduio related constants used across the app.
 //
-// Time-stamp: <Friday 2024-10-25 13:32:31 +1100 Graham Williams>
+// Time-stamp: <Wednesday 2025-09-03 13:35:40 +1000 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -45,10 +45,6 @@ final introAudio = AssetSource('sounds/intro.mp3');
 /// meditation session.
 
 final sessionGuide = AssetSource('sounds/session_guide.mp3');
-
-///
-
-final sessionIntro = AssetSource('sounds/session_intro.mp3');
 
 ///
 
