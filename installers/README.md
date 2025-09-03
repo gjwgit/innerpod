@@ -51,6 +51,7 @@ unzip innerpod-dev-linux.zip -d ${HOME}/.local/share/innerpod
 
 Then set up your local installation (only required once):
 
+<!-- markdownlint-disable MD013 -->
 ```bash
 ln -s ${HOME}/.local/share/innerpod/innerpod ${HOME}/.local/bin/
 wget https://raw.githubusercontent.com/gjwgit/innerpod/dev/installers/innerpod.desktop -O ${HOME}/.local/share/applications/innerpod.desktop
@@ -58,13 +59,14 @@ sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/innerpod.desktop
 mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
 wget https://github.com/gjwgit/innerpod/raw/dev/installers/innerpod.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/innerpod.png
 ```
+<!-- markdownlint-enable MD013 -->
 
 To install for any user on the computer:
 
 ```bash
 sudo unzip innerpod-dev-linux.zip -d /opt/innerpod
 sudo ln -s /opt/innerpod/innerpod /usr/local/bin/
-``` 
+```
 
 The
 [innerpod.desktop](https://solidcommunity.au/installers/innerpod.desktop)
@@ -87,7 +89,8 @@ app should then run without the warning next time.
 ## Web -- No Installation Required
 
 No installer is required for a browser based experience of
-InnerPod. Simply visit https://innerpod.solidcommunity.au.
+InnerPod. Simply visit the [Solid Community
+AU](https://innerpod.solidcommunity.au) instance.
 
 Also, your Web browser will provide an option in its menus to install
 the app locally, which can add an icon to your home screen to start
