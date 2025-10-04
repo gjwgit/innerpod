@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Tuesday 2025-07-22 21:00:46 +1000 Graham Williams>
+# Time-stamp: <Tuesday 2025-09-23 07:15:08 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -30,7 +30,7 @@ DEST=/var/www/html/$(APP)
 
 REPO=solidcommunity.au
 RLOC=/var/www/html/installers/
-DWLD=https://$(REPO)/installers
+DWLD=https://$(REPO)/installers/
 
 ########################################################################
 # Supported Makefile modules.
@@ -65,12 +65,6 @@ endif
 
 define HELP
 $(APP):
-
-  jmaudio		AI intro and JM session
-  weaudio		AI intro and JM session as single intro
-  teaudio		Short audio clips for testing
-  gjaudio		GJ basic intro and session
-  aiaudio		AI generated intro and session (Play Store)
 
   ginstall   After a github build download bundles and upload to $(REPO)
 
@@ -107,58 +101,6 @@ tgz::
 	ssh $(REPO) chmod -R go+rX /var/www/html/installers/
 	ssh $(REPO) chmod go=x /var/www/html/installers/
 
-# Manage the audio tracks to use.
-
-# 	ffmpeg -y -v 0 -i ignore/tibet.mp3 assets/sounds/dong.mp3
-
-jmaudio:
-	ffmpeg -y -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
-	ffmpeg -y -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
-	ffmpeg -y -v 0 -i ignore/session_guide_jm.ogg assets/sounds/session_guide.mp3
-	ffmpeg -y -v 0 -i ignore/session_intro_music.ogg assets/sounds/session_intro.mp3
-	ffmpeg -y -v 0 -i ignore/session_outro_music.ogg assets/sounds/session_outro.mp3
-
-# 20241112 gjw For some reason web version has no sound for
-# intro. Combine JM and intro into one for now.
-
-weaudio:
-	ffmpeg -y -v 0 -i ignore/dong40v.ogg assets/sounds/dong.mp3
-	ffmpeg -y -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
-	ffmpeg -y -v 0 -i ignore/session_outro_music.ogg assets/sounds/session_outro.mp3
-	ffmpeg -y -i ignore/session_guide_jm.ogg \
-	          -i ignore/session_intro_music.ogg \
-                  -filter_complex "[0:a][1:a]concat=n=2:v=0:a=1[out]" \
-                  -map "[out]" -codec:a \
-                  libmp3lame assets/sounds/session_guide.mp3
-
-# 20250218 gjw Other attempts to concat. Filed to get the duration in
-# the output!
-#
-# ffmpeg -f concat -safe 0 -i ignore/concat_jm_intro.txt -c copy assets/sounds/session_guide.mp3
-# sox ignore/session_guide_jm.ogg ignore/session_intro_music.ogg assets/sounds/session_guide.mp3
-# sox -n -r 44100 -c 2 assets/sounds/session_intro.mp3 trim 0 1
-
-teaudio:
-	ffmpeg -y -v 0 -i ignore/testing_ding.ogg assets/sounds/dong.mp3
-	ffmpeg -y -v 0 -i ignore/testing_intro.ogg assets/sounds/intro.mp3
-	ffmpeg -y -v 0 -i ignore/testing_guide.ogg assets/sounds/session_guide.mp3
-	ffmpeg -y -v 0 -i ignore/testing_intro_music.ogg assets/sounds/session_intro.mp3
-	ffmpeg -y -v 0 -i ignore/testing_outro_music.ogg assets/sounds/session_outro.mp3
-
-gjaudio:
-	ffmpeg -y -v 0 -i ignore/dongv50.ogg assets/sounds/dong.mp3
-	ffmpeg -y -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.mp3
-	ffmpeg -y -v 0 -i ignore/session_guide_gjw_8db.ogg assets/sounds/session_guide.mp3
-	ffmpeg -y -v 0 -i ignore/silence.ogg assets/sounds/session_intro.mp3
-	ffmpeg -y -v 0 -i ignore/silence.ogg assets/sounds/session_outro.mp3
-
-aiaudio:
-	ffmpeg -y -v 0 -i ignore/dong40v.ogg assets/sounds/dong.ogg
-	ffmpeg -y -v 0 -i ignore/intro_elevenlabs_emily.ogg assets/sounds/intro.ogg
-	ffmpeg -y -v 0 -i ignore/session_guide_elevenlabs_emily_80.ogg assets/sounds/session_guide.ogg
-	ffmpeg -y -v 0 -i ignore/silence.ogg assets/sounds/session_intro.ogg
-	ffmpeg -y -v 0 -i ignore/silence.ogg assets/sounds/session_outro.ogg
-
 # Android: Upload to Solid Community installers for general access.
 
 # Make apk on this machine to deal with signing. Then a ginstall of
@@ -172,10 +114,11 @@ apk::
 	rm -f installers/$(APP).apk
 
 deb:
+	@echo "Build $(APP) version $(VER)"
 	(cd installers; make $@)
 	rsync -avzh installers/$(APP)_$(VER)_amd64.deb $(REPO):$(RLOC)$(APP)_amd64.deb
 	ssh $(REPO) chmod a+r $(RLOC)$(APP)_amd64.deb
-	wget $(DWLD)/$(APP)_amd64.deb -O $(APP)_amd64.deb
+	wget $(DWLD)$(APP)_amd64.deb -O $(APP)_amd64.deb
 	wajig install $(APP)_amd64.deb
 	rm -f $(APP)_amd64.deb
 	mv -f installers/$(APP)_*.deb installers/ARCHIVE/
@@ -192,5 +135,5 @@ deb:
 # /usr/bin/rattle. This is working so add deb into the install and now
 # utilise that for the default install on my machine.
 
-ginstall: deb apk
+ginstall: deb apk prod
 	(cd installers; make $@)
