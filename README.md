@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD013 MD033 MD036 MD041 -->
 
-*Time-stamp: <Saturday 2025-10-04 17:15:07 +1000 Graham Williams>*
+*Time-stamp: <Saturday 2025-10-04 20:38:53 +1000 Graham Williams>*
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
@@ -22,6 +22,7 @@
 Run the app online: [**web**](https://innerpod.solidcommunity.au).
 
 Download the latest version:
+
 + **Android**
 [apk](https://solidcommunity.au/installers/innerpod.apk);
 + **GNU/Linux**
