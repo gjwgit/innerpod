@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD013 MD033 MD036 MD041 -->
 
-*Time-stamp: <Saturday 2025-10-04 17:13:28 +1000 Graham Williams>*
+*Time-stamp: <Saturday 2025-10-04 17:15:07 +1000 Graham Williams>*
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
@@ -17,21 +17,17 @@
 
 **A [Togaware](https://togaware.com.au) app using Solid Pods**
 
-*Author: Graham Williams*
-
-*[Togaware Pty Ltd](https://togaware.com)*
-
-*License: GNU GPL V3*
+*Author: Graham Williams [Togaware Pty Ltd](https://togaware.com)*
 
 Run the app online: [**web**](https://innerpod.solidcommunity.au).
 
 Download the latest version:
++ **Android**
+[apk](https://solidcommunity.au/installers/innerpod.apk);
 + **GNU/Linux**
 [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
 [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
 [zip](https://solidcommunity.au/installers/innerpod-dev-linux.zip);
-+ **Android**
-[apk](https://solidcommunity.au/installers/innerpod.apk);
 + **macOS**
 [dmg](https://solidcommunity.au/installers/innerpod-dev-macos-unsigned.dmg) or
 [zip](https://solidcommunity.au/installers/innerpod-dev-macos.zip);
