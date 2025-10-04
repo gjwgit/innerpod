@@ -1,5 +1,5 @@
 name: innerpod
-version: '1.4.1'
+version: '1.7.4'
 summary: A session timer with session logged to your Solid Pod
 description: |
   A session timer typically used for silent meditation.
