@@ -19,6 +19,7 @@ INC_JEKYLL   ?= $(INC_BASE)/jekyll.mk
 INC_MLHUB    ?= $(INC_BASE)/mlhub.mk
 INC_WEBCAM   ?= $(INC_BASE)/webcam.mk
 INC_INSTALL  ?= $(INC_BASE)/install.mk
+INC_INNERPOD ?= $(INC_BASE)/innerpod.mk
 
 ifneq ("$(wildcard $(INC_CLEAN))","")
   include $(INC_CLEAN)
@@ -65,4 +66,3 @@ endif
 ifneq ("$(wildcard $(INC_INSTALL))","")
   include $(INC_INSTALL)
 endif
-
