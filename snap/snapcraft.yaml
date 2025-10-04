@@ -13,6 +13,8 @@ apps:
     command: innerpod
     extensions: [gnome] # gnome includes the libraries required by flutter
     plugs:
+      - audio-playback
+      - pulseaudio
       - desktop
       - desktop-legacy
       - wayland
