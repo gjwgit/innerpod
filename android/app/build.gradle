@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.togaware.innerpod"
-    compileSdkVersion 34
+    compileSdkVersion 36
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -46,8 +46,8 @@ android {
     defaultConfig {
         applicationId "com.togaware.innerpod"
         // https://flutter.dev/to/review-gradle-config.
-        minSdk = 21
-        targetSdk = 34
+        minSdkVersion = flutter.minSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
