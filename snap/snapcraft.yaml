@@ -42,7 +42,3 @@ parts:
       - libgstreamer-plugins-good1.0-0
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-base
-
-plugs:
-  - audio-playback
-  - pulseaudio
