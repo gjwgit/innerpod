@@ -4,7 +4,7 @@
 #define MyAppName "InnerPod"
 #define MyAppVersion "dev-windows-inno"
 #define MyAppPublisher "Togaware Pty Ltd"
-#define MyAppURL "https://github.com/anusii/innerpod
+#define MyAppURL "https://github.com/gjwgit/innerpod
 #define MyAppExeName "innerpod.exe"
 
 [Setup]
@@ -17,7 +17,7 @@
 ; Also notice the consecutive "{" characters required, it seems. Looks
 ; like it is for embedding a single "{" and not a constant.
 ;
-AppId={e847c732-5892-4b4c-bf15-80b4bfd0f0c2}
+AppId={{e847c732-5892-4b4c-bf15-80b4bfd0f0c2}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}

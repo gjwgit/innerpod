@@ -1,8 +1,8 @@
 /// A session timer with session logged to your Solid Pod.
-//
-// Time-stamp: <Wednesday 2025-07-30 09:29:44 +1000 Graham Williams>
-//
-/// Copyright (C) 2024, Togaware Pty Ltd
+///
+// Time-stamp: <Monday 2025-09-29 08:38:20 +1000 Graham Williams>
+///
+/// Copyright (C) 2025, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -22,5 +22,8 @@
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: AUTHORS
+
+// Add the library directive as we have doc entries above. We publish the above
+// meta doc lines in the docs.
 
 library;
