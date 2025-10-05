@@ -40,6 +40,7 @@ flutter:
   assets:
     - assets/images/inner_icon.png
     - assets/images/inner_image.jpg
+    - assets/icons/icon.png
     - assets/sounds/dong.mp3
     - assets/sounds/intro.mp3
     - assets/sounds/session_guide.mp3
