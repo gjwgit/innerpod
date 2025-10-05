@@ -443,6 +443,8 @@ apk::
 
 appbundle:
 	flutter build appbundle --release
+	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP).aab
+	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP)-$(VER).aab
 
 realclean::
 	flutter clean
