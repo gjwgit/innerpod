@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=com.togaware.innerpod
+Name=InnerPod
 Comment=A session timer with session logged to your Solid Pod
 Exec=innerpod
 Icon=${SNAP}/meta/gui/icon.png
