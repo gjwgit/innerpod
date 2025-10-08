@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD013 MD033 MD036 MD041 -->
 
-*Time-stamp: <Monday 2025-10-06 08:37:09 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 11:38:07 +1100 Graham Williams>*
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
@@ -18,6 +18,10 @@
 **A [Togaware](https://togaware.com.au) app using Solid Pods**
 
 *Author: Graham Williams [Togaware Pty Ltd](https://togaware.com)*
+
+Published on [Google Play
+Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
+and [SnapCraft](https://snapcraft.io/innerpod).
 
 Run the app online: [**web**](https://innerpod.solidcommunity.au).
 
