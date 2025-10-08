@@ -9,7 +9,7 @@ for Android or [SnapCraft](https://snapcraft.io/innerpod) for
 Linux. You can also run the app online at
 [innerpod.solidcommunity.au](https://innerpod.solidcommunity.au).
 
-The latext version of the app can be downloaded and installed from
+The latest version of the app can be downloaded and installed from the
 [Solid Community AU](https://solidcommunity.au):
 
 + **Android**
@@ -135,7 +135,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-*Time-stamp: <Wednesday 2025-10-08 14:44:15 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 14:54:31 +1100 Graham Williams>*
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
