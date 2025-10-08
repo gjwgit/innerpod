@@ -90,7 +90,7 @@ open source code is available from
 [github](https://github.com/gjwgit/innerpod). We utilise the
 [solidpod](https://pub.dev/packages/solidpod) package for Flutter.
 
-You can try it out online at[Solid Community
+You can try it out online at [Solid Community
 AU](https://innerpod.solidcommunity.au). We also welcome testers of
 the [Android
 app](https://play.google.com/store/apps/details?id=com.togaware.innerpod).
@@ -128,7 +128,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-*Time-stamp: <Wednesday 2025-10-08 15:23:17 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 15:24:20 +1100 Graham Williams>*
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
