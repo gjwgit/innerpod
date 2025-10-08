@@ -1,5 +1,3 @@
-<!-- markdownlint-disable MD013 MD033 MD036 MD041 -->
-
 # InnerPod &mdash; A Meditation Timer and Session Log
 
 An app using Solid Pods by [Graham
@@ -11,8 +9,8 @@ for Android or [SnapCraft](https://snapcraft.io/innerpod) for
 Linux. You can also run the app online at
 [innerpod.solidcommunity.au](https://innerpod.solidcommunity.au).
 
-The app can be downloaded and installed from [Solid Community
-AU](https://solidcommunity.au):
+The latext version of the app can be downloaded and installed from
+[Solid Community AU](https://solidcommunity.au):
 
 + **Android**
 [apk](https://solidcommunity.au/installers/innerpod.apk);
@@ -137,8 +135,10 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-*Time-stamp: <Wednesday 2025-10-08 14:38:41 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 14:44:15 +1100 Graham Williams>*
 
+<!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
 [comment]: # (time-stamp-line-limit: -8)
 [comment]: # (End:)
+<!-- markdownlint-enable MD053 -->
