@@ -26,13 +26,6 @@ The latest version of the app can be downloaded and installed from the
 [zip](https://solidcommunity.au/installers/innerpod-dev-windows.zip) or
 [inno](https://solidcommunity.au/installers/innerpod-dev-windows-inno.exe).
 
-## Quick Start
-
-To run the app online visit the [Solid Community
-AU](https://innerpod.solidcommunity.au). To install the app on your
-desktop or mobile device, visit
-[Installers](https://github.com/gjwgit/innerpod/blob/dev/installers/README.md).
-
 Contributions are welcome. Visit the [github
 repository](https://github.com/gjwgit/innerpod) and feel free to
 submit an issue, or, even better, fork the repository yourself, update
@@ -136,7 +129,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-*Time-stamp: <Wednesday 2025-10-08 15:17:42 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 15:19:03 +1100 Graham Williams>*
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
