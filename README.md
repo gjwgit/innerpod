@@ -1,7 +1,5 @@
 <!-- markdownlint-disable MD013 MD033 MD036 MD041 -->
 
-*Time-stamp: <Wednesday 2025-10-08 11:52:30 +1100 Graham Williams>*
-
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
@@ -139,3 +137,9 @@ The instructions for meditating by John Main are from
 The bell is Tibetan bowl_left hit.wav by
 [dersinnsspace](https://freesound.org/s/417117/). License: Creative
 Commons 0
+
+*Time-stamp: <Wednesday 2025-10-08 14:34:19 +1100 Graham Williams>*
+
+[comment]: # (Local Variables:)
+[comment]: # (time-stamp-line-limit: -8)
+[comment]: # (End:)
