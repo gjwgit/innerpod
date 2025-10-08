@@ -33,9 +33,8 @@ a Pull Request. Thanks.
 
 ## Introduction
 
-InnerPod is a session timer with sessions optionally logged to your
-[Solid Pod](https://solidproject.au). A session can be anything though
-the app is commonly used for silent meditation.
+InnerPod is a meditation guide and timer. Using a countdown timer
+(defaults to 20 minutes) a bell will begin and end the meditation.
 
 ## Using the App
 
@@ -129,7 +128,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-*Time-stamp: <Wednesday 2025-10-08 15:21:06 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 15:23:17 +1100 Graham Williams>*
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
