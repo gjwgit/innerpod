@@ -1,9 +1,9 @@
-# InnerPod &mdash; A Meditation Timer and Session Log
+# InnerPod &mdash; A Meditation Timer
 
-An app using Solid Pods by [Graham
-Williams](https://togaware.com/Graham.Williams.html) (
-[Togaware](https://togaware.com.au)).  You can install the app from
-the [Google Play
+An app to guide and time your regular mediation. The app was developed by
+[Togaware](https://togaware.com.au) and written by [Graham
+Williams](https://togaware.com/Graham.Williams.html).  You can install
+the app from the [Google Play
 Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 for Android or [SnapCraft](https://snapcraft.io/innerpod) for
 Linux. You can also run the app online at
@@ -135,7 +135,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-*Time-stamp: <Wednesday 2025-10-08 14:54:31 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 15:14:28 +1100 Graham Williams>*
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
