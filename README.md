@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD013 MD033 MD036 MD041 -->
 
-*Time-stamp: <Wednesday 2025-10-08 11:47:57 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 11:52:30 +1100 Graham Williams>*
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
@@ -15,7 +15,8 @@
 
 # InnerPod &mdash; A Meditation Timer and Session Log
 
-An app using Solid Pods by *Graham Williams* of
+An app using Solid Pods by [Graham
+Williams](https://togaware.com/Graham.Williams.html) of
 [Togaware](https://togaware.com.au).
 
 Install from the [Google Play
