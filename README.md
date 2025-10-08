@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD013 MD033 MD036 MD041 -->
 
-*Time-stamp: <Wednesday 2025-10-08 11:46:29 +1100 Graham Williams>*
+*Time-stamp: <Wednesday 2025-10-08 11:47:57 +1100 Graham Williams>*
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
@@ -15,8 +15,8 @@
 
 # InnerPod &mdash; A Meditation Timer and Session Log
 
-**A [Togaware](https://togaware.com.au) app using Solid Pods** by
-*Graham Williams*
+An app using Solid Pods by *Graham Williams* of
+[Togaware](https://togaware.com.au).
 
 Install from the [Google Play
 Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
@@ -24,8 +24,8 @@ for Android or [SnapCraft](https://snapcraft.io/innerpod) for
 Linux. You can also run the app online at
 [innerpod.solidcommunity.au](https://innerpod.solidcommunity.au).
 
-You can also download and install the latest version from Solid
-Community AU:
+You can download and install the latest version from Solid Community
+AU:
 
 + **Android**
 [apk](https://solidcommunity.au/installers/innerpod.apk);
@@ -42,7 +42,7 @@ Community AU:
 
 ## Quick Start
 
-To run the app online **now** visit the [Solid Community
+To run the app online visit the [Solid Community
 AU](https://innerpod.solidcommunity.au). To install the app on your
 desktop or mobile device, visit
 [Installers](https://github.com/gjwgit/innerpod/blob/dev/installers/README.md).
