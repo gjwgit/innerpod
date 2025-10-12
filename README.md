@@ -1,5 +1,11 @@
 # InnerPod &mdash; A Meditation Timer
 
+[![GitHub License](https://img.shields.io/github/license/gjwgit/innerpod)](https://raw.githubusercontent.com/gjwgit/innerpod/main/LICENSE)
+[![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/innerpod/master/pubspec.yaml&query=$.version&label=version)](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
+[![Last Updated](https://img.shields.io/github/last-commit/gjwgit/innerpod?label=last%20updated)](https://github.com/gjwgit/innerpod/commits/dev/)
+[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/innerpod/dev)](https://github.com/gjwgit/rattle/commits/dev/)
+[![GitHub Issues](https://img.shields.io/github/issues/gjwgit/innerpod)](https://github.com/gjwgit/innerpod/issues)
+
 An app to guide and time your regular mediation. The app was developed
 by [Togaware](https://togaware.com.au) and written by [Graham
 Williams](https://togaware.com/Graham.Williams.html).  You can install
@@ -9,6 +15,8 @@ for Android or [SnapCraft](https://snapcraft.io/innerpod) for
 Linux. You can also run the app online at
 [innerpod.solidcommunity.au](https://innerpod.solidcommunity.au)
 &ndash; no installation required.
+
+[![innerpod](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
 
 The latest version of the app can be downloaded and installed from the
 [Solid Community AU](https://solidcommunity.au):
@@ -117,18 +125,10 @@ The bell is Tibetan bowl_left hit.wav by
 [dersinnsspace](https://freesound.org/s/417117/). License: Creative
 Commons 0
 
-[![innerpod](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
-
-[![GitHub License](https://img.shields.io/github/license/gjwgit/innerpod)](https://raw.githubusercontent.com/gjwgit/innerpod/main/LICENSE)
-[![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/innerpod/master/pubspec.yaml&query=$.version&label=version)](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
-[![Last Updated](https://img.shields.io/github/last-commit/gjwgit/innerpod?label=last%20updated)](https://github.com/gjwgit/innerpod/commits/dev/)
-[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/innerpod/dev)](https://github.com/gjwgit/rattle/commits/dev/)
-[![GitHub Issues](https://img.shields.io/github/issues/gjwgit/innerpod)](https://github.com/gjwgit/innerpod/issues)
-
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Wednesday 2025-10-08 15:32:23 +1100 Graham Williams>
+Time-stamp: <Sunday 2025-10-12 20:37:35 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
