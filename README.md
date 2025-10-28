@@ -10,14 +10,8 @@
 [![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/innerpod/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/innerpod)](https://github.com/gjwgit/innerpod/issues)
 
-[![SnapCraft](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
-[![Google Play](https://img.shields.io/badge/Google_Play-Innerpod-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-[![Google Play](https://img.shields.io/badge/Download-Google%20Play-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-[![Google Play](https://img.shields.io/endpoint?color=green&logo=google-play&logoColor=white&url=https%3A%2F%2Fplay.cuzi.workers.dev%2Fplay%3Fi%3Dcom.togaware.innerpod%26l%3DGoogle%2520Play%26m%3Dv%24version)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-[![Google Play](https://img.shields.io/badge/Google%20Play-v1.2.3-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-[![Google Play](https://img.shields.io/badge/Google%20Play-Latest-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 [![Google Play](https://img.shields.io/badge/Google%20Play-Available-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-
+[![SnapCraft](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
 
 An app to guide and time your regular mediation. The app was developed
 by [Togaware](https://togaware.com.au) and written by [Graham
@@ -143,7 +137,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Tuesday 2025-10-28 12:13:25 +1100 Graham Williams>
+Time-stamp: <Tuesday 2025-10-28 12:15:45 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
