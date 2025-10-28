@@ -1,25 +1,33 @@
 # InnerPod &mdash; A Meditation Timer
 
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
+
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/gjwgit/innerpod)
 [![GitHub License](https://img.shields.io/github/license/gjwgit/innerpod)](https://raw.githubusercontent.com/gjwgit/innerpod/main/LICENSE)
 [![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/innerpod/master/pubspec.yaml&query=$.version&label=version)](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
 [![Last Updated](https://img.shields.io/github/last-commit/gjwgit/innerpod?label=last%20updated)](https://github.com/gjwgit/innerpod/commits/dev/)
 [![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/innerpod/dev)](https://github.com/gjwgit/rattle/commits/dev/)
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/innerpod)](https://github.com/gjwgit/innerpod/issues)
 
+[![SnapCraft](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
+[![Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
+
 An app to guide and time your regular mediation. The app was developed
 by [Togaware](https://togaware.com.au) and written by [Graham
-Williams](https://togaware.com/Graham.Williams.html).  You can install
-the app from the [Google Play
+Williams](https://togaware.com/Graham.Williams.html).
+
+If you appreciate the app then please show some ❤️ and star the GitHub
+Repository to support the project.  You can install the released
+version of the app from different repositories including [Google Play
 Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-for Android or [SnapCraft](https://snapcraft.io/innerpod) for
-Linux. You can also run the app online at
-[innerpod.solidcommunity.au](https://innerpod.solidcommunity.au)
-&ndash; no installation required.
+for Android and [SnapCraft](https://snapcraft.io/innerpod) for Linux.
 
-[![innerpod](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
-
-The latest version of the app can be downloaded and installed from the
-[Solid Community AU](https://solidcommunity.au):
+The latest version of the app can be run online at
+[innerpod.solidcommunity.au](https://innerpod.solidcommunity.au) with
+no installation required, or downloaded and installed for your
+platform from the [Solid Community AU](https://solidcommunity.au)
+repository:
 
 + **Android**
 [apk](https://solidcommunity.au/installers/innerpod.apk);
@@ -37,7 +45,8 @@ The latest version of the app can be downloaded and installed from the
 Contributions are welcome. Visit
 [github](https://github.com/gjwgit/innerpod) to submit an issue or,
 even better, fork the repository yourself, update the code, and submit
-a Pull Request. Thanks.
+a Pull Request. The app is implemented in
+[Flutter](https://flutter.dev). Thanks.
 
 ## Introduction
 
@@ -128,7 +137,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Sunday 2025-10-12 20:37:35 +1100 Graham Williams>
+Time-stamp: <Tuesday 2025-10-28 12:04:09 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
