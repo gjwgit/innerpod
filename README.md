@@ -11,6 +11,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/innerpod)](https://github.com/gjwgit/innerpod/issues)
 
 [![SnapCraft](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
+[![Google Play](https://img.shields.io/badge/Google_Play-Innerpod-414141?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 [![Google Play](https://img.shields.io/badge/Download-Google%20Play-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 
 An app to guide and time your regular mediation. The app was developed
@@ -137,7 +138,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Tuesday 2025-10-28 12:05:40 +1100 Graham Williams>
+Time-stamp: <Tuesday 2025-10-28 12:06:44 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
