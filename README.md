@@ -13,9 +13,9 @@
 [![Google Play](https://img.shields.io/badge/Google%20Play-Available-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 [![SnapCraft](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
 
-An app to guide and time your regular mediation. The app was developed
-by [Togaware](https://togaware.com.au) and written by [Graham
-Williams](https://togaware.com/Graham.Williams.html).
+InnerPod is an app to guide and time your regular mediation. The app
+was developed by [Togaware](https://togaware.com.au) and written by
+[Graham Williams](https://togaware.com/Graham.Williams.html).
 
 If you appreciate the app then please show some ❤️ and star the GitHub
 Repository to support the project.  You can install the released
@@ -137,7 +137,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Tuesday 2025-10-28 12:24:26 +1100 Graham Williams>
+Time-stamp: <Tuesday 2025-10-28 20:00:34 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
