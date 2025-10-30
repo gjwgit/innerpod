@@ -13,6 +13,8 @@
 [![Google Play](https://img.shields.io/badge/Google%20Play-Available-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 [![SnapCraft](https://snapcraft.io/innerpod/badge.svg)](https://snapcraft.io/innerpod)
 
+[![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/innerpod)
+
 InnerPod is an app to guide and time your regular mediation. The app
 was developed by [Togaware](https://togaware.com.au) and written by
 [Graham Williams](https://togaware.com/Graham.Williams.html).
@@ -29,18 +31,20 @@ no installation required, or downloaded and installed for your
 platform from the [Solid Community AU](https://solidcommunity.au)
 repository:
 
++ **Web**
+  [solidcommunity](https://innerpod.solidcommunity.au/);
 + **Android**
-[apk](https://solidcommunity.au/installers/innerpod.apk);
+  [apk](https://solidcommunity.au/installers/innerpod.apk);
 + **GNU/Linux**
-[snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
-[deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
-[zip](https://solidcommunity.au/installers/innerpod-dev-linux.zip);
+  [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
+  [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
+  [zip](https://solidcommunity.au/installers/innerpod-dev-linux.zip);
 + **macOS**
-[dmg](https://solidcommunity.au/installers/innerpod-dev-macos-unsigned.dmg) or
-[zip](https://solidcommunity.au/installers/innerpod-dev-macos.zip);
+  [dmg](https://solidcommunity.au/installers/innerpod-dev-macos-unsigned.dmg) or
+  [zip](https://solidcommunity.au/installers/innerpod-dev-macos.zip);
 + **Windows**
-[zip](https://solidcommunity.au/installers/innerpod-dev-windows.zip) or
-[inno](https://solidcommunity.au/installers/innerpod-dev-windows-inno.exe).
+  [zip](https://solidcommunity.au/installers/innerpod-dev-windows.zip) or
+  [inno](https://solidcommunity.au/installers/innerpod-dev-windows-inno.exe).
 
 Contributions are welcome. Visit
 [github](https://github.com/gjwgit/innerpod) to submit an issue or,
@@ -137,7 +141,7 @@ Commons 0
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Tuesday 2025-10-28 20:00:34 +1100 Graham Williams>
+Time-stamp: <Thursday 2025-10-30 14:05:54 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
