@@ -24,7 +24,7 @@ env:
   APP: innerpod
   RELEASE: dev
   LINUX_PKGS: libsecret-1-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
-  FLUTTER_VERSION: '3.35.6'
+  FLUTTER_VERSION: '3.35.7'
 
 jobs:
 
@@ -118,6 +118,11 @@ jobs:
 
       - name: Clone Repository
         uses: actions/checkout@v4
+
+      - name: Update system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade -y
 
       - name: Build snap
         if: hashFiles('snap/**') != ''
