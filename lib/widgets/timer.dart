@@ -244,13 +244,14 @@ class TimerState extends State<Timer> {
 
     final startButton = AppButton(
       title: 'Start',
-      tooltip: '''
+      tooltip:
+          '''
 
 Tap here to begin a session of silence for ${(_duration / 60).round()}
 minutes, beginning and ending with three chimes.
 
 '''
-          .trim(),
+              .trim(),
       onPressed: () {
         logMessage('Start Session');
         _reset();
@@ -264,13 +265,14 @@ minutes, beginning and ending with three chimes.
 
     final pauseButton = AppButton(
       title: 'Pause',
-      tooltip: '''
+      tooltip:
+          '''
 
 Tap here to Pause the timer and the audio.  They can be resumed with a press
 of the Resume button.
 
 '''
-          .trim(),
+              .trim(),
       onPressed: () {
         _controller.pause();
         _player.pause();
@@ -305,14 +307,15 @@ of the Resume button.
 
     final introButton = AppButton(
       title: 'Intro',
-      tooltip: '''
+      tooltip:
+          '''
 
 Tap here to play a short introduction for a session.  After the introduction a
 ${(_duration / 60).round()} minute session of silence will begin and end with
 three dings.
 
 '''
-          .trim(),
+              .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.blue.shade100,
@@ -320,7 +323,8 @@ three dings.
 
     final guidedButton = AppButton(
       title: 'Guided',
-      tooltip: '''
+      tooltip:
+          '''
 
 Tap here to play a ${10 + (_duration / 60).round()} minute guided session.
 The session begins with instructions for meditation from John Main.
@@ -329,7 +333,7 @@ minute silent session which is then finished with another three chimes.  The
 audio may take a little time to download for the Web version.
 
 '''
-          .trim(),
+              .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.purple.shade100,
@@ -421,9 +425,7 @@ audio may take a little time to download for the Web version.
             const SizedBox(height: 1 * heightSpacer),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                durationChoice,
-              ],
+              children: [durationChoice],
             ),
           ],
         ),

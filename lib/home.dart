@@ -127,11 +127,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         title: Row(
           children: [
-            Image.asset(
-              'assets/images/inner_icon.png',
-              width: 40,
-              height: 40,
-            ),
+            Image.asset('assets/images/inner_icon.png', width: 40, height: 40),
             const SizedBox(width: 20),
             const Text('Inner Pod'),
           ],
@@ -151,10 +147,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               cursor: SystemMouseCursors.click,
               child: Text(
                 'Version $_appVersion',
-                style: const TextStyle(
-                  color: Colors.deepPurple,
-                  fontSize: 10,
-                ),
+                style: const TextStyle(color: Colors.deepPurple, fontSize: 10),
               ),
             ),
           ),
@@ -228,10 +221,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             icon: Icon(Icons.text_snippet),
             label: 'Text',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'History',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'History'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],

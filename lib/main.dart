@@ -37,9 +37,7 @@ void main() {
   // Call MaterialApp() here rather than within InnerPod so that
   // MaterialLocalizations is found when firing off the showAboutDialog.
 
-  runApp(
-    const MaterialApp(title: 'Inner Pod', home: InnerPod()),
-  );
+  runApp(const MaterialApp(title: 'Inner Pod', home: InnerPod()));
 }
 
 /// The primary widget for the app.

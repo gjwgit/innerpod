@@ -61,7 +61,8 @@ class Instructions extends StatelessWidget {
         body: TabBarView(
           children: [
             Markdown(
-              data: '# How to Meditate\n'
+              data:
+                  '# How to Meditate\n'
                   '  \n'
                   '---\n'
                   '  \n'
@@ -109,7 +110,8 @@ class Instructions extends StatelessWidget {
               ),
             ),
             Markdown(
-              data: '# Opening Prayer\n'
+              data:
+                  '# Opening Prayer\n'
                   '---\n'
                   'Heavenly Father.  \n'
                   '  \n'
@@ -134,7 +136,8 @@ class Instructions extends StatelessWidget {
               ),
             ),
             Markdown(
-              data: '# Closing Prayer\n'
+              data:
+                  '# Closing Prayer\n'
                   '  \n'
                   '---\n'
                   '  \n'
