@@ -27,6 +27,8 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:solidui/solidui.dart';
+
 import 'package:innerpod/home.dart';
 
 //import 'package:innerpod/timer.dart';
@@ -58,29 +60,20 @@ class InnerPod extends StatelessWidget {
     /// at that time. The login token and the security key are (optionally)
     /// cached so that the login information is not required every time.
 
-    // TODO 20240708 gjw COMMENTED OUT FOR NOW BUT INTEND TO USE.
-
-    // return const SolidLogin(
-    //   title: 'MANAGE YOUR INNER POD',
-    //   required: false,
-    //   image: AssetImage('assets/images/inner_image.jpg'),
-    //   logo: AssetImage('assets/images/inner_icon.png'),
-    //   continueButtonStyle: ContinueButtonStyle(
-    //     text: 'Session',
-    //     background: Colors.lightGreenAccent,
-    //   ),
-    //   infoButtonStyle: InfoButtonStyle(
-    //     tooltip: 'Browse to the InnerPod home page.',
-    //   ),
-    //   // registerButtonStyle: registerButtonStyle(
-    //   //   text: 'REG',
-    //   // ),
-    //   link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
-    //   child: Home(),
-    // );
-
-    // OR
-
-    return const Home();
+    return const SolidLogin(
+      title: 'MANAGE YOUR INNER POD',
+      required: false,
+      image: AssetImage('assets/images/inner_image.jpg'),
+      logo: AssetImage('assets/images/inner_icon.png'),
+      continueButtonStyle: ContinueButtonStyle(
+        text: 'Session',
+        background: Colors.lightGreenAccent,
+      ),
+      infoButtonStyle: InfoButtonStyle(
+        tooltip: 'Browse to the InnerPod home page.',
+      ),
+      link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
+      child: Home(),
+    );
   }
 }

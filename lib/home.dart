@@ -35,6 +35,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/utils/word_wrap.dart';
+import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
 import 'package:innerpod/widgets/timer.dart';
 
@@ -108,14 +109,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   final List<Widget> _pages = <Widget>[
     const Timer(),
     const Instructions(),
-    const Column(
-      children: [
-        Gap(100),
-        Text('Coming Soon'),
-        Gap(100),
-        Icon(Icons.chat, size: 150),
-      ],
-    ),
+    const History(),
   ];
 
   @override

@@ -29,12 +29,14 @@ import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:solidpod/solidpod.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
+import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
 
@@ -75,6 +77,10 @@ class TimerState extends State<Timer> {
   // Track the duration of a loaded audio file.
 
   var _audioDuration = Duration.zero;
+
+  // Track the start time of a session.
+
+  DateTime? _startTime;
 
   ////////////////////////////////////////////////////////////////////////
   // CONSTANTS
@@ -125,6 +131,7 @@ class TimerState extends State<Timer> {
     _reset();
     _stopSleep();
     _isGuided = false;
+    _startTime = DateTime.now();
 
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
@@ -167,6 +174,7 @@ class TimerState extends State<Timer> {
     _reset();
     _stopSleep();
     _isGuided = true;
+    _startTime = DateTime.now();
 
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
@@ -215,6 +223,28 @@ class TimerState extends State<Timer> {
 
     _reset();
     _allowSleep();
+    await _saveSession();
+  }
+
+  Future<void> _saveSession() async {
+    if (_startTime == null) return;
+
+    final endTime = DateTime.now();
+    final session = {
+      'start': _startTime!.toIso8601String(),
+      'end': endTime.toIso8601String(),
+    };
+
+    try {
+      String? content = await readPod('sessions.ttl');
+      String newContent = addSession(content, session);
+      await writePod('sessions.ttl', newContent);
+      logMessage('Session saved to Pod');
+    } catch (e) {
+      logMessage('Error saving session to Pod: $e');
+    }
+
+    _startTime = null;
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -257,6 +287,7 @@ minutes, beginning and ending with three chimes.
         dingDong(_player);
         _controller.restart();
         _stopSleep();
+        _startTime = DateTime.now();
       },
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.lightGreenAccent.shade100,

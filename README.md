@@ -7,7 +7,7 @@
 [![GitHub License](https://img.shields.io/github/license/gjwgit/innerpod)](https://raw.githubusercontent.com/gjwgit/innerpod/main/LICENSE)
 [![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/gjwgit/innerpod/master/pubspec.yaml&query=$.version&label=version)](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
 [![Last Updated](https://img.shields.io/github/last-commit/gjwgit/innerpod?label=last%20updated)](https://github.com/gjwgit/innerpod/commits/dev/)
-[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/innerpod/dev)](https://github.com/gjwgit/rattle/commits/dev/)
+[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/gjwgit/innerpod/dev)](https://github.com/gjwgit/innerpod/commits/dev/)
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/innerpod)](https://github.com/gjwgit/innerpod/issues)
 
 [![Google Play](https://img.shields.io/badge/Google%20Play-Available-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
@@ -15,7 +15,7 @@
 [![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/innerpod)
 
 InnerPod is an app to guide and time your regular mediation. The app
-was developed by [Togaware](https://togaware.com.au) and written by
+was developed by [Togaware](https://togaware.com) and written by
 [Graham Williams](https://togaware.com/Graham.Williams.html).
 
 If you appreciate the app then please show some ❤️ and star the GitHub
@@ -116,7 +116,7 @@ the [Android
 app](https://play.google.com/store/apps/details?id=com.togaware.innerpod).
 
 For more information on the Solid project visit the [Solid Project
-AU](https://solidporject.au) site.
+AU](https://solidproject.org) site.
 
 ## Acknowledgements
 
@@ -134,14 +134,15 @@ The instructions for meditating by John Main are from
 [WCCM](https://wccm.org).
 
 The bell is Tibetan bowl_left hit.wav by
-[dersinnsspace](https://freesound.org/s/417117/). License: Creative
+[dersinnsspace](https://freesound.org/people/dersinnsspace/sounds/417117/).
+License: Creative
 Commons 0
 
 ## Contributing
 
 Feel free to pickup tasks from the list in Issues and so create a fork
 to work on the issue to then submit a pull request. Or else contact
-innerpod@togaware.com to volunteer to work directly on the project
+<innerpod@togaware.com> to volunteer to work directly on the project
 under out guidance.
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
