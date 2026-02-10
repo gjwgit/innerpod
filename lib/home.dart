@@ -1,6 +1,6 @@
 /// A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Wednesday 2025-07-30 09:58:30 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2026-02-10 15:44:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:solidpod/solidpod.dart';

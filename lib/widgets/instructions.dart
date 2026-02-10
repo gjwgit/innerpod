@@ -1,6 +1,6 @@
 /// Text instructions and support.
 //
-// Time-stamp: <Wednesday 2025-09-03 12:52:02 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2026-02-10 15:45:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 /// A widget for text instructions, prayers, quotes.
 
