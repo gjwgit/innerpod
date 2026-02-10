@@ -1,6 +1,7 @@
 # Session Recording Enhancement Ideas
 
-This document outlines potential enhancements to the InnerPod session recording and history features.
+This document outlines potential enhancements to the InnerPod session
+recording and history features.
 
 ## 🎯 Quick Wins (Easy to Implement)
 
@@ -10,6 +11,7 @@ This document outlines potential enhancements to the InnerPod session recording 
 **Enhancement:** Calculate and display session duration
 
 **Implementation:**
+
 ```dart
 // In lib/widgets/history.dart
 _sessions = jsonList.map((item) {
@@ -41,6 +43,7 @@ DataCell(Text(session['duration']!)),
 **Enhancement:** Track and display session type
 
 **Implementation:**
+
 ```dart
 // In lib/widgets/timer.dart, modify _saveSession()
 final session = {
@@ -69,6 +72,7 @@ onPressed: () {
 **Enhancement:** Show total meditation time, session count, average duration
 
 **Implementation:**
+
 ```dart
 // In lib/widgets/history.dart
 Widget _buildStatistics() {
@@ -109,6 +113,7 @@ Widget _buildStatistics() {
 **Enhancement:** Allow users to add notes after completing a session
 
 **Data Format:**
+
 ```json
 {
   "start": "2026-02-09T10:30:00.000Z",
@@ -119,12 +124,14 @@ Widget _buildStatistics() {
 ```
 
 **UI Flow:**
+
 1. After session completes, show optional notes dialog
 2. User can add/skip notes
 3. Notes stored with session data
 4. Display notes in history (expandable row or detail view)
 
 **Implementation Locations:**
+
 - `lib/widgets/timer.dart` - Add notes dialog after _complete()
 - `lib/widgets/history.dart` - Display notes in expandable rows
 - Consider creating `lib/widgets/session_notes_dialog.dart`
@@ -138,15 +145,18 @@ Widget _buildStatistics() {
 **Enhancement:** Show sessions on a calendar with visual indicators
 
 **Features:**
+
 - Calendar grid showing current month
 - Days with sessions highlighted
 - Tap day to see sessions for that date
 - Color coding by session type
 
 **Packages to Use:**
+
 - `table_calendar: ^3.0.9`
 
 **Implementation:**
+
 ```dart
 // New file: lib/widgets/calendar_view.dart
 import 'package:table_calendar/table_calendar.dart';
@@ -165,6 +175,7 @@ class CalendarView extends StatefulWidget {
 **Enhancement:** Export session history to CSV file
 
 **Implementation:**
+
 ```dart
 // In lib/widgets/history.dart
 import 'package:csv/csv.dart';
@@ -201,6 +212,7 @@ Future<void> _exportToCSV() async {
 ```
 
 **Dependencies to Add:**
+
 ```yaml
 dependencies:
   csv: ^6.0.0
@@ -218,16 +230,19 @@ dependencies:
 **Enhancement:** Visual charts showing meditation patterns
 
 **Chart Types:**
+
 - Line chart: Sessions per week/month
 - Bar chart: Session duration over time
 - Pie chart: Session type distribution
 - Heatmap: Meditation frequency calendar
 
 **Packages:**
+
 - `fl_chart: ^0.66.0` (recommended)
 - `charts_flutter: ^0.12.0`
 
 **Example:**
+
 ```dart
 // lib/widgets/statistics_chart.dart
 import 'package:fl_chart/fl_chart.dart';
@@ -255,6 +270,7 @@ class SessionsLineChart extends StatelessWidget {
 **Enhancement:** Track consecutive days of meditation
 
 **Features:**
+
 - Current streak counter
 - Longest streak record
 - Visual streak calendar
@@ -262,6 +278,7 @@ class SessionsLineChart extends StatelessWidget {
 - Motivational messages
 
 **Implementation:**
+
 ```dart
 // lib/utils/streak_calculator.dart
 class StreakCalculator {
@@ -306,7 +323,8 @@ class StreakCalculator {
 **Enhancement:** Queue sessions when offline, sync when connection restored
 
 **Architecture:**
-```
+
+```text
 ┌─────────────────────────────────────┐
 │     Session Completes               │
 └──────────────┬──────────────────────┘
@@ -338,6 +356,7 @@ class StreakCalculator {
 ```
 
 **Implementation:**
+
 ```dart
 // lib/services/session_sync_service.dart
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -405,6 +424,7 @@ class SessionSyncService {
 ```
 
 **Dependencies:**
+
 ```yaml
 dependencies:
   connectivity_plus: ^5.0.0
@@ -420,12 +440,14 @@ dependencies:
 **Enhancement:** Daily notifications to remind users to meditate
 
 **Features:**
+
 - Customizable reminder time
 - Multiple reminders per day
 - Smart reminders (skip if already meditated)
 - Motivational quotes in notifications
 
 **Implementation:**
+
 ```dart
 // lib/services/notification_service.dart
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -491,6 +513,7 @@ class NotificationService {
 ```
 
 **Dependencies:**
+
 ```yaml
 dependencies:
   flutter_local_notifications: ^16.0.0
@@ -504,7 +527,7 @@ dependencies:
 ## 📊 Implementation Priority Matrix
 
 | Feature | Impact | Effort | Priority |
-|---------|--------|--------|----------|
+| :--- | :--- | :--- | :--- |
 | Session Duration | High | Low | ⭐⭐⭐⭐⭐ |
 | Session Type | High | Low | ⭐⭐⭐⭐⭐ |
 | Total Statistics | High | Medium | ⭐⭐⭐⭐ |
@@ -519,20 +542,23 @@ dependencies:
 ## 🎯 Recommended Implementation Order
 
 ### Phase 1: Quick Wins (Week 1)
+
 1. Session Duration Display
 2. Session Type Tracking
 3. Total Statistics Display
 
 ### Phase 2: Enhanced UX (Week 2-3)
-4. Session Notes
-5. Export to CSV
-6. Calendar View
+
+1. Session Notes
+2. Export to CSV
+3. Calendar View
 
 ### Phase 3: Advanced Features (Week 4-6)
-7. Streak Tracking
-8. Offline Queue & Sync
-9. Data Visualization Charts
-10. Session Reminders
+
+1. Streak Tracking
+2. Offline Queue & Sync
+3. Data Visualization Charts
+4. Session Reminders
 
 ---
 
@@ -582,7 +608,7 @@ Future<void> _debugSessions() async {
 
 ## 📝 Notes
 
-- All enhancements should maintain backward compatibility with existing session data
+- Maintain backward compatibility with existing session data
 - Consider data migration strategies when changing session format
 - Test thoroughly with and without Pod connection
 - Ensure offline functionality remains robust

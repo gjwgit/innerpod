@@ -1,14 +1,16 @@
 # InnerPod: Getting Started Guide
 
-## 🎉 Welcome!
+## 🎉 Welcome
 
-This guide will help you get started with contributing to InnerPod, specifically focusing on the session recording and history features.
+This guide will help you get started with contributing to InnerPod,
+specifically focusing on the session recording and history features.
 
 ## 📋 What You Need to Know
 
-### ✅ Good News: Features Already Implemented!
+### ✅ Good News: Features Already Implemented
 
-The session recording and history features you mentioned are **already implemented** in InnerPod! Here's what's working:
+The session recording and history features you mentioned are
+**already implemented** in InnerPod! Here's what's working:
 
 1. **Automatic Session Recording**
    - Sessions are automatically saved when completed
@@ -28,17 +30,18 @@ The session recording and history features you mentioned are **already implement
 ### 📁 Key Files to Understand
 
 | File | Purpose | Lines of Interest |
-|------|---------|-------------------|
-| `lib/widgets/timer.dart` | Session timer & recording | 229-252 (_saveSession) |
-| `lib/widgets/history.dart` | Display session history | 31-60 (_loadSessions) |
-| `lib/main.dart` | App entry & Solid login | 64-78 (SolidLogin) |
-| `lib/home.dart` | Navigation & app structure | 109-113 (pages list) |
+| :--- | :--- | :--- |
+| `lib/widgets/timer.dart` | Timer & recording | 229-252 (_saveSession) |
+| `lib/widgets/history.dart` | Display history | 31-60 (_loadSessions) |
+| `lib/main.dart` | Entry & Solid login | 64-78 (SolidLogin) |
+| `lib/home.dart` | Navigation | 110-113 (pages list) |
 
 ## 🚀 Quick Start
 
 ### Step 1: Install Flutter
 
 **Windows Setup:**
+
 ```powershell
 # 1. Download Flutter SDK
 # Visit: https://docs.flutter.dev/get-started/install/windows
@@ -47,7 +50,8 @@ The session recording and history features you mentioned are **already implement
 
 # 3. Add to PATH (PowerShell as Administrator)
 $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
-[Environment]::SetEnvironmentVariable("Path", "$currentPath;C:\src\flutter\bin", "User")
+[Environment]::SetEnvironmentVariable("Path",
+    "$currentPath;C:\src\flutter\bin", "User")
 
 # 4. Restart terminal and verify
 flutter --version
@@ -90,7 +94,9 @@ flutter run -d android
 I've created three comprehensive guides to help you:
 
 ### 1. **DEVELOPMENT_GUIDE.md**
+
 Complete development documentation covering:
+
 - Project architecture overview
 - Session recording implementation details
 - Solid Pod integration explanation
@@ -98,10 +104,13 @@ Complete development documentation covering:
 - Testing strategies
 - Contribution guidelines
 
-**When to use:** Understanding how the app works, architecture decisions, and best practices
+**When to use:** Understanding how the app works, architecture decisions,
+and best practices
 
 ### 2. **SESSION_ENHANCEMENTS.md**
+
 Enhancement ideas with implementation details:
+
 - 10 potential improvements (from easy to advanced)
 - Code examples for each enhancement
 - Effort estimates and priority matrix
@@ -110,7 +119,9 @@ Enhancement ideas with implementation details:
 **When to use:** Planning new features, looking for contribution ideas
 
 ### 3. **.agent/workflows/setup-flutter.md**
+
 Step-by-step Flutter setup workflow:
+
 - Installing Flutter SDK on Windows
 - Setting up development environment
 - Configuring PATH variables
@@ -138,10 +149,11 @@ Step-by-step Flutter setup workflow:
 ### Option B: Start Contributing
 
 1. **Fork the repository** on GitHub
-   - Visit: https://github.com/gjwgit/innerpod
+   - Visit: <https://github.com/gjwgit/innerpod>
    - Click "Fork" button
 
 2. **Clone your fork**
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/innerpod.git
    cd innerpod
@@ -153,6 +165,7 @@ Step-by-step Flutter setup workflow:
    - High impact, low effort
 
 4. **Create a branch**
+
    ```bash
    git checkout -b feature/session-duration
    ```
@@ -193,7 +206,7 @@ dart format .
 
 ### Project Structure
 
-```
+```text
 innerpod/
 ├── lib/
 │   ├── main.dart              # App entry point
@@ -221,7 +234,7 @@ intl: ^0.20.2                 # Date/time formatting
 
 ### How It Works (Simplified)
 
-```
+```text
 1. User starts session
    ↓
 2. App records start time
@@ -249,6 +262,7 @@ intl: ^0.20.2                 # Date/time formatting
 **Encryption:** Handled by Solid Pod  
 
 **Example:**
+
 ```json
 [
   {
@@ -288,15 +302,16 @@ intl: ^0.20.2                 # Date/time formatting
 
 ### Resources
 
-- **Flutter Docs:** https://docs.flutter.dev/
-- **Dart Language:** https://dart.dev/guides
-- **Solid Project:** https://solidproject.org/
-- **InnerPod GitHub:** https://github.com/gjwgit/innerpod
+- **Flutter Docs:** <https://docs.flutter.dev/>
+- **Dart Language:** <https://dart.dev/guides>
+- **Solid Project:** <https://solidproject.org/>
+- **InnerPod GitHub:** <https://github.com/gjwgit/innerpod>
 
 ### Common Issues
 
 **Q: Flutter command not found**  
 A: Restart terminal after adding to PATH, or run:
+
 ```powershell
 $env:Path += ";C:\src\flutter\bin"
 ```
@@ -322,10 +337,11 @@ A: Only in Solid Pod. Without login, sessions aren't saved (by design)
 
 ## 📞 Contact
 
-- **GitHub Issues:** https://github.com/gjwgit/innerpod/issues
+- **GitHub Issues:** <https://github.com/gjwgit/innerpod/issues>
 - **Original Author:** Graham Williams
 - **Project:** Togaware
 
 ---
 
-**Happy coding! May your meditation sessions be peaceful and your code bug-free! 🧘‍♂️✨**
+**Happy coding! May your meditation sessions be peaceful and your code
+bug-free! 🧘‍♂️✨**

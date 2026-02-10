@@ -1,6 +1,7 @@
 # InnerPod Development Guide
 
 ## 📚 Table of Contents
+
 1. [Project Overview](#project-overview)
 2. [Session Recording Architecture](#session-recording-architecture)
 3. [Solid Pod Integration](#solid-pod-integration)
@@ -13,12 +14,14 @@
 ## Project Overview
 
 InnerPod is a meditation timer app built with Flutter that:
+
 - Provides guided and unguided meditation sessions
 - Records session data to encrypted Solid Pods
 - Displays session history
 - Works offline (Pod connection is optional)
 
 **Tech Stack:**
+
 - **Framework:** Flutter 3.2.5+
 - **Language:** Dart
 - **Storage:** Solid Pod (encrypted, decentralized)
@@ -32,7 +35,7 @@ InnerPod is a meditation timer app built with Flutter that:
 
 ### How It Works
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                     User Starts Session                      │
 │                  (Start/Intro/Guided button)                 │
@@ -87,6 +90,7 @@ Sessions are stored in `sessions.ttl` on the user's Solid Pod:
 ```
 
 **Format Details:**
+
 - ISO 8601 timestamp format
 - UTC timezone
 - Millisecond precision
@@ -164,6 +168,7 @@ Future<void> _loadSessions() async {
 ### What is a Solid Pod?
 
 Solid (Social Linked Data) is a decentralized web platform where:
+
 - Users own their data
 - Data is stored in personal "Pods" (Personal Online Data stores)
 - Apps request permission to access data
@@ -172,6 +177,7 @@ Solid (Social Linked Data) is a decentralized web platform where:
 ### How InnerPod Uses Solid Pods
 
 1. **Optional Login** (`lib/main.dart`):
+
    ```dart
    SolidLogin(
      title: 'MANAGE YOUR INNER POD',
@@ -181,11 +187,13 @@ Solid (Social Linked Data) is a decentralized web platform where:
    ```
 
 2. **Reading Data**:
+
    ```dart
    String? content = await readPod('sessions.ttl');
    ```
 
 3. **Writing Data**:
+
    ```dart
    await writePod('sessions.ttl', newContent);
    ```
@@ -236,12 +244,14 @@ flutter run -d windows  # or chrome, android, etc.
 ### 1. Timer Widget (`lib/widgets/timer.dart`)
 
 **Responsibilities:**
+
 - Countdown timer display
 - Session management (start, pause, resume, reset)
 - Audio playback (bells, guided meditation)
 - Session recording
 
 **Key Methods:**
+
 - `_intro()` - Plays intro audio then starts session
 - `_guided()` - Plays full guided meditation
 - `_complete()` - Called when session ends
@@ -250,11 +260,13 @@ flutter run -d windows  # or chrome, android, etc.
 ### 2. History Widget (`lib/widgets/history.dart`)
 
 **Responsibilities:**
+
 - Display past sessions in a table
 - Load sessions from Solid Pod
 - Refresh functionality
 
 **Features:**
+
 - Date formatting (yyyy-MM-dd)
 - Time formatting (HH:mm:ss)
 - Loading state indicator
@@ -264,13 +276,14 @@ flutter run -d windows  # or chrome, android, etc.
 ### 3. Home Widget (`lib/home.dart`)
 
 **Responsibilities:**
+
 - Navigation between tabs (Home, Instructions, History)
 - App bar with version info
 - About dialog
 
 ## Code Structure
 
-```
+```text
 innerpod/
 ├── lib/
 │   ├── main.dart                 # App entry point, Solid login
@@ -300,19 +313,22 @@ innerpod/
 
 ### Manual Testing Checklist
 
-#### Session Recording:
+#### Session Recording
+
 - [ ] Start a session without Pod login (should not crash)
 - [ ] Start a session with Pod login (should save)
 - [ ] Complete multiple sessions (should append to list)
 - [ ] Check sessions.json in Pod (should be valid JSON)
 
-#### History Display:
+#### History Display
+
 - [ ] View history without Pod login (should show empty state)
 - [ ] View history with sessions (should display table)
 - [ ] Refresh history (should reload data)
 - [ ] Check date/time formatting (should be readable)
 
-#### Edge Cases:
+#### Edge Cases
+
 - [ ] Network interruption during save
 - [ ] Corrupted sessions.json file
 - [ ] Very long session (hours)
@@ -336,11 +352,13 @@ flutter analyze
 ### Workflow
 
 1. **Fork & Clone**
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/innerpod.git
    ```
 
 2. **Create Branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -351,6 +369,7 @@ flutter analyze
    - Update documentation
 
 4. **Test**
+
    ```bash
    flutter test
    flutter analyze
@@ -358,12 +377,14 @@ flutter analyze
    ```
 
 5. **Commit**
+
    ```bash
    git add .
    git commit -m "feat: add session duration calculation"
    ```
 
 6. **Push & PR**
+
    ```bash
    git push origin feature/your-feature-name
    # Create Pull Request on GitHub
@@ -416,22 +437,25 @@ Here are some ideas for improving the session recording feature:
 ## Resources
 
 ### Documentation
+
 - [Flutter Docs](https://docs.flutter.dev/)
 - [Dart Language Tour](https://dart.dev/guides/language/language-tour)
 - [Solid Project](https://solidproject.org/)
 - [solidpod Package](https://pub.dev/packages/solidpod)
 
 ### InnerPod Specific
+
 - [GitHub Repository](https://github.com/gjwgit/innerpod)
 - [Online Demo](https://innerpod.solidcommunity.au)
 - [Changelog](https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md)
 
 ### Community
+
 - [Flutter Community](https://flutter.dev/community)
 - [Solid Community](https://forum.solidproject.org/)
 
 ---
 
-**Happy Coding! 🧘‍♂️**
+Happy Coding! 🧘‍♂️
 
 For questions or issues, please open an issue on GitHub or contact the maintainers.

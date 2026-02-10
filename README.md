@@ -134,7 +134,8 @@ The instructions for meditating by John Main are from
 [WCCM](https://wccm.org).
 
 The bell is Tibetan bowl_left hit.wav by
-[dersinnsspace](https://freesound.org/people/dersinnsspace/sounds/417117/). License: Creative
+[dersinnsspace](https://freesound.org/people/dersinnsspace/sounds/417117/).
+License: Creative
 Commons 0
 
 ## Contributing
