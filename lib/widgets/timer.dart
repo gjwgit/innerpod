@@ -456,9 +456,7 @@ audio may take a little time to download for the Web version.
             const SizedBox(height: 1 * heightSpacer),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                durationChoice,
-              ],
+              children: [durationChoice],
             ),
           ],
         ),

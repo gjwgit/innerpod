@@ -1,6 +1,6 @@
 /// A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Wednesday 2025-07-30 09:58:30 +1000 Graham Williams>
+// Time-stamp: <Tuesday 2026-02-10 15:44:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -27,7 +27,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:solidpod/solidpod.dart';
@@ -121,11 +121,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       appBar: AppBar(
         title: Row(
           children: [
-            Image.asset(
-              'assets/images/inner_icon.png',
-              width: 40,
-              height: 40,
-            ),
+            Image.asset('assets/images/inner_icon.png', width: 40, height: 40),
             const SizedBox(width: 20),
             const Text('Inner Pod'),
           ],
@@ -145,10 +141,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               cursor: SystemMouseCursors.click,
               child: Text(
                 'Version $_appVersion',
-                style: const TextStyle(
-                  color: Colors.deepPurple,
-                  fontSize: 10,
-                ),
+                style: const TextStyle(color: Colors.deepPurple, fontSize: 10),
               ),
             ),
           ),
@@ -222,10 +215,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             icon: Icon(Icons.text_snippet),
             label: 'Text',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'History'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],

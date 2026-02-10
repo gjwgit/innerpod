@@ -137,10 +137,17 @@ The bell is Tibetan bowl_left hit.wav by
 [dersinnsspace](https://freesound.org/s/417117/). License: Creative
 Commons 0
 
+## Contributing
+
+Feel free to pickup tasks from the list in Issues and so create a fork
+to work on the issue to then submit a pull request. Or else contact
+innerpod@togaware.com to volunteer to work directly on the project
+under out guidance.
+
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Thursday 2025-10-30 15:45:58 +1100 Graham Williams>
+Time-stamp: <Tuesday 2026-02-10 09:01:42 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)

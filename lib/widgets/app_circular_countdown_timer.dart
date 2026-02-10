@@ -78,10 +78,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
       ringColor: _spin1,
       fillColor: _spin2,
       strokeWidth: 20.0,
-      textStyle: const TextStyle(
-        color: _text,
-        fontSize: 55,
-      ),
+      textStyle: const TextStyle(color: _text, fontSize: 55),
       onComplete: onComplete,
       isReverse: true,
       isReverseAnimation: true,

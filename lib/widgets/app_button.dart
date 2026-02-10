@@ -72,23 +72,16 @@ class AppButton extends StatelessWidget {
     return SizedBox(
       // 20240317 gjw Google Play Store noted accessibility guidelines suggest
       // the height should be at least 48.
-
       height: 48,
       width: 170,
       child: ElevatedButton(
         style: TextButton.styleFrom(
           //   textStyle: _buttonTextStyleBold,
-          textStyle: TextStyle(
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-          ),
+          textStyle: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
           backgroundColor: backgroundColor,
         ),
         onPressed: onPressed,
-        child: MarkdownTooltip(
-          message: tooltip,
-          child: Text(title),
-        ),
+        child: MarkdownTooltip(message: tooltip, child: Text(title)),
       ),
     );
   }

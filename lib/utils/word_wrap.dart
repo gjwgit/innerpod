@@ -27,10 +27,7 @@ library;
 
 /// Wrap a string using a word wrap strategy.
 
-String wordWrap(
-  String text, {
-  int width = 40,
-}) {
+String wordWrap(String text, {int width = 40}) {
   // Split into lines.
 
   var lines = text.split('\n');

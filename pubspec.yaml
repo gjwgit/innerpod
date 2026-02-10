@@ -22,19 +22,28 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  flutter_markdown: ^0.7.4
+  flutter_markdown_plus: ^1.0.7
   gap: ^3.0.1
   intl: ^0.20.2
   markdown_tooltip: ^0.0.7
-  package_info_plus: ^8.3.0
-  solidpod: ^0.7.4
+  package_info_plus: ^9.0.0
+  solidpod: ^0.10.5
   url_launcher: ^6.3.0
   wakelock_plus: ^1.1.4
 
+dependency_overrides:
+  solidpod:
+    git:
+      url: https://github.com/anusii/solidpod.git
+      ref: dev
+  solidui:
+    git:
+      url: https://github.com/anusii/solidui.git
+      ref: dev
+
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
-  flutter_lints: any
-  ubuntu_lints: any
+  flutter_lints: ^6.0.0
 
 flutter:
   assets:

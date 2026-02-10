@@ -25,6 +25,7 @@ flutter:
   emu	    Run with the android emulator;
   linux     Run with the linux device;
   qlinux    Run with the linux device and debugPrint() turned off;
+  macos     Run with the macos device;
 
   prep      Prep for PR by running tests, checks, docs.
   push      Do a git push and bump the build number if there is one.
@@ -45,11 +46,12 @@ flutter:
   ignore          Look for usage of ignore directives.
   license	  Look for missing top license in source code.
 
-  test	    Run flutter testing.
-  itest	    Run flutter interation testing.
-  qtest	    Run above test with PAUSE=0.
-  coverage  Run with `--coverage`.
-    coview  View the generated html coverage in browser.
+  test	    	  Run flutter testing.
+  itest	    	  Run flutter interation testing.
+  qtest	   	  Run above test with PAUSE=0.
+    qtest.all	  Run qtest with output redirected - good running all tests.
+  coverage  	  Run with `--coverage`.
+    coview  	  View the generated html coverage in browser.
 
   riverpod  Setup `pubspec.yaml` to support riverpod.
   runner    Build the auto generated code as *.g.dart files.
@@ -57,8 +59,12 @@ flutter:
   desktops  Set up for all desktop platforms (linux, windows, macos)
 
   distributions
-    apk	    Builds installers/$(APP).apk
-    tgz     Builds installers/$(APP).tar.gz
+    apk	          Builds installers/$(APP).apk.
+    tgz           Builds installers/$(APP).tar.gz.
+    dmg-unsigned  Builds unsigned macos app.
+    dmg-dev       Builds macos app with development certificate.
+    dmg-staging   Builds macos app with distribution certificate.
+                  (TODO convert to dmg).
 
   publish   Publish a package to pub.dev
 
@@ -142,8 +148,8 @@ linux_config:
 	flutter config --enable-linux-desktop
 
 .PHONY: prep
-prep: analyze fix import_order_fix format dcm ignore license todo locmax markdown lychee depend bakfind test
-	@echo "ADVISORY: make tests docs"
+prep: analyze fix import_order_fix format dcm ignore license todo locgo markdown lychee depend bakfind
+	@echo "ADVISORY: make test tests docs"
 	@echo $(SEPARATOR)
 
 .PHONY: docs
@@ -210,64 +216,39 @@ depend:
 	-dependency_validator
 	@echo $(SEPARATOR)
 
-LINES ?= 300
+# Check and fail if any files exceed limit.
+#
+# 20260115 gjw We utilise two targets both running locbase. The target
+# `locgo` ignores failure of the max loc check and is used in the
+# `prep` target above to ensure all tests are undertaken. It is
+# wrapped in the common echos for the `prep` workflow. The main target
+# `locmax` is used in the CI to fail on too many lines of code, and
+# thus fails the lint checking.
+
+LINES ?= 301
 
 .PHONY: locmax
 locmax:
-	@echo "Files with EXCESS LINES OF CODE:\n"
-	@-loc=$$(cat $(shell find lib -name '*.dart') \
-		| egrep -v '^ */' \
-		| egrep -v '^ *$$' \
-		| egrep -v '^ *[)},]+, *$$' \
-		| wc -l \
-		| numfmt --grouping); \
+	@loc=$$(bash $(LOC) -t $(shell find lib -name '*.dart')); \
+	totl=$$(cat $(shell find lib -name '*.dart') | wc -l); \
 	numf=$$(find lib -name "*.dart" -type f | wc -l); \
-	output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash $(LOC) "$$1"); \
-		if [ $$lines -gt $(LINES) ]; then \
-			printf "%4d %s\n" $$lines "$$1"; \
-		fi \
-	' _ {} \; | sort -nr); \
+	output=$$(bash $(LOC) -n $(LINES) $(shell find lib -name '*.dart') | sort -nr); \
 	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
 	if [ -n "$$output" ]; then \
 		echo "$$output"; \
-		echo "\nTotal $$loc lines of code across $$numf files."; \
+		echo "\nTotal $$loc lines of code across $$numf files with total $$totl lines."; \
 		echo "\n$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
 		exit 1; \
 	else \
-		echo "Total $$loc lines of code across $$numf files."; \
+		echo "Total $$loc lines of code across $$numf files with total $$totl lines."; \
 		echo "\n$(TICK) All files are under $(LINES) lines."; \
 	fi
+
+.PHONY: locgo
+locgo:
+	@echo "Files with EXCESS LINES OF CODE:\n"
+	@-make --no-print-directory locmax
 	@echo $(SEPARATOR)
-
-# Check and fail if any files exceed limit
-
-PHONY: locmax-enforce
-locmax-enforce:
-	@loc=$$(cat $(shell find lib -name '*.dart') \
-		| egrep -v '^ */' \
-		| egrep -v '^ *$$' \
-		| egrep -v '^ *[)},]+, *$$' \
-		| wc -l \
-		| numfmt --grouping); \
-	numf=$$(find lib -name "*.dart" -type f | wc -l); \
-	output=$$(find lib -name "*.dart" -exec sh -c ' \
-		lines=$$(bash $(LOC) "$$1"); \
-		if [ $$lines -gt $(LINES) ]; then \
-			printf "%4d %s\n" $$lines "$$1"; \
-		fi \
-	' _ {} \; | sort -nr); \
-	locm=$$(echo $$output | wc -w | awk '{print $$1/2}'); \
-	if [ -n "$$output" ]; then \
-		echo "$$output"; \
-		echo "Total $$loc lines of code across $$numf files."; \
-		echo "$(CROSS) Error: Found $$locm files with more than $(LINES) lines of code."; \
-		exit 1; \
-	else \
-		echo "Total $$loc lines of code across $$numf files."; \
-		echo "$(TICK) All files are under $(LINES) lines"; \
-	fi
-
 
 # dart pub global activate dependency_validator
 
@@ -378,6 +359,7 @@ qtest:
 		MINGW*|MSYS*|CYGWIN*) device_id="windows" ;; \
 		*) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
 	esac; \
+	if [ ! -d integration_test ]; then echo "No integration tests available."; exit 0; fi; \
 	for t in $$(find integration_test -name "*_test.dart" | sort); do \
 		echo "========================================"; \
 		echo $$t; /bin/echo -n $$t >&2; \
@@ -445,11 +427,13 @@ $(APP)-$(VER)-linux-x86_64.tar.gz: clean
 	mv $@ installers/$(APP).tar.gz
 
 apk::
+	@echo '******************** BUILD ANDROID APK'
 	flutter build apk --release
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP).apk
 	cp build/app/outputs/flutter-apk/app-release.apk installers/$(APP)-$(VER).apk
 
 appbundle::
+	@echo '******************** BUILD ANDROID AAB'
 	flutter clean
 	flutter build appbundle --release
 	cp build/app/outputs/bundle/release/app-release.aab installers/$(APP).aab
@@ -458,6 +442,25 @@ appbundle::
 realclean::
 	flutter clean
 	flutter pub get
+
+# Create a macos app
+# [20251029 jesscmoore] TODO: add converting to dmg
+# Build unsigned macos app
+dmg-unsigned::
+	flutter clean
+	flutter build macos --release --flavor unsigned
+
+# Build macos app signed with development certificate for testing
+# by App Developer Program togaware registered devices
+dmg-dev::
+	flutter clean
+	flutter build macos --release --flavor dev
+
+# Build macos app signed with app store distribution for testing
+# on Testflight or publishing
+dmg-staging:
+	flutter clean
+	flutter build macos --release --flavor staging
 
 # For the `dev` branch only, update the version sequence number prior
 # to a push (relies on the git.mk being loaded after this
@@ -534,11 +537,7 @@ versions:
 
 .PHONY: loc
 loc: lib/*.dart
-	@cat $(shell find lib -name '*.dart') \
-	| egrep -v '^ */' \
-	| egrep -v '^ *$$' \
-	| egrep -v '^ *[)},]+, *$$' \
-	| wc -l
+	@bash $(LOC) $(shell find lib -name '*.dart') | sort -nr
 
 #
 # Manage the production install on the remote server.
