@@ -44,7 +44,7 @@ The session recording and history features you mentioned are
 
 ```powershell
 # 1. Download Flutter SDK
-# Visit: https://docs.flutter.dev/get-started/install/windows
+# Visit: https://docs.flutter.dev/get-started/install
 
 # 2. Extract to C:\src\flutter
 
