@@ -9,7 +9,7 @@ Here we record the basic changes made to the InnerPod app.
 + Package for snap release [1.7.5 20251004 gjw]
 + For GUIDED concat audio then include in app [1.7.4 20250218 gjw]
 + Review audio. Add 5 minutes option. [1.7.3 20241114 gjw]
-+ Updated Tibetan bell from freesound.com [1.7.2 20241101 gjw]
++ Updated Tibetan bell from freesound.org [1.7.2 20241101 gjw]
 + Use markdown for About with active url links [1.7.1 20241101 gjw]
 + Move to mp3 rather than ogg for wider OS support [1.7.0 20241025 gjw]
 

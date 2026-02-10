@@ -23,6 +23,8 @@
 ///
 /// Authors: Amogh Hosamane
 
+library session_logic;
+
 const String _prefixes = '''
 @prefix : <#>.
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
