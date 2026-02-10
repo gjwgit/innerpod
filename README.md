@@ -15,7 +15,7 @@
 [![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/innerpod)
 
 InnerPod is an app to guide and time your regular mediation. The app
-was developed by [Togaware](https://togaware.com.au) and written by
+was developed by [Togaware](https://togaware.com) and written by
 [Graham Williams](https://togaware.com/Graham.Williams.html).
 
 If you appreciate the app then please show some ❤️ and star the GitHub
@@ -141,7 +141,7 @@ Commons 0
 
 Feel free to pickup tasks from the list in Issues and so create a fork
 to work on the issue to then submit a pull request. Or else contact
-innerpod@togaware.com to volunteer to work directly on the project
+<innerpod@togaware.com> to volunteer to work directly on the project
 under out guidance.
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
