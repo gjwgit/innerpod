@@ -41,14 +41,16 @@ void main() {
     test('addSession adds session to empty content with prefixes', () {
       final newSession = {
         'start': '2024-01-01T10:00:00.000Z',
-        'end': '2024-01-01T10:20:00.000Z'
+        'end': '2024-01-01T10:20:00.000Z',
       };
       final result = addSession(null, newSession);
 
       expect(result.contains('@prefix : <#>.'), isTrue);
       expect(result.contains('@prefix xsd:'), isTrue);
-      expect(result.contains(':start "2024-01-01T10:00:00.000Z"^^xsd:dateTime'),
-          isTrue);
+      expect(
+        result.contains(':start "2024-01-01T10:00:00.000Z"^^xsd:dateTime'),
+        isTrue,
+      );
     });
 
     test('addSession appends session to existing content', () {
@@ -62,13 +64,19 @@ void main() {
 ''';
       final newSession = {
         'start': '2024-01-01T12:00:00.000Z',
-        'end': '2024-01-01T12:20:00.000Z'
+        'end': '2024-01-01T12:20:00.000Z',
       };
       final result = addSession(existing, newSession);
 
       final parsed = parseSessions(result);
-      expect(parsed.length, 2);
-      expect(parsed.first['start'], '2024-01-01T12:00:00.000Z'); // Newest first
+      expect(
+        parsed.length,
+        2,
+      );
+      expect(
+        parsed.first['start'],
+        '2024-01-01T12:00:00.000Z',
+      ); // Newest first
     });
   });
 }

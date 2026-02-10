@@ -37,8 +37,7 @@ class _HistoryState extends State<History> {
     });
 
     try {
-      String? content =
-          await readPod('sessions.ttl', context, const SizedBox());
+      String? content = await readPod('sessions.ttl');
       // If readPod returns nullable, use ?. or just pass to parseSessions which handles null
       List<dynamic> jsonList = parseSessions(content);
       if (jsonList.isNotEmpty) {

@@ -236,10 +236,9 @@ class TimerState extends State<Timer> {
     };
 
     try {
-      String? content =
-          await readPod('sessions.ttl', context, const SizedBox());
+      String? content = await readPod('sessions.ttl');
       String newContent = addSession(content, session);
-      await writePod('sessions.ttl', context, newContent, const SizedBox());
+      await writePod('sessions.ttl', newContent);
       logMessage('Session saved to Pod');
     } catch (e) {
       logMessage('Error saving session to Pod: $e');
