@@ -116,7 +116,7 @@ the [Android
 app](https://play.google.com/store/apps/details?id=com.togaware.innerpod).
 
 For more information on the Solid project visit the [Solid Project
-AU](https://solidporject.au) site.
+AU](https://solidproject.org) site.
 
 ## Acknowledgements
 
@@ -134,7 +134,7 @@ The instructions for meditating by John Main are from
 [WCCM](https://wccm.org).
 
 The bell is Tibetan bowl_left hit.wav by
-[dersinnsspace](https://freesound.org/s/417117/). License: Creative
+[dersinnsspace](https://freesound.org/people/dersinnsspace/sounds/417117/). License: Creative
 Commons 0
 
 ## Contributing

@@ -31,12 +31,12 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:solidpod/solidpod.dart';
-import 'dart:convert';
 
 import 'package:innerpod/constants/audio.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
+import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
 
@@ -236,13 +236,10 @@ class TimerState extends State<Timer> {
     };
 
     try {
-      String? content = await readPod('sessions.json');
-      List<dynamic> sessions = [];
-      if (content != null && content.isNotEmpty) {
-        sessions = jsonDecode(content);
-      }
-      sessions.add(session);
-      await writePod('sessions.json', jsonEncode(sessions));
+      String? content =
+          await readPod('sessions.ttl', context, const SizedBox());
+      String newContent = addSession(content, session);
+      await writePod('sessions.ttl', context, newContent, const SizedBox());
       logMessage('Session saved to Pod');
     } catch (e) {
       logMessage('Error saving session to Pod: $e');

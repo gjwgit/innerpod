@@ -43,7 +43,14 @@ dependency_overrides:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
+<<<<<<< HEAD
   flutter_lints: ^6.0.0
+=======
+  flutter_lints: any
+  ubuntu_lints: any
+  flutter_test:
+    sdk: flutter
+>>>>>>> fdf08d2 (feat: use RDF/TTL for session storage, fix imports, fix links)
 
 flutter:
   assets:

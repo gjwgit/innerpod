@@ -5,11 +5,14 @@
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
+library;
 
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
-import 'dart:convert';
+
+import 'package:innerpod/utils/session_logic.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -34,10 +37,11 @@ class _HistoryState extends State<History> {
     });
 
     try {
-      // Assuming sessions are stored in 'sessions.json' in the Pod
-      String? content = await readPod('sessions.json');
-      if (content != null && content.isNotEmpty) {
-        List<dynamic> jsonList = jsonDecode(content);
+      String? content =
+          await readPod('sessions.ttl', context, const SizedBox());
+      // If readPod returns nullable, use ?. or just pass to parseSessions which handles null
+      List<dynamic> jsonList = parseSessions(content);
+      if (jsonList.isNotEmpty) {
         setState(() {
           _sessions = jsonList.map((item) {
             final start = DateTime.parse(item['start']);
@@ -88,11 +92,13 @@ class _HistoryState extends State<History> {
                           DataColumn(label: Text('End')),
                         ],
                         rows: _sessions.map((session) {
-                          return DataRow(cells: [
-                            DataCell(Text(session['date']!)),
-                            DataCell(Text(session['start']!)),
-                            DataCell(Text(session['end']!)),
-                          ]);
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(session['date']!)),
+                              DataCell(Text(session['start']!)),
+                              DataCell(Text(session['end']!)),
+                            ],
+                          );
                         }).toList(),
                       ),
                     ),

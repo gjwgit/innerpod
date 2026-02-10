@@ -35,9 +35,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/utils/word_wrap.dart';
+import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
 import 'package:innerpod/widgets/timer.dart';
-import 'package:innerpod/widgets/history.dart';
 
 /// A widget for the actuall app's main home page.
 
