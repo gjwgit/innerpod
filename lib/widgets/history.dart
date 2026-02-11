@@ -37,8 +37,16 @@ class _HistoryState extends State<History> {
     });
 
     try {
-      String? content = await readPod('sessions.ttl');
-      // If readPod returns nullable, use ?. or just pass to parseSessions which handles null
+      String? content;
+      try {
+        content = await readPod('sessions.ttl');
+      } catch (e) {
+        // If file doesn't exist yet, treat as empty (no sessions)
+        debugPrint('sessions.ttl does not exist yet: $e');
+        content = null;
+      }
+      
+      // parseSessions handles null content and returns empty list
       List<dynamic> jsonList = parseSessions(content);
       if (jsonList.isNotEmpty) {
         setState(() {
@@ -54,7 +62,7 @@ class _HistoryState extends State<History> {
         });
       }
     } catch (e) {
-      debugPrint('Error loading sessions: $e');
+      debugPrint('Unexpected error loading sessions: $e');
     } finally {
       setState(() {
         _isLoading = false;
