@@ -22,7 +22,6 @@
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams
-
 library;
 
 import 'package:flutter/material.dart';
