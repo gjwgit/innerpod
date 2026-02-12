@@ -1,12 +1,12 @@
-/// A session timer with session logged to your Solid Pod.
+// A session timer with session logged to your Solid Pod.
 //
 // Time-stamp: <Tuesday 2026-02-10 15:44:48 +1100 Graham Williams>
 //
-/// Copyright (C) 2024-2025, Togaware Pty Ltd
-///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://opensource.org/license/gpl-3-0
+// Copyright (C) 2024-2025, Togaware Pty Ltd
+//
+// Licensed under the GNU General Public License, Version 3 (the "License");
+//
+// License: https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software

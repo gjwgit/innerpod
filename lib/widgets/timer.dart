@@ -1,12 +1,12 @@
-/// A countdown timer and buttons for a session.
+// A countdown timer and buttons for a session.
 //
 // Time-stamp: <Wednesday 2025-07-30 09:25:45 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
-///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://opensource.org/license/gpl-3-0
+// Copyright (C) 2024, Togaware Pty Ltd
+//
+// Licensed under the GNU General Public License, Version 3 (the "License");
+//
+// License: https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software

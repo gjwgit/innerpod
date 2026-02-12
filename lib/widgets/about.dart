@@ -1,12 +1,12 @@
-/// About dialog for the app.
+// About dialog for the app.
 //
 // Time-stamp: <2026-02-12 20:40:00 Graham Williams>
 //
-/// Copyright (C) 2024-2026, Togaware Pty Ltd
-///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://opensource.org/license/gpl-3-0
+// Copyright (C) 2024-2026, Togaware Pty Ltd
+//
+// Licensed under the GNU General Public License, Version 3 (the "License");
+//
+// License: https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
