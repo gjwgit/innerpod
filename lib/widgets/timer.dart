@@ -221,8 +221,12 @@ class TimerState extends State<Timer> {
       await Future.delayed(_audioDuration);
     }
 
-    _reset();
-    _allowSleep();
+    // Check if widget is still mounted before calling _reset()
+    // to avoid AnimationController errors after disposal
+    if (mounted) {
+      _reset();
+      _allowSleep();
+    }
     await _saveSession();
   }
 
@@ -236,7 +240,16 @@ class TimerState extends State<Timer> {
     };
 
     try {
-      String? content = await readPod('sessions.ttl');
+      String? content;
+      try {
+        content = await readPod('sessions.ttl');
+      } catch (e) {
+        // If file doesn't exist yet, treat as empty content
+        // This will create the file with proper prefixes
+        debugPrint('sessions.ttl does not exist yet, creating new file');
+        content = null;
+      }
+
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent);
       logMessage('Session saved to Pod');
