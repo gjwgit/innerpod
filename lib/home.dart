@@ -82,9 +82,11 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Future<void> _loadAppInfo() async {
     final packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      _appVersion = packageInfo.version; // Set app version from package info
-    });
+    if (mounted) {
+      setState(() {
+        _appVersion = packageInfo.version; // Set app version from package info
+      });
+    }
   }
 
   @override

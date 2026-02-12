@@ -32,26 +32,30 @@ class _HistoryState extends State<History> {
   }
 
   Future<void> _loadSessions() async {
-    setState(() {
-      _isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        _isLoading = true;
+      });
+    }
 
     try {
       String? content = await readPod('sessions.ttl');
       // If readPod returns nullable, use ?. or just pass to parseSessions which handles null
       List<dynamic> jsonList = parseSessions(content);
       if (jsonList.isNotEmpty) {
-        setState(() {
-          _sessions = jsonList.map((item) {
-            final start = DateTime.parse(item['start']);
-            final end = DateTime.parse(item['end']);
-            return {
-              'date': DateFormat('yyyy-MM-dd').format(start),
-              'start': DateFormat('HH:mm:ss').format(start),
-              'end': DateFormat('HH:mm:ss').format(end),
-            };
-          }).toList();
-        });
+        if (mounted) {
+          setState(() {
+            _sessions = jsonList.map((item) {
+              final start = DateTime.parse(item['start']);
+              final end = DateTime.parse(item['end']);
+              return {
+                'date': DateFormat('yyyy-MM-dd').format(start),
+                'start': DateFormat('HH:mm:ss').format(start),
+                'end': DateFormat('HH:mm:ss').format(end),
+              };
+            }).toList();
+          });
+        }
       }
     } catch (e) {
       // If file doesn't exist yet, treat as empty (no sessions)
@@ -59,9 +63,11 @@ class _HistoryState extends State<History> {
         'sessions.ttl does not exist yet (this is normal for new users)',
       );
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 

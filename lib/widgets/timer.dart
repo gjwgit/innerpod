@@ -25,6 +25,8 @@
 
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -97,6 +99,10 @@ class TimerState extends State<Timer> {
 
   final _player = AudioPlayer();
 
+  // Subscription for audio duration changes.
+
+  StreamSubscription<Duration>? _durationSubscription;
+
   ////////////////////////////////////////////////////////////////////////
   // SLEEP
   ////////////////////////////////////////////////////////////////////////
@@ -110,7 +116,19 @@ class TimerState extends State<Timer> {
   void _stopSleep() => WakelockPlus.enable();
 
   @override
+  void initState() {
+    super.initState();
+
+    // Listen to the duration of the audio file being played.
+
+    _durationSubscription = _player.onDurationChanged.listen((d) {
+      _audioDuration = d;
+    });
+  }
+
+  @override
   void dispose() {
+    _durationSubscription?.cancel();
     _player.dispose();
     super.dispose();
   }
@@ -268,7 +286,14 @@ class TimerState extends State<Timer> {
     };
 
     try {
-      String? content = await readPod('sessions.ttl');
+      String? content;
+      try {
+        content = await readPod('sessions.ttl');
+      } catch (e) {
+        // If the file does not exist (e.g., first session), we treat it as
+        // null.
+        content = null;
+      }
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent);
       logMessage('Session saved to Pod');
@@ -286,15 +311,6 @@ class TimerState extends State<Timer> {
   @override
   Widget build(BuildContext context) {
     // Build the Timer Widget.
-
-    // Add a listener for a change in the duration of the playing audio
-    // file. When the audio is loaded from file then take note of the duration
-    // of the audio which will then be used to pause until the audio is
-    // complete. 20240329 gjw
-
-    _player.onDurationChanged.listen((d) {
-      _audioDuration = d;
-    });
 
     ////////////////////////////////////
     // APP BUTTONS
