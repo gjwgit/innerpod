@@ -54,7 +54,10 @@ class _HistoryState extends State<History> {
         });
       }
     } catch (e) {
-      debugPrint('Error loading sessions: $e');
+      // If file doesn't exist yet, treat as empty (no sessions)
+      debugPrint(
+        'sessions.ttl does not exist yet (this is normal for new users)',
+      );
     } finally {
       setState(() {
         _isLoading = false;

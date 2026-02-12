@@ -109,6 +109,12 @@ class TimerState extends State<Timer> {
 
   void _stopSleep() => WakelockPlus.enable();
 
+  @override
+  void dispose() {
+    _player.dispose();
+    super.dispose();
+  }
+
   ////////////////////////////////////////////////////////////////////////
   // RESET
   ////////////////////////////////////////////////////////////////////////
@@ -128,6 +134,7 @@ class TimerState extends State<Timer> {
     // An audio is played and then we begin the session.
 
     logMessage('Start Intro Session');
+    if (!mounted) return;
     _reset();
     _stopSleep();
     _isGuided = false;
@@ -137,11 +144,13 @@ class TimerState extends State<Timer> {
     // otherwise it feels rushed.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     // Make sure there is no other audio playing just now and then start the
     // intro audio.
 
     await _player.stop();
+    if (!mounted) return;
     await _player.play(introAudio);
 
     debugPrint('INTRO: intro waiting $_audioDuration');
@@ -151,13 +160,16 @@ class TimerState extends State<Timer> {
 
     //await Future.delayed(Duration(seconds: _introTime));
     await Future.delayed(_audioDuration);
+    if (!mounted) return;
 
     // Good to wait another 1 second here before the dings after the
     // introduction audio, otherwise it feels rushed.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     await dingDong(_player);
+    if (!mounted) return;
     _controller.restart();
   }
 
@@ -171,6 +183,7 @@ class TimerState extends State<Timer> {
     // another musical interlude.
 
     logMessage('Start Guided Session');
+    if (!mounted) return;
     _reset();
     _stopSleep();
     _isGuided = true;
@@ -180,6 +193,7 @@ class TimerState extends State<Timer> {
     // otherwise it feels rushed.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     // Play and wait for the session guide audio to finish.
 
@@ -189,17 +203,20 @@ class TimerState extends State<Timer> {
     debugPrint('GUIDED: guide waiting $_audioDuration');
 
     await Future.delayed(_audioDuration);
+    if (!mounted) return;
 
     // Good to wait a second before the dings otherwise it feels rushed coming
     // straight from the music.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     // The introductions are complete. We now tell the device not to sleep, play
     // the dings, and start the timer.
 
     await dingDong(_player);
     debugPrint('GUIDED: dong waiting $_audioDuration');
+    if (!mounted) return;
     _controller.restart();
   }
 
@@ -211,18 +228,33 @@ class TimerState extends State<Timer> {
     // What to do at the end of a session.
 
     logMessage('Session Completed');
-    await _player.play(dong);
-    debugPrint('COMPLETE: dong waiting: $_audioDuration');
-    await Future.delayed(_audioDuration);
+    if (mounted) {
+      await _player.play(dong);
+      debugPrint('COMPLETE: dong waiting: $_audioDuration');
+      await Future.delayed(_audioDuration);
+    }
+
+    if (!mounted) {
+      await _saveSession();
+      return;
+    }
 
     if (_isGuided) {
       await _player.play(sessionOutro);
       debugPrint('COMPLETE: outro waiting: $_audioDuration');
       await Future.delayed(_audioDuration);
+      if (!mounted) {
+        await _saveSession();
+        return;
+      }
     }
 
-    _reset();
-    _allowSleep();
+    // Check if widget is still mounted before calling _reset()
+    // to avoid AnimationController errors after disposal
+    if (mounted) {
+      _reset();
+      _allowSleep();
+    }
     await _saveSession();
   }
 
@@ -399,64 +431,80 @@ audio may take a little time to download for the Web version.
     // RETURN
     ////////////////////////////////////
 
-    return SingleChildScrollView(
-      child: Padding(
-        // Add some top and bottom padding so the timer is not clipped at the
-        // top nor the chips at the bottom.
-        padding: const EdgeInsets.only(top: 10, bottom: 5),
-        child: Column(
+    final timerDisplay = AppCircularCountDownTimer(
+      duration: _duration,
+      controller: _controller,
+      onComplete: _complete,
+    );
+
+    final buttonsMatrix = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppCircularCountDownTimer(
-              duration: _duration,
-              controller: _controller,
-              onComplete: _complete,
-            ),
-            const SizedBox(height: 2 * heightSpacer),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                introButton,
-                const SizedBox(width: widthSpacer),
-                startButton,
-              ],
-            ),
-            const SizedBox(height: heightSpacer),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                guidedButton,
-                const SizedBox(width: widthSpacer),
-                pauseButton,
-              ],
-            ),
-            // TODO 20240707 gjw EVENTUALLY PUT RESUME AND RESET INTO PAUSE.
-            //
-            // A long press will be RESET. On tap PASUE turn the button
-            // into RESUME.
-            //
-            // const SizedBox(height: heightSpacer),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     resetButton,
-            //     const SizedBox(width: widthSpacer),
-            //     resumeButton,
-            //   ],
-            // ),
-            const SizedBox(height: 2 * heightSpacer),
-            const Text(
-              'Select duration (minutes)',
-              style: TextStyle(fontSize: 20.0, color: Colors.grey),
-            ),
-            const SizedBox(height: 1 * heightSpacer),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [durationChoice],
-            ),
+            introButton,
+            const SizedBox(width: widthSpacer),
+            startButton,
           ],
         ),
-      ),
+        const SizedBox(height: heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            guidedButton,
+            const SizedBox(width: widthSpacer),
+            pauseButton,
+          ],
+        ),
+        const SizedBox(height: 2 * heightSpacer),
+        const Text(
+          'Select duration (minutes)',
+          style: TextStyle(fontSize: 20.0, color: Colors.grey),
+        ),
+        const SizedBox(height: 1 * heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [durationChoice],
+        ),
+      ],
+    );
+
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          return SingleChildScrollView(
+            child: Padding(
+              // Add some top and bottom padding so the timer is not clipped at the
+              // top nor the chips at the bottom.
+              padding: const EdgeInsets.only(top: 10, bottom: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  timerDisplay,
+                  const SizedBox(height: 2 * heightSpacer),
+                  buttonsMatrix,
+                ],
+              ),
+            ),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child: Center(child: timerDisplay)),
+                  const SizedBox(width: 2 * widthSpacer),
+                  Expanded(child: Center(child: buttonsMatrix)),
+                ],
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }
