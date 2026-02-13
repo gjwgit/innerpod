@@ -1,12 +1,12 @@
-/// A countdown timer and buttons for a session.
+// A countdown timer and buttons for a session.
 //
 // Time-stamp: <Wednesday 2025-07-30 09:25:45 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
-///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
-///
-/// License: https://opensource.org/license/gpl-3-0
+// Copyright (C) 2024, Togaware Pty Ltd
+//
+// Licensed under the GNU General Public License, Version 3 (the "License");
+//
+// License: https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,8 +22,9 @@
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams
-
 library;
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -97,6 +98,10 @@ class TimerState extends State<Timer> {
 
   final _player = AudioPlayer();
 
+  // Subscription for audio duration changes.
+
+  StreamSubscription<Duration>? _durationSubscription;
+
   ////////////////////////////////////////////////////////////////////////
   // SLEEP
   ////////////////////////////////////////////////////////////////////////
@@ -108,6 +113,24 @@ class TimerState extends State<Timer> {
   // Turn off device sleeping. I.e., lock the device into being awake.
 
   void _stopSleep() => WakelockPlus.enable();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Listen to the duration of the audio file being played.
+
+    _durationSubscription = _player.onDurationChanged.listen((d) {
+      _audioDuration = d;
+    });
+  }
+
+  @override
+  void dispose() {
+    _durationSubscription?.cancel();
+    _player.dispose();
+    super.dispose();
+  }
 
   ////////////////////////////////////////////////////////////////////////
   // RESET
@@ -128,6 +151,7 @@ class TimerState extends State<Timer> {
     // An audio is played and then we begin the session.
 
     logMessage('Start Intro Session');
+    if (!mounted) return;
     _reset();
     _stopSleep();
     _isGuided = false;
@@ -137,11 +161,13 @@ class TimerState extends State<Timer> {
     // otherwise it feels rushed.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     // Make sure there is no other audio playing just now and then start the
     // intro audio.
 
     await _player.stop();
+    if (!mounted) return;
     await _player.play(introAudio);
 
     debugPrint('INTRO: intro waiting $_audioDuration');
@@ -151,13 +177,16 @@ class TimerState extends State<Timer> {
 
     //await Future.delayed(Duration(seconds: _introTime));
     await Future.delayed(_audioDuration);
+    if (!mounted) return;
 
     // Good to wait another 1 second here before the dings after the
     // introduction audio, otherwise it feels rushed.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     await dingDong(_player);
+    if (!mounted) return;
     _controller.restart();
   }
 
@@ -171,6 +200,7 @@ class TimerState extends State<Timer> {
     // another musical interlude.
 
     logMessage('Start Guided Session');
+    if (!mounted) return;
     _reset();
     _stopSleep();
     _isGuided = true;
@@ -180,6 +210,7 @@ class TimerState extends State<Timer> {
     // otherwise it feels rushed.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     // Play and wait for the session guide audio to finish.
 
@@ -189,17 +220,20 @@ class TimerState extends State<Timer> {
     debugPrint('GUIDED: guide waiting $_audioDuration');
 
     await Future.delayed(_audioDuration);
+    if (!mounted) return;
 
     // Good to wait a second before the dings otherwise it feels rushed coming
     // straight from the music.
 
     await Future.delayed(const Duration(seconds: 1));
+    if (!mounted) return;
 
     // The introductions are complete. We now tell the device not to sleep, play
     // the dings, and start the timer.
 
     await dingDong(_player);
     debugPrint('GUIDED: dong waiting $_audioDuration');
+    if (!mounted) return;
     _controller.restart();
   }
 
@@ -211,14 +245,25 @@ class TimerState extends State<Timer> {
     // What to do at the end of a session.
 
     logMessage('Session Completed');
-    await _player.play(dong);
-    debugPrint('COMPLETE: dong waiting: $_audioDuration');
-    await Future.delayed(_audioDuration);
+    if (mounted) {
+      await _player.play(dong);
+      debugPrint('COMPLETE: dong waiting: $_audioDuration');
+      await Future.delayed(_audioDuration);
+    }
+
+    if (!mounted) {
+      await _saveSession();
+      return;
+    }
 
     if (_isGuided) {
       await _player.play(sessionOutro);
       debugPrint('COMPLETE: outro waiting: $_audioDuration');
       await Future.delayed(_audioDuration);
+      if (!mounted) {
+        await _saveSession();
+        return;
+      }
     }
 
     // Check if widget is still mounted before calling _reset()
@@ -244,12 +289,10 @@ class TimerState extends State<Timer> {
       try {
         content = await readPod('sessions.ttl');
       } catch (e) {
-        // If file doesn't exist yet, treat as empty content
-        // This will create the file with proper prefixes
-        debugPrint('sessions.ttl does not exist yet, creating new file');
+        // If the file does not exist (e.g., first session), we treat it as
+        // null.
         content = null;
       }
-
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent);
       logMessage('Session saved to Pod');
@@ -267,15 +310,6 @@ class TimerState extends State<Timer> {
   @override
   Widget build(BuildContext context) {
     // Build the Timer Widget.
-
-    // Add a listener for a change in the duration of the playing audio
-    // file. When the audio is loaded from file then take note of the duration
-    // of the audio which will then be used to pause until the audio is
-    // complete. 20240329 gjw
-
-    _player.onDurationChanged.listen((d) {
-      _audioDuration = d;
-    });
 
     ////////////////////////////////////
     // APP BUTTONS
@@ -412,64 +446,80 @@ audio may take a little time to download for the Web version.
     // RETURN
     ////////////////////////////////////
 
-    return SingleChildScrollView(
-      child: Padding(
-        // Add some top and bottom padding so the timer is not clipped at the
-        // top nor the chips at the bottom.
-        padding: const EdgeInsets.only(top: 10, bottom: 5),
-        child: Column(
+    final timerDisplay = AppCircularCountDownTimer(
+      duration: _duration,
+      controller: _controller,
+      onComplete: _complete,
+    );
+
+    final buttonsMatrix = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppCircularCountDownTimer(
-              duration: _duration,
-              controller: _controller,
-              onComplete: _complete,
-            ),
-            const SizedBox(height: 2 * heightSpacer),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                introButton,
-                const SizedBox(width: widthSpacer),
-                startButton,
-              ],
-            ),
-            const SizedBox(height: heightSpacer),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                guidedButton,
-                const SizedBox(width: widthSpacer),
-                pauseButton,
-              ],
-            ),
-            // TODO 20240707 gjw EVENTUALLY PUT RESUME AND RESET INTO PAUSE.
-            //
-            // A long press will be RESET. On tap PASUE turn the button
-            // into RESUME.
-            //
-            // const SizedBox(height: heightSpacer),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     resetButton,
-            //     const SizedBox(width: widthSpacer),
-            //     resumeButton,
-            //   ],
-            // ),
-            const SizedBox(height: 2 * heightSpacer),
-            const Text(
-              'Select duration (minutes)',
-              style: TextStyle(fontSize: 20.0, color: Colors.grey),
-            ),
-            const SizedBox(height: 1 * heightSpacer),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [durationChoice],
-            ),
+            introButton,
+            const SizedBox(width: widthSpacer),
+            startButton,
           ],
         ),
-      ),
+        const SizedBox(height: heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            guidedButton,
+            const SizedBox(width: widthSpacer),
+            pauseButton,
+          ],
+        ),
+        const SizedBox(height: 2 * heightSpacer),
+        const Text(
+          'Select duration (minutes)',
+          style: TextStyle(fontSize: 20.0, color: Colors.grey),
+        ),
+        const SizedBox(height: 1 * heightSpacer),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [durationChoice],
+        ),
+      ],
+    );
+
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          return SingleChildScrollView(
+            child: Padding(
+              // Add some top and bottom padding so the timer is not clipped at the
+              // top nor the chips at the bottom.
+              padding: const EdgeInsets.only(top: 10, bottom: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  timerDisplay,
+                  const SizedBox(height: 2 * heightSpacer),
+                  buttonsMatrix,
+                ],
+              ),
+            ),
+          );
+        } else {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(child: Center(child: timerDisplay)),
+                  const SizedBox(width: 2 * widthSpacer),
+                  Expanded(child: Center(child: buttonsMatrix)),
+                ],
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }
