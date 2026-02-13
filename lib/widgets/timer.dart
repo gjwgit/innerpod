@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2025-07-30 09:25:45 +1000 Graham Williams>
+// Time-stamp: <Friday 2026-02-13 20:31:36 +1100 Graham Williams>
 //
 // Copyright (C) 2024, Togaware Pty Ltd
 //
@@ -294,7 +294,7 @@ class TimerState extends State<Timer> {
         content = null;
       }
       String newContent = addSession(content, session);
-      await writePod('sessions.ttl', newContent);
+      await writePod('sessions.ttl', newContent, overwrite: true);
       logMessage('Session saved to Pod');
     } catch (e) {
       logMessage('Error saving session to Pod: $e');
