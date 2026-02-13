@@ -66,7 +66,7 @@ class InnerPod extends StatelessWidget {
       infoButtonStyle: InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
       ),
-      link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
+      link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
       child: Home(),
     );
   }
@@ -91,7 +91,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   var _appVersion = '';
 
   final String _changelogUrl =
-      'https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md';
+      'https://github.com/Amoghhosamane/innerpod/blob/dev/CHANGELOG.md';
 
   // Helper function to load the app name and version.
 

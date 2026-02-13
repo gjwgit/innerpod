@@ -44,8 +44,8 @@ web/**
 
 # Placeholder URLs in documentation
 
-https://github.com/YOUR_USERNAME/innerpod.git
-https://github.com/gjwgit/innerpod/blob/dev/README.md
+https://github.com/gjwgit/innerpod/.*
+https://github.com/Amoghhosamane/innerpod/.*
 
 
 # Licenses. Note that gnu.org is throttled so do not check it.
