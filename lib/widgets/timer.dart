@@ -83,6 +83,10 @@ class TimerState extends State<Timer> {
 
   DateTime? _startTime;
 
+  // Track the session type.
+
+  String _sessionType = 'basic';
+
   ////////////////////////////////////////////////////////////////////////
   // CONSTANTS
   ////////////////////////////////////////////////////////////////////////
@@ -155,6 +159,7 @@ class TimerState extends State<Timer> {
     _reset();
     _stopSleep();
     _isGuided = false;
+    _sessionType = 'intro';
     _startTime = DateTime.now();
 
     // Good to wait a second before starting the audio after tapping the button,
@@ -204,6 +209,7 @@ class TimerState extends State<Timer> {
     _reset();
     _stopSleep();
     _isGuided = true;
+    _sessionType = 'guided';
     _startTime = DateTime.now();
 
     // Good to wait a second before starting the audio after tapping the button,
@@ -278,6 +284,8 @@ class TimerState extends State<Timer> {
     final session = {
       'start': _startTime!.toIso8601String(),
       'end': endTime.toIso8601String(),
+      'type': _sessionType,
+      'silenceDuration': _duration,
     };
 
     try {
@@ -333,6 +341,7 @@ minutes, beginning and ending with three chimes.
         dingDong(_player);
         _controller.restart();
         _stopSleep();
+        _sessionType = 'basic';
         _startTime = DateTime.now();
       },
       fontWeight: FontWeight.bold,

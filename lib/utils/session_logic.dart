@@ -46,9 +46,11 @@ List<Map<String, String>> parseSessions(String? content) {
   final RegExp sessionBlockRegExp =
       RegExp(r':session_\d+.*?\.(?:\s+|$)', dotAll: true);
 
-  // RegExp to extract start and end times within a block
+  // RegExp to extract properties within a block
   final RegExp startRegExp = RegExp(r':start "(.*?)"\^\^xsd:dateTime');
   final RegExp endRegExp = RegExp(r':end "(.*?)"\^\^xsd:dateTime');
+  final RegExp typeRegExp = RegExp(r':type "(.*?)"');
+  final RegExp durationRegExp = RegExp(r':silenceDuration (\d+)');
 
   final matches = sessionBlockRegExp.allMatches(content);
 
@@ -56,11 +58,15 @@ List<Map<String, String>> parseSessions(String? content) {
     final block = match.group(0)!;
     final startMatch = startRegExp.firstMatch(block);
     final endMatch = endRegExp.firstMatch(block);
+    final typeMatch = typeRegExp.firstMatch(block);
+    final durationMatch = durationRegExp.firstMatch(block);
 
     if (startMatch != null && endMatch != null) {
       sessions.add({
         'start': startMatch.group(1)!,
         'end': endMatch.group(1)!,
+        'type': typeMatch?.group(1) ?? 'basic',
+        'silenceDuration': durationMatch?.group(1) ?? '1200', // Default to 20m
       });
     }
   }
@@ -87,6 +93,9 @@ String addSession(String? currentContent, Map<String, dynamic> newSession) {
 
   final String start = newSession['start'];
   final String end = newSession['end'];
+  final String type = newSession['type'] ?? 'basic';
+  final int silenceDuration = newSession['silenceDuration'] ?? 1200;
+
   // Use timestamp as unique ID
   final String id = DateTime.parse(start).millisecondsSinceEpoch.toString();
 
@@ -97,7 +106,9 @@ String addSession(String? currentContent, Map<String, dynamic> newSession) {
 $separator
 :session_$id a :Session;
     :start "$start"^^xsd:dateTime;
-    :end "$end"^^xsd:dateTime.
+    :end "$end"^^xsd:dateTime;
+    :type "$type";
+    :silenceDuration $silenceDuration.
 ''';
 
   return content + newEntry;

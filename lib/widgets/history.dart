@@ -62,6 +62,9 @@ class _HistoryState extends State<History> {
               'date': DateFormat('yyyy-MM-dd').format(start),
               'start': DateFormat('HH:mm:ss').format(start),
               'end': DateFormat('HH:mm:ss').format(end),
+              'type': (item['type'] ?? 'basic') as String,
+              'duration':
+                  '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
             };
           }).toList();
         });
@@ -102,6 +105,8 @@ class _HistoryState extends State<History> {
                       child: DataTable(
                         columns: const [
                           DataColumn(label: Text('Date')),
+                          DataColumn(label: Text('Type')),
+                          DataColumn(label: Text('Min')),
                           DataColumn(label: Text('Start')),
                           DataColumn(label: Text('End')),
                         ],
@@ -109,6 +114,8 @@ class _HistoryState extends State<History> {
                           return DataRow(
                             cells: [
                               DataCell(Text(session['date']!)),
+                              DataCell(Text(session['type']!)),
+                              DataCell(Text(session['duration']!)),
                               DataCell(Text(session['start']!)),
                               DataCell(Text(session['end']!)),
                             ],
