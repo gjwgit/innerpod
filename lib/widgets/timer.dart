@@ -75,10 +75,6 @@ class TimerState extends State<Timer> {
 
   var _duration = defaultSessionSeconds;
 
-  // Track the duration of a loaded audio file.
-
-  var _audioDuration = Duration.zero;
-
   // Track the start time of a session.
 
   DateTime? _startTime;
@@ -102,10 +98,6 @@ class TimerState extends State<Timer> {
 
   final _player = AudioPlayer();
 
-  // Subscription for audio duration changes.
-
-  StreamSubscription<Duration>? _durationSubscription;
-
   ////////////////////////////////////////////////////////////////////////
   // SLEEP
   ////////////////////////////////////////////////////////////////////////
@@ -121,19 +113,25 @@ class TimerState extends State<Timer> {
   @override
   void initState() {
     super.initState();
-
-    // Listen to the duration of the audio file being played.
-
-    _durationSubscription = _player.onDurationChanged.listen((d) {
-      _audioDuration = d;
-    });
   }
 
   @override
   void dispose() {
-    _durationSubscription?.cancel();
     _player.dispose();
     super.dispose();
+  }
+
+  /// Helper to play an audio source and wait for it to complete.
+  Future<void> _play(Source source) async {
+    if (!mounted) return;
+    try {
+      await _player.stop();
+      await _player.play(source);
+      // Wait for the audio to finish playing.
+      await _player.onPlayerComplete.first;
+    } catch (e) {
+      debugPrint('Audio playback error or interrupted: $e');
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -168,20 +166,8 @@ class TimerState extends State<Timer> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
 
-    // Make sure there is no other audio playing just now and then start the
-    // intro audio.
-
-    await _player.stop();
-    if (!mounted) return;
-    await _player.play(introAudio);
-
-    debugPrint('INTRO: intro waiting $_audioDuration');
-
-    // Wait now while the intro audio is played before the dong when the timer
-    // then actually starts.
-
-    //await Future.delayed(Duration(seconds: _introTime));
-    await Future.delayed(_audioDuration);
+    // Play and wait for the intro audio.
+    await _play(introAudio);
     if (!mounted) return;
 
     // Good to wait another 1 second here before the dings after the
@@ -190,7 +176,7 @@ class TimerState extends State<Timer> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
 
-    await dingDong(_player);
+    await _play(dong);
     if (!mounted) return;
     _controller.restart();
   }
@@ -219,13 +205,7 @@ class TimerState extends State<Timer> {
     if (!mounted) return;
 
     // Play and wait for the session guide audio to finish.
-
-    await _player.stop();
-    await _player.play(sessionGuide);
-
-    debugPrint('GUIDED: guide waiting $_audioDuration');
-
-    await Future.delayed(_audioDuration);
+    await _play(sessionGuide);
     if (!mounted) return;
 
     // Good to wait a second before the dings otherwise it feels rushed coming
@@ -234,11 +214,9 @@ class TimerState extends State<Timer> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
 
-    // The introductions are complete. We now tell the device not to sleep, play
-    // the dings, and start the timer.
+    // The introductions are complete. We play the dings and start the timer.
 
-    await dingDong(_player);
-    debugPrint('GUIDED: dong waiting $_audioDuration');
+    await _play(dong);
     if (!mounted) return;
     _controller.restart();
   }
@@ -254,16 +232,17 @@ class TimerState extends State<Timer> {
 
     // Only play audio and wait if still mounted
     if (mounted) {
-      await _player.play(dong);
-      debugPrint('COMPLETE: dong waiting: $_audioDuration');
-      await Future.delayed(_audioDuration);
+      await _play(dong);
     }
 
-    // Check mounted state again after the delay
+    // Check mounted state again after the dings
     if (mounted && _isGuided) {
-      await _player.play(sessionOutro);
-      debugPrint('COMPLETE: outro waiting: $_audioDuration');
-      await Future.delayed(_audioDuration);
+      // Add a small delay between the dings and the outro music for smoother transition
+      // especially on systems with busy audio pipes (like Linux with audio sharing).
+      await Future.delayed(const Duration(milliseconds: 500));
+      if (mounted) {
+        await _play(sessionOutro);
+      }
     }
 
     // Reset controls only if still mounted to avoid AnimationController errors
