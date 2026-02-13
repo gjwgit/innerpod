@@ -245,33 +245,29 @@ class TimerState extends State<Timer> {
     // What to do at the end of a session.
 
     logMessage('Session Completed');
+
+    // Only play audio and wait if still mounted
     if (mounted) {
       await _player.play(dong);
       debugPrint('COMPLETE: dong waiting: $_audioDuration');
       await Future.delayed(_audioDuration);
     }
 
-    if (!mounted) {
-      await _saveSession();
-      return;
-    }
-
-    if (_isGuided) {
+    // Check mounted state again after the delay
+    if (mounted && _isGuided) {
       await _player.play(sessionOutro);
       debugPrint('COMPLETE: outro waiting: $_audioDuration');
       await Future.delayed(_audioDuration);
-      if (!mounted) {
-        await _saveSession();
-        return;
-      }
     }
 
-    // Check if widget is still mounted before calling _reset()
-    // to avoid AnimationController errors after disposal
+    // Reset controls only if still mounted to avoid AnimationController errors
     if (mounted) {
       _reset();
       _allowSleep();
     }
+
+    // Always attempt to save the session, even if navigate away
+    // _saveSession handles its own internal null checks
     await _saveSession();
   }
 
@@ -288,9 +284,12 @@ class TimerState extends State<Timer> {
       String? content;
       try {
         content = await readPod('sessions.ttl');
+      } on ResourceNotExistException {
+        // File doesn't exist yet, we'll create it.
+        debugPrint('sessions.ttl does not exist, creating new file.');
+        content = null;
       } catch (e) {
-        // If the file does not exist (e.g., first session), we treat it as
-        // null.
+        logMessage('Error reading sessions.ttl: $e');
         content = null;
       }
       String newContent = addSession(content, session);

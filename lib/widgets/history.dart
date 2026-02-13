@@ -42,34 +42,32 @@ class _HistoryState extends State<History> {
       String? content;
       try {
         content = await readPod('sessions.ttl');
-      } catch (e) {
+      } on ResourceNotExistException {
         // If file doesn't exist yet, treat as empty (no sessions)
-        debugPrint('sessions.ttl does not exist yet: $e');
+        debugPrint('sessions.ttl does not exist yet (normal for new users)');
+        content = null;
+      } catch (e) {
+        debugPrint('Error reading from Pod: $e');
         content = null;
       }
 
       // parseSessions handles null content and returns empty list
       List<dynamic> jsonList = parseSessions(content);
-      if (jsonList.isNotEmpty) {
-        if (mounted) {
-          setState(() {
-            _sessions = jsonList.map((item) {
-              final start = DateTime.parse(item['start']);
-              final end = DateTime.parse(item['end']);
-              return {
-                'date': DateFormat('yyyy-MM-dd').format(start),
-                'start': DateFormat('HH:mm:ss').format(start),
-                'end': DateFormat('HH:mm:ss').format(end),
-              };
-            }).toList();
-          });
-        }
+      if (mounted) {
+        setState(() {
+          _sessions = jsonList.map((item) {
+            final start = DateTime.parse(item['start']);
+            final end = DateTime.parse(item['end']);
+            return {
+              'date': DateFormat('yyyy-MM-dd').format(start),
+              'start': DateFormat('HH:mm:ss').format(start),
+              'end': DateFormat('HH:mm:ss').format(end),
+            };
+          }).toList();
+        });
       }
     } catch (e) {
-      // If file doesn't exist yet, treat as empty (no sessions)
-      debugPrint(
-        'sessions.ttl does not exist yet (this is normal for new users)',
-      );
+      debugPrint('Unexpected error loading sessions: $e');
     } finally {
       if (mounted) {
         setState(() {
