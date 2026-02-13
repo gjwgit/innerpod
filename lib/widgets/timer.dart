@@ -310,7 +310,8 @@ class TimerState extends State<Timer> {
       tooltip: '''
 
 Tap here to begin a session of silence for ${(_duration / 60).round()}
-minutes, beginning and ending with three chimes.
+minutes, beginning and ending with three chimes. The blue progress
+circle indicates an active session.
 
 '''
           .trim(),
@@ -374,7 +375,7 @@ of the Resume button.
 
 Tap here to play a short introduction for a session.  After the introduction a
 ${(_duration / 60).round()} minute session of silence will begin and end with
-three dings.
+three dings. The blue progress circle indicates an active session.
 
 '''
           .trim(),
@@ -390,7 +391,8 @@ three dings.
 Tap here to play a ${10 + (_duration / 60).round()} minute guided session.
 The session begins with instructions for meditation from John Main.
 Introductory music is followed by three chimes and a ${(_duration / 60).round()}
-minute silent session which is then finished with another three chimes.  The
+minute silent session which is then finished with another three chimes. The 
+blue progress circle indicates an active session.  The
 audio may take a little time to download for the Web version.
 
 '''
