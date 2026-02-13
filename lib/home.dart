@@ -163,23 +163,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          // TODO 20250730 gjw MIGRATE TO VersionWidget
-          //
-          // I was not able to get this working - the value of _appVersion
-          // remains empty in the VersionWidget() even though it is correct in the
-          // Text().
-          //
-          // Text('XX $_appVersion'),
-          // VersionWidget(
-          //   version: 'YY $_appVersion',
-          //   changelogUrl: _changelogUrl,
-          //   showDate: false,
-          //   userTextStyle: const TextStyle(
-          //     color: Colors.deepPurple,
-          //     fontSize: 10,
-          //   ),
-          // ),
-          // Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
           const SizedBox(width: 50),
           IconButton(
             icon: const Icon(Icons.info),
