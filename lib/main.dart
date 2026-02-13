@@ -27,8 +27,6 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:solidui/solidui.dart';
-
 import 'package:innerpod/home.dart';
 
 //import 'package:innerpod/timer.dart';
@@ -40,40 +38,4 @@ void main() {
   // MaterialLocalizations is found when firing off the showAboutDialog.
 
   runApp(const MaterialApp(title: 'Inner Pod', home: InnerPod()));
-}
-
-/// The primary widget for the app.
-
-class InnerPod extends StatelessWidget {
-  /// The primary app widget.
-
-  const InnerPod({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    /// We wrap the actual home widget within a [SolidLogin]. If the app has
-    /// functionality that does not require access to Pod data then [required]
-    /// can be `false`. If the user connects to their Pod then we can ensure
-    /// their session information will be saved. If we aim to save the data to
-    /// the Pod or view data from the Pod, then if the user did not log i during
-    /// startup then we can call [SolidLoginPopup] to establish the connection
-    /// at that time. The login token and the security key are (optionally)
-    /// cached so that the login information is not required every time.
-
-    return const SolidLogin(
-      title: 'MANAGE YOUR INNER POD',
-      required: false,
-      image: AssetImage('assets/images/inner_image.jpg'),
-      logo: AssetImage('assets/images/inner_icon.png'),
-      continueButtonStyle: ContinueButtonStyle(
-        text: 'Session',
-        background: Colors.lightGreenAccent,
-      ),
-      infoButtonStyle: InfoButtonStyle(
-        tooltip: 'Browse to the InnerPod home page.',
-      ),
-      link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
-      child: Home(),
-    );
-  }
 }
