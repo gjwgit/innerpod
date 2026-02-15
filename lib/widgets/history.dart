@@ -45,7 +45,7 @@ class _HistoryState extends State<History> {
         debugPrint('sessions.ttl does not exist yet: $e');
         content = null;
       }
-      
+
       // parseSessions handles null content and returns empty list
       List<dynamic> jsonList = parseSessions(content);
       if (jsonList.isNotEmpty) {
