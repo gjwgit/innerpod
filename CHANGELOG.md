@@ -6,6 +6,8 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ Support history [1.7.7 20260213 amogh]
++ Review and set up installers [1.7.6 20251213 gjw]
 + Package for snap release [1.7.5 20251004 gjw]
 + For GUIDED concat audio then include in app [1.7.4 20250218 gjw]
 + Review audio. Add 5 minutes option. [1.7.3 20241114 gjw]
