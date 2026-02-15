@@ -48,19 +48,19 @@ class _HistoryState extends State<History> {
 
       // parseSessions handles null content and returns empty list
       List<dynamic> jsonList = parseSessions(content);
-      if (jsonList.isNotEmpty) {
-        setState(() {
-          _sessions = jsonList.map((item) {
-            final start = DateTime.parse(item['start']);
-            final end = DateTime.parse(item['end']);
-            return {
-              'date': DateFormat('yyyy-MM-dd').format(start),
-              'start': DateFormat('HH:mm:ss').format(start),
-              'end': DateFormat('HH:mm:ss').format(end),
-            };
-          }).toList();
-        });
-      }
+      final List<Map<String, String>> sessions = jsonList.map((item) {
+        final start = DateTime.parse(item['start']);
+        final end = DateTime.parse(item['end']);
+        return {
+          'date': DateFormat('yyyy-MM-dd').format(start),
+          'start': DateFormat('HH:mm:ss').format(start),
+          'end': DateFormat('HH:mm:ss').format(end),
+        };
+      }).toList();
+
+      setState(() {
+        _sessions = sessions;
+      });
     } catch (e) {
       debugPrint('Unexpected error loading sessions: $e');
     } finally {
