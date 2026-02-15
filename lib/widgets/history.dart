@@ -53,20 +53,22 @@ class _HistoryState extends State<History> {
 
       // parseSessions handles null content and returns empty list
       List<dynamic> jsonList = parseSessions(content);
+      final List<Map<String, String>> sessions = jsonList.map((item) {
+        final start = DateTime.parse(item['start']);
+        final end = DateTime.parse(item['end']);
+        return {
+          'date': DateFormat('yyyy-MM-dd').format(start),
+          'start': DateFormat('HH:mm:ss').format(start),
+          'end': DateFormat('HH:mm:ss').format(end),
+          'type': (item['type'] ?? 'basic') as String,
+          'duration':
+              '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
+        };
+      }).toList();
+
       if (mounted) {
         setState(() {
-          _sessions = jsonList.map((item) {
-            final start = DateTime.parse(item['start']);
-            final end = DateTime.parse(item['end']);
-            return {
-              'date': DateFormat('yyyy-MM-dd').format(start),
-              'start': DateFormat('HH:mm:ss').format(start),
-              'end': DateFormat('HH:mm:ss').format(end),
-              'type': (item['type'] ?? 'basic') as String,
-              'duration':
-                  '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
-            };
-          }).toList();
+          _sessions = sessions;
         });
       }
     } catch (e) {
