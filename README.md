@@ -81,7 +81,9 @@ and previous sessions will be available for visualising.
 Tap on the **INFO** button to review this guide.
 
 Once you connect to the app the session manager displays a countdown
-timer and buttons to interact and manage the session.
+timer and buttons to interact and manage the session. As the timer
+progresses, the circular progress bar fills with blue, providing a visual
+cue that the session and audio are active.
 
 ![App Home Screen](screenshots/app_home_screen.png)
 

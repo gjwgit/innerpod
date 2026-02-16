@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:solidui/solidui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:innerpod/constants/colours.dart';
@@ -34,6 +35,42 @@ import 'package:innerpod/widgets/about.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
 import 'package:innerpod/widgets/timer.dart';
+
+/// The primary widget for the app.
+
+class InnerPod extends StatelessWidget {
+  /// The primary app widget.
+
+  const InnerPod({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    /// We wrap the actual home widget within a [SolidLogin]. If the app has
+    /// functionality that does not require access to Pod data then [required]
+    /// can be `false`. If the user connects to their Pod then we can ensure
+    /// their session information will be saved. If we aim to save the data to
+    /// the Pod or view data from the Pod, then if the user did not log i during
+    /// startup then we can call [SolidLoginPopup] to establish the connection
+    /// at that time. The login token and the security key are (optionally)
+    /// cached so that the login information is not required every time.
+
+    return const SolidLogin(
+      title: 'MANAGE YOUR INNER POD',
+      required: false,
+      image: AssetImage('assets/images/inner_image.jpg'),
+      logo: AssetImage('assets/images/inner_icon.png'),
+      continueButtonStyle: ContinueButtonStyle(
+        text: 'Session',
+        background: Colors.lightGreenAccent,
+      ),
+      infoButtonStyle: InfoButtonStyle(
+        tooltip: 'Browse to the InnerPod home page.',
+      ),
+      link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
+      child: Home(),
+    );
+  }
+}
 
 /// A widget for the actuall app's main home page.
 
@@ -125,23 +162,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
             ),
           ),
-          // TODO 20250730 gjw MIGRATE TO VersionWidget
-          //
-          // I was not able to get this working - the value of _appVersion
-          // remains empty in the VersionWidget() even though it is correct in the
-          // Text().
-          //
-          // Text('XX $_appVersion'),
-          // VersionWidget(
-          //   version: 'YY $_appVersion',
-          //   changelogUrl: _changelogUrl,
-          //   showDate: false,
-          //   userTextStyle: const TextStyle(
-          //     color: Colors.deepPurple,
-          //     fontSize: 10,
-          //   ),
-          // ),
-          // Text('Version $_appVersion', style: const TextStyle(fontSize: 10)),
           const SizedBox(width: 50),
           IconButton(
             icon: const Icon(Icons.info),
