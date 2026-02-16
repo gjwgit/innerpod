@@ -2,7 +2,7 @@
 
 # set -x
 
-# 20241024 gjw After a github action has built the bundles and stored
+# 20260216 gjw Compare filesAfter a github action has built the bundles and stored
 # them as artefacts on github, we can upload them to the ${HOST} for
 # distribution.
 
