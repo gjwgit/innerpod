@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Tuesday 2026-02-17 08:23:09 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2026-02-17 08:56:38 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -83,7 +83,7 @@ class _HistoryState extends State<History> {
               'date': DateFormat('yyyy-MM-dd').format(start),
               'start': DateFormat('HH:mm:ss').format(start),
               'end': DateFormat('HH:mm:ss').format(end),
-              'type': (item['type'] ?? 'basic') as String,
+              'type': (item['type'] ?? 'bell') as String,
               'duration':
                   '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
             };
@@ -127,7 +127,7 @@ class _HistoryState extends State<History> {
                         columns: const [
                           DataColumn(label: Text('Date')),
                           DataColumn(label: Text('Type')),
-                          DataColumn(label: Text('Min')),
+                          DataColumn(label: Text('Duration')),
                           DataColumn(label: Text('Start')),
                           DataColumn(label: Text('End')),
                         ],

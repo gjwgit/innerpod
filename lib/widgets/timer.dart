@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2026-02-13 20:31:36 +1100 Graham Williams>
+// Time-stamp: <Tuesday 2026-02-17 08:54:21 +1100 Graham Williams>
 //
 // Copyright (C) 2024, Togaware Pty Ltd
 //
@@ -81,7 +81,7 @@ class TimerState extends State<Timer> {
 
   // Track the session type.
 
-  String _sessionType = 'basic';
+  String _sessionType = 'bell';
 
   ////////////////////////////////////////////////////////////////////////
   // CONSTANTS
@@ -316,12 +316,12 @@ circle indicates an active session.
 '''
           .trim(),
       onPressed: () {
-        logMessage('Start Session');
+        logMessage('Start Bell Session');
         _reset();
         dingDong(_player);
         _controller.restart();
         _stopSleep();
-        _sessionType = 'basic';
+        _sessionType = 'bell';
         _startTime = DateTime.now();
       },
       fontWeight: FontWeight.bold,
@@ -391,7 +391,7 @@ three dings. The blue progress circle indicates an active session.
 Tap here to play a ${10 + (_duration / 60).round()} minute guided session.
 The session begins with instructions for meditation from John Main.
 Introductory music is followed by three chimes and a ${(_duration / 60).round()}
-minute silent session which is then finished with another three chimes. The 
+minute silent session which is then finished with another three chimes. The
 blue progress circle indicates an active session.  The
 audio may take a little time to download for the Web version.
 

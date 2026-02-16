@@ -1,6 +1,6 @@
 /// Session logic for InnerPod.
 //
-// Time-stamp: <2026-02-10 16:40:00 Amogh Hosamane>
+// Time-stamp: <Tuesday 2026-02-17 08:53:15 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -65,7 +65,7 @@ List<Map<String, String>> parseSessions(String? content) {
       sessions.add({
         'start': startMatch.group(1)!,
         'end': endMatch.group(1)!,
-        'type': typeMatch?.group(1) ?? 'basic',
+        'type': typeMatch?.group(1) ?? 'bell',
         'silenceDuration': durationMatch?.group(1) ?? '1200', // Default to 20m
       });
     }
@@ -93,7 +93,7 @@ String addSession(String? currentContent, Map<String, dynamic> newSession) {
 
   final String start = newSession['start'];
   final String end = newSession['end'];
-  final String type = newSession['type'] ?? 'basic';
+  final String type = newSession['type'] ?? 'bell';
   final int silenceDuration = newSession['silenceDuration'] ?? 1200;
 
   // Use timestamp as unique ID
