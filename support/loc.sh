@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Graham Williams 20250910
+#
+# Count the number of lines of code in a file
+#
+# Check if exactly one argument is provided.
 
 IGNORE=false # Return an error if any files have more than N loc.
 MAX=300 # Value of N loc.

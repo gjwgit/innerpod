@@ -82,8 +82,8 @@ Tap on the **INFO** button to review this guide.
 
 Once you connect to the app the session manager displays a countdown
 timer and buttons to interact and manage the session. As the timer
-progresses, the circular progress bar fills with blue, providing a visual
-cue that the session and audio are active.
+progresses, the circular progress bar is empties of the blue bar,
+providing a visual cue that the session and audio are active.
 
 ![App Home Screen](screenshots/app_home_screen.png)
 
@@ -150,7 +150,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Tuesday 2026-02-10 09:01:42 +1100 Graham Williams>
+Time-stamp: <Tuesday 2026-02-17 07:36:49 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)

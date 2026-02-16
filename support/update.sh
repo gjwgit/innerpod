@@ -6,10 +6,21 @@
 
 SCRIPTS=${HOME}/projects/scripts/flutter
 FILES=(
-    ".gitignore" "${SCRIPTS}/gitignore"
-    "support/update.sh"  "${SCRIPTS}/../support/update.sh"
-    "support/flutter.mk"  "${SCRIPTS}/../support/flutter.mk"
+    .gitignore ${SCRIPTS}/gitignore
+    .pubignore ${SCRIPTS}/pubignore
+    support/flutter.mk  ${SCRIPTS}/../support/flutter.mk
+    support/loc.sh  ${SCRIPTS}/../support/loc.sh
+    support/update.sh  ${SCRIPTS}/../support/update.sh
 )
+
+# 20260217 gjw Handle different licenses for applications (GPL) and
+# packages (MIT).
+
+if grep --quiet gpl-3-0 license.dart; then
+    FILES+=(license.dart ${SCRIPTS}/license.app.dart)
+else
+    FILES+=(license.dart ${SCRIPTS}/license.pkg.dart)
+fi
 
 length=${#FILES[@]}
 
@@ -18,14 +29,31 @@ for ((i=0; i < length; i+=2)); do
     f2=${FILES[i+1]}
 
     if [ -f "$f1" ] && [ -f "$f2" ]; then
-	if ! cmp -s "$f1" "$f2"; then
-	    echo "MELD      $f1 $f2"
-	    meld "$f1" "$f2" 2> /dev/null
+	# 20260217 gjw For license.dart do not consider the first line
+	# in the comparison.
+
+	if [[ "$f1" == "license.dart" ]]; then
+	    if diff <(sed '1d' "$f1") <(sed '1d' "$f2") >/dev/null; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
 	else
-	    echo "IDENTICAL $f1 $f2"
+	    if cmp -s "$f1" "$f2"; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
 	fi
     else
-	echo "MISSING   $f1 $f2"
+	if [ ! -f "$f1" ] && [ -f "$f2" ]; then
+	    echo "MISSING   $f1 <- $f2"
+	    cp "$f2" "$f1"
+	else
+	    echo "MISSING $f1"
+	fi
     fi
 done
 

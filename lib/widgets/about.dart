@@ -1,6 +1,6 @@
 // About dialog for the app.
 //
-// Time-stamp: <2026-02-12 20:40:00 Graham Williams>
+// Time-stamp: <Tuesday 2026-02-17 07:37:22 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2026, Togaware Pty Ltd
 //
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'package:flutter/material.dart';
