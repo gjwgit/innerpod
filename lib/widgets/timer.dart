@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:solidpod/solidpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
@@ -113,6 +114,23 @@ class TimerState extends State<Timer> {
   @override
   void initState() {
     super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        _duration = prefs.getInt('timer_duration') ?? defaultSessionSeconds;
+        _isGuided = prefs.getBool('is_guided') ?? false;
+      });
+    }
+  }
+
+  Future<void> _saveSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('timer_duration', _duration);
+    await prefs.setBool('is_guided', _isGuided);
   }
 
   @override
@@ -317,12 +335,16 @@ circle indicates an active session.
           .trim(),
       onPressed: () {
         logMessage('Start Session');
-        _reset();
-        dingDong(_player);
-        _controller.restart();
-        _stopSleep();
-        _sessionType = 'basic';
-        _startTime = DateTime.now();
+        if (mounted) {
+          _reset();
+          dingDong(_player);
+          _controller.restart();
+          _stopSleep();
+          setState(() {
+            _sessionType = 'basic';
+            _startTime = DateTime.now();
+          });
+        }
       },
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.lightGreenAccent.shade100,
@@ -416,16 +438,17 @@ audio may take a little time to download for the Web version.
           selectedColor: Colors.lightGreenAccent,
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
-            setState(() {
-              if (selected) {
+            if (selected) {
+              setState(() {
                 _duration = number * 60;
                 debugPrint('CHOOSE: duration $_duration');
                 _controller.restart(duration: _duration);
                 _controller.pause();
                 _player.stop();
                 _allowSleep();
-              }
-            });
+              });
+              _saveSettings();
+            }
           },
         );
       }).toList(),

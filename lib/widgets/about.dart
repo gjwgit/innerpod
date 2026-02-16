@@ -25,12 +25,10 @@
 library;
 
 import 'package:flutter/material.dart';
-
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:solidpod/solidpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import 'package:innerpod/widgets/app_markdown_body.dart';
 import 'package:innerpod/utils/word_wrap.dart';
 
 /// Display the about dialog for the app.
@@ -72,15 +70,7 @@ Future<void> showAppAboutDialog(BuildContext context) async {
       applicationLegalese: '© 2024 Togaware',
       children: [
         const Gap(20),
-        MarkdownBody(
-          data: about,
-          selectable: true,
-          softLineBreak: true,
-          onTapLink: (text, href, about) {
-            final url = Uri.parse(href ?? '');
-            launchUrl(url);
-          },
-        ),
+        AppMarkdownBody(data: about),
       ],
     );
   }
