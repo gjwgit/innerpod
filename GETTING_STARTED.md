@@ -256,10 +256,10 @@ intl: ^0.20.2                 # Date/time formatting
 
 ### Data Storage
 
-**Location:** User's Solid Pod  
-**File:** `sessions.json`  
-**Format:** JSON array of session objects  
-**Encryption:** Handled by Solid Pod  
+**Location:** User's Solid Pod
+**File:** `sessions.json`
+**Format:** JSON array of session objects
+**Encryption:** Handled by Solid Pod
 
 **Example:**
 
@@ -280,21 +280,21 @@ intl: ^0.20.2                 # Date/time formatting
 
 ### 1. Add Session Duration (30 min)
 
-**File:** `lib/widgets/history.dart`  
-**Change:** Calculate and display session duration  
-**Difficulty:** 🟢 Beginner  
+**File:** `lib/widgets/history.dart`
+**Change:** Calculate and display session duration
+**Difficulty:** 🟢 Beginner
 
 ### 2. Track Session Type (1 hour)
 
-**File:** `lib/widgets/timer.dart`  
-**Change:** Add 'type' field (start/intro/guided)  
-**Difficulty:** 🟢 Beginner  
+**File:** `lib/widgets/timer.dart`
+**Change:** Add 'type' field (start/intro/guided)
+**Difficulty:** 🟢 Beginner
 
 ### 3. Show Statistics (2 hours)
 
-**File:** `lib/widgets/history.dart`  
-**Change:** Display total sessions, total time, average  
-**Difficulty:** 🟡 Intermediate  
+**File:** `lib/widgets/history.dart`
+**Change:** Display total sessions, total time, average
+**Difficulty:** 🟡 Intermediate
 
 **See SESSION_ENHANCEMENTS.md for detailed implementation guides!**
 
@@ -303,26 +303,26 @@ intl: ^0.20.2                 # Date/time formatting
 ### Resources
 
 - **Flutter Docs:** <https://docs.flutter.dev/>
-- **Dart Language:** <https://dart.dev/guides>
+- **Dart Language:** <https://dart.dev/docs>
 - **Solid Project:** <https://solidproject.org/>
 - **InnerPod GitHub:** <https://github.com/gjwgit/innerpod>
 
 ### Common Issues
 
-**Q: Flutter command not found**  
+**Q: Flutter command not found**
 A: Restart terminal after adding to PATH, or run:
 
 ```powershell
 $env:Path += ";C:\src\flutter\bin"
 ```
 
-**Q: Visual Studio required error**  
+**Q: Visual Studio required error**
 A: Install Visual Studio 2022 with C++ desktop development workload
 
-**Q: How do I test without a Solid Pod?**  
+**Q: How do I test without a Solid Pod?**
 A: App works offline! Just click "SESSION" on login screen
 
-**Q: Where is session data stored locally?**  
+**Q: Where is session data stored locally?**
 A: Only in Solid Pod. Without login, sessions aren't saved (by design)
 
 ## 🎯 Your Mission (If You Choose to Accept)

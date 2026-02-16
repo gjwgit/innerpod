@@ -113,10 +113,10 @@ Future<void> _saveSession() async {
   try {
     // Read existing sessions from Pod
     String? content = await readPod('sessions.ttl');
-    
+
     // Append new session using helper
     String newContent = addSession(content, session);
-    
+
     // Write back to Pod
     await writePod('sessions.ttl', newContent);
     logMessage('Session saved to Pod');
@@ -392,7 +392,7 @@ flutter analyze
 
 ### Code Style
 
-- Follow [Dart style guide](https://dart.dev/guides/language/effective-dart/style)
+- Follow [Dart style guide](https://dart.dev/effective-dart/style)
 - Use `dart format .` before committing
 - Add doc comments for public APIs
 - Keep functions focused and small
@@ -439,7 +439,7 @@ Here are some ideas for improving the session recording feature:
 ### Documentation
 
 - [Flutter Docs](https://docs.flutter.dev/)
-- [Dart Language Tour](https://dart.dev/guides/language/language-tour)
+- [Dart Language Tour](https://dart.dev/language)
 - [Solid Project](https://solidproject.org/)
 - [solidpod Package](https://pub.dev/packages/solidpod)
 
