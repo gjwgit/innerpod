@@ -177,9 +177,15 @@ class HomeState extends State<Home> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
+      body: Stack(
+        children: _pages.asMap().entries.map((entry) {
+          final index = entry.key;
+          final page = entry.value;
+          return Offstage(
+            offstage: _selectedIndex != index,
+            child: page,
+          );
+        }).toList(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: border,
