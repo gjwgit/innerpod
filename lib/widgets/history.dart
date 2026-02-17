@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
+import 'package:solidui/solidui.dart';
 
 import 'package:innerpod/utils/session_logic.dart';
 
@@ -47,7 +48,19 @@ class _HistoryState extends State<History> {
         debugPrint('sessions.ttl does not exist yet (normal for new users)');
         content = null;
       } catch (e) {
-        debugPrint('Error reading from Pod: $e');
+        if (e.toString().contains('You must first set the security key')) {
+          debugPrint('Security key missing. Prompting user.');
+          if (mounted) {
+            await getKeyFromUserIfRequired(context, widget);
+            // Retry loading sessions after popup closes
+            if (mounted) {
+              await _loadSessions();
+              return;
+            }
+          }
+        } else {
+          debugPrint('Error reading from Pod: $e');
+        }
         content = null;
       }
 

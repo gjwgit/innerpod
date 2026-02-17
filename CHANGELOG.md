@@ -6,6 +6,7 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ Prompt for security key if missing when accessing history [1.7.7 20260217]
 + Maintain timer countdown when navigating tabs [1.7.7 20260217]
 + Fix final audio not playing on Ubuntu with Zoom [1.7.7 20260217]
 + Package for snap release [1.7.5 20251004 gjw]
