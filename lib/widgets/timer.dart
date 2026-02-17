@@ -255,11 +255,22 @@ class TimerState extends State<Timer> {
 
     // Check mounted state again after the dings
     if (mounted && _isGuided) {
-      // Add a small delay between the dings and the outro music for smoother transition
+      // Release the player resources to ensure a clean state for the final audio
+      // which helps with issues on Linux with Zoom audio sharing.
+      await _player.release();
+
+      // Add a delay between the dings and the outro music for smoother transition
       // especially on systems with busy audio pipes (like Linux with audio sharing).
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(seconds: 2));
       if (mounted) {
-        await _play(sessionOutro);
+        // Use inline play logic instead of _play() because _play() calls stop()
+        // which might fail on a released player, preventing play() from running.
+        try {
+          await _player.play(sessionOutro);
+          await _player.onPlayerComplete.first;
+        } catch (e) {
+          debugPrint('Audio playback error (final outro): $e');
+        }
       }
     }
 

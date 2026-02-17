@@ -6,6 +6,7 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ Fix final audio not playing on Ubuntu with Zoom [1.7.7 20260217]
 + Package for snap release [1.7.5 20251004 gjw]
 + For GUIDED concat audio then include in app [1.7.4 20250218 gjw]
 + Review audio. Add 5 minutes option. [1.7.3 20241114 gjw]
