@@ -1,10 +1,10 @@
-/// A reusable markdown body widget.
+// A reusable markdown body widget.
 //
 // Time-stamp: <2025-02-18 20:40:00 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
-/// Licensed under the GNU General Public License, Version 3 (the "License").
+/// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
 /// License: https://opensource.org/license/gpl-3-0
 //
@@ -28,6 +28,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 /// A reusable markdown body widget with selectable text and clickable links.
