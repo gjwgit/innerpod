@@ -69,7 +69,7 @@ Future<void> showAppAboutDialog(BuildContext context) async {
       ),
       applicationName: '${appName[0].toUpperCase()}${appName.substring(1)}',
       applicationVersion: appInfo.version,
-      applicationLegalese: '© 2024 Togaware',
+      applicationLegalese: 'Â© 2024 Togaware',
       children: [
         const Gap(20),
         AppMarkdownBody(data: about),

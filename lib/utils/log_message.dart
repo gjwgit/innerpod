@@ -2,7 +2,7 @@
 //
 // Time-stamp: <Wednesday 2024-06-26 12:31:34 +1000 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///

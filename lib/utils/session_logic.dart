@@ -2,7 +2,7 @@
 //
 // Time-stamp: <2026-02-10 16:40:00 Amogh Hosamane>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///

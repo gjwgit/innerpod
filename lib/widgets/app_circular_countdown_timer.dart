@@ -1,6 +1,6 @@
 /// The default circular countdown style for the app.
 ///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2026, Togaware Pty Ltd.
 ///
 /// License: https://opensource.org/license/gpl-3-0
 ///
