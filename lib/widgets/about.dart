@@ -52,7 +52,7 @@ Future<void> showAppAboutDialog(BuildContext context) async {
   The app is written in Flutter and the open source code is available from
   **github**.  You can also run the app **online** through your browser.
 
-  **GitHub** [https://github.com/Amoghhosamane/innerpod](https://github.com/Amoghhosamane/innerpod)
+  **GitHub** [https://github.com/gjwgit/innerpod](https://github.com/gjwgit/innerpod)
 
   **OnLine** [https://innerpod.solidcommunity.au](https://innerpod.solidcommunity.au)
 
