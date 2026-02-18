@@ -104,15 +104,22 @@ class _HistoryState extends State<History> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Session'),
-        content: const Text('Are you sure you want to delete this session?'),
+        content: const Text(
+          'Are you sure you want to delete this session? This action cannot be undone.',
+          style: TextStyle(fontSize: 16),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Text('Cancel'),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent.withValues(alpha: 0.1),
+              foregroundColor: Colors.redAccent,
+              elevation: 0,
+            ),
             child: const Text('Delete'),
           ),
         ],
@@ -147,28 +154,45 @@ class _HistoryState extends State<History> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Edit Session'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: commentController,
-              decoration: const InputDecoration(labelText: 'Comment'),
-              maxLines: 3,
-            ),
-          ],
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  hintText: 'Enter session name',
+                  prefixIcon: const Icon(Icons.label_outline),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: commentController,
+                decoration: InputDecoration(
+                  labelText: 'Comment',
+                  hintText: 'Enter session comment',
+                  prefixIcon: const Icon(Icons.notes),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Text('Cancel'),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Save'),
+            child: const Text('Save Changes'),
           ),
         ],
       ),
