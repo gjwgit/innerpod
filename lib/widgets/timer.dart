@@ -99,6 +99,11 @@ class TimerState extends State<Timer> {
 
   final _player = AudioPlayer();
 
+  // Controllers for session metadata.
+
+  final _nameController = TextEditingController();
+  final _commentController = TextEditingController();
+
   ////////////////////////////////////////////////////////////////////////
   // SLEEP
   ////////////////////////////////////////////////////////////////////////
@@ -135,6 +140,8 @@ class TimerState extends State<Timer> {
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _commentController.dispose();
     _player.dispose();
     super.dispose();
   }
@@ -294,6 +301,8 @@ class TimerState extends State<Timer> {
       'end': endTime.toIso8601String(),
       'type': _sessionType,
       'silenceDuration': _duration,
+      'name': _nameController.text,
+      'comment': _commentController.text,
     };
 
     try {
@@ -304,6 +313,9 @@ class TimerState extends State<Timer> {
         // File doesn't exist yet, we'll create it.
         debugPrint('sessions.ttl does not exist, creating new file.');
         content = null;
+      } on SecurityKeyNotAvailableException {
+        logMessage('Security key not available - cannot save session.');
+        return;
       } catch (e) {
         logMessage('Error reading sessions.ttl: $e');
         content = null;
@@ -311,11 +323,15 @@ class TimerState extends State<Timer> {
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent);
       logMessage('Session saved to Pod');
+    } on SecurityKeyNotAvailableException {
+      logMessage('Security key not available - cannot save session.');
     } catch (e) {
       logMessage('Error saving session to Pod: $e');
     }
 
     _startTime = null;
+    _nameController.clear();
+    _commentController.clear();
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -504,6 +520,29 @@ audio may take a little time to download for the Web version.
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [durationChoice],
+        ),
+        const SizedBox(height: 2 * heightSpacer),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'NAME',
+                  hintText: 'Enter session name (optional)',
+                ),
+              ),
+              TextField(
+                controller: _commentController,
+                decoration: const InputDecoration(
+                  labelText: 'COMMENT',
+                  hintText: 'Enter session comment (optional)',
+                ),
+                maxLines: 2,
+              ),
+            ],
+          ),
         ),
       ],
     );
