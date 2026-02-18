@@ -69,19 +69,62 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPrimary = backgroundColor != Colors.white;
+
     return SizedBox(
-      // 20240317 gjw Google Play Store noted accessibility guidelines suggest
-      // the height should be at least 48.
-      height: 48,
+      height: 52,
       width: 170,
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          //   textStyle: _buttonTextStyleBold,
-          textStyle: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
-          backgroundColor: backgroundColor,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: isPrimary
+                ? [
+                    backgroundColor,
+                    Color.lerp(backgroundColor, Colors.black, 0.05)!,
+                  ]
+                : [
+                    Colors.white,
+                    const Color(0xFFFDF7F0),
+                  ],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: isPrimary
+                  ? backgroundColor.withOpacity(0.3)
+                  : Colors.grey.withOpacity(0.1),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        onPressed: onPressed,
-        child: MarkdownTooltip(message: tooltip, child: Text(title)),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: onPressed,
+            child: Center(
+              child: MarkdownTooltip(
+                message: tooltip,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: isPrimary ? FontWeight.bold : fontWeight,
+                    color: isPrimary
+                        ? (Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black87)
+                        : const Color(0xFF5D4037),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

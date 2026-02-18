@@ -492,60 +492,86 @@ audio may take a little time to download for the Web version.
       onComplete: _complete,
     );
 
-    final buttonsMatrix = Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            introButton,
-            const SizedBox(width: widthSpacer),
-            startButton,
-          ],
+    final buttonsMatrix = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.5),
         ),
-        const SizedBox(height: heightSpacer),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            guidedButton,
-            const SizedBox(width: widthSpacer),
-            pauseButton,
-          ],
-        ),
-        const SizedBox(height: 2 * heightSpacer),
-        const Text(
-          'Select duration (minutes)',
-          style: TextStyle(fontSize: 20.0, color: Colors.grey),
-        ),
-        const SizedBox(height: 1 * heightSpacer),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [durationChoice],
-        ),
-        const SizedBox(height: 2 * heightSpacer),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40.0),
-          child: Column(
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'NAME',
-                  hintText: 'Enter session name (optional)',
-                ),
-              ),
-              TextField(
-                controller: _commentController,
-                decoration: const InputDecoration(
-                  labelText: 'COMMENT',
-                  hintText: 'Enter session comment (optional)',
-                ),
-                maxLines: 2,
-              ),
+              introButton,
+              const SizedBox(width: widthSpacer),
+              startButton,
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: heightSpacer),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              guidedButton,
+              const SizedBox(width: widthSpacer),
+              pauseButton,
+            ],
+          ),
+          const SizedBox(height: 32),
+          Text(
+            'Select duration (minutes)',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+            ),
+          ),
+          const SizedBox(height: 12),
+          durationChoice,
+          const SizedBox(height: 32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'NAME',
+                    hintText: 'Enter session name (optional)',
+                    prefixIcon: const Icon(Icons.label_outline),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.8),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _commentController,
+                  decoration: InputDecoration(
+                    labelText: 'COMMENT',
+                    hintText: 'Enter session comment (optional)',
+                    prefixIcon: const Icon(Icons.notes),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.8),
+                  ),
+                  maxLines: 2,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
 
     return OrientationBuilder(
