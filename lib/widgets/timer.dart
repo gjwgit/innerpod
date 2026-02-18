@@ -495,10 +495,10 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.5),
+        color: Colors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
-          color: Colors.white.withOpacity(0.5),
+          color: Colors.white.withValues(alpha: 0.5),
         ),
       ),
       child: Column(
@@ -527,7 +527,8 @@ audio may take a little time to download for the Web version.
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 12),
@@ -548,7 +549,7 @@ audio may take a little time to download for the Web version.
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.8),
+                    fillColor: Colors.white.withValues(alpha: 0.8),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -563,7 +564,7 @@ audio may take a little time to download for the Web version.
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.8),
+                    fillColor: Colors.white.withValues(alpha: 0.8),
                   ),
                   maxLines: 2,
                 ),
