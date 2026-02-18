@@ -234,36 +234,43 @@ class _HistoryState extends State<History> {
                           return DataRow(
                             cells: [
                               DataCell(Text(session['date']!)),
-                              DataCell(SizedBox(
-                                width: 80,
-                                child: Text(
-                                  session['name']!,
-                                  overflow: TextOverflow.ellipsis,
+                              DataCell(
+                                SizedBox(
+                                  width: 80,
+                                  child: Text(
+                                    session['name']!,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              )),
+                              ),
                               DataCell(Text(session['type']!)),
                               DataCell(Text(session['duration']!)),
                               DataCell(Text(session['start']!)),
-                              DataCell(Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.edit, size: 18),
-                                    onPressed: () => _editSession(session),
-                                    padding: EdgeInsets.zero,
-                                    constraints: const BoxConstraints(),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  IconButton(
-                                    icon: const Icon(Icons.delete,
-                                        size: 18, color: Colors.red),
-                                    onPressed: () =>
-                                        _deleteSession(session['rawStart']!),
-                                    padding: EdgeInsets.zero,
-                                    constraints: const BoxConstraints(),
-                                  ),
-                                ],
-                              )),
+                              DataCell(
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.edit, size: 18),
+                                      onPressed: () => _editSession(session),
+                                      padding: EdgeInsets.zero,
+                                      constraints: const BoxConstraints(),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        size: 18,
+                                        color: Colors.red,
+                                      ),
+                                      onPressed: () =>
+                                          _deleteSession(session['rawStart']!),
+                                      padding: EdgeInsets.zero,
+                                      constraints: const BoxConstraints(),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           );
                         }).toList(),

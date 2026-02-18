@@ -142,7 +142,10 @@ String deleteSession(String currentContent, String startTime) {
 
 /// Updates a session with the given start time in the TTL content.
 String updateSession(
-    String currentContent, String startTime, Map<String, dynamic> updatedData) {
+  String currentContent,
+  String startTime,
+  Map<String, dynamic> updatedData,
+) {
   List<Map<String, String>> sessions = parseSessions(currentContent);
   final index = sessions.indexWhere(
     (s) => s['start'] == startTime,
