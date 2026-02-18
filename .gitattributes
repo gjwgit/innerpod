@@ -1,0 +1,20 @@
+# Force LF line endings for all text files to ensure consistency
+# between Windows development and Linux CI environments.
+
+* text=auto eol=lf
+
+# Dart files must use LF to ensure import_order and dart format
+# are compatible across platforms.
+*.dart text eol=lf
+
+# Explicitly binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mp3 binary
+*.aab binary
+*.apk binary
+*.deb binary
+*.snap binary
