@@ -1,10 +1,13 @@
-/// A reusable markdown body widget with selectable text and clickable links.
+// A reusable markdown body widget with selectable text and clickable links.
 //
 // Time-stamp: <2025-02-18 20:40:00 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
-///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
+// Copyright (C) 2024, Togaware Pty Ltd
+//
+// Licensed under the GNU General Public License, Version 3 (the "License").
+//
+// License: https://opensource.org/license/gpl-3-0.
+//
 library;
 
 import 'package:flutter/material.dart';
