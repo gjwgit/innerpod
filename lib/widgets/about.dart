@@ -28,7 +28,6 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:gap/gap.dart';
-
 import 'package:solidpod/solidpod.dart';
 
 import 'package:innerpod/widgets/app_markdown_body.dart';
