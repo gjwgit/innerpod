@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Thursday 2026-02-19 17:28:37 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 18:59:51 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -99,8 +99,8 @@ class _HistoryState extends State<History> {
           'type': item['type'] ?? 'bell',
           'duration':
               '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
-          'name': item['name'] ?? '',
-          'comment': item['comment'] ?? '',
+          'title': item['title'] ?? '',
+          'description': item['description'] ?? '',
         };
       }).toList();
 
@@ -165,8 +165,9 @@ class _HistoryState extends State<History> {
   }
 
   Future<void> _editSession(Map<String, String> session) async {
-    final nameController = TextEditingController(text: session['name']);
-    final commentController = TextEditingController(text: session['comment']);
+    final titleController = TextEditingController(text: session['title']);
+    final descriptionController =
+        TextEditingController(text: session['description']);
 
     final updated = await showDialog<bool>(
       context: context,
@@ -176,12 +177,12 @@ class _HistoryState extends State<History> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
+              controller: titleController,
+              decoration: const InputDecoration(labelText: 'Title'),
             ),
             TextField(
-              controller: commentController,
-              decoration: const InputDecoration(labelText: 'Comment'),
+              controller: descriptionController,
+              decoration: const InputDecoration(labelText: 'Description'),
               maxLines: 3,
             ),
           ],
@@ -204,8 +205,8 @@ class _HistoryState extends State<History> {
       try {
         final content = await readPod('sessions.ttl');
         final newContent = updateSession(content, session['rawStart']!, {
-          'name': nameController.text,
-          'comment': commentController.text,
+          'title': titleController.text,
+          'description': descriptionController.text,
         });
         await writePod(
           'sessions.ttl',
@@ -253,7 +254,7 @@ class _HistoryState extends State<History> {
                         columnSpacing: 12,
                         columns: const [
                           DataColumn(label: Text('Date')),
-                          DataColumn(label: Text('Name')),
+                          DataColumn(label: Text('Title')),
                           DataColumn(label: Text('Type')),
                           DataColumn(label: Text('Min')),
                           DataColumn(label: Text('Start')),
@@ -267,7 +268,7 @@ class _HistoryState extends State<History> {
                                 SizedBox(
                                   width: 80,
                                   child: Text(
-                                    session['name']!,
+                                    session['title']!,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),

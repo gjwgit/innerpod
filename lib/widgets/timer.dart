@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-19 18:44:32 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 19:00:59 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -102,8 +102,8 @@ class TimerState extends State<Timer> {
 
   // Controllers for session metadata.
 
-  final _nameController = TextEditingController();
-  final _commentController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   ////////////////////////////////////////////////////////////////////////
   // SLEEP
@@ -141,8 +141,8 @@ class TimerState extends State<Timer> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _commentController.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
     _player.dispose();
     super.dispose();
   }
@@ -302,8 +302,8 @@ class TimerState extends State<Timer> {
       'end': endTime.toIso8601String(),
       'type': _sessionType,
       'silenceDuration': _duration,
-      'name': _nameController.text,
-      'comment': _commentController.text,
+      'title': _titleController.text,
+      'description': _descriptionController.text,
     };
 
     try {
@@ -331,8 +331,8 @@ class TimerState extends State<Timer> {
     }
 
     _startTime = null;
-    _nameController.clear();
-    _commentController.clear();
+    _titleController.clear();
+    _descriptionController.clear();
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -528,7 +528,7 @@ audio may take a little time to download for the Web version.
           child: Column(
             children: [
               TextField(
-                controller: _nameController,
+                controller: _titleController,
                 decoration: const InputDecoration(
                   labelText: 'Title',
                   hintText: 'Enter session title (optional)',
@@ -536,10 +536,10 @@ audio may take a little time to download for the Web version.
                 style: const TextStyle(fontSize: 16.0, color: Colors.grey),
               ),
               TextField(
-                controller: _commentController,
+                controller: _descriptionController,
                 decoration: const InputDecoration(
-                  labelText: 'Comment',
-                  hintText: 'Enter session comment (optional)',
+                  labelText: 'Description',
+                  hintText: 'Enter session description (optional)',
                 ),
                 style: const TextStyle(fontSize: 16.0, color: Colors.grey),
                 maxLines: 2,
