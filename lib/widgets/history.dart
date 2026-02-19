@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Thursday 2026-02-19 18:59:51 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 20:39:57 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -82,7 +82,7 @@ class _HistoryState extends State<History> {
         content = null;
       } catch (e) {
         // Log other errors related to reading from Pod
-        debugPrint('Error reading from Pod: $e');
+        debugPrint('Error accessing sessions.ttl: $e');
         content = null;
       }
 
@@ -125,15 +125,22 @@ class _HistoryState extends State<History> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Session'),
-        content: const Text('Are you sure you want to delete this session?'),
+        content: const Text(
+          'Are you sure you want to delete this session? This action cannot be undone.',
+          style: TextStyle(fontSize: 16),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Text('Cancel'),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent.withValues(alpha: 0.1),
+              foregroundColor: Colors.redAccent,
+              elevation: 0,
+            ),
             child: const Text('Delete'),
           ),
         ],
@@ -151,6 +158,16 @@ class _HistoryState extends State<History> {
           overwrite: true,
         );
         await _loadSessions();
+      } on SecurityKeyNotAvailableException {
+        debugPrint(
+          'Security key missing - cannot decrypt sessions.ttl for deletion',
+        );
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) {
+            await _deleteSession(rawStart);
+          }
+        }
       } catch (e) {
         debugPrint('Error deleting session: $e');
         if (mounted) {
@@ -173,28 +190,45 @@ class _HistoryState extends State<History> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Edit Session'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
-            ),
-            TextField(
-              controller: descriptionController,
-              decoration: const InputDecoration(labelText: 'Description'),
-              maxLines: 3,
-            ),
-          ],
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: titleController,
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                  hintText: 'Enter session title',
+                  prefixIcon: const Icon(Icons.label_outline),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: descriptionController,
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  hintText: 'Enter session description',
+                  prefixIcon: const Icon(Icons.notes),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Text('Cancel'),
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Save'),
+            child: const Text('Save Changes'),
           ),
         ],
       ),
@@ -214,6 +248,16 @@ class _HistoryState extends State<History> {
           overwrite: true,
         );
         await _loadSessions();
+      } on SecurityKeyNotAvailableException {
+        debugPrint(
+          'Security key missing - cannot decrypt sessions.ttl for update',
+        );
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) {
+            await _editSession(session);
+          }
+        }
       } catch (e) {
         debugPrint('Error updating session: $e');
         if (mounted) {
@@ -230,6 +274,7 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Session History'),
         automaticallyImplyLeading: false, // Don't show back button
@@ -238,75 +283,146 @@ class _HistoryState extends State<History> {
             icon: const Icon(Icons.refresh),
             onPressed: _loadSessions,
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _sessions.isEmpty
-              ? const Center(child: Text('No sessions recorded yet.'))
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columnSpacing: 12,
-                        columns: const [
-                          DataColumn(label: Text('Date')),
-                          DataColumn(label: Text('Title')),
-                          DataColumn(label: Text('Type')),
-                          DataColumn(label: Text('Min')),
-                          DataColumn(label: Text('Start')),
-                          DataColumn(label: Text('Action')),
-                        ],
-                        rows: _sessions.map((session) {
-                          return DataRow(
-                            cells: [
-                              DataCell(Text(session['date']!)),
-                              DataCell(
-                                SizedBox(
-                                  width: 80,
-                                  child: Text(
-                                    session['title']!,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.history,
+                        size: 64,
+                        color: Colors.grey.withValues(alpha: 0.5),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'No sessions recorded yet.',
+                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  itemCount: _sessions.length,
+                  itemBuilder: (context, index) {
+                    final session = _sessions[index];
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(24),
+                        onTap: () => _editSession(session),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer
+                                      .withValues(alpha: 0.5),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  session['type'] == 'guided'
+                                      ? Icons.auto_awesome_outlined
+                                      : Icons.self_improvement,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
-                              DataCell(Text(session['type']!)),
-                              DataCell(Text(session['duration']!)),
-                              DataCell(Text(session['start']!)),
-                              DataCell(
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.edit, size: 18),
-                                      onPressed: () => _editSession(session),
-                                      padding: EdgeInsets.zero,
-                                      constraints: const BoxConstraints(),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          session['date']!,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey[600],
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          session['duration']!,
+                                          style: TextStyle(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(width: 8),
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        size: 18,
-                                        color: Colors.red,
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      session['title']!.isEmpty
+                                          ? 'Session'
+                                          : session['title']!,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      onPressed: () =>
-                                          _deleteSession(session['rawStart']!),
-                                      padding: EdgeInsets.zero,
-                                      constraints: const BoxConstraints(),
+                                    ),
+                                    if (session['description']!.isNotEmpty)
+                                      Text(
+                                        session['description']!,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      '${session['start']} - ${session['end']}',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.grey[500],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
+                              const SizedBox(width: 8),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.edit_outlined,
+                                      size: 20,
+                                    ),
+                                    onPressed: () => _editSession(session),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete_outline,
+                                      size: 20,
+                                      color: Colors.redAccent,
+                                    ),
+                                    onPressed: () =>
+                                        _deleteSession(session['rawStart']!),
+                                  ),
+                                ],
+                              ),
                             ],
-                          );
-                        }).toList(),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
     );
   }

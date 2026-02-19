@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Tuesday 2026-02-10 15:44:48 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 20:45:46 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -141,68 +141,115 @@ class HomeState extends State<Home> {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     return Scaffold(
-      backgroundColor: background,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Row(
           children: [
-            Image.asset('assets/images/inner_icon.png', width: 40, height: 40),
-            const SizedBox(width: 20),
-            const Text('Inner Pod'),
+            Hero(
+              tag: 'logo',
+              child: Image.asset(
+                'assets/images/inner_icon.png',
+                width: 32,
+                height: 32,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              'Inner Pod',
+              style: Theme.of(context).appBarTheme.titleTextStyle,
+            ),
           ],
         ),
         backgroundColor: border,
         actions: [
-          GestureDetector(
-            onTap: () async {
-              final url = Uri.parse(_changelogUrl);
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url);
-              } else {
-                debugPrint('Could not launch $_changelogUrl');
-              }
-            },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Text(
-                'Version $_appVersion',
-                style: const TextStyle(color: Colors.deepPurple, fontSize: 10),
+          Center(
+            child: GestureDetector(
+              onTap: () async {
+                final url = Uri.parse(_changelogUrl);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(32),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.5),
+                  ),
+                ),
+                child: Text(
+                  'v$_appVersion',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 50),
+          const SizedBox(width: 8),
           IconButton(
-            icon: const Icon(Icons.info),
+            icon: const Icon(Icons.info_outline, size: 24),
             onPressed: () => showAppAboutDialog(context),
-            tooltip: 'Popup a window about the app.',
+            tooltip: 'About the app',
           ),
+          const SizedBox(width: 8),
         ],
       ),
-      body: Stack(
-        children: _pages.asMap().entries.map((entry) {
-          final index = entry.key;
-          final page = entry.value;
-          return Offstage(
-            offstage: _selectedIndex != index,
-            child: page,
-          );
-        }).toList(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).colorScheme.surface,
+              Theme.of(context)
+                  .colorScheme
+                  .surfaceContainerHighest
+                  .withValues(alpha: 0.3),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Stack(
+            children: _pages.asMap().entries.map((entry) {
+              final index = entry.key;
+              final page = entry.value;
+              return AnimatedOpacity(
+                opacity: _selectedIndex == index ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: Offstage(
+                  offstage: _selectedIndex != index,
+                  child: page,
+                ),
+              );
+            }).toList(),
+          ),
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: border,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home), //, color: Colors.black),
+      bottomNavigationBar: NavigationBar(
+        destinations: const <Widget>[
+          NavigationDestination(
+            icon: Icon(Icons.timer_outlined),
+            selectedIcon: Icon(Icons.timer),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.text_snippet),
+          NavigationDestination(
+            icon: Icon(Icons.menu_book_outlined),
+            selectedIcon: Icon(Icons.menu_book),
             label: 'Text',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'History'),
+          NavigationDestination(
+            icon: Icon(Icons.history_outlined),
+            selectedIcon: Icon(Icons.history),
+            label: 'History',
+          ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onItemTapped,
       ),
     );
   }
