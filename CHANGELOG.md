@@ -6,6 +6,7 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ Fine tune colours [1.7.10 20260220 gjw]
 + Redesign and modernise [1.7.9 20260219 amogh]
 + Add title/description and support edit and delete [1.7.8 20260219 amogh]
 + Implement private logging of sessions [1.7.7 20260213 amogh]
