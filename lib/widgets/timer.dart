@@ -31,13 +31,13 @@ import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:innerpod/constants/colours.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
@@ -316,6 +316,9 @@ class TimerState extends State<Timer> {
         // File doesn't exist yet, we'll create it.
         debugPrint('sessions.ttl does not exist, creating new file.');
         content = null;
+      } catch (e) {
+        logMessage('Error reading sessions.ttl: $e');
+        content = null;
       }
 
       String newContent = addSession(content, session);
@@ -340,6 +343,7 @@ class TimerState extends State<Timer> {
       _titleController.clear();
       _descriptionController.clear();
     }
+    _startTime = null;
   }
 
   ////////////////////////////////////////////////////////////////////////
