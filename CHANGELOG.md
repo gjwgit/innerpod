@@ -8,7 +8,9 @@ Here we record the basic changes made to the InnerPod app.
 
 + Redesign and modernise [1.7.9 20260219 amogh]
 + Add title/description and support edit and delete [1.7.8 20260219 amogh]
++ Maintain timer countdown when navigating tabs [1.7.7 20260217]
 + Implement private logging of sessions [1.7.7 20260213 amogh]
++ Fix final audio not playing on Ubuntu with Zoom [1.7.7 20260217]
 + Review and set up installers [1.7.6 20251213 gjw]
 + Package for snap release [1.7.5 20251004 gjw]
 + For GUIDED concat audio then include in app [1.7.4 20250218 gjw]

@@ -67,7 +67,7 @@ class InnerPod extends StatelessWidget {
       infoButtonStyle: InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
       ),
-      link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
+      link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
       child: Home(),
     );
   }
@@ -92,7 +92,7 @@ class HomeState extends State<Home> {
   var _appVersion = '';
 
   final String _changelogUrl =
-      'https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md';
+      'https://github.com/Amoghhosamane/innerpod/blob/dev/CHANGELOG.md';
 
   // Helper function to load the app name and version.
 
@@ -131,9 +131,9 @@ class HomeState extends State<Home> {
   }
 
   final List<Widget> _pages = <Widget>[
-    const Timer(),
-    const Instructions(),
-    const History(),
+    const Timer(key: PageStorageKey('timer_page')),
+    const Instructions(key: PageStorageKey('text_page')),
+    const History(key: PageStorageKey('history_page')),
   ];
 
   @override
@@ -219,10 +219,11 @@ class HomeState extends State<Home> {
               final index = entry.key;
               final page = entry.value;
               return AnimatedOpacity(
+                key: ValueKey('page_$index'),
                 opacity: _selectedIndex == index ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 300),
-                child: Offstage(
-                  offstage: _selectedIndex != index,
+                child: IgnorePointer(
+                  ignoring: _selectedIndex != index,
                   child: page,
                 ),
               );

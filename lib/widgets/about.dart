@@ -26,12 +26,11 @@
 library;
 
 import 'package:flutter/material.dart';
-
 import 'package:gap/gap.dart';
 import 'package:solidpod/solidpod.dart';
 
-import 'package:innerpod/utils/word_wrap.dart';
 import 'package:innerpod/widgets/app_markdown_body.dart';
+import 'package:innerpod/utils/word_wrap.dart';
 
 /// Display the about dialog for the app.
 
@@ -52,7 +51,7 @@ Future<void> showAppAboutDialog(BuildContext context) async {
   The app is written in Flutter and the open source code is available from
   **github**.  You can also run the app **online** through your browser.
 
-  **GitHub** [https://github.com/gjwgit/innerpod](https://github.com/gjwgit/innerpod)
+  **GitHub** [https://github.com/Amoghhosamane/innerpod](https://github.com/Amoghhosamane/innerpod)
 
   **OnLine** [https://innerpod.solidcommunity.au](https://innerpod.solidcommunity.au)
 
