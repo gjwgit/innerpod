@@ -74,7 +74,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
       duration: duration,
       controller: controller,
       autoStart: false,
-      backgroundColor: background,
+      backgroundColor: border,
       ringColor: _spin1,
       fillColor: _spin2,
       strokeWidth: 20.0,

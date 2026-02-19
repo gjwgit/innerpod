@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-19 19:57:31 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-02-20 08:41:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:innerpod/constants/colours.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
@@ -398,6 +399,7 @@ of the Resume button.
         _player.pause();
         _allowSleep();
       },
+      backgroundColor: Colors.grey[200] ?? Colors.grey,
     );
 
     // TODO 20240708 gjw COMMENT OUT BUTTONS UNTIL FUINCTIONALITY MIGRATED
@@ -501,7 +503,13 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
+        // 20260220 gjw Choose a darker background for the activ button
+        // area. This darker background, same as title bar and timer central,
+        // more clearly distinguishes the buttons matrix from the app
+        // background.
+
+        color: border,
+        // color: Colors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.5),
