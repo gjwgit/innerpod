@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2026-02-20 09:06:32 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-02-20 10:26:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -506,12 +506,12 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        // 20260220 gjw Choose a darker background for the activ button
+        // 20260220 gjw Choose a darker background for the active button
         // area. This darker background, same as title bar and timer central,
         // more clearly distinguishes the buttons matrix from the app
         // background.
 
-        color: border,
+        color: background,
         // color: Colors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(

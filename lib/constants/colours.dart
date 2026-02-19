@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Wednesday 2024-06-26 11:52:40 +1000 Graham Williams>
+// Time-stamp: <Friday 2026-02-20 10:27:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -31,8 +31,12 @@ import 'package:flutter/material.dart';
 
 // const _background = Color(0xFFE6B276);
 // const background = Color(0xFFF5E0C8);
+// const background = Color(0xFFF0D1AD);
 
-const background = Color(0xFFF0D1AD);
+// 20260220 gjw The background to be used for active components of the app, like
+// the timer's central area and the box containing the buttons.
+
+const background = Color(0xFFF5E0C8);
 
 /// A lighter colour for the top and bottom (navbar) elements of the app.
 
