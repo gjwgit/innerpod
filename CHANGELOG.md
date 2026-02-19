@@ -6,6 +6,7 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ Add title/description and support edit and delete [1.7.8 20260219 amogh]
 + Implement private logging of sessions [1.7.7 20260213 amogh]
 + Review and set up installers [1.7.6 20251213 gjw]
 + Package for snap release [1.7.5 20251004 gjw]
