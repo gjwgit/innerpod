@@ -31,8 +31,8 @@ import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:solidpod/solidpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:solidpod/solidpod.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
@@ -533,7 +533,7 @@ audio may take a little time to download for the Web version.
                   labelText: 'Title',
                   hintText: 'Enter session title (optional)',
                 ),
-                style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                style: const TextStyle(fontSize: 16.0, color: Colors.grey),
               ),
               TextField(
                 controller: _commentController,
@@ -541,7 +541,7 @@ audio may take a little time to download for the Web version.
                   labelText: 'Comment',
                   hintText: 'Enter session comment (optional)',
                 ),
-                style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                style: const TextStyle(fontSize: 16.0, color: Colors.grey),
                 maxLines: 2,
               ),
             ],
