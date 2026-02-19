@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Thursday 2026-02-19 20:31:56 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 20:45:46 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -31,6 +31,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/widgets/about.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
@@ -159,7 +160,7 @@ class HomeState extends State<Home> {
             ),
           ],
         ),
-        // backgroundColor: border,
+        backgroundColor: border,
         actions: [
           Center(
             child: GestureDetector(
