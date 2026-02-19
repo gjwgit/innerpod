@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -85,7 +86,7 @@ class Home extends StatefulWidget {
 
 ///
 
-class HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class HomeState extends State<Home> {
   // We will populate the app version shortly.
 
   var _appVersion = '';
@@ -97,9 +98,11 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Future<void> _loadAppInfo() async {
     final packageInfo = await PackageInfo.fromPlatform();
+    final prefs = await SharedPreferences.getInstance();
     if (mounted) {
       setState(() {
         _appVersion = packageInfo.version; // Set app version from package info
+        _selectedIndex = prefs.getInt('selected_index') ?? 0;
       });
     }
   }
@@ -117,10 +120,14 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onItemTapped(int index) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('selected_index', index);
+    if (mounted) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   final List<Widget> _pages = <Widget>[
@@ -170,7 +177,16 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         ],
       ),
-      body: Center(child: _pages.elementAt(_selectedIndex)), //Timer()),
+      body: Stack(
+        children: _pages.asMap().entries.map((entry) {
+          final index = entry.key;
+          final page = entry.value;
+          return Offstage(
+            offstage: _selectedIndex != index,
+            child: page,
+          );
+        }).toList(),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: border,
         items: const <BottomNavigationBarItem>[
