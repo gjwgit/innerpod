@@ -109,8 +109,9 @@ String serializeSessions(List<Map<String, String>> sessions) {
     buffer.write('    :type "$type";\n');
     buffer.write('    :silenceDuration $duration');
     if (title.isNotEmpty) buffer.write(';\n    :title "$title"');
-    if (description.isNotEmpty)
+    if (description.isNotEmpty) {
       buffer.write(';\n    :description "$description"');
+    }
     buffer.write('.\n');
   }
 
