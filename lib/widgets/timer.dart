@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2026-02-20 08:41:10 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-02-20 09:06:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -343,7 +343,6 @@ class TimerState extends State<Timer> {
       _titleController.clear();
       _descriptionController.clear();
     }
-    _startTime = null;
   }
 
   ////////////////////////////////////////////////////////////////////////
