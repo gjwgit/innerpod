@@ -2,11 +2,11 @@
 //
 // Time-stamp: <Tuesday 2026-02-17 07:37:22 +1100 Graham Williams>
 //
-// Copyright (C) 2024-2026, Togaware Pty Ltd
-//
-// Licensed under the GNU General Public License, Version 3 (the "License");
-//
-// License: https://opensource.org/license/gpl-3-0
+/// Copyright (C) 2024-2026, Togaware Pty Ltd
+///
+/// Licensed under the GNU General Public License, Version 3 (the "License").
+///
+/// License: https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -27,11 +27,10 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:solidpod/solidpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import 'package:innerpod/widgets/app_markdown_body.dart';
 import 'package:innerpod/utils/word_wrap.dart';
 
 /// Display the about dialog for the app.
@@ -73,15 +72,7 @@ Future<void> showAppAboutDialog(BuildContext context) async {
       applicationLegalese: '© 2024 Togaware',
       children: [
         const Gap(20),
-        MarkdownBody(
-          data: about,
-          selectable: true,
-          softLineBreak: true,
-          onTapLink: (text, href, about) {
-            final url = Uri.parse(href ?? '');
-            launchUrl(url);
-          },
-        ),
+        AppMarkdownBody(data: about),
       ],
     );
   }

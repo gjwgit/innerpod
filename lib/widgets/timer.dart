@@ -1,12 +1,12 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Tuesday 2026-02-17 08:54:21 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 18:44:32 +1100 Graham Williams>
 //
-// Copyright (C) 2024, Togaware Pty Ltd
-//
-// Licensed under the GNU General Public License, Version 3 (the "License");
-//
-// License: https://opensource.org/license/gpl-3-0
+/// Copyright (C) 2024, Togaware Pty Ltd
+///
+/// Licensed under the GNU General Public License, Version 3 (the "License").
+///
+/// License: https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -22,6 +22,7 @@
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
 /// Authors: Graham Williams
+
 library;
 
 import 'dart:async';
@@ -31,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:solidpod/solidpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
@@ -98,6 +100,11 @@ class TimerState extends State<Timer> {
 
   final _player = AudioPlayer();
 
+  // Controllers for session metadata.
+
+  final _nameController = TextEditingController();
+  final _commentController = TextEditingController();
+
   ////////////////////////////////////////////////////////////////////////
   // SLEEP
   ////////////////////////////////////////////////////////////////////////
@@ -113,10 +120,29 @@ class TimerState extends State<Timer> {
   @override
   void initState() {
     super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (mounted) {
+      setState(() {
+        _duration = prefs.getInt('timer_duration') ?? defaultSessionSeconds;
+        _isGuided = prefs.getBool('is_guided') ?? false;
+      });
+    }
+  }
+
+  Future<void> _saveSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('timer_duration', _duration);
+    await prefs.setBool('is_guided', _isGuided);
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _commentController.dispose();
     _player.dispose();
     super.dispose();
   }
@@ -237,11 +263,22 @@ class TimerState extends State<Timer> {
 
     // Check mounted state again after the dings
     if (mounted && _isGuided) {
-      // Add a small delay between the dings and the outro music for smoother transition
+      // Release the player resources to ensure a clean state for the final audio
+      // which helps with issues on Linux with Zoom audio sharing.
+      await _player.release();
+
+      // Add a delay between the dings and the outro music for smoother transition
       // especially on systems with busy audio pipes (like Linux with audio sharing).
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(seconds: 2));
       if (mounted) {
-        await _play(sessionOutro);
+        // Use inline play logic instead of _play() because _play() calls stop()
+        // which might fail on a released player, preventing play() from running.
+        try {
+          await _player.play(sessionOutro);
+          await _player.onPlayerComplete.first;
+        } catch (e) {
+          debugPrint('Audio playback error (final outro): $e');
+        }
       }
     }
 
@@ -265,6 +302,8 @@ class TimerState extends State<Timer> {
       'end': endTime.toIso8601String(),
       'type': _sessionType,
       'silenceDuration': _duration,
+      'name': _nameController.text,
+      'comment': _commentController.text,
     };
 
     try {
@@ -275,6 +314,9 @@ class TimerState extends State<Timer> {
         // File doesn't exist yet, we'll create it.
         debugPrint('sessions.ttl does not exist, creating new file.');
         content = null;
+      } on SecurityKeyNotAvailableException {
+        logMessage('Security key not available - cannot save session.');
+        return;
       } catch (e) {
         logMessage('Error reading sessions.ttl: $e');
         content = null;
@@ -282,11 +324,15 @@ class TimerState extends State<Timer> {
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent, overwrite: true);
       logMessage('Session saved to Pod');
+    } on SecurityKeyNotAvailableException {
+      logMessage('Security key not available - cannot save session.');
     } catch (e) {
       logMessage('Error saving session to Pod: $e');
     }
 
     _startTime = null;
+    _nameController.clear();
+    _commentController.clear();
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -316,13 +362,17 @@ circle indicates an active session.
 '''
           .trim(),
       onPressed: () {
-        logMessage('Start Bell Session');
-        _reset();
-        dingDong(_player);
-        _controller.restart();
-        _stopSleep();
-        _sessionType = 'bell';
-        _startTime = DateTime.now();
+        logMessage('Start Session');
+        if (mounted) {
+          _reset();
+          dingDong(_player);
+          _controller.restart();
+          _stopSleep();
+          setState(() {
+            _sessionType = 'bell';
+            _startTime = DateTime.now();
+          });
+        }
       },
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.lightGreenAccent.shade100,
@@ -416,16 +466,17 @@ audio may take a little time to download for the Web version.
           selectedColor: Colors.lightGreenAccent,
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
-            setState(() {
-              if (selected) {
+            if (selected) {
+              setState(() {
                 _duration = number * 60;
                 debugPrint('CHOOSE: duration $_duration');
                 _controller.restart(duration: _duration);
                 _controller.pause();
                 _player.stop();
                 _allowSleep();
-              }
-            });
+              });
+              _saveSettings();
+            }
           },
         );
       }).toList(),
@@ -471,6 +522,31 @@ audio may take a little time to download for the Web version.
           mainAxisAlignment: MainAxisAlignment.center,
           children: [durationChoice],
         ),
+        const SizedBox(height: 1 * heightSpacer),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                  hintText: 'Enter session title (optional)',
+                ),
+                style: TextStyle(fontSize: 16.0, color: Colors.grey),
+              ),
+              TextField(
+                controller: _commentController,
+                decoration: const InputDecoration(
+                  labelText: 'Comment',
+                  hintText: 'Enter session comment (optional)',
+                ),
+                style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
       ],
     );
 
@@ -485,6 +561,7 @@ audio may take a little time to download for the Web version.
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 2 * heightSpacer),
                   timerDisplay,
                   const SizedBox(height: 2 * heightSpacer),
                   buttonsMatrix,
