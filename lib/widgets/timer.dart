@@ -1,8 +1,8 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-19 19:00:59 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 19:57:31 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License").
 ///
@@ -33,6 +33,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart';
+import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
@@ -314,25 +315,30 @@ class TimerState extends State<Timer> {
         // File doesn't exist yet, we'll create it.
         debugPrint('sessions.ttl does not exist, creating new file.');
         content = null;
-      } on SecurityKeyNotAvailableException {
-        logMessage('Security key not available - cannot save session.');
-        return;
-      } catch (e) {
-        logMessage('Error reading sessions.ttl: $e');
-        content = null;
       }
+
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent, overwrite: true);
       logMessage('Session saved to Pod');
+
+      _startTime = null;
+      _titleController.clear();
+      _descriptionController.clear();
     } on SecurityKeyNotAvailableException {
-      logMessage('Security key not available - cannot save session.');
+      debugPrint('Security key missing - cannot save session. Prompting user.');
+      if (mounted) {
+        await getKeyFromUserIfRequired(context, widget);
+        if (mounted) {
+          // Retry saving session after popup closes
+          await _saveSession();
+        }
+      }
     } catch (e) {
       logMessage('Error saving session to Pod: $e');
+      _startTime = null;
+      _titleController.clear();
+      _descriptionController.clear();
     }
-
-    _startTime = null;
-    _titleController.clear();
-    _descriptionController.clear();
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -492,62 +498,87 @@ audio may take a little time to download for the Web version.
       onComplete: _complete,
     );
 
-    final buttonsMatrix = Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            introButton,
-            const SizedBox(width: widthSpacer),
-            startButton,
-          ],
+    final buttonsMatrix = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(32),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.5),
         ),
-        const SizedBox(height: heightSpacer),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            guidedButton,
-            const SizedBox(width: widthSpacer),
-            pauseButton,
-          ],
-        ),
-        const SizedBox(height: 2 * heightSpacer),
-        const Text(
-          'Select duration (minutes)',
-          style: TextStyle(fontSize: 20.0, color: Colors.grey),
-        ),
-        const SizedBox(height: 1 * heightSpacer),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [durationChoice],
-        ),
-        const SizedBox(height: 1 * heightSpacer),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Title',
-                  hintText: 'Enter session title (optional)',
-                ),
-                style: const TextStyle(fontSize: 16.0, color: Colors.grey),
-              ),
-              TextField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                  hintText: 'Enter session description (optional)',
-                ),
-                style: const TextStyle(fontSize: 16.0, color: Colors.grey),
-                maxLines: 2,
-              ),
+              introButton,
+              const SizedBox(width: widthSpacer),
+              startButton,
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: heightSpacer),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              guidedButton,
+              const SizedBox(width: widthSpacer),
+              pauseButton,
+            ],
+          ),
+          const SizedBox(height: 32),
+          Text(
+            'Select duration (minutes)',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600,
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+            ),
+          ),
+          const SizedBox(height: 12),
+          durationChoice,
+          const SizedBox(height: 32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _titleController,
+                  decoration: InputDecoration(
+                    labelText: 'Title',
+                    hintText: 'Enter session title (optional)',
+                    prefixIcon: const Icon(Icons.label_outline),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withValues(alpha: 0.8),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    hintText: 'Enter session description (optional)',
+                    prefixIcon: const Icon(Icons.notes),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white.withValues(alpha: 0.8),
+                  ),
+                  maxLines: 2,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
 
     return OrientationBuilder(
