@@ -1,6 +1,6 @@
 // About dialog for the app.
 //
-// Time-stamp: <Tuesday 2026-02-17 07:37:22 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-02-20 05:20:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -63,7 +63,7 @@ Future<void> showAppAboutDialog(BuildContext context) async {
     showAboutDialog(
       context: context,
       applicationIcon: Image.asset(
-        'assets/images/inner_icon.png',
+        'assets/images/app_icon.png',
         width: 100,
         height: 100,
       ),

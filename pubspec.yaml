@@ -52,8 +52,8 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/images/inner_icon.png
-    - assets/images/inner_image.jpg
+    - assets/images/app_icon.png
+    - assets/images/app_image.jpg
     - assets/icon/icon.png
     - assets/sounds/dong.mp3
     - assets/sounds/intro.mp3

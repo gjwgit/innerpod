@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Thursday 2026-02-19 20:45:46 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-02-20 05:21:30 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -58,8 +58,8 @@ class InnerPod extends StatelessWidget {
     return const SolidLogin(
       title: 'MANAGE YOUR INNER POD',
       required: false,
-      image: AssetImage('assets/images/inner_image.jpg'),
-      logo: AssetImage('assets/images/inner_icon.png'),
+      image: AssetImage('assets/images/app_image.jpg'),
+      logo: AssetImage('assets/images/app_icon.png'),
       continueButtonStyle: ContinueButtonStyle(
         text: 'Session',
         background: Colors.lightGreenAccent,
@@ -148,7 +148,7 @@ class HomeState extends State<Home> {
             Hero(
               tag: 'logo',
               child: Image.asset(
-                'assets/images/inner_icon.png',
+                'assets/images/app_icon.png',
                 width: 32,
                 height: 32,
               ),
