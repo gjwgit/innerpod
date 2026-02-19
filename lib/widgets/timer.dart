@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Wednesday 2025-07-30 09:25:45 +1000 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 10:25:00 +1000 Antigravity AI>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -33,6 +33,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart';
+import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
@@ -314,25 +315,30 @@ class TimerState extends State<Timer> {
         // File doesn't exist yet, we'll create it.
         debugPrint('sessions.ttl does not exist, creating new file.');
         content = null;
-      } on SecurityKeyNotAvailableException {
-        logMessage('Security key not available - cannot save session.');
-        return;
-      } catch (e) {
-        logMessage('Error reading sessions.ttl: $e');
-        content = null;
       }
+
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent);
       logMessage('Session saved to Pod');
+
+      _startTime = null;
+      _nameController.clear();
+      _commentController.clear();
     } on SecurityKeyNotAvailableException {
-      logMessage('Security key not available - cannot save session.');
+      debugPrint('Security key missing - cannot save session. Prompting user.');
+      if (mounted) {
+        await getKeyFromUserIfRequired(context, widget);
+        if (mounted) {
+          // Retry saving session after popup closes
+          await _saveSession();
+        }
+      }
     } catch (e) {
       logMessage('Error saving session to Pod: $e');
+      _startTime = null;
+      _nameController.clear();
+      _commentController.clear();
     }
-
-    _startTime = null;
-    _nameController.clear();
-    _commentController.clear();
   }
 
   ////////////////////////////////////////////////////////////////////////

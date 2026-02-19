@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 //
-// Time-stamp: <2026-02-09 16:45:00 Amogh Hosamane>
+// Time-stamp: <2026-02-19 10:25:00 Antigravity AI>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -46,10 +46,10 @@ class _HistoryState extends State<History> {
         content = await readPod('sessions.ttl');
       } on ResourceNotExistException {
         // If file doesn't exist yet, treat as empty (no sessions)
-        debugPrint('sessions.ttl does not exist yet (normal for new users)');
+        debugPrint('sessions.ttl does not exist (normal for new users)');
         content = null;
       } on SecurityKeyNotAvailableException {
-        debugPrint('Security key missing. Prompting user.');
+        debugPrint('Security key missing - cannot decrypt sessions.ttl');
         if (mounted) {
           await getKeyFromUserIfRequired(context, widget);
           // Retry loading sessions after popup closes
@@ -61,7 +61,7 @@ class _HistoryState extends State<History> {
         content = null;
       } catch (e) {
         // Log other errors related to reading from Pod
-        debugPrint('Error reading from Pod: $e');
+        debugPrint('Error accessing sessions.ttl: $e');
         content = null;
       }
 
@@ -133,6 +133,16 @@ class _HistoryState extends State<History> {
         final newContent = deleteSession(content, rawStart);
         await writePod('sessions.ttl', newContent);
         await _loadSessions();
+      } on SecurityKeyNotAvailableException {
+        debugPrint(
+          'Security key missing - cannot decrypt sessions.ttl for deletion',
+        );
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) {
+            await _deleteSession(rawStart);
+          }
+        }
       } catch (e) {
         debugPrint('Error deleting session: $e');
         if (mounted) {
@@ -208,6 +218,16 @@ class _HistoryState extends State<History> {
         });
         await writePod('sessions.ttl', newContent);
         await _loadSessions();
+      } on SecurityKeyNotAvailableException {
+        debugPrint(
+          'Security key missing - cannot decrypt sessions.ttl for update',
+        );
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) {
+            await _editSession(session);
+          }
+        }
       } catch (e) {
         debugPrint('Error updating session: $e');
         if (mounted) {
