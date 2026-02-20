@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:version_widget/version_widget.dart';
 
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/widgets/about.dart';
@@ -91,17 +91,14 @@ class HomeState extends State<Home> {
 
   var _appVersion = '';
 
-  final String _changelogUrl =
-      'https://github.com/Amoghhosamane/innerpod/blob/dev/CHANGELOG.md';
-
   // Helper function to load the app name and version.
 
-  Future<void> _loadAppInfo() async {
+  Future<void> _loadSettings() async {
     final packageInfo = await PackageInfo.fromPlatform();
     final prefs = await SharedPreferences.getInstance();
     if (mounted) {
       setState(() {
-        _appVersion = packageInfo.version; // Set app version from package info
+        _appVersion = packageInfo.version;
         _selectedIndex = prefs.getInt('selected_index') ?? 0;
       });
     }
@@ -111,9 +108,7 @@ class HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    // Get the app name and version.
-
-    _loadAppInfo();
+    _loadSettings();
   }
 
   // Track which item is selected in the nav bar.
@@ -162,34 +157,7 @@ class HomeState extends State<Home> {
         ),
         backgroundColor: border,
         actions: [
-          Center(
-            child: GestureDetector(
-              onTap: () async {
-                final url = Uri.parse(_changelogUrl);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(32),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.5),
-                  ),
-                ),
-                child: Text(
-                  'v$_appVersion',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          Center(child: VersionWidget(version: _appVersion)),
           const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.info_outline, size: 24),
