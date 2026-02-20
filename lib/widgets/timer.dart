@@ -171,7 +171,7 @@ class TimerState extends State<Timer> {
 
   void _reset() {
     _player.stop();
-    _controller.restart();
+    _controller.restart(duration: _duration);
     _controller.pause();
     _isGuided = false;
     _isPaused = false;
@@ -210,7 +210,7 @@ class TimerState extends State<Timer> {
 
     await _play(dong);
     if (!mounted) return;
-    _controller.restart();
+    _controller.restart(duration: _duration);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -250,7 +250,7 @@ class TimerState extends State<Timer> {
 
     await _play(dong);
     if (!mounted) return;
-    _controller.restart();
+    _controller.restart(duration: _duration);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -377,7 +377,7 @@ circle indicates an active session.
         if (mounted) {
           _reset();
           dingDong(_player);
-          _controller.restart();
+          _controller.restart(duration: _duration);
           _stopSleep();
           setState(() {
             _sessionType = 'bell';
