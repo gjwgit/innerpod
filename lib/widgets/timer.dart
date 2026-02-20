@@ -208,8 +208,7 @@ class TimerState extends State<Timer> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
 
-    await _play(dong);
-    if (!mounted) return;
+    dingDong(_player);
     _controller.restart(duration: _duration);
   }
 
@@ -248,8 +247,7 @@ class TimerState extends State<Timer> {
 
     // The introductions are complete. We play the dings and start the timer.
 
-    await _play(dong);
-    if (!mounted) return;
+    dingDong(_player);
     _controller.restart(duration: _duration);
   }
 
