@@ -1,7 +1,7 @@
 /// A table of past sessions logged to the user's Solid Pod.
-///
-// Time-stamp: <Thursday 2026-02-19 20:39:57 +1100 Graham Williams>
-///
+//
+// Time-stamp: <Saturday 2026-02-21 00:58:00 +1100 Graham Williams>
+//
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
@@ -23,19 +23,17 @@
 ///
 /// Authors: Amogh Hosamane
 
-// Add the library directive as we have doc entries above. We publish the above
-// meta doc lines in the docs.
-
 library;
 
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
 import 'package:innerpod/utils/session_logic.dart';
+import 'package:innerpod/widgets/edit_session_dialog.dart';
+import 'package:innerpod/widgets/session_card.dart';
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -56,127 +54,77 @@ class _HistoryState extends State<History> {
   }
 
   Future<void> _loadSessions() async {
-    if (mounted) {
-      setState(() {
-        _isLoading = true;
-      });
-    }
+    if (!mounted) return;
+    setState(() => _isLoading = true);
 
     try {
-      String? content;
-      try {
-        content = await readPod('sessions.ttl');
-      } on ResourceNotExistException {
-        // If file doesn't exist yet, treat as empty (no sessions)
-        debugPrint('sessions.ttl does not exist yet (normal for new users)');
-        content = null;
-      } on SecurityKeyNotAvailableException {
-        debugPrint('Security key missing. Prompting user.');
-        if (mounted) {
-          await getKeyFromUserIfRequired(context, widget);
-          // Retry loading sessions after popup closes
-          if (mounted) {
-            await _loadSessions();
-            return;
-          }
-        }
-        content = null;
-      } catch (e) {
-        // Log other errors related to reading from Pod
-        debugPrint('Error accessing sessions.ttl: $e');
-        content = null;
-      }
-
-      // parseSessions handles null content and returns empty list
-
+      final content = await readPod('sessions.ttl');
       _rawSessions = parseSessions(content);
-      final List<Map<String, String>> sessions = _rawSessions.map((item) {
-        final start = DateTime.parse(item['start']!);
-        final end = DateTime.parse(item['end']!);
+
+      _sessions = _rawSessions.map((s) {
+        final start = DateTime.parse(s['start']!);
+        final end = DateTime.parse(s['end']!);
+        final durationSeconds = int.parse(s['silenceDuration']!);
+        final durationMinutes = (durationSeconds / 60).round();
+
         return {
-          'rawStart': item['start']!, // Keep raw start as ID
-          'date': DateFormat('yyyy-MM-dd').format(start),
-          'start': DateFormat('HH:mm:ss').format(start),
-          'end': DateFormat('HH:mm:ss').format(end),
-          'type': item['type'] ?? 'bell',
-          'duration':
-              '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
-          'title': item['title'] ?? '',
-          'description': item['description'] ?? '',
+          'rawStart': s['start']!,
+          'date': DateFormat('EEE, MMM d, yyyy').format(start),
+          'start': DateFormat('HH:mm').format(start),
+          'end': DateFormat('HH:mm').format(end),
+          'duration': '$durationMinutes min',
+          'type': s['type']!,
+          'title': s['title'] ?? '',
+          'description': s['description'] ?? '',
         };
       }).toList();
-
+    } on ResourceNotExistException {
+      debugPrint('Sessions file does not exist yet.');
+      _sessions = [];
+    } on SecurityKeyNotAvailableException {
+      debugPrint('Security key missing - cannot decrypt sessions.ttl');
       if (mounted) {
-        setState(() {
-          _sessions = sessions;
-        });
+        await getKeyFromUserIfRequired(context, widget);
+        if (mounted) {
+          await _loadSessions();
+        }
       }
     } catch (e) {
-      debugPrint('Unexpected error loading sessions: $e');
+      debugPrint('Error loading sessions: $e');
     } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   Future<void> _deleteSession(String rawStart) async {
-    final confirmed = await showDialog<bool>(
+    final confirm = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Session'),
-        content: const Text(
-          'Are you sure you want to delete this session? This action cannot be undone.',
-          style: TextStyle(fontSize: 16),
-        ),
+        content: const Text('Are you sure you want to delete this session?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          TextButton(
             onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent.withValues(alpha: 0.1),
-              foregroundColor: Colors.redAccent,
-              elevation: 0,
-            ),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Delete'),
           ),
         ],
       ),
     );
 
-    if (confirmed == true) {
+    if (confirm == true) {
       setState(() => _isLoading = true);
       try {
         final content = await readPod('sessions.ttl');
         final newContent = deleteSession(content, rawStart);
-        await writePod(
-          'sessions.ttl',
-          newContent,
-          overwrite: true,
-        );
+        await writePod('sessions.ttl', newContent, overwrite: true);
         await _loadSessions();
-      } on SecurityKeyNotAvailableException {
-        debugPrint(
-          'Security key missing - cannot decrypt sessions.ttl for deletion',
-        );
-        if (mounted) {
-          await getKeyFromUserIfRequired(context, widget);
-          if (mounted) {
-            await _deleteSession(rawStart);
-          }
-        }
       } catch (e) {
         debugPrint('Error deleting session: $e');
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to delete session: $e')),
-          );
-        }
       } finally {
         if (mounted) setState(() => _isLoading = false);
       }
@@ -190,49 +138,9 @@ class _HistoryState extends State<History> {
 
     final updated = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Edit Session'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                  hintText: 'Enter session title',
-                  prefixIcon: const Icon(Icons.label_outline),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: descriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  hintText: 'Enter session description',
-                  prefixIcon: const Icon(Icons.notes),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                maxLines: 3,
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Save Changes'),
-          ),
-        ],
+      builder: (context) => EditSessionDialog(
+        titleController: titleController,
+        descriptionController: descriptionController,
       ),
     );
 
@@ -321,116 +229,10 @@ class _HistoryState extends State<History> {
                   itemCount: _sessions.length,
                   itemBuilder: (context, index) {
                     final session = _sessions[index];
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(24),
-                        onTap: () => _editSession(session),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer
-                                      .withValues(alpha: 0.5),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  session['type'] == 'guided'
-                                      ? Icons.auto_awesome_outlined
-                                      : Icons.self_improvement,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          session['date']!,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey[600],
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Text(
-                                          session['duration']!,
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      session['title']!.isEmpty
-                                          ? session['type']![0].toUpperCase() +
-                                              session['type']!.substring(1)
-                                          : session['title']!,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    if (session['description']!.isNotEmpty)
-                                      Text(
-                                        session['description']!,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: Colors.grey[600],
-                                        ),
-                                      ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      '${session['start']} - ${session['end']}',
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.grey[500],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Column(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.edit_outlined,
-                                      size: 20,
-                                    ),
-                                    onPressed: () => _editSession(session),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.delete_outline,
-                                      size: 20,
-                                      color: Colors.redAccent,
-                                    ),
-                                    onPressed: () =>
-                                        _deleteSession(session['rawStart']!),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    return SessionCard(
+                      session: session,
+                      onEdit: () => _editSession(session),
+                      onDelete: () => _deleteSession(session['rawStart']!),
                     );
                   },
                 ),
