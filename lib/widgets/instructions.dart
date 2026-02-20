@@ -1,4 +1,4 @@
-com/// Text instructions and support.
+/// Text instructions and support.
 //
 // Time-stamp: <Tuesday 2026-02-10 15:45:15 +1100 Graham Williams>
 //
