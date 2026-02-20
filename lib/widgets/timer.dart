@@ -74,6 +74,10 @@ class TimerState extends State<Timer> {
 
   var _isGuided = false;
 
+  // Track whether the timer is currently paused.
+
+  var _isPaused = false;
+
   // Record the currently selected duration for the session, as seconds.
 
   var _duration = defaultSessionSeconds;
@@ -170,6 +174,7 @@ class TimerState extends State<Timer> {
     _controller.restart();
     _controller.pause();
     _isGuided = false;
+    _isPaused = false;
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -384,46 +389,40 @@ circle indicates an active session.
       backgroundColor: Colors.lightGreenAccent.shade100,
     );
 
-    final pauseButton = AppButton(
-      title: 'Pause',
-      tooltip: '''
+    final pauseResumeButton = AppButton(
+      title: _isPaused ? 'Resume' : 'Pause',
+      tooltip: _isPaused
+          ? '''
 
-Tap here to Pause the timer and the audio.  They can be resumed with a press
+Tap here to Resume the timer and the audio from where they were paused.
+
+'''
+              .trim()
+          : '''
+
+Tap here to Pause the timer and the audio. They can be resumed with a press
 of the Resume button.
 
 '''
-          .trim(),
+              .trim(),
       onPressed: () {
-        _controller.pause();
-        _player.pause();
-        _allowSleep();
+        setState(() {
+          if (_isPaused) {
+            // Resume the timer and audio.
+            _controller.resume();
+            _player.resume();
+            _stopSleep();
+            _isPaused = false;
+          } else {
+            // Pause the timer and audio.
+            _controller.pause();
+            _player.pause();
+            _allowSleep();
+            _isPaused = true;
+          }
+        });
       },
     );
-
-    // TODO 20240708 gjw COMMENT OUT BUTTONS UNTIL FUINCTIONALITY MIGRATED
-    //
-    // I originally had these extra two buttons but UX suggests one buttont to
-    // PAUSE whcih when tapped becomes RESUME and if long held it is RESET.
-
-    // final resumeButton = AppButton(
-    //   title: 'Resume',
-    //   tooltip: 'After a Pause the timer and the audio can be resumed '
-    //       'with a press of the Resume button.',
-    //   onPressed: () {
-    //     _controller.resume();
-    //     _player.resume();
-    //     _stopSleep();
-    //   },
-    // );
-
-    // final resetButton = AppButton(
-    //     title: 'Reset',
-    //     tooltip: 'Press here to reset the session. The count down timer '
-    //         'and the audio is stopped.',
-    //     onPressed: () {
-    //       _reset();
-    //       _allowSleep();
-    //     });
 
     final introButton = AppButton(
       title: 'Intro',
@@ -524,7 +523,7 @@ audio may take a little time to download for the Web version.
             children: [
               guidedButton,
               const SizedBox(width: widthSpacer),
-              pauseButton,
+              pauseResumeButton,
             ],
           ),
           const SizedBox(height: 32),
