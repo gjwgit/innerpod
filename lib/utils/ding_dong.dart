@@ -37,5 +37,6 @@ Future<void> dingDong(AudioPlayer player) async {
   // Always stop the player first in case there is some other audio still
   // playing.
   await player.stop();
+  await player.setVolume(bellVolume);
   await player.play(dong);
 }

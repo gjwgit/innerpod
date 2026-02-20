@@ -153,10 +153,11 @@ class TimerState extends State<Timer> {
   }
 
   /// Helper to play an audio source and wait for it to complete.
-  Future<void> _play(Source source) async {
+  Future<void> _play(Source source, {double volume = 1.0}) async {
     if (!mounted) return;
     try {
       await _player.stop();
+      await _player.setVolume(volume);
       await _player.play(source);
       // Wait for the audio to finish playing.
       await _player.onPlayerComplete.first;
@@ -262,7 +263,7 @@ class TimerState extends State<Timer> {
 
     // Only play audio and wait if still mounted
     if (mounted) {
-      await _play(dong);
+      await _play(dong, volume: bellVolume);
     }
 
     // Check mounted state again after the dings
@@ -278,6 +279,7 @@ class TimerState extends State<Timer> {
         // Use inline play logic instead of _play() because _play() calls stop()
         // which might fail on a released player, preventing play() from running.
         try {
+          await _player.setVolume(1.0);
           await _player.play(sessionOutro);
           await _player.onPlayerComplete.first;
         } catch (e) {

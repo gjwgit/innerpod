@@ -37,6 +37,10 @@ import 'package:audioplayers/audioplayers.dart';
 
 final dong = AssetSource('sounds/dong.mp3');
 
+/// The volume for the bells.
+
+const bellVolume = 0.5;
+
 /// The INTRO audio is often a short introductory prayer to begin the session.
 
 final introAudio = AssetSource('sounds/intro.mp3');
