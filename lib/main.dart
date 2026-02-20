@@ -92,7 +92,9 @@ void main() {
               );
             }
             return GoogleFonts.outfit(
-                fontSize: 12, color: Colors.grey.shade600);
+              fontSize: 12,
+              color: Colors.grey.shade600,
+            );
           }),
         ),
         cardTheme: CardThemeData(

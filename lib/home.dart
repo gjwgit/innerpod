@@ -234,11 +234,23 @@ class HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildNavItem(
-                  0, Icons.timer_outlined, Icons.timer_rounded, 'Home'),
+                0,
+                Icons.timer_outlined,
+                Icons.timer_rounded,
+                'Home',
+              ),
               _buildNavItem(
-                  1, Icons.menu_book_outlined, Icons.menu_book_rounded, 'Text'),
+                1,
+                Icons.menu_book_outlined,
+                Icons.menu_book_rounded,
+                'Text',
+              ),
               _buildNavItem(
-                  2, Icons.history_outlined, Icons.history_rounded, 'History'),
+                2,
+                Icons.history_outlined,
+                Icons.history_rounded,
+                'History',
+              ),
             ],
           ),
         ),
@@ -247,7 +259,11 @@ class HomeState extends State<Home> {
   }
 
   Widget _buildNavItem(
-      int index, IconData icon, IconData selectedIcon, String label) {
+    int index,
+    IconData icon,
+    IconData selectedIcon,
+    String label,
+  ) {
     bool isSelected = _selectedIndex == index;
     return InkWell(
       onTap: () => _onItemTapped(index),
