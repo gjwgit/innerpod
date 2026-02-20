@@ -87,6 +87,7 @@ class _HistoryState extends State<History> {
       }
 
       // parseSessions handles null content and returns empty list
+
       _rawSessions = parseSessions(content);
       final List<Map<String, String>> sessions = _rawSessions.map((item) {
         final start = DateTime.parse(item['start']!);
