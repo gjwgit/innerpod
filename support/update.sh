@@ -11,6 +11,7 @@ FILES=(
     .github/workflows/ci.yaml ${SCRIPTS}/github/workflows/ci.yaml
     .github/workflows/installers.yaml ${SCRIPTS}/github/workflows/installers.yaml
     support/flutter.mk  ${SCRIPTS}/../support/flutter.mk
+    support/git.mk  ${SCRIPTS}/../support/git.mk
     support/loc.sh  ${SCRIPTS}/../support/loc.sh
     support/update.sh  ${SCRIPTS}/../support/update.sh
 )
@@ -41,8 +42,15 @@ for ((i=0; i < length; i+=2)); do
 		echo "MELD      $f1 $f2"
 		meld "$f1" "$f2" 2> /dev/null
 	    fi
-	else
-	    if cmp -s "$f1" "$f2"; then
+	elif [[ "$f1" == ".github/workflows/installers.yaml" ]]; then
+	    if diff <(grep -v '^  APP:' "$f1" | grep -v '^  LINUX_PKGS:') <(grep -v '^  APP:' "$f2" | grep -v '^  LINUX_PKGS:') >/dev/null; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
+        else
+	   if cmp -s "$f1" "$f2"; then
 		echo "IDENTICAL $f1 $f2"
 	    else
 		echo "MELD      $f1 $f2"
