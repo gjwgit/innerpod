@@ -38,10 +38,8 @@ void main() {
     MaterialApp(
       title: 'Inner Pod',
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF8B5E3C),
           surface: const Color(0xFFFDFBF9),
@@ -67,7 +65,6 @@ void main() {
             fontSize: 17,
             letterSpacing: -0.1,
             height: 1.5,
-            color: const Color(0xFF4A3427),
           ),
         ),
         appBarTheme: AppBarTheme(
@@ -90,7 +87,7 @@ void main() {
             if (states.contains(WidgetState.selected)) {
               return GoogleFonts.outfit(
                 fontSize: 12,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: const Color(0xFF8B5E3C),
               );
             }
@@ -106,74 +103,14 @@ void main() {
           ),
           color: Colors.white,
         ),
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          brightness: Brightness.dark,
-          seedColor: const Color(0xFFE6B276),
-          surface: const Color(0xFF121212),
-          primary: const Color(0xFFE6B276),
-          secondary: const Color(0xFF8B5E3C),
-          surfaceContainerHighest: const Color(0xFF1E1E1E),
-        ),
-        textTheme:
-            GoogleFonts.outfitTextTheme(ThemeData.dark().textTheme).copyWith(
-          displayLarge: GoogleFonts.outfit(
-            fontWeight: FontWeight.w700,
-            fontSize: 32,
-            letterSpacing: -0.5,
-            color: const Color(0xFFFDFBF9),
-          ),
-          titleLarge: GoogleFonts.outfit(
-            fontWeight: FontWeight.w600,
-            fontSize: 22,
-            letterSpacing: -0.2,
-            color: const Color(0xFFFDFBF9),
-          ),
-          bodyLarge: GoogleFonts.outfit(
-            fontSize: 17,
-            letterSpacing: -0.1,
-            height: 1.5,
-            color: const Color(0xFFE0D7D0),
-          ),
-        ),
-        appBarTheme: AppBarTheme(
-          centerTitle: false,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          scrolledUnderElevation: 4,
-          titleTextStyle: GoogleFonts.outfit(
-            color: const Color(0xFFFDFBF9),
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.5,
-          ),
-        ),
-        navigationBarTheme: NavigationBarThemeData(
-          backgroundColor: const Color(0xFF1E1E1E).withValues(alpha: 0.8),
-          indicatorColor: const Color(0xFFE6B276).withValues(alpha: 0.2),
-          height: 80,
-          labelTextStyle: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.selected)) {
-              return GoogleFonts.outfit(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: const Color(0xFFE6B276),
-              );
-            }
-            return GoogleFonts.outfit(
-                fontSize: 12, color: Colors.grey.shade500);
-          }),
-        ),
-        cardTheme: CardThemeData(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-            side: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
-          ),
-          color: const Color(0xFF1E1E1E),
+        chipTheme: ChipThemeData(
+          shape: const StadiumBorder(),
+          backgroundColor: Colors.white,
+          selectedColor: const Color(0xFF8B5E3C),
+          secondarySelectedColor: const Color(0xFFFDFBF9),
+          labelStyle: GoogleFonts.outfit(fontSize: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          side: BorderSide(color: Colors.grey.shade200),
         ),
       ),
       home: const InnerPod(),

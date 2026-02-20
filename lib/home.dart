@@ -55,20 +55,20 @@ class InnerPod extends StatelessWidget {
     /// at that time. The login token and the security key are (optionally)
     /// cached so that the login information is not required every time.
 
-    return SolidLogin(
+    return const SolidLogin(
       title: 'MANAGE YOUR INNER POD',
       required: false,
-      image: const AssetImage('assets/images/app_image.jpg'),
-      logo: const AssetImage('assets/images/app_icon.png'),
+      image: AssetImage('assets/images/app_image.jpg'),
+      logo: AssetImage('assets/images/app_icon.png'),
       continueButtonStyle: ContinueButtonStyle(
         text: 'Session',
-        background: Theme.of(context).colorScheme.primary,
+        background: Colors.lightGreenAccent,
       ),
-      infoButtonStyle: const InfoButtonStyle(
+      infoButtonStyle: InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
       ),
       link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
-      child: const Home(),
+      child: Home(),
     );
   }
 }
