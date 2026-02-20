@@ -26,21 +26,9 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-
-import 'package:innerpod/constants/colours.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // CIRCULAR TIMER COLOURS
-
-// Choose colours for the internal background of the timer and the gradient
-// of the timer neon.
-
-const _text = Colors.black;
-
-// const spin1 = Color(0xFFFFB31A);
-// const spin2 = Color(0xFFB08261);
-
-const _spin1 = Colors.white;
-final _spin2 = Colors.blueAccent.shade700;
 
 /// A [CircularCountDownTimer] with defaults for the app.
 
@@ -69,16 +57,22 @@ class AppCircularCountDownTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularCountDownTimer(
-      width: 250,
-      height: 250,
+      width: 280,
+      height: 280,
       duration: duration,
       controller: controller,
       autoStart: false,
-      backgroundColor: background,
-      ringColor: _spin1,
-      fillColor: _spin2,
-      strokeWidth: 20.0,
-      textStyle: const TextStyle(color: _text, fontSize: 55),
+      backgroundColor: Colors.white.withValues(alpha: 0.4),
+      ringColor: Colors.black.withValues(alpha: 0.05),
+      fillColor: Theme.of(context).colorScheme.primary,
+      strokeWidth: 12.0,
+      strokeCap: StrokeCap.round,
+      textStyle: GoogleFonts.outfit(
+        color: const Color(0xFF2D1B0E),
+        fontSize: 64,
+        fontWeight: FontWeight.w600,
+        letterSpacing: -2,
+      ),
       onComplete: onComplete,
       isReverse: true,
       isReverseAnimation: true,

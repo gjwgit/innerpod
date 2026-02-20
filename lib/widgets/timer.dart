@@ -31,13 +31,13 @@ import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
-import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/utils/session_logic.dart';
@@ -498,13 +498,21 @@ audio may take a little time to download for the Web version.
     );
 
     final buttonsMatrix = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(32),
+        color: Colors.white.withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(40),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.5),
+          color: Colors.white.withValues(alpha: 0.8),
+          width: 2,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 40,
+            offset: const Offset(0, 10),
+          ),
+        ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -513,64 +521,49 @@ audio may take a little time to download for the Web version.
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               introButton,
-              const SizedBox(width: widthSpacer),
+              const SizedBox(width: 16),
               startButton,
             ],
           ),
-          const SizedBox(height: heightSpacer),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               guidedButton,
-              const SizedBox(width: widthSpacer),
+              const SizedBox(width: 16),
               pauseResumeButton,
             ],
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 40),
           Text(
-            'Select duration (minutes)',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w600,
+            'SELECT DURATION',
+            style: GoogleFonts.outfit(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 1.5,
               color:
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.6),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           durationChoice,
-          const SizedBox(height: 32),
+          const SizedBox(height: 40),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: Column(
               children: [
-                TextField(
+                _buildPremiumTextField(
                   controller: _titleController,
-                  decoration: InputDecoration(
-                    labelText: 'Title',
-                    hintText: 'Enter session title (optional)',
-                    prefixIcon: const Icon(Icons.label_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'TITLE',
+                  hintText: 'Keep it meaningful...',
+                  icon: Icons.label_outline,
                 ),
-                const SizedBox(height: 12),
-                TextField(
+                const SizedBox(height: 16),
+                _buildPremiumTextField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'Enter session description (optional)',
-                    prefixIcon: const Icon(Icons.notes),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'DESCRIPTION',
+                  hintText: 'Share your thoughts...',
+                  icon: Icons.notes,
                   maxLines: 2,
                 ),
               ],
@@ -584,16 +577,15 @@ audio may take a little time to download for the Web version.
       builder: (context, orientation) {
         if (orientation == Orientation.portrait) {
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
-              // Add some top and bottom padding so the timer is not clipped at the
-              // top nor the chips at the bottom.
-              padding: const EdgeInsets.only(top: 10, bottom: 5),
+              padding: const EdgeInsets.only(top: 20, bottom: 40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 2 * heightSpacer),
+                  const SizedBox(height: 40),
                   timerDisplay,
-                  const SizedBox(height: 2 * heightSpacer),
+                  const SizedBox(height: 60),
                   buttonsMatrix,
                 ],
               ),
@@ -601,14 +593,15 @@ audio may take a little time to download for the Web version.
           );
         } else {
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(child: Center(child: timerDisplay)),
-                  const SizedBox(width: 2 * widthSpacer),
+                  const SizedBox(width: 40),
                   Expanded(child: Center(child: buttonsMatrix)),
                 ],
               ),
@@ -616,6 +609,64 @@ audio may take a little time to download for the Web version.
           );
         }
       },
+    );
+  }
+
+  Widget _buildPremiumTextField({
+    required TextEditingController controller,
+    required String labelText,
+    required String hintText,
+    required IconData icon,
+    int maxLines = 1,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          labelText,
+          style: GoogleFonts.outfit(
+            fontSize: 11,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.2,
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: controller,
+          maxLines: maxLines,
+          style:
+              GoogleFonts.outfit(fontSize: 16, color: const Color(0xFF2D1B0E)),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: GoogleFonts.outfit(
+              fontSize: 16,
+              color: Colors.grey.shade400,
+            ),
+            prefixIcon: Icon(icon,
+                color: Theme.of(context).colorScheme.primary, size: 20),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide:
+                  BorderSide(color: Colors.black.withValues(alpha: 0.05)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide:
+                  BorderSide(color: Colors.black.withValues(alpha: 0.05)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary, width: 2),
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          ),
+        ),
+      ],
     );
   }
 }

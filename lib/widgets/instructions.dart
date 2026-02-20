@@ -28,6 +28,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:innerpod/widgets/app_markdown_body.dart';
 
@@ -49,12 +50,19 @@ class Instructions extends StatelessWidget {
           toolbarHeight: 0, // Hide the standard toolbar
           bottom: TabBar(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            indicatorColor: Theme.of(context).colorScheme.primary,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorWeight: 3,
+            dividerColor: Colors.transparent,
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+            ),
+            indicatorSize: TabBarIndicatorSize.tab,
             labelColor: Theme.of(context).colorScheme.primary,
-            unselectedLabelColor: Colors.grey,
-            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            unselectedLabelColor: Colors.grey.shade500,
+            labelStyle:
+                GoogleFonts.outfit(fontWeight: FontWeight.w700, fontSize: 13),
+            unselectedLabelStyle:
+                GoogleFonts.outfit(fontWeight: FontWeight.w500, fontSize: 13),
             tabs: const [
               Tab(text: 'Guide'),
               Tab(text: 'Opening'),
