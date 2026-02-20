@@ -33,7 +33,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/utils/ding_dong.dart';
-import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
 import 'package:innerpod/widgets/duration_selector.dart';
 import 'package:innerpod/widgets/premium_text_field.dart';
@@ -51,15 +50,6 @@ class Timer extends StatefulWidget {
 
 class TimerState extends State<Timer> with TimerStateLogic<Timer> {
   @override
-  final AudioPlayer player = AudioPlayer();
-  @override
-  final CountDownController controller = CountDownController();
-  @override
-  final TextEditingController titleController = TextEditingController();
-  @override
-  final TextEditingController descriptionController = TextEditingController();
-
-  @override
   void allowSleep() => WakelockPlus.disable();
 
   @override
@@ -67,6 +57,10 @@ class TimerState extends State<Timer> with TimerStateLogic<Timer> {
 
   @override
   void initState() {
+    player = AudioPlayer();
+    controller = CountDownController();
+    titleController = TextEditingController();
+    descriptionController = TextEditingController();
     super.initState();
     _loadSettings();
   }
