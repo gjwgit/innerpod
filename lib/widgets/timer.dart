@@ -43,6 +43,7 @@ import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
+import 'package:innerpod/widgets/premium_text_field.dart';
 
 /// The default session length is 20 minutes. That seems to be a world wide
 /// default. We only utilise this constant in this file (at least for now).
@@ -543,34 +544,18 @@ audio may take a little time to download for the Web version.
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
-                TextField(
+                PremiumTextField(
                   controller: _titleController,
-                  decoration: InputDecoration(
-                    labelText: 'Title',
-                    hintText: 'Enter session title (optional)',
-                    prefixIcon: const Icon(Icons.label_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'Title',
+                  hintText: 'Enter session title (optional)',
+                  icon: Icons.label_outline,
                 ),
                 const SizedBox(height: 12),
-                TextField(
+                PremiumTextField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'Enter session description (optional)',
-                    prefixIcon: const Icon(Icons.notes),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'Description',
+                  hintText: 'Enter session description (optional)',
+                  icon: Icons.notes,
                   maxLines: 2,
                 ),
               ],
