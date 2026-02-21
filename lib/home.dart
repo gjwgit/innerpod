@@ -232,6 +232,8 @@ class HomeState extends State<Home> {
         ),
       ),
       bottomNavigationBar: NavigationBar(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        surfaceTintColor: Colors.transparent,
         destinations: const <Widget>[
           NavigationDestination(
             icon: Icon(Icons.timer_outlined),
