@@ -30,6 +30,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
+import 'package:version_widget/version_widget.dart';
 
 import 'package:innerpod/widgets/about.dart';
 import 'package:innerpod/widgets/history.dart';
@@ -177,19 +178,7 @@ class HomeState extends State<Home> {
           ],
         ),
         actions: [
-          Center(
-            child: Text(
-              'v$_appVersion',
-              style: GoogleFonts.outfit(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Theme.of(context)
-                    .colorScheme
-                    .primary
-                    .withValues(alpha: 0.6),
-              ),
-            ),
-          ),
+          Center(child: VersionWidget(version: _appVersion)),
           const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.info_outline_rounded, size: 26),
