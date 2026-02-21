@@ -465,10 +465,26 @@ audio may take a little time to download for the Web version.
       spacing: 8.0, // Gap between adjacent chips.
       runSpacing: 4.0, // Gap between lines.
       children: [5, 10, 15, 20, 25, 30].map((number) {
+        final isSelected = _duration == number * 60;
         return ChoiceChip(
-          label: Text(number.toString()),
-          selected: _duration == number * 60,
-          selectedColor: Colors.lightGreenAccent,
+          label: Text(
+            number.toString(),
+            style: TextStyle(
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.onSurface,
+              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            ),
+          ),
+          selected: isSelected,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          selectedColor:
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
+          side: BorderSide(
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.4)
+                : Colors.grey.withValues(alpha: 0.3),
+          ),
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
             if (selected) {
