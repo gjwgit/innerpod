@@ -75,6 +75,10 @@ class TimerState extends State<Timer> {
 
   var _isGuided = false;
 
+  // Track whether the timer is currently paused.
+
+  var _isPaused = false;
+
   // Record the currently selected duration for the session, as seconds.
 
   var _duration = defaultSessionSeconds;
@@ -168,9 +172,10 @@ class TimerState extends State<Timer> {
 
   void _reset() {
     _player.stop();
-    _controller.restart();
+    _controller.restart(duration: _duration);
     _controller.pause();
     _isGuided = false;
+    _isPaused = false;
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -206,7 +211,7 @@ class TimerState extends State<Timer> {
 
     await _play(dong);
     if (!mounted) return;
-    _controller.restart();
+    _controller.restart(duration: _duration);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -246,7 +251,7 @@ class TimerState extends State<Timer> {
 
     await _play(dong);
     if (!mounted) return;
-    _controller.restart();
+    _controller.restart(duration: _duration);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -376,7 +381,7 @@ circle indicates an active session.
         if (mounted) {
           _reset();
           dingDong(_player);
-          _controller.restart();
+          _controller.restart(duration: _duration);
           _stopSleep();
           setState(() {
             _sessionType = 'bell';
@@ -388,47 +393,41 @@ circle indicates an active session.
       backgroundColor: Colors.lightGreenAccent.shade100,
     );
 
-    final pauseButton = AppButton(
-      title: 'Pause',
-      tooltip: '''
+    final pauseResumeButton = AppButton(
+      title: _isPaused ? 'Resume' : 'Pause',
+      tooltip: _isPaused
+          ? '''
 
-Tap here to Pause the timer and the audio.  They can be resumed with a press
+Tap here to Resume the timer and the audio from where they were paused.
+
+'''
+              .trim()
+          : '''
+
+Tap here to Pause the timer and the audio. They can be resumed with a press
 of the Resume button.
 
 '''
-          .trim(),
+              .trim(),
       onPressed: () {
-        _controller.pause();
-        _player.pause();
-        _allowSleep();
+        setState(() {
+          if (_isPaused) {
+            // Resume the timer and audio.
+            _controller.resume();
+            _player.resume();
+            _stopSleep();
+            _isPaused = false;
+          } else {
+            // Pause the timer and audio.
+            _controller.pause();
+            _player.pause();
+            _allowSleep();
+            _isPaused = true;
+          }
+        });
       },
       backgroundColor: Colors.grey[200] ?? Colors.grey,
     );
-
-    // TODO 20240708 gjw COMMENT OUT BUTTONS UNTIL FUINCTIONALITY MIGRATED
-    //
-    // I originally had these extra two buttons but UX suggests one buttont to
-    // PAUSE whcih when tapped becomes RESUME and if long held it is RESET.
-
-    // final resumeButton = AppButton(
-    //   title: 'Resume',
-    //   tooltip: 'After a Pause the timer and the audio can be resumed '
-    //       'with a press of the Resume button.',
-    //   onPressed: () {
-    //     _controller.resume();
-    //     _player.resume();
-    //     _stopSleep();
-    //   },
-    // );
-
-    // final resetButton = AppButton(
-    //     title: 'Reset',
-    //     tooltip: 'Press here to reset the session. The count down timer '
-    //         'and the audio is stopped.',
-    //     onPressed: () {
-    //       _reset();
-    //       _allowSleep();
-    //     });
 
     final introButton = AppButton(
       title: 'Intro',
@@ -471,10 +470,26 @@ audio may take a little time to download for the Web version.
       spacing: 8.0, // Gap between adjacent chips.
       runSpacing: 4.0, // Gap between lines.
       children: [5, 10, 15, 20, 25, 30].map((number) {
+        final isSelected = _duration == number * 60;
         return ChoiceChip(
-          label: Text(number.toString()),
-          selected: _duration == number * 60,
-          selectedColor: Colors.lightGreenAccent,
+          label: Text(
+            number.toString(),
+            style: TextStyle(
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.onSurface,
+              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            ),
+          ),
+          selected: isSelected,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          selectedColor:
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
+          side: BorderSide(
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.4)
+                : Colors.grey.withValues(alpha: 0.3),
+          ),
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
             if (selected) {
@@ -535,7 +550,7 @@ audio may take a little time to download for the Web version.
             children: [
               guidedButton,
               const SizedBox(width: widthSpacer),
-              pauseButton,
+              pauseResumeButton,
             ],
           ),
           const SizedBox(height: 32),
