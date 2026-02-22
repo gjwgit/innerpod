@@ -1,6 +1,6 @@
 /// Aduio related constants used across the app.
 //
-// Time-stamp: <Wednesday 2025-09-03 13:35:40 +1000 Graham Williams>
+// Time-stamp: <Monday 2026-02-23 08:09:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -36,6 +36,10 @@ import 'package:audioplayers/audioplayers.dart';
 /// The dong usually consists of three dings.
 
 final dong = AssetSource('sounds/dong.mp3');
+
+/// The volume for the bells.
+
+const bellVolume = 1.0;
 
 /// The INTRO audio is often a short introductory prayer to begin the session.
 

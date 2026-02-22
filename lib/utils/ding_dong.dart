@@ -1,6 +1,6 @@
 /// Play the ding dong audio file.
 //
-// Time-stamp: <Wednesday 2024-06-26 12:25:20 +1000 Graham Williams>
+// Time-stamp: <Monday 2026-02-23 08:10:36 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -37,5 +37,6 @@ Future<void> dingDong(AudioPlayer player) async {
   // Always stop the player first in case there is some other audio still
   // playing.
   await player.stop();
+  await player.setVolume(bellVolume);
   await player.play(dong);
 }
