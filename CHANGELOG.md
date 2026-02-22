@@ -6,6 +6,9 @@ Here we record the basic changes made to the InnerPod app.
 
 ## 1.8 IN PROGRESS
 
++ Bug fix - timer was resetting to default [1.7.13 20260223 amogh]
++ Default title is the session type [1.7.12 20260223 amogh]
++ Implement PAUSE/RESUME [1.7.11 20260223 amogh]
 + Fine tune colours [1.7.10 20260220 gjw]
 + Redesign and modernise [1.7.9 20260219 amogh]
 + Add title/description and support edit and delete [1.7.8 20260219 amogh]
