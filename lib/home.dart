@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Friday 2026-02-20 05:21:30 +1100 Graham Williams>
+// Time-stamp: <Monday 2026-02-23 09:28:16 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:version_widget/version_widget.dart';
 
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/widgets/about.dart';
@@ -163,30 +163,14 @@ class HomeState extends State<Home> {
         backgroundColor: border,
         actions: [
           Center(
-            child: GestureDetector(
-              onTap: () async {
-                final url = Uri.parse(_changelogUrl);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(32),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.5),
-                  ),
-                ),
-                child: Text(
-                  'v$_appVersion',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            child: VersionWidget(
+              version: '>> $_appVersion <<',
+              changelogUrl: _changelogUrl,
+              fontSize: 10,
+              userTextStyle: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
