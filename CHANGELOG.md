@@ -27,7 +27,7 @@ Contributions are welcome. Visit
 [github](https://github.com/gjwgit/innerpod) to submit an issue or, even
 better, fork the repository yourself, update the code, and submit a
 Pull Request. Coding documentation is
-[available](https://solidcommunity.au/docs/innerpod).
+[available](https://solidcommunity.au/docs/innerpod/).
 
 ## 1.8 IN PROGRESS
 
