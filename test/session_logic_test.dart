@@ -106,5 +106,16 @@ void main() {
         '2024-01-01T12:00:00.000Z',
       ); // Newest first
     });
+    test('addSession uses capitalized type as default title', () {
+      final newSession = {
+        'start': '2024-01-01T10:00:00.000Z',
+        'end': '2024-01-01T10:20:00.000Z',
+        'type': 'bell',
+      };
+      final result = addSession(null, newSession);
+      final parsed = parseSessions(result);
+
+      expect(parsed.first['title'], 'Bell');
+    });
   });
 }

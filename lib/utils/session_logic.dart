@@ -66,12 +66,14 @@ List<Map<String, String>> parseSessions(String? content) {
     final descriptionMatch = descriptionRegExp.firstMatch(block);
 
     if (startMatch != null && endMatch != null) {
+      final type = typeMatch?.group(1) ?? 'bell';
+      final title = titleMatch?.group(1) ?? '';
       sessions.add({
         'start': startMatch.group(1)!,
         'end': endMatch.group(1)!,
-        'type': typeMatch?.group(1) ?? 'bell',
+        'type': type,
         'silenceDuration': durationMatch?.group(1) ?? '1200',
-        'title': titleMatch?.group(1) ?? '',
+        'title': title.isEmpty ? _capitalize(type) : title,
         'description': descriptionMatch?.group(1) ?? '',
       });
     }
@@ -124,13 +126,16 @@ String serializeSessions(List<Map<String, String>> sessions) {
 String addSession(String? currentContent, Map<String, dynamic> newSession) {
   List<Map<String, String>> sessions = parseSessions(currentContent);
 
+  final type = (newSession['type'] ?? 'bell').toString();
+  final title = (newSession['title'] ?? '').toString();
+
   // Convert map values to String
   final Map<String, String> sessionToAdd = {
     'start': newSession['start'].toString(),
     'end': newSession['end'].toString(),
-    'type': (newSession['type'] ?? 'bell').toString(),
+    'type': type,
     'silenceDuration': (newSession['silenceDuration'] ?? 1200).toString(),
-    'title': (newSession['title'] ?? '').toString(),
+    'title': title.isEmpty ? _capitalize(type) : title,
     'description': (newSession['description'] ?? '').toString(),
   };
 
@@ -143,6 +148,11 @@ String deleteSession(String currentContent, String startTime) {
   List<Map<String, String>> sessions = parseSessions(currentContent);
   sessions.removeWhere((s) => s['start'] == startTime);
   return serializeSessions(sessions);
+}
+
+String _capitalize(String s) {
+  if (s.isEmpty) return s;
+  return s[0].toUpperCase() + s.substring(1);
 }
 
 /// Updates a session with the given start time in the TTL content.

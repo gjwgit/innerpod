@@ -1,0 +1,98 @@
+﻿commit 174d92667f3267e15d418d3f02dd13ef7512b4cb
+Author: Amoghhosamane <amoghvarsh9614@gmail.com>
+Date:   Sat Feb 21 00:23:59 2026 +0530
+
+    feat: replace manual version string with VersionWidget (#56)
+
+diff --git a/lib/home.dart b/lib/home.dart
+index 543e4d1..8c490f3 100644
+--- a/lib/home.dart
++++ b/lib/home.dart
+@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
+ import 'package:package_info_plus/package_info_plus.dart';
+ import 'package:shared_preferences/shared_preferences.dart';
+ import 'package:solidui/solidui.dart';
+-import 'package:url_launcher/url_launcher.dart';
++import 'package:version_widget/version_widget.dart';
+ 
+ import 'package:innerpod/constants/colours.dart';
+ import 'package:innerpod/widgets/about.dart';
+@@ -91,17 +91,14 @@ class HomeState extends State<Home> {
+ 
+   var _appVersion = '';
+ 
+-  final String _changelogUrl =
+-      'https://github.com/Amoghhosamane/innerpod/blob/dev/CHANGELOG.md';
+-
+   // Helper function to load the app name and version.
+ 
+-  Future<void> _loadAppInfo() async {
++  Future<void> _loadSettings() async {
+     final packageInfo = await PackageInfo.fromPlatform();
+     final prefs = await SharedPreferences.getInstance();
+     if (mounted) {
+       setState(() {
+-        _appVersion = packageInfo.version; // Set app version from package info
++        _appVersion = packageInfo.version;
+         _selectedIndex = prefs.getInt('selected_index') ?? 0;
+       });
+     }
+@@ -111,9 +108,7 @@ class HomeState extends State<Home> {
+   void initState() {
+     super.initState();
+ 
+-    // Get the app name and version.
+-
+-    _loadAppInfo();
++    _loadSettings();
+   }
+ 
+   // Track which item is selected in the nav bar.
+@@ -162,34 +157,7 @@ class HomeState extends State<Home> {
+         ),
+         backgroundColor: border,
+         actions: [
+-          Center(
+-            child: GestureDetector(
+-              onTap: () async {
+-                final url = Uri.parse(_changelogUrl);
+-                if (await canLaunchUrl(url)) {
+-                  await launchUrl(url);
+-                }
+-              },
+-              child: Container(
+-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+-                decoration: BoxDecoration(
+-                  color: Theme.of(context).colorScheme.primaryContainer,
+-                  borderRadius: BorderRadius.circular(32),
+-                  border: Border.all(
+-                    color: Colors.white.withValues(alpha: 0.5),
+-                  ),
+-                ),
+-                child: Text(
+-                  'v$_appVersion',
+-                  style: TextStyle(
+-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+-                    fontSize: 10,
+-                    fontWeight: FontWeight.bold,
+-                  ),
+-                ),
+-              ),
+-            ),
+-          ),
++          Center(child: VersionWidget(version: _appVersion)),
+           const SizedBox(width: 8),
+           IconButton(
+             icon: const Icon(Icons.info_outline, size: 24),
+diff --git a/pubspec.yaml b/pubspec.yaml
+index 3432bdb..2c75f54 100644
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+@@ -31,6 +31,7 @@ dependencies:
+   solidpod: ^0.11.0
+   solidui: ^0.2.0
+   url_launcher: ^6.3.0
++  version_widget: ^1.0.6
+   wakelock_plus: ^1.1.4
+ 
+ dependency_overrides:

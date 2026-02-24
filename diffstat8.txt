@@ -1,0 +1,22 @@
+﻿ .lycheeignore                                 |   1 +
+ lib/constants/audio.dart                      |   4 +
+ lib/constants/colours.dart                    |  39 --
+ lib/constants/spacing.dart                    |  34 --
+ lib/home.dart                                 | 203 +++++----
+ lib/main.dart                                 |  96 +++--
+ lib/utils/ding_dong.dart                      |   1 +
+ lib/widgets/about.dart                        |   3 +-
+ lib/widgets/app_button.dart                   |  42 +-
+ lib/widgets/app_circular_countdown_timer.dart |  34 +-
+ lib/widgets/app_markdown_body.dart            |  41 +-
+ lib/widgets/duration_selector.dart            |  62 +++
+ lib/widgets/edit_session_dialog.dart          |  87 ++++
+ lib/widgets/history.dart                      | 298 +++----------
+ lib/widgets/instructions.dart                 |  18 +-
+ lib/widgets/premium_text_field.dart           | 119 +++++
+ lib/widgets/session_card.dart                 | 153 +++++++
+ lib/widgets/timer.dart                        | 597 +++++---------------------
+ lib/widgets/timer_buttons.dart                | 117 +++++
+ lib/widgets/timer_logic.dart                  | 195 +++++++++
+ pubspec.yaml                                  |   2 +
+ 21 files changed, 1179 insertions(+), 967 deletions(-)

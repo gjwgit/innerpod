@@ -1,0 +1,2 @@
+[info] The imported package 'version_widget' isn't a dependency of the importing package (C:\Desktop\innerpod\lib\home.dart:33:8)
+[info] Missing a required trailing comma (C:\Desktop\innerpod\lib\home.dart:264:68)

@@ -1,0 +1,16 @@
+﻿880c181 style: fix import ordering and add missing copyright headers
+7b389ae refactor: modularize history.dart and resolve all remaining lint issues
+692a3d4 refactor: modularize timer widgets and resolve all lint issues
+d58a50a refactor: resolve all lint issues and split timer.dart into modular widgets
+063faf5 revert: remove light/dark mode and login page design changes
+9171da6 feat: add light/dark mode and refine premium Apple design for login page
+cbbb235 style: complete premium Apple-inspired design overhaul with Outfit font
+174d926 feat: replace manual version string with VersionWidget (#56)
+d5d9ce8 feat: reduce bell volume to 0.5 and ensure music plays at full volume (#55)
+70e8e60 fix: start countdown timer concurrent with bells in Intro and Guided (#54)
+6fb81b2 ci: ignore freesound.org link in lychee check due to timeouts
+c092159 fix: ensure timer duration is correctly restored on startup (#53)
+618bcf5 fix(instructions): remove typo from file header
+a2fa887 feat: use session type as default title if none provided (#52)
+371b947 refactor: extract MarkdownBody into reusable AppMarkdownBody widget
+bd89d73 feat: toggle PAUSE/RESUME button on tap (#51)
