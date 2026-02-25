@@ -26,10 +26,11 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:version_widget/version_widget.dart';
 
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/widgets/about.dart';
@@ -92,7 +93,7 @@ class HomeState extends State<Home> {
   var _appVersion = '';
 
   final String _changelogUrl =
-      'https://github.com/Amoghhosamane/innerpod/blob/dev/CHANGELOG.md';
+      'https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md';
 
   // Helper function to load the app name and version.
 
@@ -141,79 +142,63 @@ class HomeState extends State<Home> {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     return Scaffold(
+      extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        titleSpacing: 20,
         title: Row(
           children: [
             Hero(
               tag: 'logo',
-              child: Image.asset(
-                'assets/images/app_icon.png',
-                width: 32,
-                height: 32,
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Image.asset(
+                  'assets/images/app_icon.png',
+                  width: 24,
+                  height: 24,
+                ),
               ),
             ),
             const SizedBox(width: 12),
             Text(
               'Inner Pod',
-              style: Theme.of(context).appBarTheme.titleTextStyle,
+              style: GoogleFonts.outfit(
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
+                letterSpacing: -0.5,
+              ),
             ),
           ],
         ),
         backgroundColor: border,
         actions: [
-          Center(
-            child: GestureDetector(
-              onTap: () async {
-                final url = Uri.parse(_changelogUrl);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(32),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.5),
-                  ),
-                ),
-                child: Text(
-                  'v$_appVersion',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          Center(child: VersionWidget(version: _appVersion)),
           const SizedBox(width: 8),
           IconButton(
-            icon: const Icon(Icons.info_outline, size: 24),
+            icon: const Icon(Icons.info_outline_rounded, size: 26),
             onPressed: () => showAppAboutDialog(context),
             tooltip: 'About the app',
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 12),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).colorScheme.surface,
-              Theme.of(context)
-                  .colorScheme
-                  .surfaceContainerHighest
-                  .withValues(alpha: 0.3),
-            ],
-          ),
+        decoration: const BoxDecoration(
+          color: Color(0xFFFDFBF9),
         ),
         child: SafeArea(
+          bottom: false,
           child: Stack(
             children: _pages.asMap().entries.map((entry) {
               final index = entry.key;
@@ -221,7 +206,8 @@ class HomeState extends State<Home> {
               return AnimatedOpacity(
                 key: ValueKey('page_$index'),
                 opacity: _selectedIndex == index ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOutCubic,
                 child: IgnorePointer(
                   ignoring: _selectedIndex != index,
                   child: page,
@@ -231,26 +217,96 @@ class HomeState extends State<Home> {
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(Icons.timer_outlined),
-            selectedIcon: Icon(Icons.timer),
-            label: 'Home',
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+        height: 72,
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.8),
+          borderRadius: BorderRadius.circular(36),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.5),
+            width: 1.5,
           ),
-          NavigationDestination(
-            icon: Icon(Icons.menu_book_outlined),
-            selectedIcon: Icon(Icons.menu_book),
-            label: 'Text',
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 30,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(36),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildNavItem(
+                0,
+                Icons.timer_outlined,
+                Icons.timer_rounded,
+                'Home',
+              ),
+              _buildNavItem(
+                1,
+                Icons.menu_book_outlined,
+                Icons.menu_book_rounded,
+                'Text',
+              ),
+              _buildNavItem(
+                2,
+                Icons.history_outlined,
+                Icons.history_rounded,
+                'History',
+              ),
+            ],
           ),
-          NavigationDestination(
-            icon: Icon(Icons.history_outlined),
-            selectedIcon: Icon(Icons.history),
-            label: 'History',
-          ),
-        ],
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: _onItemTapped,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(
+    int index,
+    IconData icon,
+    IconData selectedIcon,
+    String label,
+  ) {
+    bool isSelected = _selectedIndex == index;
+    return InkWell(
+      onTap: () => _onItemTapped(index),
+      borderRadius: BorderRadius.circular(20),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              isSelected ? selectedIcon : icon,
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : Colors.grey.shade400,
+              size: 26,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: GoogleFonts.outfit(
+                fontSize: 11,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                color: isSelected
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.grey.shade400,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

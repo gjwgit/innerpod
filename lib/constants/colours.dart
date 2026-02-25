@@ -36,7 +36,7 @@ import 'package:flutter/material.dart';
 // 20260220 gjw The background to be used for active components of the app, like
 // the timer's central area and the box containing the buttons.
 
-const background = Color(0xFFF5E0C8);
+const background = Color(0xFFF0D1AD);
 
 /// A lighter colour for the top and bottom (navbar) elements of the app.
 

@@ -1,6 +1,6 @@
 /// Main program for the inner pod session timing and logging.
 //
-// Time-stamp: <Monday 2024-07-08 13:29:54 +1000 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 09:40:21 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -27,9 +27,9 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:innerpod/home.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-//import 'package:innerpod/timer.dart';
+import 'package:innerpod/home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,44 +43,78 @@ void main() {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFF0D1AD),
-          surface: const Color(0xFFFDF7F0), // Lighter cream surface
-          primary: const Color(0xFF8B5E3C), // Earthy brown/gold primary
-          onPrimary: Colors.white,
+          seedColor: const Color(0xFF8B5E3C),
+          surface: const Color(0xFFFDFBF9),
+          primary: const Color(0xFF8B5E3C),
           secondary: const Color(0xFFE6B276),
-          surfaceContainerHighest: const Color(0xFFF5E0C8),
+          tertiary: const Color(0xFFAD8B73),
+          surfaceContainerHighest: const Color(0xFFF5EADA),
         ),
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
+        textTheme: GoogleFonts.outfitTextTheme().copyWith(
+          displayLarge: GoogleFonts.outfit(
+            fontWeight: FontWeight.w700,
+            fontSize: 32,
+            letterSpacing: -0.5,
+            color: const Color(0xFF2D1B0E),
+          ),
+          titleLarge: GoogleFonts.outfit(
+            fontWeight: FontWeight.w600,
+            fontSize: 22,
+            letterSpacing: -0.2,
+            color: const Color(0xFF2D1B0E),
+          ),
+          bodyLarge: GoogleFonts.outfit(
+            fontSize: 17,
+            letterSpacing: -0.1,
+            height: 1.5,
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          centerTitle: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          scrolledUnderElevation: 0,
-          titleTextStyle: TextStyle(
-            color: Color(0xFF5D4037),
-            fontSize: 22,
+          scrolledUnderElevation: 4,
+          titleTextStyle: GoogleFonts.outfit(
+            color: const Color(0xFF2D1B0E),
+            fontSize: 24,
             fontWeight: FontWeight.bold,
+            letterSpacing: -0.5,
           ),
         ),
         navigationBarTheme: NavigationBarThemeData(
-          backgroundColor: const Color(0xFFFDF7F0),
-          indicatorColor: const Color(0xFFE6B276).withValues(alpha: 0.5),
-          labelTextStyle: WidgetStateProperty.all(
-            const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-          ),
+          backgroundColor: Colors.white.withValues(alpha: 0.8),
+          indicatorColor: const Color(0xFF8B5E3C).withValues(alpha: 0.1),
+          height: 80,
+          labelTextStyle: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return GoogleFonts.outfit(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFF8B5E3C),
+              );
+            }
+            return GoogleFonts.outfit(
+              fontSize: 12,
+              color: Colors.grey.shade600,
+            );
+          }),
         ),
         cardTheme: CardThemeData(
-          elevation: 2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-          color: Colors.white.withValues(alpha: 0.9),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28),
+            side: BorderSide(color: Colors.black.withValues(alpha: 0.05)),
           ),
+          color: Colors.white,
+        ),
+        chipTheme: ChipThemeData(
+          shape: const StadiumBorder(),
+          backgroundColor: Colors.white,
+          selectedColor: const Color(0xFF8B5E3C),
+          secondarySelectedColor: const Color(0xFFFDFBF9),
+          labelStyle: GoogleFonts.outfit(fontSize: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          side: BorderSide(color: Colors.grey.shade200),
         ),
       ),
       home: const InnerPod(),

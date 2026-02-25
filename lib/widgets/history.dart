@@ -368,10 +368,7 @@ class _HistoryState extends State<History> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      session['title']!.isEmpty
-                                          ? session['type']![0].toUpperCase() +
-                                              session['type']!.substring(1)
-                                          : session['title']!,
+                                      session['title']!,
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
