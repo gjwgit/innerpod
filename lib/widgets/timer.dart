@@ -365,15 +365,14 @@ class TimerState extends State<Timer> {
 
     final startButton = AppButton(
       title: 'Start',
-      tooltip:
-          '''
+      tooltip: '''
 
 Tap here to begin a session of silence for ${(_duration / 60).round()}
 minutes, beginning and ending with three chimes. The blue progress
 circle indicates an active session.
 
 '''
-              .trim(),
+          .trim(),
       onPressed: () {
         logMessage('Start Session');
         if (mounted) {
@@ -399,14 +398,14 @@ circle indicates an active session.
 Tap here to Resume the timer and the audio from where they were paused.
 
 '''
-                .trim()
+              .trim()
           : '''
 
 Tap here to Pause the timer and the audio. They can be resumed with a press
 of the Resume button.
 
 '''
-                .trim(),
+              .trim(),
       onPressed: () {
         setState(() {
           if (_isPaused) {
@@ -428,15 +427,14 @@ of the Resume button.
 
     final introButton = AppButton(
       title: 'Intro',
-      tooltip:
-          '''
+      tooltip: '''
 
 Tap here to play a short introduction for a session.  After the introduction a
 ${(_duration / 60).round()} minute session of silence will begin and end with
 three dings. The blue progress circle indicates an active session.
 
 '''
-              .trim(),
+          .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.blue.shade100,
@@ -444,8 +442,7 @@ three dings. The blue progress circle indicates an active session.
 
     final guidedButton = AppButton(
       title: 'Guided',
-      tooltip:
-          '''
+      tooltip: '''
 
 Tap here to play a ${10 + (_duration / 60).round()} minute guided session.
 The session begins with instructions for meditation from John Main.
@@ -455,7 +452,7 @@ blue progress circle indicates an active session.  The
 audio may take a little time to download for the Web version.
 
 '''
-              .trim(),
+          .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: Colors.purple.shade100,
