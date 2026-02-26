@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Friday 2026-02-20 05:21:30 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 12:32:13 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -32,7 +32,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
 import 'package:version_widget/version_widget.dart';
 
-import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/widgets/about.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';

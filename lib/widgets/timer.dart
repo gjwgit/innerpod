@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2026-02-20 10:26:32 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 12:32:52 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -37,7 +37,6 @@ import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
-import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
@@ -471,7 +470,6 @@ audio may take a little time to download for the Web version.
       spacing: 8.0, // Gap between adjacent chips.
       runSpacing: 4.0, // Gap between lines.
       children: [5, 10, 15, 20, 25, 30].map((number) {
-        final isSelected = _duration == number * 60;
         return ChoiceChip(
           label: Text(number.toString()),
           selected: _duration == number * 60,
