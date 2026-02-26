@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Friday 2026-02-20 10:26:32 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 12:32:52 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -37,13 +37,13 @@ import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
-import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
+import 'package:innerpod/widgets/premium_text_field.dart';
 
 /// The default session length is 20 minutes. That seems to be a world wide
 /// default. We only utilise this constant in this file (at least for now).
@@ -426,7 +426,7 @@ of the Resume button.
           }
         });
       },
-      backgroundColor: Colors.grey[200] ?? Colors.grey,
+      // backgroundColor: Colors.grey[200] ?? Colors.grey,
     );
 
     final introButton = AppButton(
@@ -470,26 +470,10 @@ audio may take a little time to download for the Web version.
       spacing: 8.0, // Gap between adjacent chips.
       runSpacing: 4.0, // Gap between lines.
       children: [5, 10, 15, 20, 25, 30].map((number) {
-        final isSelected = _duration == number * 60;
         return ChoiceChip(
-          label: Text(
-            number.toString(),
-            style: TextStyle(
-              color: isSelected
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onSurface,
-              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-            ),
-          ),
-          selected: isSelected,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          selectedColor:
-              Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
-          side: BorderSide(
-            color: isSelected
-                ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.4)
-                : Colors.grey.withValues(alpha: 0.3),
-          ),
+          label: Text(number.toString()),
+          selected: _duration == number * 60,
+          selectedColor: Colors.lightGreenAccent,
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
             if (selected) {
@@ -526,12 +510,10 @@ audio may take a little time to download for the Web version.
         // more clearly distinguishes the buttons matrix from the app
         // background.
 
-        color: background,
-        // color: Colors.white.withValues(alpha: 0.5),
+        // color: background,
+        color: Colors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.5),
-        ),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -559,8 +541,9 @@ audio may take a little time to download for the Web version.
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
-              color:
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 12),
@@ -570,34 +553,18 @@ audio may take a little time to download for the Web version.
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
-                TextField(
+                PremiumTextField(
                   controller: _titleController,
-                  decoration: InputDecoration(
-                    labelText: 'Title',
-                    hintText: 'Enter session title (optional)',
-                    prefixIcon: const Icon(Icons.label_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'Title',
+                  hintText: 'Enter session title (optional)',
+                  icon: Icons.label_outline,
                 ),
                 const SizedBox(height: 12),
-                TextField(
+                PremiumTextField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'Enter session description (optional)',
-                    prefixIcon: const Icon(Icons.notes),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'Description',
+                  hintText: 'Enter session description (optional)',
+                  icon: Icons.notes,
                   maxLines: 2,
                 ),
               ],
