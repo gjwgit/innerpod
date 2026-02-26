@@ -1,6 +1,6 @@
 // A premium stylized text field.
 //
-// Time-stamp: <Thursday 2026-02-26 14:21:10 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-02-27 05:29:38 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2026, Togaware Pty Ltd
 //
