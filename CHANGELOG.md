@@ -31,8 +31,9 @@ We make this project available for free so if you appreciate the app
 then please show some ❤️ and tap on the star at
 [GitHub](https://github.com/gjwgit/innerpod) to support our work.
 
-## 1.9 Stability
+## 1.9 Fine Tuning
 
++ Updated choice of colour for the spin [1.8.4 20260227 gjw]
 + Ensure duration labels are visible [1.8.3 20260226 gjw]
 + Improved colour scheme [1.8.2 20260226 gjw]
 + Dong at half volume. Start timer with bells. [1.8.1 20260226 gjw]
