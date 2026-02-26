@@ -1,6 +1,6 @@
 /// Aduio related constants used across the app.
 //
-// Time-stamp: <Monday 2026-02-23 08:09:35 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 13:56:32 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -39,7 +39,7 @@ final dong = AssetSource('sounds/dong.mp3');
 
 /// The volume for the bells.
 
-const bellVolume = 1.0;
+const bellVolume = 0.5;
 
 /// The INTRO audio is often a short introductory prayer to begin the session.
 
