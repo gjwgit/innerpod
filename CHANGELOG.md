@@ -33,6 +33,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Stability
 
++ Ensure duration labels are visible [1.8.3 20260226 gjw]
 + Improved colour scheme [1.8.2 20260226 gjw]
 + Dong at half volume. Start timer with bells. [1.8.1 20260226 gjw]
 
