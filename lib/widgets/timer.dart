@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-26 12:32:52 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 13:45:45 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -209,8 +209,8 @@ class TimerState extends State<Timer> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
 
-    await _play(dong);
-    if (!mounted) return;
+    dingDong(_player);
+
     _controller.restart(duration: _duration);
   }
 
@@ -249,8 +249,8 @@ class TimerState extends State<Timer> {
 
     // The introductions are complete. We play the dings and start the timer.
 
-    await _play(dong);
-    if (!mounted) return;
+    dingDong(_player);
+
     _controller.restart(duration: _duration);
   }
 
