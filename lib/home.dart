@@ -142,10 +142,10 @@ class HomeState extends State<Home> {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     return Scaffold(
-      extendBody: true,
+      // extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        titleSpacing: 20,
+        // titleSpacing: 20,
         title: Row(
           children: [
             Hero(
@@ -181,16 +181,27 @@ class HomeState extends State<Home> {
             ),
           ],
         ),
-        backgroundColor: border,
+        // backgroundColor: border,
         actions: [
-          Center(child: VersionWidget(version: _appVersion)),
+          Center(
+            child: VersionWidget(
+              version: _appVersion,
+              changelogUrl: _changelogUrl,
+              fontSize: 10,
+              userTextStyle: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           const SizedBox(width: 8),
           IconButton(
-            icon: const Icon(Icons.info_outline_rounded, size: 26),
+            icon: const Icon(Icons.info_outline, size: 24),
             onPressed: () => showAppAboutDialog(context),
             tooltip: 'About the app',
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 8),
         ],
       ),
       body: Container(
@@ -198,7 +209,7 @@ class HomeState extends State<Home> {
           color: Color(0xFFFDFBF9),
         ),
         child: SafeArea(
-          bottom: false,
+          // bottom: false,
           child: Stack(
             children: _pages.asMap().entries.map((entry) {
               final index = entry.key;

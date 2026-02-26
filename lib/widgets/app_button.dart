@@ -73,11 +73,11 @@ class AppButton extends StatelessWidget {
     bool isPrimary = backgroundColor != Colors.white;
 
     return SizedBox(
-      height: 56,
+      height: 52,
       width: 170,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(20),
           color: isPrimary ? backgroundColor : Colors.white,
           boxShadow: [
             BoxShadow(
@@ -95,7 +95,7 @@ class AppButton extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(20),
             onTap: onPressed,
             child: Center(
               child: MarkdownTooltip(

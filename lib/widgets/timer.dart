@@ -427,7 +427,7 @@ of the Resume button.
           }
         });
       },
-      backgroundColor: Colors.grey[200] ?? Colors.grey,
+      // backgroundColor: Colors.grey[200] ?? Colors.grey,
     );
 
     final introButton = AppButton(
@@ -512,12 +512,10 @@ audio may take a little time to download for the Web version.
         // more clearly distinguishes the buttons matrix from the app
         // background.
 
-        color: background,
-        // color: Colors.white.withValues(alpha: 0.5),
+        // color: background,
+        color: Colors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.5),
-        ),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -545,8 +543,9 @@ audio may take a little time to download for the Web version.
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
-              color:
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 12),
