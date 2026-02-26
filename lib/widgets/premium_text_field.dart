@@ -1,6 +1,6 @@
 // A premium stylized text field.
 //
-// Time-stamp: <Sunday 2026-02-22 00:30:00 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 14:21:10 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2026, Togaware Pty Ltd
 //
@@ -18,6 +18,7 @@ library;
 import 'package:flutter/material.dart';
 
 /// A styled text field used across the app for standardized inputs.
+
 class PremiumTextField extends StatelessWidget {
   /// The controller for the text field.
   final TextEditingController controller;

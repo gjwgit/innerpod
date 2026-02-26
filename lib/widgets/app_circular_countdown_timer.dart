@@ -40,7 +40,7 @@ const _text = Colors.black;
 // const spin2 = Color(0xFFB08261);
 
 const _spin1 = Colors.white;
-final _spin2 = Colors.blueAccent.shade700;
+final _spin2 = background; //Colors.blueAccent.shade700;
 
 /// A [CircularCountDownTimer] with defaults for the app.
 
@@ -74,7 +74,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
       duration: duration,
       controller: controller,
       autoStart: false,
-      backgroundColor: background,
+      backgroundColor: Color(0xFFFDFBF9), //border,
       ringColor: _spin1,
       fillColor: _spin2,
       strokeWidth: 20.0,

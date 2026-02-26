@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-26 13:55:20 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 14:23:33 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -429,7 +429,7 @@ of the Resume button.
           }
         });
       },
-      // backgroundColor: Colors.grey[200] ?? Colors.grey,
+      backgroundColor: Colors.grey[200] ?? Colors.grey,
     );
 
     final introButton = AppButton(
