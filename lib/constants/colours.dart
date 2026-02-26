@@ -1,8 +1,8 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Thursday 2026-02-26 14:38:17 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-02-27 08:22:06 +1100 Graham Williams>
 //
-/// Copyright (C) 2024, Togaware Pty Ltd
+/// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///
@@ -29,15 +29,33 @@ import 'package:flutter/material.dart';
 
 /// The background colour of the main widget of the app.
 
-// const _background = Color(0xFFE6B276);
+// const background = Color(0xFFE6B276);
 // const background = Color(0xFFF5E0C8);
 // const background = Color(0xFFF0D1AD);
 
 // 20260220 gjw The background to be used for active components of the app, like
-// the timer's central area and the box containing the buttons.
+// the timer's central area and the box containing the buttons. Though it is not
+// currently used. We need to review the colour literals used across the app and
+// move them here for ease of maintenance and reducing trechnical debt.
 
-const background = Color(0xFFF0D1AD);
+// const background = Color(0xFFF0D1AD);
 
 /// A lighter colour for the top and bottom (navbar) elements of the app.
 
 // const border = Color(0xFFF5E0C8);
+
+// SPIN
+//
+// 20260227 gjw Define the colour to be used for the active countdown timer spin
+// bar. Exploring colour options that are dark enough to be visible and contrast
+// in low light leads to the choice here. The original blueAccent is out of
+// place for the new colour scheme. Other colours tried include:
+//
+// Color(0xFFF0D1AD); Too light.
+// Color(0xFFD0A97D);
+// Color(0xFFCEAF85);
+// Color(0xFFC0895D); This is a little more golden than 0xFFB08261.
+// Color(0xFFB08261); A bit flat in colour compared to 0xFFC0895D.
+// Colors.blueAccent.shade700; Out of place for the colour scheme.
+
+const spin = Color(0xFFC0895D);

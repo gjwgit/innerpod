@@ -37,10 +37,8 @@ import 'package:innerpod/constants/colours.dart';
 const _text = Colors.black;
 
 // const spin1 = Color(0xFFFFB31A);
-// const spin2 = Color(0xFFB08261);
 
 const _spin1 = Colors.white;
-final _spin2 = background; //Colors.blueAccent.shade700;
 
 /// A [CircularCountDownTimer] with defaults for the app.
 
@@ -76,7 +74,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
       autoStart: false,
       backgroundColor: const Color(0xFFFDFBF9), //border,
       ringColor: _spin1,
-      fillColor: _spin2,
+      fillColor: spin,
       strokeWidth: 20.0,
       textStyle: const TextStyle(color: _text, fontSize: 55),
       onComplete: onComplete,
