@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Thursday 2026-02-26 12:32:13 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 14:08:22 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -89,7 +89,7 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   // We will populate the app version shortly.
 
-  var _appVersion = '';
+  var _appVersion = '0.0.0';
 
   final String _changelogUrl =
       'https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md';
