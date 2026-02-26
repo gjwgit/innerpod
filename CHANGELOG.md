@@ -35,6 +35,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.8 Save Sessions and Update UI
 
++ Review and Incorporate outsanding PRs [1.8.0 20260226 gjw]
 + Bug fix - timer was resetting to default [1.7.13 20260223 amogh]
 + Default title is the session type [1.7.12 20260223 amogh]
 + Implement PAUSE/RESUME [1.7.11 20260223 amogh]
@@ -50,10 +51,10 @@ then please show some ❤️ and tap on the star at
 + Review audio. Add 5 minutes option. [1.7.3 20241114 gjw]
 + Updated Tibetan bell from freesound.org [1.7.2 20241101 gjw]
 + Use markdown for About with active url links [1.7.1 20241101 gjw]
-+ Move to mp3 rather than ogg for wider OS support [1.7.0 20241025 gjw]
 
 ## 1.7 Fine Tuning
 
++ Move to mp3 rather than ogg for wider OS support [1.7.0 20241025 gjw]
 + Quotes -> Wisdom [1.6.4 20241024 gjw]
 + Update installers [1.6.3 20241023 gjw]
 + Testing [1.6.2 20241023 gjw]
