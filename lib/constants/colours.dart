@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Friday 2026-02-20 10:27:21 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 13:29:56 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -40,4 +40,4 @@ const background = Color(0xFFF0D1AD);
 
 /// A lighter colour for the top and bottom (navbar) elements of the app.
 
-const border = Color(0xFFF5E0C8);
+// const border = Color(0xFFF5E0C8);
