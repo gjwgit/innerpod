@@ -33,6 +33,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Stability
 
++ Improved colour scheme [1.8.2 20260226 gjw]
 + Dong at half volume. Start timer with bells. [1.8.1 20260226 gjw]
 
 ## 1.8 Save Sessions and Update UI
