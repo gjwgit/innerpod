@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-26 14:23:33 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-26 14:42:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -475,6 +475,7 @@ audio may take a little time to download for the Web version.
       children: [5, 10, 15, 20, 25, 30].map((number) {
         return ChoiceChip(
           label: Text(number.toString()),
+          labelStyle: TextStyle(color: Colors.grey[600]),
           selected: _duration == number * 60,
           selectedColor: Colors.lightGreenAccent,
           showCheckmark: false, // This will hide the tick mark.
