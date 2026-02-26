@@ -33,6 +33,8 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Stability
 
++ Dong at half volume. Start timer with bells. [1.8.1 20260226 gjw]
+
 ## 1.8 Save Sessions and Update UI
 
 + Review and Incorporate outsanding PRs [1.8.0 20260226 gjw]
