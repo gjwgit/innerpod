@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Friday 2026-02-27 08:22:06 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-02-28 07:16:39 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -28,23 +28,24 @@ library;
 import 'package:flutter/material.dart';
 
 /// The background colour of the main widget of the app.
-
+//
 // const background = Color(0xFFE6B276);
 // const background = Color(0xFFF5E0C8);
 // const background = Color(0xFFF0D1AD);
-
+//
 // 20260220 gjw The background to be used for active components of the app, like
 // the timer's central area and the box containing the buttons. Though it is not
 // currently used. We need to review the colour literals used across the app and
 // move them here for ease of maintenance and reducing trechnical debt.
-
+//
 // const background = Color(0xFFF0D1AD);
 
 /// A lighter colour for the top and bottom (navbar) elements of the app.
-
+//
 // const border = Color(0xFFF5E0C8);
+//
 
-// SPIN
+/// Colour of the spin bar when it is active
 //
 // 20260227 gjw Define the colour to be used for the active countdown timer spin
 // bar. Exploring colour options that are dark enough to be visible and contrast
@@ -58,4 +59,40 @@ import 'package:flutter/material.dart';
 // Color(0xFFB08261); A bit flat in colour compared to 0xFFC0895D.
 // Colors.blueAccent.shade700; Out of place for the colour scheme.
 
-const spin = Color(0xFFC0895D);
+const spinColor = Color(0xFFC0895D);
+
+const spinBackgroundColor = Colors.white;
+
+const timerCentralColor = Color(0xFFFDFBF9);
+
+/// Colour for the digits displayed within the timer.
+
+const timerTextColor = Colors.black;
+
+/// Background colors for the 4 function buttons.
+
+final guidedBackgroundColor = Colors.purple.shade100;
+final introBackgroundColor = Colors.blue.shade100;
+final pauseBackgroundColor = Colors.grey[200] ?? Colors.grey;
+final startBackgroundColor = Colors.lightGreenAccent.shade100;
+
+/// Background colour of the integer duration buttons.
+
+final durationBackgroundColor = Colors.lightGreenAccent;
+
+/// Colour of the text for the integer duration buttons.
+
+final durationTextColor = Colors.grey[600];
+
+/// Colour for the background of the funcation area.
+///
+/// This is the area where the function and duration buttons are.
+//
+// 20260220 gjw Choosing a darker background for the active button area
+// distringuishes it from the above timer display to more clearly distinguish
+// the buttons matrix from the app background. Another option is to have the
+// same background as the title bar and timer central. The white with alpha 1.0
+// gives it the same as the time white. Could probably use the same color for
+// both.
+
+final functionsBackgroundColor = Colors.white;

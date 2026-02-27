@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-26 14:42:16 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-02-28 07:05:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -37,6 +37,7 @@ import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
@@ -393,7 +394,7 @@ circle indicates an active session.
         }
       },
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.lightGreenAccent.shade100,
+      backgroundColor: startBackgroundColor,
     );
 
     final pauseResumeButton = AppButton(
@@ -429,7 +430,7 @@ of the Resume button.
           }
         });
       },
-      backgroundColor: Colors.grey[200] ?? Colors.grey,
+      backgroundColor: pauseBackgroundColor,
     );
 
     final introButton = AppButton(
@@ -444,7 +445,7 @@ three dings. The blue progress circle indicates an active session.
           .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.blue.shade100,
+      backgroundColor: introBackgroundColor,
     );
 
     final guidedButton = AppButton(
@@ -462,7 +463,7 @@ audio may take a little time to download for the Web version.
           .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.purple.shade100,
+      backgroundColor: guidedBackgroundColor,
     );
 
     ////////////////////////////////////
@@ -475,9 +476,10 @@ audio may take a little time to download for the Web version.
       children: [5, 10, 15, 20, 25, 30].map((number) {
         return ChoiceChip(
           label: Text(number.toString()),
-          labelStyle: TextStyle(color: Colors.grey[600]),
+
+          labelStyle: TextStyle(color: durationTextColor),
           selected: _duration == number * 60,
-          selectedColor: Colors.lightGreenAccent,
+          selectedColor: durationBackgroundColor,
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
             if (selected) {
@@ -509,15 +511,9 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        // 20260220 gjw Choose a darker background for the active button
-        // area. This darker background, same as title bar and timer central,
-        // more clearly distinguishes the buttons matrix from the app
-        // background.
-
-        // color: background,
-        color: Colors.white.withValues(alpha: 0.5),
+        color: functionsBackgroundColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+        border: Border.all(color: functionsBackgroundColor),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
