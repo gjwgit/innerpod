@@ -28,6 +28,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
 
+import 'package:innerpod/constants/colours.dart';
+
 /// An [ElevatedButton] with defaults for the app.
 
 class AppButton extends StatelessWidget {
@@ -38,7 +40,7 @@ class AppButton extends StatelessWidget {
     required this.tooltip,
     required this.onPressed,
     super.key,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor = appBackgroundColor,
     this.fontSize = 20,
     this.fontWeight = FontWeight.normal,
   });
@@ -70,7 +72,7 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPrimary = backgroundColor != Colors.white;
+    bool isPrimary = backgroundColor != appBackgroundColor;
 
     return SizedBox(
       height: 52,
@@ -78,22 +80,20 @@ class AppButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: isPrimary ? backgroundColor : Colors.white,
+          color: isPrimary ? backgroundColor : appBackgroundColor,
           boxShadow: [
             BoxShadow(
               color: isPrimary
                   ? backgroundColor.withValues(alpha: 0.15)
-                  : Colors.black.withValues(alpha: 0.05),
+                  : appShadowColor,
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
           ],
-          border: isPrimary
-              ? null
-              : Border.all(color: Colors.black.withValues(alpha: 0.05)),
+          border: isPrimary ? null : Border.all(color: appShadowColor),
         ),
         child: Material(
-          color: Colors.transparent,
+          color: appButtonColor,
           child: InkWell(
             borderRadius: BorderRadius.circular(20),
             onTap: onPressed,
@@ -107,7 +107,7 @@ class AppButton extends StatelessWidget {
                     fontWeight: isPrimary ? FontWeight.w600 : FontWeight.w500,
                     color: isPrimary
                         ? (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
+                            ? appBackgroundColor
                             : const Color(0xFF2D1B0E))
                         : const Color(0xFF5D4037),
                     letterSpacing: -0.2,

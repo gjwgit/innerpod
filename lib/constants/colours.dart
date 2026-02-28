@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Saturday 2026-02-28 17:09:26 +1100 Graham Williams>
+// Time-stamp: <Sunday 2026-03-01 05:59:30 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -26,6 +26,10 @@
 library;
 
 import 'package:flutter/material.dart';
+
+const appBackgroundColor = Colors.white;
+const appButtonColor = Colors.transparent;
+final appShadowColor = Colors.black.withValues(alpha: 0.05);
 
 /// The background colour of the main widget of the app.
 //
@@ -102,3 +106,4 @@ const instructionsUnselectedColor = Colors.grey;
 
 final historyIncidentalColor = Colors.grey[600];
 const historyDeleteColor = Colors.redAccent;
+final historyNoneColor = Colors.grey.withValues(alpha: 0.5);

@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Saturday 2026-02-28 17:09:55 +1100 Graham Williams>
+// Time-stamp: <Sunday 2026-03-01 05:46:19 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -295,12 +295,12 @@ class _HistoryState extends State<History> {
                       Icon(
                         Icons.history,
                         size: 64,
-                        color: Colors.grey.withValues(alpha: 0.5),
+                        color: historyNoneColor,
                       ),
                       const SizedBox(height: 16),
-                      const Text(
+                      Text(
                         'No sessions recorded yet.',
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        style: TextStyle(color: historyNoneColor, fontSize: 16),
                       ),
                     ],
                   ),
