@@ -1,6 +1,6 @@
 /// Aduio related constants used across the app.
 //
-// Time-stamp: <Thursday 2026-02-26 13:56:32 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-02-28 09:28:46 +1100 Graham Williams>
 //
 /// Copyright (C) 2024, Togaware Pty Ltd
 ///
@@ -38,8 +38,10 @@ import 'package:audioplayers/audioplayers.dart';
 final dong = AssetSource('sounds/dong.mp3');
 
 /// The volume for the bells.
+//
+// For the Tibetan bell 0.5 is too quiet. 0.7 seems okay.
 
-const bellVolume = 0.5;
+const bellVolume = 0.7;
 
 /// The INTRO audio is often a short introductory prayer to begin the session.
 
