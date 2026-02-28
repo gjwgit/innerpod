@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Saturday 2026-02-28 07:16:39 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-02-28 17:09:26 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -96,3 +96,9 @@ final durationTextColor = Colors.grey[600];
 // both.
 
 final functionsBackgroundColor = Colors.white;
+
+const instructionsBarColor = Colors.transparent;
+const instructionsUnselectedColor = Colors.grey;
+
+final historyIncidentalColor = Colors.grey[600];
+const historyDeleteColor = Colors.redAccent;

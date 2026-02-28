@@ -1,6 +1,6 @@
 /// Text instructions and support.
 //
-// Time-stamp: <Tuesday 2026-02-10 15:45:15 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-02-28 09:53:49 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -29,6 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/widgets/app_markdown_body.dart';
 
 /// A widget for text instructions, prayers, quotes.
@@ -44,7 +45,7 @@ class Instructions extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: instructionsBarColor,
           elevation: 0,
           toolbarHeight: 0, // Hide the standard toolbar
           bottom: TabBar(
@@ -53,7 +54,7 @@ class Instructions extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.label,
             indicatorWeight: 3,
             labelColor: Theme.of(context).colorScheme.primary,
-            unselectedLabelColor: Colors.grey,
+            unselectedLabelColor: instructionsUnselectedColor,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold),
             tabs: const [
               Tab(text: 'Guide'),

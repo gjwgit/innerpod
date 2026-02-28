@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Thursday 2026-02-19 20:39:57 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-02-28 17:09:55 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -34,6 +34,7 @@ import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/utils/session_logic.dart';
 
 class History extends StatefulWidget {
@@ -138,8 +139,6 @@ class _HistoryState extends State<History> {
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent.withValues(alpha: 0.1),
-              foregroundColor: Colors.redAccent,
               elevation: 0,
             ),
             child: const Text('Delete'),
@@ -275,7 +274,6 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Session History'),
         automaticallyImplyLeading: false, // Don't show back button
@@ -350,7 +348,7 @@ class _HistoryState extends State<History> {
                                           session['date']!,
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Colors.grey[600],
+                                            color: historyIncidentalColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -381,7 +379,7 @@ class _HistoryState extends State<History> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: Colors.grey[600],
+                                          color: historyIncidentalColor,
                                         ),
                                       ),
                                     const SizedBox(height: 4),
@@ -389,7 +387,7 @@ class _HistoryState extends State<History> {
                                       '${session['start']} - ${session['end']}',
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: Colors.grey[500],
+                                        color: historyIncidentalColor,
                                       ),
                                     ),
                                   ],
@@ -409,7 +407,7 @@ class _HistoryState extends State<History> {
                                     icon: const Icon(
                                       Icons.delete_outline,
                                       size: 20,
-                                      color: Colors.redAccent,
+                                      color: historyDeleteColor,
                                     ),
                                     onPressed: () =>
                                         _deleteSession(session['rawStart']!),
