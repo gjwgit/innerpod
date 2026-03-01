@@ -33,6 +33,8 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
++ Add INTERENET permission for Android [1.8.6 20260302 gjw]
++ Volume of Tibetan bell to 0.7 and duration to 9s [1.8.5 20260302 gjw]
 + Updated choice of colour for the spin [1.8.4 20260227 gjw]
 + Ensure duration labels are visible [1.8.3 20260226 gjw]
 + Improved colour scheme [1.8.2 20260226 gjw]
