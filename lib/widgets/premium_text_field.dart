@@ -16,6 +16,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 
 /// A styled text field used across the app for standardized inputs.
 class PremiumTextField extends StatelessWidget {
@@ -57,7 +58,7 @@ class PremiumTextField extends StatelessWidget {
           borderSide: BorderSide.none,
         ),
         filled: true,
-        fillColor: Colors.white.withValues(alpha: 0.8),
+        fillColor: colours.white.withValues(alpha: 0.8),
       ),
       maxLines: maxLines,
     );

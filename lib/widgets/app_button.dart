@@ -24,6 +24,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:markdown_tooltip/markdown_tooltip.dart';
@@ -38,7 +39,7 @@ class AppButton extends StatelessWidget {
     required this.tooltip,
     required this.onPressed,
     super.key,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor = colours.white,
     this.fontSize = 20,
     this.fontWeight = FontWeight.normal,
   });
@@ -70,7 +71,7 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPrimary = backgroundColor != Colors.white;
+    bool isPrimary = backgroundColor != colours.white;
 
     return SizedBox(
       height: 56,
@@ -78,22 +79,22 @@ class AppButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
-          color: isPrimary ? backgroundColor : Colors.white,
+          color: isPrimary ? backgroundColor : colours.white,
           boxShadow: [
             BoxShadow(
               color: isPrimary
                   ? backgroundColor.withValues(alpha: 0.15)
-                  : Colors.black.withValues(alpha: 0.05),
+                  : colours.black.withValues(alpha: 0.05),
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
           ],
           border: isPrimary
               ? null
-              : Border.all(color: Colors.black.withValues(alpha: 0.05)),
+              : Border.all(color: colours.black.withValues(alpha: 0.05)),
         ),
         child: Material(
-          color: Colors.transparent,
+          color: colours.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(28),
             onTap: onPressed,
@@ -107,9 +108,9 @@ class AppButton extends StatelessWidget {
                     fontWeight: isPrimary ? FontWeight.w600 : FontWeight.w500,
                     color: isPrimary
                         ? (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : const Color(0xFF2D1B0E))
-                        : const Color(0xFF5D4037),
+                            ? colours.white
+                            : colours.text)
+                        : colours.accentBrown,
                     letterSpacing: -0.2,
                   ),
                 ),

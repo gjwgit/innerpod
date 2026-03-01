@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,18 +64,18 @@ class AppMarkdownBody extends StatelessWidget {
             p: GoogleFonts.outfit(
               fontSize: 16,
               height: 1.6,
-              color: const Color(0xFF4A3427),
+              color: colours.textSecondary,
             ),
             h1: GoogleFonts.outfit(
               fontSize: 28,
               fontWeight: FontWeight.w700,
-              color: const Color(0xFF2D1B0E),
+              color: colours.text,
               letterSpacing: -0.5,
             ),
             h2: GoogleFonts.outfit(
               fontSize: 22,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF2D1B0E),
+              color: colours.text,
               letterSpacing: -0.3,
             ),
             a: GoogleFonts.outfit(
@@ -86,7 +87,7 @@ class AppMarkdownBody extends StatelessWidget {
               color: theme.colorScheme.primary,
             ),
             blockquote: GoogleFonts.outfit(
-              color: Colors.grey.shade700,
+              color: colours.grey700,
               fontStyle: FontStyle.italic,
             ),
             blockquoteDecoration: BoxDecoration(

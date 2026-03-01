@@ -27,20 +27,20 @@ import 'package:flutter/material.dart';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
-import 'package:innerpod/constants/colours.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 
 // CIRCULAR TIMER COLOURS
 
 // Choose colours for the internal background of the timer and the gradient
 // of the timer neon.
 
-const _text = Colors.black;
+const _text = colours.black;
 
 // const spin1 = Color(0xFFFFB31A);
 // const spin2 = Color(0xFFB08261);
 
-const _spin1 = Colors.white;
-final _spin2 = Colors.blueAccent.shade700;
+const _spin1 = colours.white;
+final _spin2 = colours.timerFill.shade700;
 
 /// A [CircularCountDownTimer] with defaults for the app.
 
@@ -74,7 +74,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
       duration: duration,
       controller: controller,
       autoStart: false,
-      backgroundColor: background,
+      backgroundColor: colours.background,
       ringColor: _spin1,
       fillColor: _spin2,
       strokeWidth: 20.0,

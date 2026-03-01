@@ -26,6 +26,7 @@
 library;
 
 import 'package:flutter/material.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
@@ -44,7 +45,7 @@ class Instructions extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: colours.transparent,
           elevation: 0,
           toolbarHeight: 0, // Hide the standard toolbar
           bottom: TabBar(
@@ -53,7 +54,7 @@ class Instructions extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.label,
             indicatorWeight: 3,
             labelColor: Theme.of(context).colorScheme.primary,
-            unselectedLabelColor: Colors.grey,
+            unselectedLabelColor: colours.grey,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold),
             tabs: const [
               Tab(text: 'Guide'),

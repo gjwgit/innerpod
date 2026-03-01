@@ -31,6 +31,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
 import 'package:version_widget/version_widget.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 
 import 'package:innerpod/widgets/about.dart';
 import 'package:innerpod/widgets/history.dart';
@@ -62,7 +63,7 @@ class InnerPod extends StatelessWidget {
       logo: AssetImage('assets/images/app_icon.png'),
       continueButtonStyle: ContinueButtonStyle(
         text: 'Session',
-        background: Colors.lightGreenAccent,
+        background: colours.accentGreen,
       ),
       infoButtonStyle: InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
@@ -149,11 +150,11 @@ class HomeState extends State<Home> {
               child: Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colours.white,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
+                      color: colours.black.withValues(alpha: 0.1),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -190,7 +191,7 @@ class HomeState extends State<Home> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFFFDFBF9),
+          color: colours.surface,
         ),
         child: SafeArea(
           bottom: false,
@@ -216,15 +217,15 @@ class HomeState extends State<Home> {
         margin: const EdgeInsets.fromLTRB(24, 0, 24, 32),
         height: 72,
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.8),
+          color: colours.white.withValues(alpha: 0.8),
           borderRadius: BorderRadius.circular(36),
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.5),
+            color: colours.white.withValues(alpha: 0.5),
             width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
+              color: colours.black.withValues(alpha: 0.08),
               blurRadius: 30,
               offset: const Offset(0, 10),
             ),
@@ -276,7 +277,7 @@ class HomeState extends State<Home> {
         decoration: BoxDecoration(
           color: isSelected
               ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
-              : Colors.transparent,
+              : colours.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
@@ -286,7 +287,7 @@ class HomeState extends State<Home> {
               isSelected ? selectedIcon : icon,
               color: isSelected
                   ? Theme.of(context).colorScheme.primary
-                  : Colors.grey.shade400,
+                  : colours.grey600.withValues(alpha: 0.5),
               size: 26,
             ),
             const SizedBox(height: 4),
@@ -297,7 +298,7 @@ class HomeState extends State<Home> {
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 color: isSelected
                     ? Theme.of(context).colorScheme.primary
-                    : Colors.grey.shade400,
+                    : colours.grey600.withValues(alpha: 0.5),
               ),
             ),
           ],

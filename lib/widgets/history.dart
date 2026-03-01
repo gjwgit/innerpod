@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 
 import 'package:innerpod/utils/session_logic.dart';
 
@@ -138,8 +139,8 @@ class _HistoryState extends State<History> {
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent.withValues(alpha: 0.1),
-              foregroundColor: Colors.redAccent,
+              backgroundColor: colours.error.withValues(alpha: 0.1),
+              foregroundColor: colours.error,
               elevation: 0,
             ),
             child: const Text('Delete'),
@@ -275,7 +276,7 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: colours.transparent,
       appBar: AppBar(
         title: const Text('Session History'),
         automaticallyImplyLeading: false, // Don't show back button
@@ -297,12 +298,12 @@ class _HistoryState extends State<History> {
                       Icon(
                         Icons.history,
                         size: 64,
-                        color: Colors.grey.withValues(alpha: 0.5),
+                        color: colours.grey.withValues(alpha: 0.5),
                       ),
                       const SizedBox(height: 16),
                       const Text(
                         'No sessions recorded yet.',
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        style: TextStyle(color: colours.grey, fontSize: 16),
                       ),
                     ],
                   ),
@@ -350,7 +351,7 @@ class _HistoryState extends State<History> {
                                           session['date']!,
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Colors.grey[600],
+                                            color: colours.grey600,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -381,7 +382,7 @@ class _HistoryState extends State<History> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: Colors.grey[600],
+                                          color: colours.grey600,
                                         ),
                                       ),
                                     const SizedBox(height: 4),
@@ -389,7 +390,7 @@ class _HistoryState extends State<History> {
                                       '${session['start']} - ${session['end']}',
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: Colors.grey[500],
+                                        color: colours.grey500,
                                       ),
                                     ),
                                   ],
@@ -409,7 +410,7 @@ class _HistoryState extends State<History> {
                                     icon: const Icon(
                                       Icons.delete_outline,
                                       size: 20,
-                                      color: Colors.redAccent,
+                                      color: colours.error,
                                     ),
                                     onPressed: () =>
                                         _deleteSession(session['rawStart']!),

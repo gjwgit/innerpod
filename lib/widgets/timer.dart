@@ -37,6 +37,7 @@ import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
+import 'package:innerpod/constants/colors.dart' as colours;
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
@@ -387,7 +388,7 @@ circle indicates an active session.
         }
       },
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.lightGreenAccent.shade100,
+      backgroundColor: colours.startButtonBackground,
     );
 
     final pauseResumeButton = AppButton(
@@ -437,7 +438,7 @@ three dings. The blue progress circle indicates an active session.
           .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.blue.shade100,
+      backgroundColor: colours.introButtonBackground,
     );
 
     final guidedButton = AppButton(
@@ -455,7 +456,7 @@ audio may take a little time to download for the Web version.
           .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.purple.shade100,
+      backgroundColor: colours.guidedButtonBackground,
     );
 
     ////////////////////////////////////
@@ -469,7 +470,7 @@ audio may take a little time to download for the Web version.
         return ChoiceChip(
           label: Text(number.toString()),
           selected: _duration == number * 60,
-          selectedColor: Colors.lightGreenAccent,
+          selectedColor: colours.accentGreen,
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
             if (selected) {
@@ -501,9 +502,9 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
+        color: colours.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+        border: Border.all(color: colours.white.withValues(alpha: 0.5)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
