@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Thursday 2026-02-26 14:08:22 +1100 Graham Williams>
+// Time-stamp: <Monday 2026-03-02 09:30:07 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -140,7 +140,7 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-    return Scaffold(
+    return SolidScaffold(
       // extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
