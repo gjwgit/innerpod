@@ -35,6 +35,7 @@ import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
 import 'package:innerpod/utils/session_logic.dart';
+import 'package:innerpod/constants/colours.dart' as colours;
 
 class History extends StatefulWidget {
   const History({super.key});
@@ -138,8 +139,8 @@ class _HistoryState extends State<History> {
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.redAccent.withValues(alpha: 0.1),
-              foregroundColor: Colors.redAccent,
+              backgroundColor: colours.error.withValues(alpha: 0.1),
+              foregroundColor: colours.error,
               elevation: 0,
             ),
             child: const Text('Delete'),
@@ -179,6 +180,70 @@ class _HistoryState extends State<History> {
       } finally {
         if (mounted) setState(() => _isLoading = false);
       }
+    }
+  }
+
+  Future<void> _deleteAllSessions() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete All Sessions'),
+        content: const Text(
+          'Are you sure you want to delete ALL sessions? This action cannot be undone.',
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colours.error.withValues(alpha: 0.1),
+              foregroundColor: colours.error,
+              elevation: 0,
+            ),
+            child: const Text('Delete All'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await _performDeleteAll();
+    }
+  }
+
+  Future<void> _performDeleteAll() async {
+    setState(() => _isLoading = true);
+    try {
+      final newContent = serializeSessions([]);
+      await writePod(
+        'sessions.ttl',
+        newContent,
+        overwrite: true,
+      );
+      await _loadSessions();
+    } on SecurityKeyNotAvailableException {
+      debugPrint(
+        'Security key missing - cannot write sessions.ttl for bulk deletion',
+      );
+      if (mounted) {
+        await getKeyFromUserIfRequired(context, widget);
+        if (mounted) {
+          await _performDeleteAll();
+        }
+      }
+    } catch (e) {
+      debugPrint('Error deleting all sessions: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete all sessions: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -280,8 +345,18 @@ class _HistoryState extends State<History> {
         title: const Text('Session History'),
         automaticallyImplyLeading: false, // Don't show back button
         actions: [
+          if (_sessions.isNotEmpty)
+            IconButton(
+              icon: const Icon(
+                Icons.delete_sweep_outlined,
+                color: colours.error,
+              ),
+              tooltip: 'Delete all sessions',
+              onPressed: _deleteAllSessions,
+            ),
           IconButton(
             icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
             onPressed: _loadSessions,
           ),
           const SizedBox(width: 8),
@@ -411,7 +486,7 @@ class _HistoryState extends State<History> {
                                     icon: const Icon(
                                       Icons.delete_outline,
                                       size: 20,
-                                      color: Colors.redAccent,
+                                      color: colours.error,
                                     ),
                                     onPressed: () =>
                                         _deleteSession(session['rawStart']!),

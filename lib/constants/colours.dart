@@ -37,3 +37,6 @@ const background = Color(0xFFF0D1AD);
 /// A lighter colour for the top and bottom (navbar) elements of the app.
 
 const border = Color(0xFFF5E0C8);
+
+/// A color for error messages or destructive actions.
+const error = Colors.redAccent;
