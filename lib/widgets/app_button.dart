@@ -40,6 +40,7 @@ class AppButton extends StatelessWidget {
     this.backgroundColor = Colors.white,
     this.fontSize = 20,
     this.fontWeight = FontWeight.normal,
+    this.textColor,
   });
 
   /// The text to be displayed on the button.
@@ -66,6 +67,10 @@ class AppButton extends StatelessWidget {
   /// Override the default text wight.
 
   final FontWeight fontWeight;
+
+  /// The colour of the label text.
+
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -113,11 +118,12 @@ class AppButton extends StatelessWidget {
                   style: TextStyle(
                     fontSize: fontSize,
                     fontWeight: isPrimary ? FontWeight.bold : fontWeight,
-                    color: isPrimary
-                        ? (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black87)
-                        : const Color(0xFF5D4037),
+                    color: textColor ??
+                        (isPrimary
+                            ? (Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black87)
+                            : const Color(0xFF5D4037)),
                     letterSpacing: 0.5,
                   ),
                 ),
