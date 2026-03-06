@@ -324,16 +324,18 @@ class TimerState extends State<Timer> {
       _startTime = null;
       _titleController.clear();
       _descriptionController.clear();
-    } on SecurityKeyNotAvailableException {
-      debugPrint('Security key missing - cannot save session. Prompting user.');
-      if (mounted) {
-        await getKeyFromUserIfRequired(context, widget);
-        if (mounted) {
-          // Retry saving session after popup closes
-          await _saveSession();
-        }
-      }
     } catch (e) {
+      if (e.toString().contains('You must first set the security key!')) {
+        debugPrint(
+            'Security key missing - cannot save session. Prompting user.',);
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) {
+            await _saveSession();
+          }
+        }
+        return;
+      }
       logMessage('Error saving session to Pod: $e');
       _startTime = null;
       _titleController.clear();

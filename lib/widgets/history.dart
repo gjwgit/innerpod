@@ -67,21 +67,20 @@ class _HistoryState extends State<History> {
       try {
         content = await readPod('sessions.ttl');
       } on ResourceNotExistException {
-        // If file doesn't exist yet, treat as empty (no sessions)
         debugPrint('sessions.ttl does not exist yet (normal for new users)');
         content = null;
-      } on SecurityKeyNotAvailableException {
-        debugPrint('Security key missing. Prompting user.');
-        if (mounted) {
-          await getKeyFromUserIfRequired(context, widget);
-          // Retry loading sessions after popup closes
+      } catch (e) {
+        if (e.toString().contains('You must first set the security key!')) {
+          debugPrint(
+              'Security key missing - cannot access sessions.ttl. Prompting user.',);
           if (mounted) {
-            await _loadSessions();
-            return;
+            await getKeyFromUserIfRequired(context, widget);
+            if (mounted) {
+              await _loadSessions();
+              return;
+            }
           }
         }
-        content = null;
-      } catch (e) {
         // Log other errors related to reading from Pod
         debugPrint('Error accessing sessions.ttl: $e');
         content = null;
@@ -160,17 +159,18 @@ class _HistoryState extends State<History> {
           overwrite: true,
         );
         await _loadSessions();
-      } on SecurityKeyNotAvailableException {
-        debugPrint(
-          'Security key missing - cannot decrypt sessions.ttl for deletion',
-        );
-        if (mounted) {
-          await getKeyFromUserIfRequired(context, widget);
-          if (mounted) {
-            await _deleteSession(rawStart);
-          }
-        }
       } catch (e) {
+        if (e.toString().contains('You must first set the security key!')) {
+          debugPrint(
+              'Security key missing - cannot decrypt sessions.ttl for deletion',);
+          if (mounted) {
+            await getKeyFromUserIfRequired(context, widget);
+            if (mounted) {
+              await _deleteSession(rawStart);
+            }
+          }
+          return;
+        }
         debugPrint('Error deleting session: $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -225,17 +225,18 @@ class _HistoryState extends State<History> {
         overwrite: true,
       );
       await _loadSessions();
-    } on SecurityKeyNotAvailableException {
-      debugPrint(
-        'Security key missing - cannot write sessions.ttl for bulk deletion',
-      );
-      if (mounted) {
-        await getKeyFromUserIfRequired(context, widget);
-        if (mounted) {
-          await _performDeleteAll();
-        }
-      }
     } catch (e) {
+      if (e.toString().contains('You must first set the security key!')) {
+        debugPrint(
+            'Security key missing - cannot write sessions.ttl for bulk deletion',);
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) {
+            await _performDeleteAll();
+          }
+        }
+        return;
+      }
       debugPrint('Error deleting all sessions: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -314,17 +315,18 @@ class _HistoryState extends State<History> {
           overwrite: true,
         );
         await _loadSessions();
-      } on SecurityKeyNotAvailableException {
-        debugPrint(
-          'Security key missing - cannot decrypt sessions.ttl for update',
-        );
-        if (mounted) {
-          await getKeyFromUserIfRequired(context, widget);
-          if (mounted) {
-            await _editSession(session);
-          }
-        }
       } catch (e) {
+        if (e.toString().contains('You must first set the security key!')) {
+          debugPrint(
+              'Security key missing - cannot decrypt sessions.ttl for update',);
+          if (mounted) {
+            await getKeyFromUserIfRequired(context, widget);
+            if (mounted) {
+              await _editSession(session);
+            }
+          }
+          return;
+        }
         debugPrint('Error updating session: $e');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
