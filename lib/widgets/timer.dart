@@ -381,7 +381,9 @@ circle indicates an active session.
         }
       },
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.lightGreenAccent.shade100,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.green.shade900
+          : Colors.lightGreenAccent.shade100,
     );
 
     final pauseButton = AppButton(
@@ -400,7 +402,7 @@ of the Resume button.
       },
     );
 
-    // TODO 20240708 gjw COMMENT OUT BUTTONS UNTIL FUINCTIONALITY MIGRATED
+    // Note: 20240708 gjw COMMENT OUT BUTTONS UNTIL FUNCTIONALITY MIGRATED
     //
     // I originally had these extra two buttons but UX suggests one buttont to
     // PAUSE whcih when tapped becomes RESUME and if long held it is RESET.
@@ -437,7 +439,9 @@ three dings. The blue progress circle indicates an active session.
           .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.blue.shade100,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.blue.shade900
+          : Colors.blue.shade100,
     );
 
     final guidedButton = AppButton(
@@ -455,7 +459,9 @@ audio may take a little time to download for the Web version.
           .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.purple.shade100,
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? Colors.purple.shade900
+          : Colors.purple.shade100,
     );
 
     ////////////////////////////////////
@@ -469,7 +475,8 @@ audio may take a little time to download for the Web version.
         return ChoiceChip(
           label: Text(number.toString()),
           selected: _duration == number * 60,
-          selectedColor: Colors.lightGreenAccent,
+          selectedColor:
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
             if (selected) {
@@ -501,10 +508,16 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
+        color: Theme.of(context)
+            .colorScheme
+            .surfaceContainer
+            .withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.5),
+          color: Theme.of(context)
+              .colorScheme
+              .outlineVariant
+              .withValues(alpha: 0.3),
         ),
       ),
       child: Column(
@@ -555,7 +568,10 @@ audio may take a little time to download for the Web version.
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
+                    fillColor: Theme.of(context)
+                        .colorScheme
+                        .surfaceContainer
+                        .withValues(alpha: 0.8),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -570,7 +586,10 @@ audio may take a little time to download for the Web version.
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
+                    fillColor: Theme.of(context)
+                        .colorScheme
+                        .surfaceContainer
+                        .withValues(alpha: 0.8),
                   ),
                   maxLines: 2,
                 ),

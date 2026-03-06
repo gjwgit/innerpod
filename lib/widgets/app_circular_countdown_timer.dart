@@ -68,17 +68,22 @@ class AppCircularCountDownTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return CircularCountDownTimer(
       width: 250,
       height: 250,
       duration: duration,
       controller: controller,
       autoStart: false,
-      backgroundColor: background,
-      ringColor: _spin1,
+      backgroundColor: isDark ? backgroundDark : background,
+      ringColor: isDark ? const Color(0xFF2C2C2C) : _spin1,
       fillColor: _spin2,
       strokeWidth: 20.0,
-      textStyle: const TextStyle(color: _text, fontSize: 55),
+      textStyle: TextStyle(
+        color: isDark ? const Color(0xFFF5E0C8) : _text,
+        fontSize: 55,
+      ),
       onComplete: onComplete,
       isReverse: true,
       isReverseAnimation: true,

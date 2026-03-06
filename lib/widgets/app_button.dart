@@ -69,7 +69,11 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPrimary = backgroundColor != Colors.white;
+    bool isPrimary = backgroundColor != Colors.white &&
+        backgroundColor != Colors.black &&
+        backgroundColor != Colors.transparent;
+
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return SizedBox(
       height: 52,
@@ -83,18 +87,24 @@ class AppButton extends StatelessWidget {
             colors: isPrimary
                 ? [
                     backgroundColor,
-                    Color.lerp(backgroundColor, Colors.black, 0.05)!,
+                    Color.lerp(
+                      backgroundColor,
+                      isDark ? Colors.white : Colors.black,
+                      0.15,
+                    )!,
                   ]
                 : [
-                    Colors.white,
-                    const Color(0xFFFDF7F0),
+                    isDark ? const Color(0xFF2C2C2C) : Colors.white,
+                    isDark ? const Color(0xFF1A1A1A) : const Color(0xFFFDF7F0),
                   ],
           ),
           boxShadow: [
             BoxShadow(
               color: isPrimary
                   ? backgroundColor.withValues(alpha: 0.3)
-                  : Colors.grey.withValues(alpha: 0.1),
+                  : (isDark
+                      ? Colors.black26
+                      : Colors.grey.withValues(alpha: 0.1)),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -114,10 +124,12 @@ class AppButton extends StatelessWidget {
                     fontSize: fontSize,
                     fontWeight: isPrimary ? FontWeight.bold : fontWeight,
                     color: isPrimary
-                        ? (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
+                        ? (isDark
+                            ? Colors.white.withValues(alpha: 0.9)
                             : Colors.black87)
-                        : const Color(0xFF5D4037),
+                        : (isDark
+                            ? const Color(0xFFF5E0C8)
+                            : const Color(0xFF5D4037)),
                     letterSpacing: 0.5,
                   ),
                 ),

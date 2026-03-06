@@ -130,6 +130,12 @@ class HomeState extends State<Home> {
     }
   }
 
+  void _toggleTheme() async {
+    themeNotifier.toggleTheme();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDark', themeNotifier.isDarkMode);
+  }
+
   final List<Widget> _pages = <Widget>[
     const Timer(key: PageStorageKey('timer_page')),
     const Instructions(key: PageStorageKey('text_page')),
@@ -160,7 +166,7 @@ class HomeState extends State<Home> {
             ),
           ],
         ),
-        backgroundColor: border,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         actions: [
           Center(
             child: GestureDetector(
@@ -189,6 +195,22 @@ class HomeState extends State<Home> {
                 ),
               ),
             ),
+          ),
+          const SizedBox(width: 8),
+          ListenableBuilder(
+            listenable: themeNotifier,
+            builder: (context, child) {
+              return IconButton(
+                icon: Icon(
+                  themeNotifier.isDarkMode
+                      ? Icons.light_mode_outlined
+                      : Icons.dark_mode_outlined,
+                  size: 24,
+                ),
+                onPressed: _toggleTheme,
+                tooltip: 'Toggle light/dark mode',
+              );
+            },
           ),
           const SizedBox(width: 8),
           IconButton(

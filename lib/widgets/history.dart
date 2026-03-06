@@ -404,7 +404,7 @@ class _HistoryState extends State<History> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primaryContainer
-                                      .withValues(alpha: 0.5),
+                                      .withValues(alpha: 0.7),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
@@ -425,7 +425,9 @@ class _HistoryState extends State<History> {
                                           session['date']!,
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Colors.grey[600],
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurfaceVariant,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -458,7 +460,9 @@ class _HistoryState extends State<History> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: Colors.grey[600],
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurfaceVariant,
                                         ),
                                       ),
                                     const SizedBox(height: 4),
@@ -466,7 +470,9 @@ class _HistoryState extends State<History> {
                                       '${session['start']} - ${session['end']}',
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: Colors.grey[500],
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .outline,
                                       ),
                                     ),
                                   ],

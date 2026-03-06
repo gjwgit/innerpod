@@ -33,10 +33,36 @@ import 'package:flutter/material.dart';
 // const background = Color(0xFFF5E0C8);
 
 const background = Color(0xFFF0D1AD);
+const backgroundDark = Color(0xFF1A1A1A);
 
 /// A lighter colour for the top and bottom (navbar) elements of the app.
-
 const border = Color(0xFFF5E0C8);
+const borderDark = Color(0xFF2C2C2C);
 
 /// A color for error messages or destructive actions.
 const error = Colors.redAccent;
+
+/// Theme management.
+class ThemeNotifier extends ChangeNotifier {
+  static final ThemeNotifier _instance = ThemeNotifier._internal();
+  factory ThemeNotifier() => _instance;
+  ThemeNotifier._internal();
+
+  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode get themeMode => _themeMode;
+
+  bool get isDarkMode => _themeMode == ThemeMode.dark;
+
+  void toggleTheme() {
+    _themeMode =
+        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+
+  set themeMode(ThemeMode mode) {
+    _themeMode = mode;
+    notifyListeners();
+  }
+}
+
+final themeNotifier = ThemeNotifier();
