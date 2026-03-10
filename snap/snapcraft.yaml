@@ -4,7 +4,7 @@ summary: A session timer with session logged to your Solid Pod
 description: |
   A session timer typically used for silent meditation.
 
-base: core22
+base: core24
 grade: stable
 confinement: strict
 
@@ -14,15 +14,18 @@ apps:
     extensions: [gnome] # gnome includes the libraries required by flutter
     plugs:
       - audio-playback
-      - pulseaudio
       - desktop
       - desktop-legacy
+      - pulseaudio
       - wayland
       - x11
       - opengl
       - network
       - home
       - screen-inhibit-control
+      - network-bind
+      - password-manager-service
+      - secret-service
 
 # 20251013 gjw The `flutter_secure_storage` package (and maybe
 # `vault_storage`) is used by `solidpod/solidui` to save secrets
@@ -66,6 +69,8 @@ parts:
       - clang
       - cmake
       - llvm
+      - git
+      - pkg-config
       - ninja-build
       - libgtk-3-dev
       - libblkid-dev
@@ -73,9 +78,18 @@ parts:
       - libgstreamer1.0-dev
       - libgstreamer-plugins-base1.0-dev
       - libgstreamer-plugins-good1.0-dev
+      - libsecret-1-dev
+      - libjsoncpp-dev
+      - libssl-dev
+      - lld
+      - binutils
     stage-packages:
       - libgstreamer1.0-0
       - libgstreamer-plugins-base1.0-0
       - libgstreamer-plugins-good1.0-0
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-base
+      - libsecret-1-0
+      - libjsoncpp-dev
+      - libssl3
+      - libgtk-3-0
