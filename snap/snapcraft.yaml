@@ -43,8 +43,8 @@ apps:
 #      - libjsoncpp-dev
 #
 # 20251013 gjw If using the `audioplayers` package for flutter then
-# the gstreamer packages are required for bulding the installer 
-# running the app. 
+# the gstreamer packages are required for bulding the installer
+# running the app.
 #
 #    build-packages:
 #      - libgstreamer1.0-dev
@@ -65,6 +65,7 @@ parts:
     build-packages:
       - clang
       - cmake
+      - llvm
       - ninja-build
       - libgtk-3-dev
       - libblkid-dev
