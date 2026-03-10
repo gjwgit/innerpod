@@ -25,7 +25,6 @@ apps:
       - screen-inhibit-control
       - network-bind
       - password-manager-service
-      - secret-service
 
 # 20251013 gjw The `flutter_secure_storage` package (and maybe
 # `vault_storage`) is used by `solidpod/solidui` to save secrets
