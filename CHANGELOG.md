@@ -33,6 +33,8 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
++ Prompt for security key when required [1.8.8 20260312 amogh]
++ Add a delete all history [1.8.7 20260312 amogh]
 + Add INTERENET permission for Android [1.8.6 20260302 gjw]
 + Volume of Tibetan bell to 0.7 and duration to 9s [1.8.5 20260302 gjw]
 + Updated choice of colour for the spin [1.8.4 20260227 gjw]

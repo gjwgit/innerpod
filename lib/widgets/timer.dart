@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Saturday 2026-02-28 07:05:51 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 10:02:42 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -337,20 +337,19 @@ class TimerState extends State<Timer> {
       _startTime = null;
       _titleController.clear();
       _descriptionController.clear();
-    } on SecurityKeyNotAvailableException {
-      debugPrint('Security key missing - cannot save session. Prompting user.');
-      if (mounted) {
-        await getKeyFromUserIfRequired(context, widget);
-        if (mounted) {
-          // Retry saving session after popup closes
-          await _saveSession();
-        }
-      }
     } catch (e) {
-      logMessage('Error saving session to Pod: $e');
-      _startTime = null;
-      _titleController.clear();
-      _descriptionController.clear();
+      if (e.toString().contains('You must first set the security key!')) {
+        debugPrint(
+          'Security key missing - cannot save session. Prompting user.',
+        );
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) {
+            await _saveSession();
+          }
+        }
+        return;
+      }
     }
   }
 
