@@ -26,7 +26,9 @@
 library;
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// A reusable markdown body widget with selectable text and clickable links.
@@ -50,11 +52,48 @@ class AppMarkdownBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return MarkdownBody(
       data: data,
       selectable: selectable,
       softLineBreak: true,
-      styleSheet: styleSheet,
+      styleSheet: styleSheet ??
+          MarkdownStyleSheet(
+            p: GoogleFonts.outfit(
+              fontSize: 16,
+              height: 1.6,
+              color: const Color(0xFF4A3427),
+            ),
+            h1: GoogleFonts.outfit(
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xFF2D1B0E),
+              letterSpacing: -0.5,
+            ),
+            h2: GoogleFonts.outfit(
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF2D1B0E),
+              letterSpacing: -0.3,
+            ),
+            a: GoogleFonts.outfit(
+              color: theme.colorScheme.primary,
+              fontWeight: FontWeight.w600,
+              decoration: TextDecoration.underline,
+            ),
+            listBullet: GoogleFonts.outfit(
+              color: theme.colorScheme.primary,
+            ),
+            blockquote: GoogleFonts.outfit(
+              color: Colors.grey.shade700,
+              fontStyle: FontStyle.italic,
+            ),
+            blockquoteDecoration: BoxDecoration(
+              color: theme.colorScheme.primary.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
       onTapLink: (text, href, title) async {
         if (href != null) {
           final url = Uri.parse(href);

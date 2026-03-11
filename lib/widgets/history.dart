@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Thursday 2026-02-19 20:39:57 +1100 Graham Williams>
+// Time-stamp: <Sunday 2026-03-01 05:46:19 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -34,6 +34,7 @@ import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/constants/colours.dart' as colours;
 
@@ -340,7 +341,6 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Session History'),
         automaticallyImplyLeading: false, // Don't show back button
@@ -372,12 +372,12 @@ class _HistoryState extends State<History> {
                       Icon(
                         Icons.history,
                         size: 64,
-                        color: Colors.grey.withValues(alpha: 0.5),
+                        color: historyNoneColor,
                       ),
                       const SizedBox(height: 16),
-                      const Text(
+                      Text(
                         'No sessions recorded yet.',
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        style: TextStyle(color: historyNoneColor, fontSize: 16),
                       ),
                     ],
                   ),
@@ -425,7 +425,7 @@ class _HistoryState extends State<History> {
                                           session['date']!,
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Colors.grey[600],
+                                            color: historyIncidentalColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -443,9 +443,7 @@ class _HistoryState extends State<History> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      session['title']!.isEmpty
-                                          ? 'Session'
-                                          : session['title']!,
+                                      session['title']!,
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -458,7 +456,7 @@ class _HistoryState extends State<History> {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 13,
-                                          color: Colors.grey[600],
+                                          color: historyIncidentalColor,
                                         ),
                                       ),
                                     const SizedBox(height: 4),
@@ -466,7 +464,7 @@ class _HistoryState extends State<History> {
                                       '${session['start']} - ${session['end']}',
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: Colors.grey[500],
+                                        color: historyIncidentalColor,
                                       ),
                                     ),
                                   ],
@@ -486,7 +484,11 @@ class _HistoryState extends State<History> {
                                     icon: const Icon(
                                       Icons.delete_outline,
                                       size: 20,
+<<<<<<< feature/delete-all-history-65
                                       color: colours.error,
+=======
+                                      color: historyDeleteColor,
+>>>>>>> dev
                                     ),
                                     onPressed: () =>
                                         _deleteSession(session['rawStart']!),

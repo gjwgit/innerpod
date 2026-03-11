@@ -10,7 +10,11 @@ FILES=(
     .pubignore ${SCRIPTS}/pubignore
     .github/workflows/ci.yaml ${SCRIPTS}/github/workflows/ci.yaml
     .github/workflows/installers.yaml ${SCRIPTS}/github/workflows/installers.yaml
+    .github/pull_request_template.md ${SCRIPTS}/github/pull_request_template.md
+    Makefile ${SCRIPTS}/Makefile.tmpl
+    installers/update.sh ${SCRIPTS}/installers/update.sh
     support/flutter.mk  ${SCRIPTS}/../support/flutter.mk
+    support/git.mk  ${SCRIPTS}/../support/git.mk
     support/loc.sh  ${SCRIPTS}/../support/loc.sh
     support/update.sh  ${SCRIPTS}/../support/update.sh
 )
@@ -32,17 +36,54 @@ for ((i=0; i < length; i+=2)); do
 
     if [ -f "$f1" ] && [ -f "$f2" ]; then
 	# 20260217 gjw For license.dart do not consider the first line
-	# in the comparison.
+	# in the comparison nor the 5th line which might be Copyright
+	# SII or Togaware.
 
 	if [[ "$f1" == "license.dart" ]]; then
-	    if diff <(sed '1d' "$f1") <(sed '1d' "$f2") >/dev/null; then
+	    if diff <(sed '1d;5d' "$f1") <(sed '1d;5d' "$f2") >/dev/null; then
 		echo "IDENTICAL $f1 $f2"
 	    else
 		echo "MELD      $f1 $f2"
 		meld "$f1" "$f2" 2> /dev/null
 	    fi
-	else
-	    if cmp -s "$f1" "$f2"; then
+
+	# 20260220 gjw For the installers workflow we expect the APP
+	# and LINUX_PKGS to differ so ignore those lines.
+
+	elif [[ "$f1" == ".github/workflows/installers.yaml" ]]; then
+	    if diff <(grep -v '^  APP:' "$f1" | grep -v '^  LINUX_PKGS:') <(grep -v '^  APP:' "$f2" | grep -v '^  LINUX_PKGS:') >/dev/null; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
+
+	# 20260306 gjw For the Makefile we expect the REPO, RLOC, and
+	# DWLD to differ so ignore those lines.
+
+	elif [[ "$f1" == "Makefile" ]]; then
+	    if diff <(grep -v '^REPO=' "$f1" | grep -v '^RLOC=' | grep -v '^DWLD=') <(grep -v '^REPO=' "$f2" | grep -v '^RLOC=' | grep -v '^DWLD=') >/dev/null; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
+
+	# 20260306 gjw For the installers uploader we expect the HOST
+	# and FLDR to differ so ignore those lines.
+
+	elif [[ "$f1" == "installers/update.sh" ]]; then
+	    if diff <(grep -v '^HOST=' "$f1" | grep -v '^FLDR=') <(grep -v '^HOST=' "$f2" | grep -v '^FLDR=') >/dev/null; then
+		echo "IDENTICAL $f1 $f2"
+	    else
+		echo "MELD      $f1 $f2"
+		meld "$f1" "$f2" 2> /dev/null
+	    fi
+
+	# 20260306 gjw Otherwise do a straightforward comparison.
+
+        else
+	   if cmp -s "$f1" "$f2"; then
 		echo "IDENTICAL $f1 $f2"
 	    else
 		echo "MELD      $f1 $f2"

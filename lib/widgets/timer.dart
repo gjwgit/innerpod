@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-02-19 19:57:31 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-02-28 07:05:51 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -37,12 +37,14 @@ import 'package:solidui/solidui.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:innerpod/constants/audio.dart';
+import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/constants/spacing.dart';
 import 'package:innerpod/utils/ding_dong.dart';
 import 'package:innerpod/utils/log_message.dart';
 import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/app_button.dart';
 import 'package:innerpod/widgets/app_circular_countdown_timer.dart';
+import 'package:innerpod/widgets/premium_text_field.dart';
 
 /// The default session length is 20 minutes. That seems to be a world wide
 /// default. We only utilise this constant in this file (at least for now).
@@ -73,6 +75,10 @@ class TimerState extends State<Timer> {
   // Track whether a final audio is required at the end of a session.
 
   var _isGuided = false;
+
+  // Track whether the timer is currently paused.
+
+  var _isPaused = false;
 
   // Record the currently selected duration for the session, as seconds.
 
@@ -149,10 +155,12 @@ class TimerState extends State<Timer> {
   }
 
   /// Helper to play an audio source and wait for it to complete.
-  Future<void> _play(Source source) async {
+
+  Future<void> _play(Source source, {double volume = 1.0}) async {
     if (!mounted) return;
     try {
       await _player.stop();
+      await _player.setVolume(volume);
       await _player.play(source);
       // Wait for the audio to finish playing.
       await _player.onPlayerComplete.first;
@@ -167,9 +175,10 @@ class TimerState extends State<Timer> {
 
   void _reset() {
     _player.stop();
-    _controller.restart();
+    _controller.restart(duration: _duration);
     _controller.pause();
     _isGuided = false;
+    _isPaused = false;
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -203,9 +212,9 @@ class TimerState extends State<Timer> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
 
-    await _play(dong);
-    if (!mounted) return;
-    _controller.restart();
+    dingDong(_player);
+
+    _controller.restart(duration: _duration);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -243,9 +252,9 @@ class TimerState extends State<Timer> {
 
     // The introductions are complete. We play the dings and start the timer.
 
-    await _play(dong);
-    if (!mounted) return;
-    _controller.restart();
+    dingDong(_player);
+
+    _controller.restart(duration: _duration);
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -259,7 +268,7 @@ class TimerState extends State<Timer> {
 
     // Only play audio and wait if still mounted
     if (mounted) {
-      await _play(dong);
+      await _play(dong, volume: bellVolume);
     }
 
     // Check mounted state again after the dings
@@ -275,6 +284,7 @@ class TimerState extends State<Timer> {
         // Use inline play logic instead of _play() because _play() calls stop()
         // which might fail on a released player, preventing play() from running.
         try {
+          await _player.setVolume(1.0);
           await _player.play(sessionOutro);
           await _player.onPlayerComplete.first;
         } catch (e) {
@@ -314,6 +324,9 @@ class TimerState extends State<Timer> {
       } on ResourceNotExistException {
         // File doesn't exist yet, we'll create it.
         debugPrint('sessions.ttl does not exist, creating new file.');
+        content = null;
+      } catch (e) {
+        logMessage('Error reading sessions.ttl: $e');
         content = null;
       }
 
@@ -372,7 +385,7 @@ circle indicates an active session.
         if (mounted) {
           _reset();
           dingDong(_player);
-          _controller.restart();
+          _controller.restart(duration: _duration);
           _stopSleep();
           setState(() {
             _sessionType = 'bell';
@@ -381,49 +394,44 @@ circle indicates an active session.
         }
       },
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.lightGreenAccent.shade100,
+      backgroundColor: startBackgroundColor,
     );
 
-    final pauseButton = AppButton(
-      title: 'Pause',
-      tooltip: '''
+    final pauseResumeButton = AppButton(
+      title: _isPaused ? 'Resume' : 'Pause',
+      tooltip: _isPaused
+          ? '''
 
-Tap here to Pause the timer and the audio.  They can be resumed with a press
+Tap here to Resume the timer and the audio from where they were paused.
+
+'''
+              .trim()
+          : '''
+
+Tap here to Pause the timer and the audio. They can be resumed with a press
 of the Resume button.
 
 '''
-          .trim(),
+              .trim(),
       onPressed: () {
-        _controller.pause();
-        _player.pause();
-        _allowSleep();
+        setState(() {
+          if (_isPaused) {
+            // Resume the timer and audio.
+            _controller.resume();
+            _player.resume();
+            _stopSleep();
+            _isPaused = false;
+          } else {
+            // Pause the timer and audio.
+            _controller.pause();
+            _player.pause();
+            _allowSleep();
+            _isPaused = true;
+          }
+        });
       },
+      backgroundColor: pauseBackgroundColor,
     );
-
-    // TODO 20240708 gjw COMMENT OUT BUTTONS UNTIL FUINCTIONALITY MIGRATED
-    //
-    // I originally had these extra two buttons but UX suggests one buttont to
-    // PAUSE whcih when tapped becomes RESUME and if long held it is RESET.
-
-    // final resumeButton = AppButton(
-    //   title: 'Resume',
-    //   tooltip: 'After a Pause the timer and the audio can be resumed '
-    //       'with a press of the Resume button.',
-    //   onPressed: () {
-    //     _controller.resume();
-    //     _player.resume();
-    //     _stopSleep();
-    //   },
-    // );
-
-    // final resetButton = AppButton(
-    //     title: 'Reset',
-    //     tooltip: 'Press here to reset the session. The count down timer '
-    //         'and the audio is stopped.',
-    //     onPressed: () {
-    //       _reset();
-    //       _allowSleep();
-    //     });
 
     final introButton = AppButton(
       title: 'Intro',
@@ -437,7 +445,7 @@ three dings. The blue progress circle indicates an active session.
           .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.blue.shade100,
+      backgroundColor: introBackgroundColor,
     );
 
     final guidedButton = AppButton(
@@ -455,7 +463,7 @@ audio may take a little time to download for the Web version.
           .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.purple.shade100,
+      backgroundColor: guidedBackgroundColor,
     );
 
     ////////////////////////////////////
@@ -468,8 +476,10 @@ audio may take a little time to download for the Web version.
       children: [5, 10, 15, 20, 25, 30].map((number) {
         return ChoiceChip(
           label: Text(number.toString()),
+
+          labelStyle: TextStyle(color: durationTextColor),
           selected: _duration == number * 60,
-          selectedColor: Colors.lightGreenAccent,
+          selectedColor: durationBackgroundColor,
           showCheckmark: false, // This will hide the tick mark.
           onSelected: (selected) {
             if (selected) {
@@ -501,11 +511,9 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
+        color: functionsBackgroundColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.5),
-        ),
+        border: Border.all(color: functionsBackgroundColor),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -524,7 +532,7 @@ audio may take a little time to download for the Web version.
             children: [
               guidedButton,
               const SizedBox(width: widthSpacer),
-              pauseButton,
+              pauseResumeButton,
             ],
           ),
           const SizedBox(height: 32),
@@ -533,8 +541,9 @@ audio may take a little time to download for the Web version.
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
-              color:
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 12),
@@ -544,34 +553,18 @@ audio may take a little time to download for the Web version.
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
-                TextField(
+                PremiumTextField(
                   controller: _titleController,
-                  decoration: InputDecoration(
-                    labelText: 'Title',
-                    hintText: 'Enter session title (optional)',
-                    prefixIcon: const Icon(Icons.label_outline),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'Title',
+                  hintText: 'Enter session title (optional)',
+                  icon: Icons.label_outline,
                 ),
                 const SizedBox(height: 12),
-                TextField(
+                PremiumTextField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'Enter session description (optional)',
-                    prefixIcon: const Icon(Icons.notes),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
-                  ),
+                  labelText: 'Description',
+                  hintText: 'Enter session description (optional)',
+                  icon: Icons.notes,
                   maxLines: 2,
                 ),
               ],

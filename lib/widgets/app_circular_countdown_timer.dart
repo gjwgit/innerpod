@@ -1,6 +1,6 @@
 /// The default circular countdown style for the app.
 ///
-/// Copyright (C) 2024, Togaware Pty Ltd.
+/// Copyright (C) 2024-2026, Togaware Pty Ltd.
 ///
 /// License: https://opensource.org/license/gpl-3-0
 ///
@@ -28,19 +28,6 @@ import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
 import 'package:innerpod/constants/colours.dart';
-
-// CIRCULAR TIMER COLOURS
-
-// Choose colours for the internal background of the timer and the gradient
-// of the timer neon.
-
-const _text = Colors.black;
-
-// const spin1 = Color(0xFFFFB31A);
-// const spin2 = Color(0xFFB08261);
-
-const _spin1 = Colors.white;
-final _spin2 = Colors.blueAccent.shade700;
 
 /// A [CircularCountDownTimer] with defaults for the app.
 
@@ -74,11 +61,11 @@ class AppCircularCountDownTimer extends StatelessWidget {
       duration: duration,
       controller: controller,
       autoStart: false,
-      backgroundColor: background,
-      ringColor: _spin1,
-      fillColor: _spin2,
+      backgroundColor: timerCentralColor,
+      ringColor: spinBackgroundColor,
+      fillColor: spinColor,
       strokeWidth: 20.0,
-      textStyle: const TextStyle(color: _text, fontSize: 55),
+      textStyle: const TextStyle(color: timerTextColor, fontSize: 55),
       onComplete: onComplete,
       isReverse: true,
       isReverseAnimation: true,
