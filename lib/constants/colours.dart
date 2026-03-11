@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Sunday 2026-03-01 05:59:30 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 08:58:19 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -104,13 +104,12 @@ final functionsBackgroundColor = Colors.white;
 const instructionsBarColor = Colors.transparent;
 const instructionsUnselectedColor = Colors.grey;
 
-<<<<<<< feature/delete-all-history-65
 const border = Color(0xFFF5E0C8);
 
 /// A color for error messages or destructive actions.
+
 const error = Colors.redAccent;
-=======
+
 final historyIncidentalColor = Colors.grey[600];
 const historyDeleteColor = Colors.redAccent;
 final historyNoneColor = Colors.grey.withValues(alpha: 0.5);
->>>>>>> dev

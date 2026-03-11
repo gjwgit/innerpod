@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Sunday 2026-03-01 05:46:19 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 08:58:39 +1100 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -484,11 +484,7 @@ class _HistoryState extends State<History> {
                                     icon: const Icon(
                                       Icons.delete_outline,
                                       size: 20,
-<<<<<<< feature/delete-all-history-65
-                                      color: colours.error,
-=======
                                       color: historyDeleteColor,
->>>>>>> dev
                                     ),
                                     onPressed: () =>
                                         _deleteSession(session['rawStart']!),
