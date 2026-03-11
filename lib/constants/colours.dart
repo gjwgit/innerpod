@@ -104,6 +104,13 @@ final functionsBackgroundColor = Colors.white;
 const instructionsBarColor = Colors.transparent;
 const instructionsUnselectedColor = Colors.grey;
 
+<<<<<<< feature/delete-all-history-65
+const border = Color(0xFFF5E0C8);
+
+/// A color for error messages or destructive actions.
+const error = Colors.redAccent;
+=======
 final historyIncidentalColor = Colors.grey[600];
 const historyDeleteColor = Colors.redAccent;
 final historyNoneColor = Colors.grey.withValues(alpha: 0.5);
+>>>>>>> dev
