@@ -29,9 +29,10 @@ apps:
 # 20251013 gjw The `flutter_secure_storage` package (and maybe
 # `vault_storage`) is used by `solidpod/solidui` to save secrets
 # locally, if the app provides this option to the user to do so. Thus
-# `libsecret-1-dev` and `libjsoncpp-dev` are required to build the
-# installer and `libsecret-1-0` and `libjsoncpp1` to run the
-# application. See
+# `libsecret-1-dev`, `libjsoncpp-dev`, `llvm`, and `lld` at least are
+# required to build the installer and `libsecret-1-0` and
+# `libjsoncpp1` to run the application. There may be more that are
+# included below and need to test their removal to test. See
 #
 # https://github.com/juliansteenbakker/flutter_secure_storage/blob/develop/README.md
 # https://pub.dev/packages/vault_storage/versions/2.2.0#platform-setup
@@ -39,6 +40,8 @@ apps:
 #    build-packages:
 #      - libsecret-1-dev
 #      - libjsoncpp-dev
+#      - llvm
+#      - lld
 #
 #    stage-packages:
 #      - libsecret-1-0
