@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-03-12 10:02:42 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 10:23:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -90,7 +90,7 @@ class TimerState extends State<Timer> {
 
   // Track the session type.
 
-  String _sessionType = 'bell';
+  String _sessionType = 'none';
 
   ////////////////////////////////////////////////////////////////////////
   // CONSTANTS
@@ -179,6 +179,7 @@ class TimerState extends State<Timer> {
     _controller.pause();
     _isGuided = false;
     _isPaused = false;
+    _sessionType = 'none';
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -266,6 +267,8 @@ class TimerState extends State<Timer> {
 
     logMessage('Session Completed');
 
+    final typeToSave = _sessionType;
+
     // Only play audio and wait if still mounted
     if (mounted) {
       await _play(dong, volume: bellVolume);
@@ -301,17 +304,18 @@ class TimerState extends State<Timer> {
 
     // Always attempt to save the session, even if navigate away
     // _saveSession handles its own internal null checks
-    await _saveSession();
+
+    await _saveSession(typeOverride: typeToSave);
   }
 
-  Future<void> _saveSession() async {
+  Future<void> _saveSession({String? typeOverride}) async {
     if (_startTime == null) return;
 
     final endTime = DateTime.now();
     final session = {
       'start': _startTime!.toIso8601String(),
       'end': endTime.toIso8601String(),
-      'type': _sessionType,
+      'type': typeOverride ?? _sessionType,
       'silenceDuration': _duration,
       'title': _titleController.text,
       'description': _descriptionController.text,
@@ -345,7 +349,7 @@ class TimerState extends State<Timer> {
         if (mounted) {
           await getKeyFromUserIfRequired(context, widget);
           if (mounted) {
-            await _saveSession();
+            await _saveSession(typeOverride: typeOverride);
           }
         }
         return;
@@ -394,6 +398,7 @@ circle indicates an active session.
       },
       fontWeight: FontWeight.bold,
       backgroundColor: startBackgroundColor,
+      textColor: _sessionType == 'bell' ? Colors.blue : null,
     );
 
     final pauseResumeButton = AppButton(
@@ -445,6 +450,7 @@ three dings. The blue progress circle indicates an active session.
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: introBackgroundColor,
+      textColor: _sessionType == 'intro' ? Colors.blue : null,
     );
 
     final guidedButton = AppButton(
@@ -463,6 +469,7 @@ audio may take a little time to download for the Web version.
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: guidedBackgroundColor,
+      textColor: _sessionType == 'guided' ? Colors.blue : null,
     );
 
     ////////////////////////////////////
