@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Monday 2026-03-02 09:30:07 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 12:18:15 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -227,51 +227,59 @@ class HomeState extends State<Home> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.fromLTRB(24, 0, 24, 32),
-        height: 72,
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.8),
-          borderRadius: BorderRadius.circular(36),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.5),
-            width: 1.5,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 30,
-              offset: const Offset(0, 10),
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(36),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildNavItem(
-                0,
-                Icons.timer_outlined,
-                Icons.timer_rounded,
-                'Home',
-              ),
-              _buildNavItem(
-                1,
-                Icons.menu_book_outlined,
-                Icons.menu_book_rounded,
-                'Text',
-              ),
-              _buildNavItem(
-                2,
-                Icons.history_outlined,
-                Icons.history_rounded,
-                'History',
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar:
+          // 20260312 gjw Change the handling of the navigation bar depending on the
+          // orientation. This is assuming the landscape is on a phone and so the
+          // height is limited and the navigation bar will otherwise overlay the
+          // timer. Not true if on desktop, but we'll deal with that another time.
+
+          MediaQuery.of(context).orientation == Orientation.portrait
+              ? Container(
+                  margin: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+                  height: 72,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.8),
+                    borderRadius: BorderRadius.circular(36),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.5),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.08),
+                        blurRadius: 30,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(36),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildNavItem(
+                          0,
+                          Icons.timer_outlined,
+                          Icons.timer_rounded,
+                          'Home',
+                        ),
+                        _buildNavItem(
+                          1,
+                          Icons.menu_book_outlined,
+                          Icons.menu_book_rounded,
+                          'Text',
+                        ),
+                        _buildNavItem(
+                          2,
+                          Icons.history_outlined,
+                          Icons.history_rounded,
+                          'History',
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : null, // 20260312 gjw Hide the navigation bar in landscape mode.
     );
   }
 
