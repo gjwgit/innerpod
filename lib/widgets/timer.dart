@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-03-12 11:54:50 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 11:56:37 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -636,7 +636,8 @@ audio may take a little time to download for the Web version.
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                // 20260312 gjw Align the timer at the top for a landscape view.
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(child: Center(child: timerDisplay)),
                   const SizedBox(width: 2 * widthSpacer),
