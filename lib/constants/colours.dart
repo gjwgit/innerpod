@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Thursday 2026-03-12 12:29:14 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 13:25:35 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -30,6 +30,10 @@ import 'package:flutter/material.dart';
 const appBackgroundColor = Colors.white;
 const appButtonColor = Colors.transparent;
 final appShadowColor = Colors.black.withValues(alpha: 0.05);
+
+/// The color used for the button most recently pressed.
+
+const appSelectedColor = Colors.blue;
 
 /// The background colour of the main widget of the app.
 //

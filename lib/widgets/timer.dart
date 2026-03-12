@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-03-12 12:28:10 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 13:26:16 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -398,7 +398,7 @@ circle indicates an active session.
       },
       fontWeight: FontWeight.bold,
       backgroundColor: startBackgroundColor,
-      textColor: _sessionType == 'bell' ? Colors.blue : null,
+      textColor: _sessionType == 'bell' ? appSelectedColor : null,
     );
 
     final pauseResumeButton = AppButton(
@@ -450,7 +450,7 @@ three dings. The blue progress circle indicates an active session.
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: introBackgroundColor,
-      textColor: _sessionType == 'intro' ? Colors.blue : null,
+      textColor: _sessionType == 'intro' ? appSelectedColor : null,
     );
 
     final guidedButton = AppButton(
@@ -469,12 +469,11 @@ audio may take a little time to download for the Web version.
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: guidedBackgroundColor,
-      textColor: _sessionType == 'guided' ? Colors.blue : null,
+      textColor: _sessionType == 'guided' ? appSelectedColor : null,
     );
 
     ////////////////////////////////////
     // DURATION CHOICE
-    ////////////////////////////////////
 
     // 20260312 gjw The early versions used specific duration choices. From
     // 1.8.10 we allowed any choice between 1 and 30 minutes. So
@@ -533,10 +532,6 @@ audio may take a little time to download for the Web version.
         ),
       ],
     );
-
-    ////////////////////////////////////
-    // RETURN
-    ////////////////////////////////////
 
     final timerDisplay = AppCircularCountDownTimer(
       duration: _duration,
