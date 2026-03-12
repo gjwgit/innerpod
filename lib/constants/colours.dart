@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Thursday 2026-03-12 08:58:19 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 12:29:14 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -82,11 +82,11 @@ final startBackgroundColor = Colors.lightGreenAccent.shade100;
 
 /// Background colour of the integer duration buttons.
 
-final durationBackgroundColor = Colors.lightGreenAccent;
+//final durationBackgroundColor = Colors.lightGreenAccent;
 
 /// Colour of the text for the integer duration buttons.
 
-final durationTextColor = Colors.grey[600];
+//final durationTextColor = Colors.grey[600];
 
 /// Colour for the background of the funcation area.
 ///
@@ -104,7 +104,7 @@ final functionsBackgroundColor = Colors.white;
 const instructionsBarColor = Colors.transparent;
 const instructionsUnselectedColor = Colors.grey;
 
-const border = Color(0xFFF5E0C8);
+// const border = Color(0xFFF5E0C8);
 
 /// A color for error messages or destructive actions.
 

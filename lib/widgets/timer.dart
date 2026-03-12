@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-03-12 11:56:37 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 12:28:10 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -480,33 +480,33 @@ audio may take a little time to download for the Web version.
     // 1.8.10 we allowed any choice between 1 and 30 minutes. So
     // `durationChoice` is now deprecated.
 
-    final Widget durationChoice = Wrap(
-      spacing: 8.0, // Gap between adjacent chips.
-      runSpacing: 4.0, // Gap between lines.
-      children: [5, 10, 15, 20, 25, 30].map((number) {
-        return ChoiceChip(
-          label: Text(number.toString()),
+    // final Widget durationChoice = Wrap(
+    //   spacing: 8.0, // Gap between adjacent chips.
+    //   runSpacing: 4.0, // Gap between lines.
+    //   children: [5, 10, 15, 20, 25, 30].map((number) {
+    //     return ChoiceChip(
+    //       label: Text(number.toString()),
 
-          labelStyle: TextStyle(color: durationTextColor),
-          selected: _duration == number * 60,
-          selectedColor: durationBackgroundColor,
-          showCheckmark: false, // This will hide the tick mark.
-          onSelected: (selected) {
-            if (selected) {
-              setState(() {
-                _duration = number * 60;
-                debugPrint('CHOOSE: duration $_duration');
-                _controller.restart(duration: _duration);
-                _controller.pause();
-                _player.stop();
-                _allowSleep();
-              });
-              _saveSettings();
-            }
-          },
-        );
-      }).toList(),
-    );
+    //       labelStyle: TextStyle(color: durationTextColor),
+    //       selected: _duration == number * 60,
+    //       selectedColor: durationBackgroundColor,
+    //       showCheckmark: false, // This will hide the tick mark.
+    //       onSelected: (selected) {
+    //         if (selected) {
+    //           setState(() {
+    //             _duration = number * 60;
+    //             debugPrint('CHOOSE: duration $_duration');
+    //             _controller.restart(duration: _duration);
+    //             _controller.pause();
+    //             _player.stop();
+    //             _allowSleep();
+    //           });
+    //           _saveSettings();
+    //         }
+    //       },
+    //     );
+    //   }).toList(),
+    // );
 
     final Widget durationSlider = Column(
       spacing: 8.0,
