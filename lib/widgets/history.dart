@@ -34,9 +34,9 @@ import 'package:intl/intl.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
+import 'package:innerpod/constants/colours.dart' as colours;
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/utils/session_logic.dart';
-import 'package:innerpod/constants/colours.dart' as colours;
 
 class History extends StatefulWidget {
   const History({super.key});

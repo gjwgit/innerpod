@@ -1,6 +1,6 @@
 // A countdown timer and buttons for a session.
 //
-// Time-stamp: <Thursday 2026-03-12 10:23:35 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-03-12 11:54:50 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -476,6 +476,10 @@ audio may take a little time to download for the Web version.
     // DURATION CHOICE
     ////////////////////////////////////
 
+    // 20260312 gjw The early versions used specific duration choices. From
+    // 1.8.10 we allowed any choice between 1 and 30 minutes. So
+    // `durationChoice` is now deprecated.
+
     final Widget durationChoice = Wrap(
       spacing: 8.0, // Gap between adjacent chips.
       runSpacing: 4.0, // Gap between lines.
@@ -504,6 +508,32 @@ audio may take a little time to download for the Web version.
       }).toList(),
     );
 
+    final Widget durationSlider = Column(
+      spacing: 8.0,
+      children: [
+        Slider(
+          value: (_duration / 60).toDouble(),
+          min: 1,
+          max: 30,
+          // 20260312 gjw Create discrete steps. With 29 we get steps for each
+          // minute. Change this to 6 to get steps 5, 10, 15, ...
+          divisions: 29,
+          label: (_duration / 60).toInt().toString(),
+          onChanged: (double value) {
+            setState(() {
+              _duration = (value * 60).toInt();
+              debugPrint('CHOOSE: duration $_duration');
+              _controller.restart(duration: (_duration / 60).toInt());
+              _controller.pause();
+              _player.stop();
+              _allowSleep();
+            });
+            _saveSettings();
+          },
+        ),
+      ],
+    );
+
     ////////////////////////////////////
     // RETURN
     ////////////////////////////////////
@@ -524,6 +554,20 @@ audio may take a little time to download for the Web version.
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Text(
+            'Select duration (1-30 minutes)',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w600,
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.7),
+            ),
+          ),
+          // const SizedBox(height: 32),
+          //const SizedBox(height: 12),
+          //durationChoice,
+          durationSlider,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -541,19 +585,6 @@ audio may take a little time to download for the Web version.
               pauseResumeButton,
             ],
           ),
-          const SizedBox(height: 32),
-          Text(
-            'Select duration (minutes)',
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w600,
-              color: Theme.of(
-                context,
-              ).colorScheme.primary.withValues(alpha: 0.7),
-            ),
-          ),
-          const SizedBox(height: 12),
-          durationChoice,
           const SizedBox(height: 32),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

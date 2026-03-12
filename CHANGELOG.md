@@ -33,6 +33,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
++ Move to a slider for selection of duration [1.8.10 20260312 gjw]
 + Colour the selected button [1.8.9 20260312 amogh]
 + Prompt for security key when required [1.8.8 20260312 amogh]
 + Add a delete all history [1.8.7 20260312 amogh]
