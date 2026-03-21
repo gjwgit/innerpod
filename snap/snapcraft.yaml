@@ -8,6 +8,13 @@ base: core24
 grade: stable
 confinement: strict
 
+# 20251013 gjw Plugins that may be needed include the following, but are
+# not required for every app:
+#
+#      - audio-playback
+#      - pulseaudio
+#      - screen-inhibit-control
+
 apps:
   innerpod:
     command: innerpod
