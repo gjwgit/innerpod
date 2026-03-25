@@ -69,6 +69,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularCountDownTimer(
+      key: const ValueKey('circular_timer'),
       width: 250,
       height: 250,
       duration: duration,
