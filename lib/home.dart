@@ -29,6 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
+import 'package:solidpod/solidpod.dart';
+
+
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:innerpod/constants/colours.dart';
@@ -162,6 +165,43 @@ class HomeState extends State<Home> {
         ),
         backgroundColor: border,
         actions: [
+          FutureBuilder<bool>(
+            future: isUserLoggedIn(),
+            builder: (context, snapshot) {
+              final isLoggedIn = snapshot.data ?? false;
+              if (isLoggedIn) {
+                return IconButton(
+                  icon: const Icon(Icons.logout, size: 24),
+                  onPressed: () => logoutPopup(context, const InnerPod()),
+                  tooltip: 'Logout',
+                );
+              } else {
+                return IconButton(
+                  icon: const Icon(Icons.login, size: 24),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => const SolidPopupLogin(),
+                  ),
+                  tooltip: 'Login',
+                );
+              }
+            },
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.key, size: 24),
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => SolidSecurityKeyManager(
+                config: SolidSecurityKeyManagerConfig(
+                  appWidget: widget,
+                ),
+                onKeyStatusChanged: (status) {},
+              ),
+            ),
+            tooltip: 'Security Key',
+          ),
+          const SizedBox(width: 8),
           Center(
             child: GestureDetector(
               onTap: () async {
