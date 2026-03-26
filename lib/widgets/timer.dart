@@ -191,12 +191,15 @@ class TimerState extends State<Timer> {
     // An audio is played and then we begin the session.
 
     logMessage('Start Intro Session');
-    if (!mounted) return;
-    _reset();
-    _stopSleep();
-    _isGuided = false;
-    _sessionType = 'intro';
-    _startTime = DateTime.now();
+    if (mounted) {
+      setState(() {
+        _reset();
+        _isGuided = false;
+        _sessionType = 'intro';
+        _startTime = DateTime.now();
+      });
+      _stopSleep();
+    }
 
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
@@ -229,12 +232,15 @@ class TimerState extends State<Timer> {
     // another musical interlude.
 
     logMessage('Start Guided Session');
-    if (!mounted) return;
-    _reset();
-    _stopSleep();
-    _isGuided = true;
-    _sessionType = 'guided';
-    _startTime = DateTime.now();
+    if (mounted) {
+      setState(() {
+        _reset();
+        _isGuided = true;
+        _sessionType = 'guided';
+        _startTime = DateTime.now();
+      });
+      _stopSleep();
+    }
 
     // Good to wait a second before starting the audio after tapping the button,
     // otherwise it feels rushed.
@@ -298,7 +304,9 @@ class TimerState extends State<Timer> {
 
     // Reset controls only if still mounted to avoid AnimationController errors
     if (mounted) {
-      _reset();
+      setState(() {
+        _reset();
+      });
       _allowSleep();
     }
 
@@ -383,11 +391,11 @@ circle indicates an active session.
       onPressed: () {
         logMessage('Start Session');
         if (mounted) {
-          _reset();
           dingDong(_player);
           _controller.restart(duration: _duration);
           _stopSleep();
           setState(() {
+            _reset();
             _sessionType = 'bell';
             _startTime = DateTime.now();
           });
