@@ -370,6 +370,9 @@ class TimerState extends State<Timer> {
   Widget build(BuildContext context) {
     // Build the Timer Widget.
 
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final Color blueIndicator = isDark ? Colors.lightBlueAccent : Colors.blue;
+
     ////////////////////////////////////
     // APP BUTTONS
     ////////////////////////////////////
@@ -402,8 +405,10 @@ circle indicates an active session.
         }
       },
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.lightGreenAccent.shade100,
-      textColor: _sessionType == 'bell' ? Colors.blue : null,
+      backgroundColor: isDark
+          ? Colors.green.withValues(alpha: 0.2)
+          : Colors.lightGreenAccent.shade100,
+      textColor: _sessionType == 'bell' ? blueIndicator : null,
     );
 
     final pauseResumeButton = AppButton(
@@ -453,8 +458,9 @@ three dings. The blue progress circle indicates an active session.
           .trim(),
       onPressed: _intro,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.blue.shade100,
-      textColor: _sessionType == 'intro' ? Colors.blue : null,
+      backgroundColor:
+          isDark ? Colors.blue.withValues(alpha: 0.2) : Colors.blue.shade100,
+      textColor: _sessionType == 'intro' ? blueIndicator : null,
     );
 
     final guidedButton = AppButton(
@@ -472,8 +478,9 @@ audio may take a little time to download for the Web version.
           .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
-      backgroundColor: Colors.purple.shade100,
-      textColor: _sessionType == 'guided' ? Colors.blue : null,
+      backgroundColor:
+          isDark ? Colors.purple.withValues(alpha: 0.2) : Colors.purple.shade100,
+      textColor: _sessionType == 'guided' ? blueIndicator : null,
     );
 
     ////////////////////////////////////
@@ -520,10 +527,14 @@ audio may take a little time to download for the Web version.
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.5),
+        color: isDark
+            ? Colors.black.withValues(alpha: 0.3)
+            : Colors.white.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.5),
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.1)
+              : Colors.white.withValues(alpha: 0.5),
         ),
       ),
       child: Column(
@@ -574,7 +585,9 @@ audio may take a little time to download for the Web version.
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
+                    fillColor: isDark
+                        ? Colors.black.withValues(alpha: 0.3)
+                        : Colors.white.withValues(alpha: 0.8),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -589,7 +602,9 @@ audio may take a little time to download for the Web version.
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white.withValues(alpha: 0.8),
+                    fillColor: isDark
+                        ? Colors.black.withValues(alpha: 0.3)
+                        : Colors.white.withValues(alpha: 0.8),
                   ),
                   maxLines: 2,
                 ),

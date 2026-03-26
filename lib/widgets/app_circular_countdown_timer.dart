@@ -34,12 +34,6 @@ import 'package:innerpod/constants/colours.dart';
 // Choose colours for the internal background of the timer and the gradient
 // of the timer neon.
 
-const _text = Colors.black;
-
-// const spin1 = Color(0xFFFFB31A);
-// const spin2 = Color(0xFFB08261);
-
-const _spin1 = Colors.white;
 final _spin2 = Colors.blueAccent.shade700;
 
 /// A [CircularCountDownTimer] with defaults for the app.
@@ -68,6 +62,11 @@ class AppCircularCountDownTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final Color timerBg = isDark ? const Color(0xFF2C1E12) : background;
+    final Color textColor = isDark ? Colors.white : Colors.black;
+    final Color ringColor = isDark ? Colors.white10 : Colors.white;
+
     return CircularCountDownTimer(
       key: const ValueKey('circular_timer'),
       width: 250,
@@ -75,11 +74,11 @@ class AppCircularCountDownTimer extends StatelessWidget {
       duration: duration,
       controller: controller,
       autoStart: false,
-      backgroundColor: background,
-      ringColor: _spin1,
+      backgroundColor: timerBg,
+      ringColor: ringColor,
       fillColor: _spin2,
       strokeWidth: 20.0,
-      textStyle: const TextStyle(color: _text, fontSize: 55),
+      textStyle: TextStyle(color: textColor, fontSize: 55),
       onComplete: onComplete,
       isReverse: true,
       isReverseAnimation: true,

@@ -33,7 +33,7 @@ import 'package:solidpod/solidpod.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:innerpod/constants/colours.dart';
+import 'package:innerpod/utils/theme_provider.dart';
 import 'package:innerpod/widgets/about.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
@@ -140,7 +140,7 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -162,7 +162,7 @@ class HomeState extends State<Home> {
             ),
           ],
         ),
-        backgroundColor: border,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         actions: [
           FutureBuilder<bool>(
             future: isUserLoggedIn(),
@@ -230,6 +230,22 @@ class HomeState extends State<Home> {
             ),
           ),
           const SizedBox(width: 8),
+          ValueListenableBuilder<ThemeMode>(
+            valueListenable: ThemeProvider.themeMode,
+            builder: (context, mode, child) {
+              return IconButton(
+                icon: Icon(
+                  mode == ThemeMode.light
+                      ? Icons.dark_mode_outlined
+                      : Icons.light_mode_outlined,
+                  size: 24,
+                ),
+                onPressed: () => ThemeProvider.toggleTheme(),
+                tooltip: 'Toggle Dark/Light Mode',
+              );
+            },
+          ),
+          const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.info_outline, size: 24),
             onPressed: () => showAppAboutDialog(context),
@@ -248,7 +264,7 @@ class HomeState extends State<Home> {
               Theme.of(context)
                   .colorScheme
                   .surfaceContainerHighest
-                  .withValues(alpha: 0.3),
+                  .withValues(alpha: isDark ? 0.05 : 0.3),
             ],
           ),
         ),

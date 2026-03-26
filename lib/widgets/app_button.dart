@@ -74,7 +74,11 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPrimary = backgroundColor != Colors.white;
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final defaultBg = isDark ? const Color(0xFF2C1E12) : Colors.white;
+    final resolvedBackgroundColor =
+        backgroundColor == Colors.white ? defaultBg : backgroundColor;
+    bool isPrimary = resolvedBackgroundColor != defaultBg;
 
     return SizedBox(
       height: 52,
@@ -87,19 +91,22 @@ class AppButton extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: isPrimary
                 ? [
-                    backgroundColor,
-                    Color.lerp(backgroundColor, Colors.black, 0.05)!,
+                    resolvedBackgroundColor,
+                    Color.lerp(resolvedBackgroundColor,
+                        isDark ? Colors.white : Colors.black, 0.05)!,
                   ]
                 : [
-                    Colors.white,
-                    const Color(0xFFFDF7F0),
+                    resolvedBackgroundColor,
+                    isDark
+                        ? const Color(0xFF1A120B)
+                        : const Color(0xFFFDF7F0),
                   ],
           ),
           boxShadow: [
             BoxShadow(
               color: isPrimary
-                  ? backgroundColor.withValues(alpha: 0.3)
-                  : Colors.grey.withValues(alpha: 0.1),
+                  ? resolvedBackgroundColor.withValues(alpha: 0.3)
+                  : (isDark ? Colors.black45 : Colors.grey.withValues(alpha: 0.1)),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -120,10 +127,8 @@ class AppButton extends StatelessWidget {
                     fontWeight: isPrimary ? FontWeight.bold : fontWeight,
                     color: textColor ??
                         (isPrimary
-                            ? (Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white
-                                : Colors.black87)
-                            : const Color(0xFF5D4037)),
+                            ? (isDark ? Colors.white : Colors.black87)
+                            : (isDark ? Colors.white70 : const Color(0xFF5D4037))),
                     letterSpacing: 0.5,
                   ),
                 ),
