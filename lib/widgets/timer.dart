@@ -478,8 +478,9 @@ audio may take a little time to download for the Web version.
           .trim(),
       onPressed: _guided,
       fontWeight: FontWeight.bold,
-      backgroundColor:
-          isDark ? Colors.purple.withValues(alpha: 0.2) : Colors.purple.shade100,
+      backgroundColor: isDark
+          ? Colors.purple.withValues(alpha: 0.2)
+          : Colors.purple.shade100,
       textColor: _sessionType == 'guided' ? blueIndicator : null,
     );
 

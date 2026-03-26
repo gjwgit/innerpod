@@ -297,14 +297,18 @@ class _HistoryState extends State<History> {
                       Icon(
                         Icons.history,
                         size: 64,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurfaceVariant
+                            .withValues(alpha: 0.5),
                       ),
                       const SizedBox(height: 16),
                       Text(
                         'No sessions recorded yet.',
                         style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            fontSize: 16),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          fontSize: 16,
+                        ),
                       ),
                     ],
                   ),
@@ -352,7 +356,9 @@ class _HistoryState extends State<History> {
                                           session['date']!,
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurfaceVariant,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -384,10 +390,12 @@ class _HistoryState extends State<History> {
                                         session['description']!,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                          ),
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurfaceVariant,
+                                        ),
                                       ),
                                     const SizedBox(height: 4),
                                     Text(

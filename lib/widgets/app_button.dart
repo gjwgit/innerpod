@@ -93,20 +93,20 @@ class AppButton extends StatelessWidget {
                 ? [
                     resolvedBackgroundColor,
                     Color.lerp(resolvedBackgroundColor,
-                        isDark ? Colors.white : Colors.black, 0.05)!,
+                        isDark ? Colors.white : Colors.black, 0.05,)!,
                   ]
                 : [
                     resolvedBackgroundColor,
-                    isDark
-                        ? const Color(0xFF1A120B)
-                        : const Color(0xFFFDF7F0),
+                    isDark ? const Color(0xFF1A120B) : const Color(0xFFFDF7F0),
                   ],
           ),
           boxShadow: [
             BoxShadow(
               color: isPrimary
                   ? resolvedBackgroundColor.withValues(alpha: 0.3)
-                  : (isDark ? Colors.black45 : Colors.grey.withValues(alpha: 0.1)),
+                  : (isDark
+                      ? Colors.black45
+                      : Colors.grey.withValues(alpha: 0.1)),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -128,7 +128,9 @@ class AppButton extends StatelessWidget {
                     color: textColor ??
                         (isPrimary
                             ? (isDark ? Colors.white : Colors.black87)
-                            : (isDark ? Colors.white70 : const Color(0xFF5D4037))),
+                            : (isDark
+                                ? Colors.white70
+                                : const Color(0xFF5D4037))),
                     letterSpacing: 0.5,
                   ),
                 ),

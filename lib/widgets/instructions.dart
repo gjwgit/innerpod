@@ -53,7 +53,8 @@ class Instructions extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.label,
             indicatorWeight: 3,
             labelColor: Theme.of(context).colorScheme.primary,
-            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
+            unselectedLabelColor:
+                Theme.of(context).colorScheme.onSurfaceVariant,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold),
             tabs: const [
               Tab(text: 'Guide'),
