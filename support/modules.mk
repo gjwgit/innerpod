@@ -4,6 +4,7 @@
 # Often the support Makefiles will be in the local support folder, or
 # else installed in the local user's shares.
 
+INC_LOCAL    ?= $(INC_BASE)/local.mk
 INC_CLEAN    ?= $(INC_BASE)/clean.mk
 INC_BOOKDOWN ?= $(INC_BASE)/bookdown.mk
 INC_R        ?= $(INC_BASE)/r.mk
@@ -19,8 +20,10 @@ INC_JEKYLL   ?= $(INC_BASE)/jekyll.mk
 INC_MLHUB    ?= $(INC_BASE)/mlhub.mk
 INC_WEBCAM   ?= $(INC_BASE)/webcam.mk
 INC_INSTALL  ?= $(INC_BASE)/install.mk
-INC_INNERPOD ?= $(INC_BASE)/innerpod.mk
 
+ifneq ("$(wildcard $(INC_LOCAL))","")
+  include $(INC_LOCAL)
+endif
 ifneq ("$(wildcard $(INC_CLEAN))","")
   include $(INC_CLEAN)
 endif
@@ -35,6 +38,9 @@ ifneq ("$(wildcard $(INC_KNITR))","")
 endif
 ifneq ("$(wildcard $(INC_PANDOC))","")
   include $(INC_PANDOC)
+endif
+ifneq ("$(wildcard $(INC_FLUTTER))","")
+  include $(INC_FLUTTER)
 endif
 ifneq ("$(wildcard $(INC_GIT))","")
   include $(INC_GIT)
@@ -59,9 +65,6 @@ ifneq ("$(wildcard $(INC_MLHUB))","")
 endif
 ifneq ("$(wildcard $(INC_WEBCAM))","")
   include $(INC_WEBCAM)
-endif
-ifneq ("$(wildcard $(INC_FLUTTER))","")
-  include $(INC_FLUTTER)
 endif
 ifneq ("$(wildcard $(INC_INSTALL))","")
   include $(INC_INSTALL)

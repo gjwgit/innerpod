@@ -26,17 +26,20 @@ Priority: optional
 Architecture: amd64
 Depends: libgtk-3-0, libblkid1, liblzma5
 Maintainer: Graham Williams <graham.williams@togaware.com>
-Description: A meditation timer
- A detailed description of Innerpod
- spanning multiple lines if needed.
+Description: A meditation session timer
+ Innerpod is an app to support timed sessions, including
+ mediation or mindfulness sessions. Sessions begin and conclude
+ with three bells. Sessions can be recorded to you secure and
+ privet Data Vault hosted via your personal online datastore
+ (POD) on a SOlid server.
 EOL
 
 # Create desktop entry.
 
-cat > ${APP}_${VER}_amd64/usr/share/applications/${APP}.desktop << EOL
+cat > ${APP}_${VER}_amd64/usr/share/applications/com.togaware.${APP}.desktop << EOL
 [Desktop Entry]
-Name=Innerpod
-Comment=Innerpod Meditation Timer
+Name=${APP}
+Comment=A meditation/mindfulness session timer with data stored securely and privately.
 Exec=/usr/bin/${APP}
 Icon=${APP}
 Terminal=false
@@ -55,7 +58,7 @@ cp -r ../build/linux/x64/release/bundle/* ${APP}_${VER}_amd64/usr/lib/${APP}/
 # Copy the app icon which is assumed to be named ${APP}.png in the
 # installers folder.
 
-cp ${APP}.png ${APP}_${VER}_amd64/usr/share/icons/hicolor/512x512/apps/
+cp ../assets/images/app_icon.png ${APP}_${VER}_amd64/usr/share/icons/hicolor/512x512/apps/${APP}.png
 
 # Set correct permissions.
 

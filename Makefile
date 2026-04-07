@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Saturday 2026-01-03 16:58:59 +1100 Graham Williams>
+# Time-stamp: <Tuesday 2026-04-07 16:32:53 +1000 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -188,3 +188,13 @@ ginfo:
 	else \
 		echo "No bump ID found."; \
 	fi
+
+.PHONY: zip
+zip:
+	rm -f ignore/$(APP)_lib.zip
+	zip -r ignore/$(APP)_lib.zip lib pubspec.yaml
+	open ignore/$(APP)_lib.zip
+
+.PHONY: claude
+claude:
+	bash support/meld_zip_from_claude.sh
