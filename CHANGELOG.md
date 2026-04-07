@@ -33,6 +33,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
++ Fix missing version widget instance [1.8.13 20260408 gjw]
 + Remove bottom navigation on landscape [1.8.12 20260312 gjw]
 + Landscape timer at top. Gets chopped on phone [1.8.11 20260312 gjw]
 + Move to a slider for selection of duration [1.8.10 20260312 gjw]

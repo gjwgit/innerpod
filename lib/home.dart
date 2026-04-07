@@ -182,18 +182,19 @@ class HomeState extends State<Home> {
         ),
         // backgroundColor: border,
         actions: [
-          Center(
-            child: VersionWidget(
-              version: _appVersion,
-              changelogUrl: _changelogUrl,
-              fontSize: 10,
-              userTextStyle: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
+          if (_appVersion != '0.0.0')
+            Center(
+              child: VersionWidget(
+                version: _appVersion,
+                changelogUrl: _changelogUrl,
                 fontSize: 10,
-                fontWeight: FontWeight.bold,
+                userTextStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
           const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.info_outline, size: 24),
