@@ -77,7 +77,30 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cs = Theme.of(context).colorScheme;
     bool isPrimary = backgroundColor != appBackgroundColor;
+
+    // In dark mode, darken the pastel button backgrounds.
+
+    final effectiveBg = isPrimary
+        ? (isDark
+            ? HSLColor.fromColor(backgroundColor)
+                .withLightness(
+                  (HSLColor.fromColor(backgroundColor).lightness * 0.4)
+                      .clamp(0.15, 0.35),
+                )
+                .toColor()
+            : backgroundColor)
+        : (isDark ? cs.surfaceContainerHighest : appBackgroundColor);
+
+    final effectiveBorder = isPrimary
+        ? null
+        : Border.all(
+            color: isDark
+                ? cs.outlineVariant.withValues(alpha: 0.3)
+                : appShadowColor,
+          );
 
     return SizedBox(
       height: 52,
@@ -85,17 +108,17 @@ class AppButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: isPrimary ? backgroundColor : appBackgroundColor,
+          color: effectiveBg,
           boxShadow: [
             BoxShadow(
               color: isPrimary
-                  ? backgroundColor.withValues(alpha: 0.15)
-                  : appShadowColor,
+                  ? effectiveBg.withValues(alpha: isDark ? 0.3 : 0.15)
+                  : (isDark ? Colors.transparent : appShadowColor),
               blurRadius: 20,
               offset: const Offset(0, 8),
             ),
           ],
-          border: isPrimary ? null : Border.all(color: appShadowColor),
+          border: effectiveBorder,
         ),
         child: Material(
           color: appButtonColor,
@@ -112,10 +135,10 @@ class AppButton extends StatelessWidget {
                     fontWeight: isPrimary ? FontWeight.w600 : FontWeight.w500,
                     color: textColor ??
                         (isPrimary
-                            ? (Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white
-                                : Colors.black87)
-                            : const Color(0xFF5D4037)),
+                            ? (isDark ? Colors.white70 : Colors.black87)
+                            : (isDark
+                                ? cs.onSurface
+                                : const Color(0xFF5D4037))),
                     letterSpacing: -0.2,
                   ),
                 ),

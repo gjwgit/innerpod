@@ -539,12 +539,19 @@ audio may take a little time to download for the Web version.
       onComplete: _complete,
     );
 
+    final cs = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final buttonsMatrix = Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: functionsBackgroundColor,
+        color: isDark ? cs.surfaceContainerHighest : functionsBackgroundColor,
         borderRadius: BorderRadius.circular(32),
-        border: Border.all(color: functionsBackgroundColor),
+        border: Border.all(
+          color: isDark
+              ? cs.outlineVariant.withValues(alpha: 0.3)
+              : functionsBackgroundColor,
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

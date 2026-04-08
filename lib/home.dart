@@ -40,35 +40,30 @@ import 'package:innerpod/widgets/timer.dart';
 /// The primary widget for the app.
 
 class InnerPod extends StatelessWidget {
+  /// The theme notifier for toggling dark/light mode.
+
+  final SolidThemeNotifier themeNotifier;
+
   /// The primary app widget.
 
-  const InnerPod({super.key});
+  const InnerPod({super.key, required this.themeNotifier});
 
   @override
   Widget build(BuildContext context) {
-    /// We wrap the actual home widget within a [SolidLogin]. If the app has
-    /// functionality that does not require access to Pod data then [required]
-    /// can be `false`. If the user connects to their Pod then we can ensure
-    /// their session information will be saved. If we aim to save the data to
-    /// the Pod or view data from the Pod, then if the user did not log i during
-    /// startup then we can call [SolidLoginPopup] to establish the connection
-    /// at that time. The login token and the security key are (optionally)
-    /// cached so that the login information is not required every time.
-
-    return const SolidLogin(
+    return SolidLogin(
       title: 'MANAGE YOUR INNER POD',
       required: false,
-      image: AssetImage('assets/images/app_image.jpg'),
-      logo: AssetImage('assets/images/app_icon.png'),
-      continueButtonStyle: ContinueButtonStyle(
+      image: const AssetImage('assets/images/app_image.jpg'),
+      logo: const AssetImage('assets/images/app_icon.png'),
+      continueButtonStyle: const ContinueButtonStyle(
         text: 'Session',
         background: Colors.lightGreenAccent,
       ),
-      infoButtonStyle: InfoButtonStyle(
+      infoButtonStyle: const InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
       ),
       link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
-      child: Home(),
+      child: Home(themeNotifier: themeNotifier),
     );
   }
 }
@@ -76,9 +71,13 @@ class InnerPod extends StatelessWidget {
 /// A widget for the actuall app's main home page.
 
 class Home extends StatefulWidget {
+  /// The theme notifier for toggling dark/light mode.
+
+  final SolidThemeNotifier themeNotifier;
+
   /// Constructor for the home screen.
 
-  const Home({super.key});
+  const Home({super.key, required this.themeNotifier});
 
   @override
   HomeState createState() => HomeState();
@@ -152,7 +151,7 @@ class HomeState extends State<Home> {
               child: Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
@@ -189,13 +188,28 @@ class HomeState extends State<Home> {
                 changelogUrl: _changelogUrl,
                 fontSize: 10,
                 userTextStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.7),
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           const SizedBox(width: 8),
+          IconButton(
+            icon: Icon(
+              widget.themeNotifier.themeMode == ThemeMode.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+              size: 22,
+            ),
+            onPressed: widget.themeNotifier.toggleTheme,
+            tooltip: widget.themeNotifier.themeMode == ThemeMode.dark
+                ? 'Switch to light mode'
+                : 'Switch to dark mode',
+          ),
           IconButton(
             icon: const Icon(Icons.info_outline, size: 24),
             onPressed: () => showAppAboutDialog(context),
@@ -205,8 +219,8 @@ class HomeState extends State<Home> {
         ],
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFFFDFBF9),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
         ),
         child: SafeArea(
           // bottom: false,
@@ -239,10 +253,16 @@ class HomeState extends State<Home> {
                   margin: const EdgeInsets.fromLTRB(24, 0, 24, 32),
                   height: 72,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.8),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .surface
+                        .withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(36),
                     border: Border.all(
-                      color: Colors.white.withValues(alpha: 0.5),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outlineVariant
+                          .withValues(alpha: 0.3),
                       width: 1.5,
                     ),
                     boxShadow: [
@@ -310,7 +330,7 @@ class HomeState extends State<Home> {
               isSelected ? selectedIcon : icon,
               color: isSelected
                   ? Theme.of(context).colorScheme.primary
-                  : Colors.grey.shade400,
+                  : Theme.of(context).colorScheme.onSurfaceVariant,
               size: 26,
             ),
             const SizedBox(height: 4),
@@ -321,7 +341,7 @@ class HomeState extends State<Home> {
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 color: isSelected
                     ? Theme.of(context).colorScheme.primary
-                    : Colors.grey.shade400,
+                    : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
           ],

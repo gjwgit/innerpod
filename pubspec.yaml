@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: "none"
-version: 1.8.13+91
+version: 1.8.14+91
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -29,21 +29,11 @@ dependencies:
   markdown_tooltip: ^0.0.7
   package_info_plus: ^9.0.0
   shared_preferences: ^2.5.4
-  solidpod: ^0.11.0
-  solidui: ^0.2.0
+  solidpod: ^0.12.2
+  solidui: ^0.3.9
   url_launcher: ^6.3.0
   version_widget: ^1.0.6
   wakelock_plus: ^1.1.4
-
-dependency_overrides:
-  solidpod:
-    git:
-      url: https://github.com/anusii/solidpod.git
-      ref: dev
-  solidui:
-    git:
-      url: https://github.com/anusii/solidui.git
-      ref: dev
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4

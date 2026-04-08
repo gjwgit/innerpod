@@ -58,7 +58,7 @@ class PremiumTextField extends StatelessWidget {
           borderSide: BorderSide.none,
         ),
         filled: true,
-        fillColor: Colors.white.withValues(alpha: 0.8),
+        fillColor: Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
       ),
       maxLines: maxLines,
     );
