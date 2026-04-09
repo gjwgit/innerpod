@@ -88,6 +88,15 @@ class HomeState extends State<Home> {
   var _appVersion = '0.0.0';
   String? _webId;
 
+  // Persistent key ensures TimerState survives orientation changes and
+  // SolidScaffold rebuilds — Flutter reuses the existing element rather
+  // than creating a new one.
+  final _timerKey = GlobalKey();
+
+  // Tracks which page is selected — managed here so we can use
+  // IndexedStack to keep all pages permanently mounted.
+  int _selectedIndex = 0;
+
   final String _changelogUrl =
       'https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md';
 
@@ -164,21 +173,30 @@ session is active.
           title: 'Session',
           icon: Icons.timer_outlined,
           tooltip: '**Session**\n\nTimer and session controls.',
-          child: Timer(),
         ),
         SolidMenuItem(
           title: 'Text',
           icon: Icons.menu_book_outlined,
           tooltip: '**Text**\n\nGuide, prayers and wisdom.',
-          child: Instructions(),
         ),
         SolidMenuItem(
           title: 'History',
           icon: Icons.history_outlined,
           tooltip: '**History**\n\nPast sessions logged to your Pod.',
-          child: History(),
         ),
       ],
+      selectedIndex: _selectedIndex,
+      onMenuSelected: (i) => setState(() => _selectedIndex = i),
+      // IndexedStack keeps all three pages permanently mounted so
+      // TimerState is never disposed when switching tabs or resizing.
+      bodyOverride: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          Timer(key: _timerKey),
+          const Instructions(),
+          const History(),
+        ],
+      ),
     );
   }
 }

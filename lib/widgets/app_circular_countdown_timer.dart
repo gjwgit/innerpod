@@ -38,6 +38,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
     required this.duration,
     required this.onComplete,
     required this.controller,
+    this.timerKey,
     super.key,
   });
 
@@ -53,12 +54,16 @@ class AppCircularCountDownTimer extends StatelessWidget {
 
   final Function() onComplete;
 
+  /// Optional key for [CircularCountDownTimer] to survive tree moves.
+  final Key? timerKey;
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cs = Theme.of(context).colorScheme;
 
     return CircularCountDownTimer(
+      key: timerKey,
       width: 250,
       height: 250,
       duration: duration,

@@ -33,6 +33,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
++ Retain timer on rotating app [1.8.19 20260409 gjw]
 + Remove logout from app bar [1.8.18 20260409 gjw]
 + Add status bar and app info [1.8.17 20260409 gjw]
 + Migrate to SolidScaffold [1.8.16 20260409 gjw]
