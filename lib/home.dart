@@ -30,9 +30,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidui/solidui.dart';
-import 'package:version_widget/version_widget.dart';
 
-import 'package:innerpod/widgets/about.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
 import 'package:innerpod/widgets/timer.dart';
@@ -42,11 +40,9 @@ import 'package:innerpod/widgets/timer.dart';
 class InnerPod extends StatelessWidget {
   /// The theme notifier for toggling dark/light mode.
 
-  final SolidThemeNotifier themeNotifier;
-
   /// The primary app widget.
 
-  const InnerPod({super.key, required this.themeNotifier});
+  const InnerPod({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +59,7 @@ class InnerPod extends StatelessWidget {
         tooltip: 'Browse to the InnerPod home page.',
       ),
       link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
-      child: Home(themeNotifier: themeNotifier),
+      child: const Home(),
     );
   }
 }
@@ -73,11 +69,9 @@ class InnerPod extends StatelessWidget {
 class Home extends StatefulWidget {
   /// The theme notifier for toggling dark/light mode.
 
-  final SolidThemeNotifier themeNotifier;
-
   /// Constructor for the home screen.
 
-  const Home({super.key, required this.themeNotifier});
+  const Home({super.key});
 
   @override
   HomeState createState() => HomeState();
@@ -140,83 +134,37 @@ class HomeState extends State<Home> {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     return SolidScaffold(
-      // extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        // titleSpacing: 20,
-        title: Row(
-          children: [
-            Hero(
-              tag: 'logo',
-              child: Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Image.asset(
-                  'assets/images/app_icon.png',
-                  width: 24,
-                  height: 24,
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'Inner Pod',
-              style: GoogleFonts.outfit(
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-                letterSpacing: -0.5,
-              ),
-            ),
-          ],
-        ),
-        // backgroundColor: border,
-        actions: [
-          if (_appVersion != '0.0.0')
-            Center(
-              child: VersionWidget(
-                version: _appVersion,
+      appBar: SolidAppBarConfig(
+        title: 'Inner Pod',
+        versionConfig: _appVersion != '0.0.0'
+            ? SolidVersionConfig(
                 changelogUrl: _changelogUrl,
-                fontSize: 10,
-                userTextStyle: TextStyle(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurface
-                      .withValues(alpha: 0.7),
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          const SizedBox(width: 8),
-          IconButton(
-            icon: Icon(
-              widget.themeNotifier.themeMode == ThemeMode.dark
-                  ? Icons.light_mode
-                  : Icons.dark_mode,
-              size: 22,
-            ),
-            onPressed: widget.themeNotifier.toggleTheme,
-            tooltip: widget.themeNotifier.themeMode == ThemeMode.dark
-                ? 'Switch to light mode'
-                : 'Switch to dark mode',
-          ),
-          IconButton(
-            icon: const Icon(Icons.info_outline, size: 24),
-            onPressed: () => showAppAboutDialog(context),
-            tooltip: 'About the app',
-          ),
-          const SizedBox(width: 8),
-        ],
+              )
+            : null,
+      ),
+      themeToggle: const SolidThemeToggleConfig(enabled: true),
+      aboutConfig: SolidAboutConfig(
+        applicationName: 'Inner Pod',
+        applicationIcon: Image.asset(
+          'assets/images/app_icon.png',
+          width: 64,
+          height: 64,
+        ),
+        applicationLegalese: '© 2024-2026 Togaware Pty Ltd',
+        text: '''
+Inner Pod can be used to time any fixed time session, optionally storing a
+log of your sessions to a secure and private data store. The app is commonly
+used for contemplative or silent meditation as is the tradition in many
+cultures and religions. The progress circle provides a visual cue that the
+session is active.
+
+**OnLine** [https://innerpod.solidcommunity.au](https://innerpod.solidcommunity.au)
+
+**GitHub** [https://github.com/gjwgit/innerpod](https://github.com/gjwgit/innerpod)
+
+**Author** [Graham Williams](https://togaware.com/graham.williams.html)
+''',
       ),
       body: Container(
         decoration: BoxDecoration(

@@ -46,18 +46,22 @@ class InnerPodApp extends StatefulWidget {
 }
 
 class _InnerPodAppState extends State<InnerPodApp> {
-  final _themeNotifier = SolidThemeNotifier();
-
   @override
   void initState() {
     super.initState();
-    _themeNotifier.initialize();
-    _themeNotifier.addListener(() => setState(() {}));
+    _initTheme();
+    solidThemeNotifier.addListener(() => setState(() {}));
+  }
+
+  // initialize() is async — must be awaited in a separate method.
+  Future<void> _initTheme() async {
+    await solidThemeNotifier.initialize();
+    if (mounted) setState(() {});
   }
 
   @override
   void dispose() {
-    _themeNotifier.dispose();
+    solidThemeNotifier.removeListener(() => setState(() {}));
     super.dispose();
   }
 
@@ -67,9 +71,9 @@ class _InnerPodAppState extends State<InnerPodApp> {
       title: 'Inner Pod',
       theme: _lightTheme(),
       darkTheme: _darkTheme(),
-      themeMode: _themeNotifier.themeMode,
+      themeMode: solidThemeNotifier.themeMode,
       debugShowCheckedModeBanner: false,
-      home: InnerPod(themeNotifier: _themeNotifier),
+      home: const InnerPod(),
     );
   }
 }

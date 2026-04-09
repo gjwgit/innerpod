@@ -53,6 +53,7 @@ class AppMarkdownBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
 
     return MarkdownBody(
       data: data,
@@ -63,34 +64,34 @@ class AppMarkdownBody extends StatelessWidget {
             p: GoogleFonts.outfit(
               fontSize: 16,
               height: 1.6,
-              color: const Color(0xFF4A3427),
+              color: cs.onSurface,
             ),
             h1: GoogleFonts.outfit(
               fontSize: 28,
               fontWeight: FontWeight.w700,
-              color: const Color(0xFF2D1B0E),
+              color: cs.onSurface,
               letterSpacing: -0.5,
             ),
             h2: GoogleFonts.outfit(
               fontSize: 22,
               fontWeight: FontWeight.w600,
-              color: const Color(0xFF2D1B0E),
+              color: cs.onSurface,
               letterSpacing: -0.3,
             ),
             a: GoogleFonts.outfit(
-              color: theme.colorScheme.primary,
+              color: cs.primary,
               fontWeight: FontWeight.w600,
               decoration: TextDecoration.underline,
             ),
             listBullet: GoogleFonts.outfit(
-              color: theme.colorScheme.primary,
+              color: cs.primary,
             ),
             blockquote: GoogleFonts.outfit(
-              color: Colors.grey.shade700,
+              color: cs.onSurfaceVariant,
               fontStyle: FontStyle.italic,
             ),
             blockquoteDecoration: BoxDecoration(
-              color: theme.colorScheme.primary.withValues(alpha: 0.05),
+              color: cs.primary.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(8),
             ),
           ),

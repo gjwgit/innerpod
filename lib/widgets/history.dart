@@ -341,7 +341,7 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SolidScaffold(
       appBar: AppBar(
         title: const Text('Session History'),
         automaticallyImplyLeading: false, // Don't show back button

@@ -27,6 +27,8 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:solidui/solidui.dart';
+
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 
 import 'package:innerpod/constants/colours.dart';
@@ -43,7 +45,7 @@ class Instructions extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
-      child: Scaffold(
+      child: SolidScaffold(
         appBar: AppBar(
           backgroundColor: instructionsBarColor,
           elevation: 0,

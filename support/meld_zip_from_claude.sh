@@ -34,7 +34,14 @@ mkdir tmp
 # Run meld with the file and find result
 
 meld tmp/lib lib
-meld tmp/pubspec.yaml pubspec.yaml
+
+# Check if pubspec included and if so compare.
+
+if [ -f tmp/pubspec.yaml ]; then
+    meld tmp/pubspec.yaml pubspec.yaml
+else
+    echo "No updated pubspec.yaml provided by Claude."
+fi
 
 # Remove the file after meld closes
 
