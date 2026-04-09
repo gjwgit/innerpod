@@ -341,164 +341,171 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
-    return SolidScaffold(
-      appBar: AppBar(
-        title: const Text('Session History'),
-        automaticallyImplyLeading: false, // Don't show back button
-        actions: [
-          if (_sessions.isNotEmpty)
-            IconButton(
-              icon: const Icon(
-                Icons.delete_sweep_outlined,
-                color: colours.error,
+    return Column(
+      children: [
+        // Action row replacing the AppBar actions.
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (_sessions.isNotEmpty)
+              IconButton(
+                icon: const Icon(
+                  Icons.delete_sweep_outlined,
+                  color: colours.error,
+                ),
+                tooltip: 'Delete all sessions',
+                onPressed: _deleteAllSessions,
               ),
-              tooltip: 'Delete all sessions',
-              onPressed: _deleteAllSessions,
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Refresh',
+              onPressed: _loadSessions,
             ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
-            onPressed: _loadSessions,
-          ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _sessions.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.history,
-                        size: 64,
-                        color: historyNoneColor,
+            const SizedBox(width: 8),
+          ],
+        ),
+        Expanded(
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _sessions.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.history,
+                            size: 64,
+                            color: historyNoneColor,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'No sessions recorded yet.',
+                            style: TextStyle(
+                                color: historyNoneColor, fontSize: 16),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'No sessions recorded yet.',
-                        style: TextStyle(color: historyNoneColor, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                )
-              : ListView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  itemCount: _sessions.length,
-                  itemBuilder: (context, index) {
-                    final session = _sessions[index];
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(24),
-                        onTap: () => _editSession(session),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer
-                                      .withValues(alpha: 0.5),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  session['type'] == 'guided'
-                                      ? Icons.auto_awesome_outlined
-                                      : Icons.self_improvement,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      itemCount: _sessions.length,
+                      itemBuilder: (context, index) {
+                        final session = _sessions[index];
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 12),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(24),
+                            onTap: () => _editSession(session),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer
+                                          .withValues(alpha: 0.5),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      session['type'] == 'guided'
+                                          ? Icons.auto_awesome_outlined
+                                          : Icons.self_improvement,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              session['date']!,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: historyIncidentalColor,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            Text(
+                                              session['duration']!,
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 4),
                                         Text(
-                                          session['date']!,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: historyIncidentalColor,
-                                            fontWeight: FontWeight.w500,
+                                          session['title']!,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        const Spacer(),
+                                        if (session['description']!.isNotEmpty)
+                                          Text(
+                                            session['description']!,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              color: historyIncidentalColor,
+                                            ),
+                                          ),
+                                        const SizedBox(height: 4),
                                         Text(
-                                          session['duration']!,
+                                          '${session['start']} - ${session['end']}',
                                           style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 11,
+                                            color: historyIncidentalColor,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      session['title']!,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    if (session['description']!.isNotEmpty)
-                                      Text(
-                                        session['description']!,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          color: historyIncidentalColor,
-                                        ),
-                                      ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      '${session['start']} - ${session['end']}',
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: historyIncidentalColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Column(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.edit_outlined,
-                                      size: 20,
-                                    ),
-                                    onPressed: () => _editSession(session),
                                   ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.delete_outline,
-                                      size: 20,
-                                      color: historyDeleteColor,
-                                    ),
-                                    onPressed: () =>
-                                        _deleteSession(session['rawStart']!),
+                                  const SizedBox(width: 8),
+                                  Column(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.edit_outlined,
+                                          size: 20,
+                                        ),
+                                        onPressed: () => _editSession(session),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(
+                                          Icons.delete_outline,
+                                          size: 20,
+                                          color: historyDeleteColor,
+                                        ),
+                                        onPressed: () => _deleteSession(
+                                            session['rawStart']!),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                        );
+                      },
+                    ),
+        ),
+      ],
     );
   }
 }

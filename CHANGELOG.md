@@ -33,7 +33,8 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
-+ Migrate to SOlidScaffold [1.8.16 20260409 gjw]
++ Add status bar and app info [1.8.17 20260409 gjw]
++ Migrate to SolidScaffold [1.8.16 20260409 gjw]
 + Save theme between instances with solidui 0.3.12 [1.8.15 20260409 gjw]
 + Add dark/light mode [1.8.14 20260408 gjw]
 + Fix missing version widget instance [1.8.13 20260408 gjw]

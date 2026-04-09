@@ -26,9 +26,8 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:solidpod/solidpod.dart' show getWebId;
 import 'package:solidui/solidui.dart';
 
 import 'package:innerpod/widgets/history.dart';
@@ -83,6 +82,7 @@ class HomeState extends State<Home> {
   // We will populate the app version shortly.
 
   var _appVersion = '0.0.0';
+  String? _webId;
 
   final String _changelogUrl =
       'https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md';
@@ -91,11 +91,11 @@ class HomeState extends State<Home> {
 
   Future<void> _loadAppInfo() async {
     final packageInfo = await PackageInfo.fromPlatform();
-    final prefs = await SharedPreferences.getInstance();
+    final webId = await getWebId();
     if (mounted) {
       setState(() {
-        _appVersion = packageInfo.version; // Set app version from package info
-        _selectedIndex = prefs.getInt('selected_index') ?? 0;
+        _appVersion = packageInfo.version;
+        _webId = webId;
       });
     }
   }
@@ -109,32 +109,11 @@ class HomeState extends State<Home> {
     _loadAppInfo();
   }
 
-  // Track which item is selected in the nav bar.
-
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('selected_index', index);
-    if (mounted) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
-
-  final List<Widget> _pages = <Widget>[
-    const Timer(key: PageStorageKey('timer_page')),
-    const Instructions(key: PageStorageKey('text_page')),
-    const History(key: PageStorageKey('history_page')),
-  ];
-
   @override
   Widget build(BuildContext context) {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     return SolidScaffold(
-      extendBodyBehindAppBar: true,
       appBar: SolidAppBarConfig(
         title: 'Inner Pod',
         versionConfig: _appVersion != '0.0.0'
@@ -144,6 +123,15 @@ class HomeState extends State<Home> {
             : null,
       ),
       themeToggle: const SolidThemeToggleConfig(enabled: true),
+      statusBar: SolidStatusBarConfig(
+        serverInfo: _webId != null ? SolidServerInfo.fromWebId(_webId!) : null,
+        loginStatus: SolidLoginStatus(
+          webId: _webId,
+        ),
+        securityKeyStatus: const SolidSecurityKeyStatus(
+          title: 'InnerPod Security Keys',
+        ),
+      ),
       aboutConfig: SolidAboutConfig(
         applicationName: 'Inner Pod',
         applicationIcon: Image.asset(
@@ -166,135 +154,26 @@ session is active.
 **Author** [Graham Williams](https://togaware.com/graham.williams.html)
 ''',
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+      menu: const [
+        SolidMenuItem(
+          title: 'Session',
+          icon: Icons.timer_outlined,
+          tooltip: '**Session**\n\nTimer and session controls.',
+          child: Timer(),
         ),
-        child: SafeArea(
-          // bottom: false,
-          child: Stack(
-            children: _pages.asMap().entries.map((entry) {
-              final index = entry.key;
-              final page = entry.value;
-              return AnimatedOpacity(
-                key: ValueKey('page_$index'),
-                opacity: _selectedIndex == index ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeInOutCubic,
-                child: IgnorePointer(
-                  ignoring: _selectedIndex != index,
-                  child: page,
-                ),
-              );
-            }).toList(),
-          ),
+        SolidMenuItem(
+          title: 'Text',
+          icon: Icons.menu_book_outlined,
+          tooltip: '**Text**\n\nGuide, prayers and wisdom.',
+          child: Instructions(),
         ),
-      ),
-      bottomNavigationBar:
-          // 20260312 gjw Change the handling of the navigation bar depending on the
-          // orientation. This is assuming the landscape is on a phone and so the
-          // height is limited and the navigation bar will otherwise overlay the
-          // timer. Not true if on desktop, but we'll deal with that another time.
-
-          MediaQuery.of(context).orientation == Orientation.portrait
-              ? Container(
-                  margin: const EdgeInsets.fromLTRB(24, 0, 24, 32),
-                  height: 72,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .surface
-                        .withValues(alpha: 0.9),
-                    borderRadius: BorderRadius.circular(36),
-                    border: Border.all(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .outlineVariant
-                          .withValues(alpha: 0.3),
-                      width: 1.5,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        blurRadius: 30,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(36),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildNavItem(
-                          0,
-                          Icons.timer_outlined,
-                          Icons.timer_rounded,
-                          'Home',
-                        ),
-                        _buildNavItem(
-                          1,
-                          Icons.menu_book_outlined,
-                          Icons.menu_book_rounded,
-                          'Text',
-                        ),
-                        _buildNavItem(
-                          2,
-                          Icons.history_outlined,
-                          Icons.history_rounded,
-                          'History',
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : null, // 20260312 gjw Hide the navigation bar in landscape mode.
-    );
-  }
-
-  Widget _buildNavItem(
-    int index,
-    IconData icon,
-    IconData selectedIcon,
-    String label,
-  ) {
-    bool isSelected = _selectedIndex == index;
-    return InkWell(
-      onTap: () => _onItemTapped(index),
-      borderRadius: BorderRadius.circular(20),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
+        SolidMenuItem(
+          title: 'History',
+          icon: Icons.history_outlined,
+          tooltip: '**History**\n\nPast sessions logged to your Pod.',
+          child: History(),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isSelected ? selectedIcon : icon,
-              color: isSelected
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onSurfaceVariant,
-              size: 26,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: GoogleFonts.outfit(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                color: isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }
