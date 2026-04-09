@@ -239,7 +239,10 @@ three dings. The blue progress circle indicates an active session.
 
 '''
           .trim(),
-      onPressed: _intro,
+      onPressed: () {
+        setState(() => _sessionType = 'intro');
+        _intro();
+      },
       fontWeight: FontWeight.bold,
       backgroundColor: introBackgroundColor,
       textColor: _sessionType == 'intro'
@@ -260,7 +263,10 @@ audio may take a little time to download for the Web version.
 
 '''
           .trim(),
-      onPressed: _guided,
+      onPressed: () {
+        setState(() => _sessionType = 'guided');
+        _guided();
+      },
       fontWeight: FontWeight.bold,
       backgroundColor: guidedBackgroundColor,
       textColor: _sessionType == 'guided'
