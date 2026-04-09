@@ -59,6 +59,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
 
     return CircularCountDownTimer(
+      key: const ValueKey('circular_timer'),
       width: 250,
       height: 250,
       duration: duration,

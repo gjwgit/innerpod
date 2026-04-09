@@ -112,6 +112,11 @@ class TimerState extends State<Timer> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
+  // A GlobalKey to ensure the timer display is preserved across orientation
+  // changes.
+
+  final _timerKey = GlobalKey();
+
   ////////////////////////////////////////////////////////////////////////
   // SLEEP
   ////////////////////////////////////////////////////////////////////////
@@ -534,6 +539,7 @@ audio may take a little time to download for the Web version.
     );
 
     final timerDisplay = AppCircularCountDownTimer(
+      key: _timerKey,
       duration: _duration,
       controller: _controller,
       onComplete: _complete,
