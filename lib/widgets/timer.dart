@@ -174,10 +174,10 @@ class TimerState extends State<Timer> {
   // RESET
   ////////////////////////////////////////////////////////////////////////
 
+  // Reset internal state variables only. Callers are responsible for
+  // stopping audio and resetting the controller to avoid onComplete race
+  // conditions (see issue #73).
   void _reset() {
-    _player.stop();
-    _controller.restart(duration: _duration);
-    _controller.pause();
     _isGuided = false;
     _isPaused = false;
     _sessionType = 'none';
@@ -191,6 +191,14 @@ class TimerState extends State<Timer> {
     // An audio is played and then we begin the session.
 
     logMessage('Start Intro Session');
+
+    // Stop any running audio and reset the controller BEFORE updating state
+    // to avoid _complete() being called via onComplete on the previous timer
+    // instance, which would race with and overwrite the new _sessionType.
+    _player.stop();
+    _controller.restart(duration: _duration);
+    _controller.pause();
+
     if (mounted) {
       setState(() {
         _reset();
@@ -232,6 +240,14 @@ class TimerState extends State<Timer> {
     // another musical interlude.
 
     logMessage('Start Guided Session');
+
+    // Stop any running audio and reset the controller BEFORE updating state
+    // to avoid _complete() being called via onComplete on the previous timer
+    // instance, which would race with and overwrite the new _sessionType.
+    _player.stop();
+    _controller.restart(duration: _duration);
+    _controller.pause();
+
     if (mounted) {
       setState(() {
         _reset();
@@ -394,14 +410,19 @@ circle indicates an active session.
       onPressed: () {
         logMessage('Start Session');
         if (mounted) {
-          dingDong(_player);
+          // Stop audio and reset the controller BEFORE updating state to avoid
+          // onComplete racing with the new _sessionType (see issue #73).
+          _player.stop();
           _controller.restart(duration: _duration);
-          _stopSleep();
+          _controller.pause();
           setState(() {
             _reset();
             _sessionType = 'bell';
             _startTime = DateTime.now();
           });
+          _controller.restart(duration: _duration);
+          dingDong(_player);
+          _stopSleep();
         }
       },
       fontWeight: FontWeight.bold,
@@ -444,6 +465,8 @@ of the Resume button.
           }
         });
       },
+      // Show blue text when a session is actively paused.
+      textColor: (_isPaused && _sessionType != 'none') ? blueIndicator : null,
     );
 
     final introButton = AppButton(
