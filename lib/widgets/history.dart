@@ -50,11 +50,20 @@ class _HistoryState extends State<History> {
   List<Map<String, String>> _rawSessions = [];
   List<Map<String, String>> _sessions = [];
   bool _isLoading = true;
+  bool _isLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
-    _loadSessions();
+    _initHistory();
+  }
+
+  Future<void> _initHistory() async {
+    final webId = await getWebId();
+    if (mounted) {
+      setState(() => _isLoggedIn = webId != null && webId.isNotEmpty);
+    }
+    await _loadSessions();
   }
 
   Future<void> _loadSessions() async {
@@ -374,13 +383,16 @@ class _HistoryState extends State<History> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.history,
+                            _isLoggedIn ? Icons.history : Icons.lock_outline,
                             size: 64,
                             color: historyNoneColor,
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'No sessions recorded yet.',
+                            _isLoggedIn
+                                ? 'No sessions recorded yet.'
+                                : 'No sessions available.\nPlease login to view the session history.',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: historyNoneColor,
                               fontSize: 16,
