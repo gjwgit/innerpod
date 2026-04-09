@@ -191,7 +191,8 @@ circle indicates an active session.
       },
       fontWeight: FontWeight.bold,
       backgroundColor: startBackgroundColor,
-      textColor: _sessionType == 'bell' ? appSelectedColor : null,
+      textColor:
+          _sessionType == 'bell' ? Theme.of(context).colorScheme.primary : null,
     );
 
     final pauseResumeButton = AppButton(
@@ -241,7 +242,9 @@ three dings. The blue progress circle indicates an active session.
       onPressed: _intro,
       fontWeight: FontWeight.bold,
       backgroundColor: introBackgroundColor,
-      textColor: _sessionType == 'intro' ? appSelectedColor : null,
+      textColor: _sessionType == 'intro'
+          ? Theme.of(context).colorScheme.primary
+          : null,
     );
 
     final guidedButton = AppButton(
@@ -260,7 +263,9 @@ audio may take a little time to download for the Web version.
       onPressed: _guided,
       fontWeight: FontWeight.bold,
       backgroundColor: guidedBackgroundColor,
-      textColor: _sessionType == 'guided' ? appSelectedColor : null,
+      textColor: _sessionType == 'guided'
+          ? Theme.of(context).colorScheme.primary
+          : null,
     );
 
     ////////////////////////////////////

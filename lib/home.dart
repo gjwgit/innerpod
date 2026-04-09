@@ -128,6 +128,7 @@ class HomeState extends State<Home> {
 
     return SolidScaffold(
       showLogout: false,
+      showLogin: false,
       appBar: SolidAppBarConfig(
         title: 'Inner Pod',
         versionConfig: _appVersion != '0.0.0'

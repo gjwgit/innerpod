@@ -138,8 +138,10 @@ extension TimerStateLogic on TimerState {
     _reset();
     _stopSleep();
     _isGuided = false;
-    _sessionType = 'intro';
-    _startTime = DateTime.now();
+    setState(() {
+      _sessionType = 'intro';
+      _startTime = DateTime.now();
+    });
     _saveSessionPrefs();
 
     // Good to wait a second before starting the audio after tapping the button,
@@ -167,8 +169,10 @@ extension TimerStateLogic on TimerState {
     _reset();
     _stopSleep();
     _isGuided = true;
-    _sessionType = 'guided';
-    _startTime = DateTime.now();
+    setState(() {
+      _sessionType = 'guided';
+      _startTime = DateTime.now();
+    });
     _saveSessionPrefs();
 
     await Future.delayed(const Duration(seconds: 1));
