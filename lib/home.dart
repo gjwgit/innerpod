@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Thursday 2026-03-12 12:18:15 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-04-09 20:13:49 +1000 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -57,6 +57,10 @@ class InnerPod extends StatelessWidget {
       infoButtonStyle: InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
       ),
+      // loginButtonStyle: LoginButtonStyle(visible: true),
+      // continueButtonStyle: ContinueButtonStyle(visible: true),
+      // registerButtonStyle: RegisterButtonStyle(visible: false),
+      // infoButtonStyle: InfoButtonStyle(visible: true),
       link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
       child: Home(),
     );
