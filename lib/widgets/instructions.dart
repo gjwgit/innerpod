@@ -249,7 +249,9 @@ class Instructions extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       blockquotePadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       blockquoteDecoration: BoxDecoration(
                         border: Border(
                           left: BorderSide(

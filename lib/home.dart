@@ -45,20 +45,20 @@ class InnerPod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SolidLogin(
+    return const SolidLogin(
       title: 'MANAGE YOUR INNER POD',
       required: false,
-      image: const AssetImage('assets/images/app_image.jpg'),
-      logo: const AssetImage('assets/images/app_icon.png'),
-      continueButtonStyle: const ContinueButtonStyle(
+      image: AssetImage('assets/images/app_image.jpg'),
+      logo: AssetImage('assets/images/app_icon.png'),
+      continueButtonStyle: ContinueButtonStyle(
         text: 'Session',
         background: Colors.lightGreenAccent,
       ),
-      infoButtonStyle: const InfoButtonStyle(
+      infoButtonStyle: InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
       ),
       link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
-      child: const Home(),
+      child: Home(),
     );
   }
 }
@@ -114,6 +114,7 @@ class HomeState extends State<Home> {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
     return SolidScaffold(
+      showLogout: false,
       appBar: SolidAppBarConfig(
         title: 'Inner Pod',
         versionConfig: _appVersion != '0.0.0'

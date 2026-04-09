@@ -381,14 +381,18 @@ class _HistoryState extends State<History> {
                           Text(
                             'No sessions recorded yet.',
                             style: TextStyle(
-                                color: historyNoneColor, fontSize: 16),
+                              color: historyNoneColor,
+                              fontSize: 16,
+                            ),
                           ),
                         ],
                       ),
                     )
                   : ListView.builder(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       itemCount: _sessions.length,
                       itemBuilder: (context, index) {
                         final session = _sessions[index];
@@ -493,7 +497,8 @@ class _HistoryState extends State<History> {
                                           color: historyDeleteColor,
                                         ),
                                         onPressed: () => _deleteSession(
-                                            session['rawStart']!),
+                                          session['rawStart']!,
+                                        ),
                                       ),
                                     ],
                                   ),

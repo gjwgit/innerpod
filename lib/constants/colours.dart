@@ -1,6 +1,6 @@
 /// Color constants used throughout the app.
 //
-// Time-stamp: <Thursday 2026-03-12 13:25:35 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-04-09 12:36:11 +1000 Graham Williams>
 //
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -105,7 +105,6 @@ final startBackgroundColor = Colors.lightGreenAccent.shade100;
 
 final functionsBackgroundColor = Colors.white;
 
-const instructionsBarColor = Colors.transparent;
 const instructionsUnselectedColor = Colors.grey;
 
 // const border = Color(0xFFF5E0C8);
