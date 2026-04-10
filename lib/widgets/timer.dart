@@ -178,7 +178,7 @@ circle indicates an active session.
       onPressed: () {
         logMessage('Start Session');
         if (mounted) {
-          _reset();
+          _reset(stopPlayer: true);
           dingDong(_player);
           _controller.restart(duration: _duration);
           _stopSleep();
@@ -304,7 +304,10 @@ audio may take a little time to download for the Web version.
     final timerDisplay = AppCircularCountDownTimer(
       duration: _duration,
       controller: _controller,
-      onComplete: _complete,
+      onComplete: () async {
+        await _complete();
+        if (mounted) setState(_reset);
+      },
       timerKey: _countdownKey,
     );
 

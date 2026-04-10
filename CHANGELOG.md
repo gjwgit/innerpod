@@ -33,6 +33,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
++ Bug fix to reset timer at session end [1.8.22 20260410 gjw]
 + Lint and HISTORY messaging fixes [1.8.21 20260410 gjw]
 + Fix button logic indicating session type [1.8.20 20260410 gjw]
 + Retain timer on rotating app [1.8.19 20260409 gjw]

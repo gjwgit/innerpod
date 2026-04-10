@@ -117,16 +117,14 @@ extension TimerStateLogic on TimerState {
   // RESET
   ////////////////////////////////////////////////////////////////////////
 
-  void _reset() {
-    _player.stop();
+  void _reset({bool stopPlayer = false}) {
+    if (stopPlayer) _player.stop();
     _controller.restart(duration: _duration);
     _controller.pause();
     _isGuided = false;
     _isPaused = false;
     _sessionType = 'none';
     _startTime = null;
-    // Session prefs are overwritten by _saveSessionPrefs() on new session
-    // start, or cleared by _clearSessionPrefs() on completion.
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -135,7 +133,7 @@ extension TimerStateLogic on TimerState {
 
   Future<void> _intro() async {
     if (!mounted) return;
-    _reset();
+    _reset(stopPlayer: true);
     _stopSleep();
     _isGuided = false;
     _sessionType = 'intro';
@@ -164,7 +162,7 @@ extension TimerStateLogic on TimerState {
 
   Future<void> _guided() async {
     if (!mounted) return;
-    _reset();
+    _reset(stopPlayer: true);
     _stopSleep();
     _isGuided = true;
     _sessionType = 'guided';
@@ -191,8 +189,10 @@ extension TimerStateLogic on TimerState {
   Future<void> _complete() async {
     final typeToSave = _sessionType;
 
+    // Await bells so all three dings play before we move on.
     if (mounted) {
-      dingDong(_player);
+      await dingDong(_player);
+      await _player.onPlayerComplete.first;
     }
 
     if (mounted && _isGuided) {
