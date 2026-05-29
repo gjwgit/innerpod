@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Thursday 2026-04-09 20:13:49 +1000 Graham Williams>
+// Time-stamp: <Friday 2026-05-29 20:37:24 +1000 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -27,6 +27,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart' show getWebId;
 import 'package:solidui/solidui.dart';
 
@@ -62,6 +63,13 @@ class InnerPod extends StatelessWidget {
       // registerButtonStyle: RegisterButtonStyle(visible: false),
       // infoButtonStyle: InfoButtonStyle(visible: true),
       link: 'https://github.com/Amoghhosamane/innerpod/blob/dev/README.md',
+      clientId: 'https://solidcommunity.au/apps/innerpod/client-profile.jsonld',
+      redirectUris: [
+        'http://localhost:4400/redirect',
+        'com.togaware.innerpod://redirect',
+        'https://solidcommunity.au/apps/innerpod/redirect.html',
+      ],
+      autoLogin: true,
       child: Home(),
     );
   }
@@ -93,8 +101,12 @@ class HomeState extends State<Home> {
   // than creating a new one.
   final _timerKey = GlobalKey();
 
-  // Tracks which page is selected — managed here so we can use
-  // IndexedStack to keep all pages permanently mounted.
+  // Incremented after each successful session save so the History widget
+  // knows to reload without needing a full app restart.
+  final _sessionVersion = ValueNotifier<int>(0);
+
+  // Tracks which page is selected — drives the IndexedStack in bodyOverride
+  // so all pages stay permanently mounted (preserving TimerState).
   int _selectedIndex = 0;
 
   final String _changelogUrl =
@@ -116,10 +128,21 @@ class HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-
-    // Get the app name and version.
-
     _loadAppInfo();
+    // Restore the last selected menu index that solidui saved, so the
+    // IndexedStack starts on the same page solidui remembers.
+    SharedPreferences.getInstance().then((prefs) {
+      final saved = prefs.getInt('solidui_last_menu_index');
+      if (saved != null && saved > 0 && saved < 3 && mounted) {
+        setState(() => _selectedIndex = saved);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _sessionVersion.dispose();
+    super.dispose();
   }
 
   @override
@@ -174,28 +197,37 @@ session is active.
           title: 'Session',
           icon: Icons.timer_outlined,
           tooltip: '**Session**\n\nTimer and session controls.',
+          // Non-null child required so solidui's isActionOnly check
+          // does not swallow the tap. The actual content is in bodyOverride.
+          child: SizedBox.shrink(),
         ),
         SolidMenuItem(
           title: 'Text',
           icon: Icons.menu_book_outlined,
           tooltip: '**Text**\n\nGuide, prayers and wisdom.',
+          child: SizedBox.shrink(),
         ),
         SolidMenuItem(
           title: 'History',
           icon: Icons.history_outlined,
           tooltip: '**History**\n\nPast sessions logged to your Pod.',
+          child: SizedBox.shrink(),
         ),
       ],
-      selectedIndex: _selectedIndex,
       onMenuSelected: (i) => setState(() => _selectedIndex = i),
-      // IndexedStack keeps all three pages permanently mounted so
-      // TimerState is never disposed when switching tabs or resizing.
+      // bodyOverride with IndexedStack keeps all three pages permanently
+      // mounted so TimerState is never disposed when switching tabs.
+      // Menu items must have non-null children (above) so solidui's
+      // isActionOnly check doesn't swallow the tap.
       bodyOverride: IndexedStack(
         index: _selectedIndex,
         children: [
-          Timer(key: _timerKey),
+          Timer(
+            key: _timerKey,
+            onSessionSaved: () => _sessionVersion.value++,
+          ),
           const Instructions(),
-          const History(),
+          History(sessionVersion: _sessionVersion),
         ],
       ),
     );
