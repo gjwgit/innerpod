@@ -37,6 +37,9 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+	manifestPlaceholders.putAll(mapOf(
+            "appAuthRedirectScheme" to "com.togaware.innerpod"
+        ))
     }
 
     signingConfigs {
