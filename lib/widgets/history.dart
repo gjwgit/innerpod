@@ -40,7 +40,11 @@ import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/history_tile.dart';
 
 class History extends StatefulWidget {
-  const History({super.key});
+  /// Incrementing this notifier from outside causes the history to
+  /// reload, e.g. immediately after a new session is saved.
+  const History({super.key, this.sessionVersion});
+
+  final ValueNotifier<int>? sessionVersion;
 
   @override
   State<History> createState() => _HistoryState();
@@ -56,6 +60,14 @@ class _HistoryState extends State<History> {
   void initState() {
     super.initState();
     _initHistory();
+    // Reload whenever the parent signals a new session was saved.
+    widget.sessionVersion?.addListener(_loadSessions);
+  }
+
+  @override
+  void dispose() {
+    widget.sessionVersion?.removeListener(_loadSessions);
+    super.dispose();
   }
 
   Future<void> _initHistory() async {
@@ -64,6 +76,35 @@ class _HistoryState extends State<History> {
       setState(() => _isLoggedIn = webId != null && webId.isNotEmpty);
     }
     await _loadSessions();
+  }
+
+  /// Parse a date string tolerantly, handling both ISO 8601
+  /// (e.g. "2026-05-25T14:30:22.000") and the legacy compact format
+  /// (e.g. "20260525T143022") that older app versions wrote to the Pod.
+  DateTime _parseDate(String s) {
+    final trimmed = s.trim();
+    // Stored as literal "null" when end time was missing in old sessions.
+    if (trimmed == 'null' || trimmed.isEmpty) {
+      return DateTime.fromMillisecondsSinceEpoch(0);
+    }
+    try {
+      return DateTime.parse(trimmed);
+    } catch (_) {}
+    // Legacy format: yMMddTHHmmss → 20260525T143022
+    final compact = RegExp(r'^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$');
+    final m = compact.firstMatch(trimmed);
+    if (m != null) {
+      return DateTime(
+        int.parse(m.group(1)!),
+        int.parse(m.group(2)!),
+        int.parse(m.group(3)!),
+        int.parse(m.group(4)!),
+        int.parse(m.group(5)!),
+        int.parse(m.group(6)!),
+      );
+    }
+    debugPrint('[History] Unparseable date: $s');
+    return DateTime.fromMillisecondsSinceEpoch(0);
   }
 
   Future<void> _loadSessions() async {
@@ -103,13 +144,17 @@ class _HistoryState extends State<History> {
 
       _rawSessions = parseSessions(content);
       final List<Map<String, String>> sessions = _rawSessions.map((item) {
-        final start = DateTime.parse(item['start']!);
-        final end = DateTime.parse(item['end']!);
+        final start = _parseDate(item['start']!);
+        final endRaw = item['end'] ?? 'null';
+        final end = _parseDate(endRaw);
+        final endStr = (endRaw.trim() == 'null' || endRaw.trim().isEmpty)
+            ? '--:--:--'
+            : DateFormat('HH:mm:ss').format(end);
         return {
-          'rawStart': item['start']!, // Keep raw start as ID
+          'rawStart': item['start']!,
           'date': DateFormat('yyyy-MM-dd').format(start),
           'start': DateFormat('HH:mm:ss').format(start),
-          'end': DateFormat('HH:mm:ss').format(end),
+          'end': endStr,
           'type': item['type'] ?? 'bell',
           'duration':
               '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',

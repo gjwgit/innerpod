@@ -132,7 +132,7 @@ String addSession(String? currentContent, Map<String, dynamic> newSession) {
   // Convert map values to String
   final Map<String, String> sessionToAdd = {
     'start': newSession['start'].toString(),
-    'end': newSession['end'].toString(),
+    'end': (newSession['end'] ?? DateTime.now().toIso8601String()).toString(),
     'type': type,
     'silenceDuration': (newSession['silenceDuration'] ?? 1200).toString(),
     'title': title.isEmpty ? _capitalize(type) : title,

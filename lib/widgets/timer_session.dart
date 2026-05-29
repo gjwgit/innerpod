@@ -223,6 +223,7 @@ extension TimerStateLogic on TimerState {
 
     final session = {
       'start': _startTime!.toIso8601String(),
+      'end': DateTime.now().toIso8601String(),
       'type': typeOverride ?? _sessionType,
       'silenceDuration': _duration,
       'title': _titleController.text,
@@ -239,6 +240,9 @@ extension TimerStateLogic on TimerState {
       String newContent = addSession(content, session);
       await writePod('sessions.ttl', newContent, overwrite: true);
       logMessage('Session saved to Pod');
+
+      // Notify parent (e.g. to refresh the History screen).
+      widget.onSessionSaved?.call();
 
       _startTime = null;
       _clearSessionPrefs();

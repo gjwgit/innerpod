@@ -56,7 +56,11 @@ const defaultSessionSeconds = 20 * 60;
 /// A countdown timer widget with buttons for the home page.
 
 class Timer extends StatefulWidget {
-  const Timer({super.key});
+  /// Optional callback invoked after a session is successfully saved to
+  /// the Pod. Use this to trigger a History refresh in the parent.
+  const Timer({super.key, this.onSessionSaved});
+
+  final VoidCallback? onSessionSaved;
 
   @override
   TimerState createState() => TimerState();
