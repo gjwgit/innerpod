@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Friday 2026-05-29 20:37:24 +1000 Graham Williams>
+// Time-stamp: <Sunday 2026-05-31 06:30:17 +1000 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -69,7 +69,6 @@ class InnerPod extends StatelessWidget {
         'com.togaware.innerpod://redirect',
         'https://solidcommunity.au/apps/innerpod/redirect.html',
       ],
-      autoLogin: true,
       child: Home(),
     );
   }
