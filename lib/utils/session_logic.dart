@@ -177,7 +177,12 @@ String updateSession(
     if (updatedData.containsKey('type')) {
       session['type'] = updatedData['type'].toString();
     }
-    // We don't usually update start/end times via UI but keeping it flexible
+    // Start and end times are editable from the History edit dialog.
+    // The session is matched by its original start time (startTime), so
+    // updating the start value here is safe.
+    if (updatedData.containsKey('start')) {
+      session['start'] = updatedData['start'].toString();
+    }
     if (updatedData.containsKey('end')) {
       session['end'] = updatedData['end'].toString();
     }

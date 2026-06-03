@@ -152,6 +152,7 @@ class _HistoryState extends State<History> {
             : DateFormat('HH:mm:ss').format(end);
         return {
           'rawStart': item['start']!,
+          'rawEnd': endRaw,
           'date': DateFormat('yyyy-MM-dd').format(start),
           'start': DateFormat('HH:mm:ss').format(start),
           'end': endStr,
@@ -312,51 +313,124 @@ class _HistoryState extends State<History> {
     final descriptionController =
         TextEditingController(text: session['description']);
 
+    // Parse current start/end into editable DateTime values. End may be
+    // missing ("null") on old sessions — default it to the start time.
+    DateTime startDt = _parseDate(session['rawStart']!);
+    final rawEnd = session['rawEnd'] ?? 'null';
+    DateTime endDt = (rawEnd.trim() == 'null' || rawEnd.trim().isEmpty)
+        ? startDt
+        : _parseDate(rawEnd);
+
     final updated = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Edit Session'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                  hintText: 'Enter session title',
-                  prefixIcon: const Icon(Icons.label_outline),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) {
+          Future<void> pickDateTime({required bool isStart}) async {
+            final current = isStart ? startDt : endDt;
+            final date = await showDatePicker(
+              context: context,
+              initialDate: current,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+            );
+            if (date == null || !context.mounted) return;
+            final time = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.fromDateTime(current),
+            );
+            if (time == null) return;
+            final combined = DateTime(
+              date.year,
+              date.month,
+              date.day,
+              time.hour,
+              time.minute,
+              isStart ? current.second : current.second,
+            );
+            setDialogState(() {
+              if (isStart) {
+                startDt = combined;
+              } else {
+                endDt = combined;
+              }
+            });
+          }
+
+          final fmt = DateFormat('yyyy-MM-dd HH:mm');
+          return AlertDialog(
+            title: const Text('Edit Session'),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                      labelText: 'Title',
+                      hintText: 'Enter session title',
+                      prefixIcon: const Icon(Icons.label_outline),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: descriptionController,
+                    decoration: InputDecoration(
+                      labelText: 'Description',
+                      hintText: 'Enter session description',
+                      prefixIcon: const Icon(Icons.notes),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 16),
+                  // Start time — tap to edit.
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.play_arrow_outlined),
+                    title: const Text('Start'),
+                    subtitle: Text(fmt.format(startDt)),
+                    trailing: const Icon(Icons.edit_outlined, size: 18),
+                    onTap: () => pickDateTime(isStart: true),
+                  ),
+                  // End time — tap to edit.
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.stop_outlined),
+                    title: const Text('End'),
+                    subtitle: Text(fmt.format(endDt)),
+                    trailing: const Icon(Icons.edit_outlined, size: 18),
+                    onTap: () => pickDateTime(isStart: false),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: descriptionController,
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  hintText: 'Enter session description',
-                  prefixIcon: const Icon(Icons.notes),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
-                maxLines: 3,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (endDt.isBefore(startDt)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('End time must be after start time.'),
+                      ),
+                    );
+                    return;
+                  }
+                  Navigator.pop(context, true);
+                },
+                child: const Text('Save Changes'),
               ),
             ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Save Changes'),
-          ),
-        ],
+          );
+        },
       ),
     );
 
@@ -367,6 +441,8 @@ class _HistoryState extends State<History> {
         final newContent = updateSession(content, session['rawStart']!, {
           'title': titleController.text,
           'description': descriptionController.text,
+          'start': startDt.toIso8601String(),
+          'end': endDt.toIso8601String(),
         });
         await writePod(
           'sessions.ttl',
