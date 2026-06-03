@@ -28,8 +28,16 @@ dependencies:
   markdown_tooltip: ^0.0.7
   package_info_plus: ^9.0.0
   shared_preferences: ^2.5.4
-  solidpod: ^0.12.2
-  solidui: ^0.3.16
+  # solidpod: ^0.12.11
+  solidpod:
+    git:
+      url: "https://github.com/anusii/solidpod.git"
+      ref: av/40_migrate_oidc_implementation_revert
+  # solidui: ^0.3.57
+  solidui:
+    git:
+      url: "https://github.com/anusii/solidui.git"
+      ref: av/40_migrate_oidc_implementation_revert
   url_launcher: ^6.3.0
   wakelock_plus: ^1.1.4
 
