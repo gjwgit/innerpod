@@ -1,6 +1,6 @@
 /// A table of past sessions logged to the user's Solid Pod.
 ///
-// Time-stamp: <Thursday 2026-03-12 10:03:00 +1100 Graham Williams>
+// Time-stamp: <Monday 2026-06-08 11:14:23 +1000 Graham Williams>
 ///
 /// Copyright (C) 2024-2026, Togaware Pty Ltd
 ///
@@ -53,7 +53,6 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  List<Map<String, String>> _rawSessions = [];
   List<Map<String, String>> _sessions = [];
   bool _isLoading = true;
   bool _isLoggedIn = false;
@@ -112,8 +111,10 @@ class _HistoryState extends State<History> {
   /// Convert a parsed raw session map into the display map used by the
   /// session tiles. [local] marks sessions that live only in the local
   /// device store (not yet synced to the Pod) so the UI can show a lock.
-  Map<String, String> _toDisplay(Map<String, String> item,
-      {bool local = false}) {
+  Map<String, String> _toDisplay(
+    Map<String, String> item, {
+    bool local = false,
+  }) {
     final start = _parseDate(item['start']!);
     final endRaw = item['end'] ?? 'null';
     final end = _parseDate(endRaw);
@@ -239,7 +240,6 @@ class _HistoryState extends State<History> {
       }
 
       final podRaw = parseSessions(content);
-      _rawSessions = podRaw;
 
       // Merge: Pod sessions (not local) + local sessions (tagged local).
       final sessions = <Map<String, String>>[
