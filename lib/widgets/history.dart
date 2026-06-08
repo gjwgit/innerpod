@@ -36,6 +36,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:innerpod/constants/colours.dart' as colours;
 import 'package:innerpod/constants/colours.dart';
+import 'package:innerpod/utils/local_session_store.dart';
 import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/history_stats.dart';
 import 'package:innerpod/widgets/history_tile.dart';
@@ -108,6 +109,98 @@ class _HistoryState extends State<History> {
     return DateTime.fromMillisecondsSinceEpoch(0);
   }
 
+  /// Convert a parsed raw session map into the display map used by the
+  /// session tiles. [local] marks sessions that live only in the local
+  /// device store (not yet synced to the Pod) so the UI can show a lock.
+  Map<String, String> _toDisplay(Map<String, String> item,
+      {bool local = false}) {
+    final start = _parseDate(item['start']!);
+    final endRaw = item['end'] ?? 'null';
+    final end = _parseDate(endRaw);
+    final endStr = (endRaw.trim() == 'null' || endRaw.trim().isEmpty)
+        ? '--:--:--'
+        : DateFormat('HH:mm:ss').format(end);
+    return {
+      'rawStart': item['start']!,
+      'rawEnd': endRaw,
+      'date': DateFormat('yyyy-MM-dd').format(start),
+      'start': DateFormat('HH:mm:ss').format(start),
+      'end': endStr,
+      'type': item['type'] ?? 'bell',
+      'duration':
+          '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
+      'title': item['title'] ?? '',
+      'description': item['description'] ?? '',
+      'local': local ? 'true' : 'false',
+    };
+  }
+
+  /// Promote a locally-stored session to the Pod: write it to sessions.ttl,
+  /// then remove it from the local store. Triggered by tapping the lock icon.
+  Future<void> _syncToPod(Map<String, String> session) async {
+    if (!_isLoggedIn) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please log in first to save to your Pod.'),
+          ),
+        );
+      }
+      return;
+    }
+    setState(() => _isLoading = true);
+    try {
+      // Reconstruct the raw session map for addSession.
+      final raw = <String, dynamic>{
+        'start': session['rawStart'],
+        'end': session['rawEnd'],
+        'type': session['type'],
+        // Duration is shown as e.g. "20m"; convert back to seconds.
+        'silenceDuration': _durationToSeconds(session['duration']),
+        'title': session['title'],
+        'description': session['description'],
+      };
+
+      String content = '';
+      try {
+        content = await readPod('sessions.ttl');
+      } on ResourceNotExistException {
+        content = '';
+      }
+      final newContent = addSession(content, raw);
+      await writePod('sessions.ttl', newContent, overwrite: true);
+
+      // Remove from local store now that it's on the Pod.
+      await LocalSessionStore.removeSessionLocal(session['rawStart']!);
+
+      await _loadSessions();
+    } catch (e) {
+      if (e.toString().contains('You must first set the security key!')) {
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) await _syncToPod(session);
+        }
+        return;
+      }
+      debugPrint('Failed to sync local session to Pod: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not save to Pod. Try again.')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  /// Convert a display duration like "20m" back to seconds for storage.
+  int _durationToSeconds(String? duration) {
+    if (duration == null) return 1200;
+    final m = RegExp(r'(\d+)').firstMatch(duration);
+    if (m == null) return 1200;
+    return int.parse(m.group(1)!) * 60;
+  }
+
   Future<void> _loadSessions() async {
     if (mounted) {
       setState(() {
@@ -116,54 +209,46 @@ class _HistoryState extends State<History> {
     }
 
     try {
+      // Always load the local (un-synced) store.
+      final localRaw = await LocalSessionStore.readSessions();
+
+      // Load the Pod store only when logged in.
       String? content;
-      try {
-        content = await readPod('sessions.ttl');
-      } on ResourceNotExistException {
-        debugPrint('sessions.ttl does not exist yet (normal for new users)');
-        content = null;
-      } catch (e) {
-        if (e.toString().contains('You must first set the security key!')) {
-          debugPrint(
-            'Security key missing - cannot access sessions.ttl. Prompting user.',
-          );
-          if (mounted) {
-            await getKeyFromUserIfRequired(context, widget);
+      if (_isLoggedIn) {
+        try {
+          content = await readPod('sessions.ttl');
+        } on ResourceNotExistException {
+          debugPrint('sessions.ttl does not exist yet (normal for new users)');
+          content = null;
+        } catch (e) {
+          if (e.toString().contains('You must first set the security key!')) {
+            debugPrint(
+              'Security key missing - cannot access sessions.ttl. Prompting.',
+            );
             if (mounted) {
-              await _loadSessions();
-              return;
+              await getKeyFromUserIfRequired(context, widget);
+              if (mounted) {
+                await _loadSessions();
+                return;
+              }
             }
           }
+          debugPrint('Error accessing sessions.ttl: $e');
+          content = null;
         }
-        // Log other errors related to reading from Pod.
-
-        debugPrint('Error accessing sessions.ttl: $e');
-        content = null;
       }
 
-      // parseSessions handles null content and returns empty list
+      final podRaw = parseSessions(content);
+      _rawSessions = podRaw;
 
-      _rawSessions = parseSessions(content);
-      final List<Map<String, String>> sessions = _rawSessions.map((item) {
-        final start = _parseDate(item['start']!);
-        final endRaw = item['end'] ?? 'null';
-        final end = _parseDate(endRaw);
-        final endStr = (endRaw.trim() == 'null' || endRaw.trim().isEmpty)
-            ? '--:--:--'
-            : DateFormat('HH:mm:ss').format(end);
-        return {
-          'rawStart': item['start']!,
-          'rawEnd': endRaw,
-          'date': DateFormat('yyyy-MM-dd').format(start),
-          'start': DateFormat('HH:mm:ss').format(start),
-          'end': endStr,
-          'type': item['type'] ?? 'bell',
-          'duration':
-              '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
-          'title': item['title'] ?? '',
-          'description': item['description'] ?? '',
-        };
-      }).toList();
+      // Merge: Pod sessions (not local) + local sessions (tagged local).
+      final sessions = <Map<String, String>>[
+        ...podRaw.map((item) => _toDisplay(item)),
+        ...localRaw.map((item) => _toDisplay(item, local: true)),
+      ];
+
+      // Sort newest first by raw start timestamp.
+      sessions.sort((a, b) => b['rawStart']!.compareTo(a['rawStart']!));
 
       if (mounted) {
         setState(() {
@@ -181,7 +266,7 @@ class _HistoryState extends State<History> {
     }
   }
 
-  Future<void> _deleteSession(String rawStart) async {
+  Future<void> _deleteSession(String rawStart, {bool local = false}) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -210,6 +295,18 @@ class _HistoryState extends State<History> {
 
     if (confirmed == true) {
       setState(() => _isLoading = true);
+      // Local sessions are deleted from the device store, not the Pod.
+      if (local) {
+        try {
+          await LocalSessionStore.removeSessionLocal(rawStart);
+          await _loadSessions();
+        } catch (e) {
+          debugPrint('Error deleting local session: $e');
+        } finally {
+          if (mounted) setState(() => _isLoading = false);
+        }
+        return;
+      }
       try {
         final content = await readPod('sessions.ttl');
         final newContent = deleteSession(content, rawStart);
@@ -536,13 +633,17 @@ class _HistoryState extends State<History> {
                           );
                         }
                         final session = _sessions[index - 1];
+                        final isLocal = session['local'] == 'true';
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: HistorySessionTile(
                             session: session,
                             onEdit: () => _editSession(session),
-                            onDelete: () =>
-                                _deleteSession(session['rawStart']!),
+                            onDelete: () => _deleteSession(
+                              session['rawStart']!,
+                              local: isLocal,
+                            ),
+                            onSync: isLocal ? () => _syncToPod(session) : null,
                           ),
                         );
                       },

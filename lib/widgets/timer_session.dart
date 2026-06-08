@@ -229,6 +229,24 @@ extension TimerStateLogic on TimerState {
       'title': _titleController.text,
     };
 
+    // Determine whether we can reach the Pod. If not logged in, save the
+    // session to the local device store instead; it can be promoted to the
+    // Pod later from the History view.
+    bool loggedIn = false;
+    try {
+      final webId = await getWebId();
+      loggedIn = webId != null && webId.isNotEmpty;
+    } catch (_) {
+      // getWebId can throw if the keyring is locked — treat as logged out
+      // and fall back to local storage so the session is never lost.
+      loggedIn = false;
+    }
+
+    if (!loggedIn) {
+      await _saveSessionLocally(session);
+      return;
+    }
+
     try {
       String content = '';
       try {
@@ -257,10 +275,23 @@ extension TimerStateLogic on TimerState {
           }
         }
       } else {
-        debugPrint(
-          'Session save failed: $e — session data: $session',
-        );
+        // Pod write failed for some other reason — don't lose the session,
+        // store it locally so it can be synced later.
+        debugPrint('Session save to Pod failed: $e — storing locally.');
+        await _saveSessionLocally(session);
       }
     }
+  }
+
+  /// Persist [session] to the local device store and reset the timer state.
+  /// Used when the user is not logged in or the Pod write fails.
+  Future<void> _saveSessionLocally(Map<String, dynamic> session) async {
+    await LocalSessionStore.addSessionLocal(session);
+    logMessage('Session saved locally (not logged in)');
+    widget.onSessionSaved?.call();
+    _startTime = null;
+    _clearSessionPrefs();
+    _titleController.clear();
+    _descriptionController.clear();
   }
 }

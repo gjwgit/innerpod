@@ -33,6 +33,7 @@ then please show some ❤️ and tap on the star at
 
 ## 1.9 Fine Tuning
 
++ Support offline logging [1.8.26 20260608 gjw]
 + Add visual history [1.8.25 20260608 gjw]
 + Updated solidui menus to bottom [1.8.24 20260606 gjw]
 + Allow editing date/time [1.8.23 20260603 gjw]

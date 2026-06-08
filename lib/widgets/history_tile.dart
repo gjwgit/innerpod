@@ -40,12 +40,17 @@ class HistorySessionTile extends StatelessWidget {
     required this.session,
     required this.onEdit,
     required this.onDelete,
+    this.onSync,
     super.key,
   });
 
   final Map<String, String> session;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+
+  /// Called when the user taps the lock icon on a locally-stored session to
+  /// save it to the Pod. Null for sessions already on the Pod.
+  final VoidCallback? onSync;
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +137,17 @@ class HistorySessionTile extends StatelessWidget {
               const SizedBox(width: 8),
               Column(
                 children: [
+                  if (onSync != null)
+                    IconButton(
+                      icon: Icon(
+                        Icons.lock_outline,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      tooltip: 'Saved on this device only — '
+                          'tap to save to your Pod',
+                      onPressed: onSync,
+                    ),
                   IconButton(
                     icon: const Icon(Icons.edit_outlined, size: 20),
                     onPressed: onEdit,

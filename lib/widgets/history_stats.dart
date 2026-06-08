@@ -197,10 +197,13 @@ class _Heatmap extends StatelessWidget {
     const days = 7;
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    // Start on the Monday of the week containing (today - 7*weeks days).
-    final startBase = today.subtract(const Duration(days: days * weeks - 1));
-    // Align to Monday (weekday 1).
-    final start = startBase.subtract(Duration(days: startBase.weekday - 1));
+    // Anchor the grid so the LAST column is the week containing today,
+    // even when that week is incomplete. Find the Monday of today's week,
+    // then step back (weeks - 1) weeks for the first column's Monday.
+    final mondayOfThisWeek = today.subtract(Duration(days: today.weekday - 1));
+    final start = mondayOfThisWeek.subtract(
+      const Duration(days: days * (weeks - 1)),
+    );
 
     // Build columns = weeks, rows = weekdays Mon..Sun.
     final columns = <Widget>[];
@@ -261,10 +264,8 @@ class _HeatmapLegend extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
         children: [
-          Text(
-            'Less',
-            style: TextStyle(fontSize: 10, color: cs.onSurfaceVariant),
-          ),
+          Text('Less',
+              style: TextStyle(fontSize: 10, color: cs.onSurfaceVariant)),
           const SizedBox(width: 4),
           _swatch(cs.surfaceContainerHighest),
           _swatch(cs.primary.withValues(alpha: 0.45)),
