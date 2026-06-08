@@ -37,6 +37,7 @@ import 'package:solidui/solidui.dart';
 import 'package:innerpod/constants/colours.dart' as colours;
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/utils/session_logic.dart';
+import 'package:innerpod/widgets/history_stats.dart';
 import 'package:innerpod/widgets/history_tile.dart';
 
 class History extends StatefulWidget {
@@ -523,17 +524,26 @@ class _HistoryState extends State<History> {
                       ),
                     )
                   : ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      itemCount: _sessions.length,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      // +1 for the stats header at index 0.
+                      itemCount: _sessions.length + 1,
                       itemBuilder: (context, index) {
-                        final session = _sessions[index];
-                        return HistorySessionTile(
-                          session: session,
-                          onEdit: () => _editSession(session),
-                          onDelete: () => _deleteSession(session['rawStart']!),
+                        if (index == 0) {
+                          return HistoryStats(
+                            starts: _sessions
+                                .map((s) => _parseDate(s['rawStart']!))
+                                .toList(),
+                          );
+                        }
+                        final session = _sessions[index - 1];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: HistorySessionTile(
+                            session: session,
+                            onEdit: () => _editSession(session),
+                            onDelete: () =>
+                                _deleteSession(session['rawStart']!),
+                          ),
                         );
                       },
                     ),
