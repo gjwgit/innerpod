@@ -7,17 +7,19 @@ following incremental updates through the 1.8.n series.
 You can run the app in your browser from the
 [**web**](https://innerpod.solidcommunity.au) or else download and
 install locally the latest version from the [Solid Community
-AU](https://solidcommunity.au) or directly: for **Android** as
+AU](https://solidcommunity.au) or directly:
+
++ **Android** as
 [aab](https://solidcommunity.au/installers/innerpod.apk) or
 [apk](https://solidcommunity.au/installers/innerpod.apk); for
-**GNU/Linux** as
++ **GNU/Linux** as
 [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
 [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
 [zip](https://solidcommunity.au/installers/innerpod-linux.zip); for
-**macOS** as
++ **macOS** as
 [dmg](https://solidcommunity.au/installers/innerpod-macos.dmg) or
 [zip](https://solidcommunity.au/installers/innerpod-macos.zip); for
-**Windows** as
++ **Windows** as
 [inno](https://solidcommunity.au/installers/innerpod-windows-inno.exe)
 or [zip](https://solidcommunity.au/installers/innerpod-windows.zip).
 
