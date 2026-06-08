@@ -11,14 +11,14 @@ AU](https://solidcommunity.au) or directly:
 
 + **Android** as
 [aab](https://solidcommunity.au/installers/innerpod.apk) or
-[apk](https://solidcommunity.au/installers/innerpod.apk); for
+[apk](https://solidcommunity.au/installers/innerpod.apk);
 + **GNU/Linux** as
 [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
 [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
-[zip](https://solidcommunity.au/installers/innerpod-linux.zip); for
+[zip](https://solidcommunity.au/installers/innerpod-linux.zip);
 + **macOS** as
 [dmg](https://solidcommunity.au/installers/innerpod-macos.dmg) or
-[zip](https://solidcommunity.au/installers/innerpod-macos.zip); for
+[zip](https://solidcommunity.au/installers/innerpod-macos.zip);
 + **Windows** as
 [inno](https://solidcommunity.au/installers/innerpod-windows-inno.exe)
 or [zip](https://solidcommunity.au/installers/innerpod-windows.zip).
