@@ -37,13 +37,13 @@ repository:
 + **GNU/Linux**
   [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
   [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
-  [zip](https://solidcommunity.au/installers/innerpod-dev-linux.zip);
+  [zip](https://solidcommunity.au/installers/innerpod-linux.zip);
 + **macOS**
-  [dmg](https://solidcommunity.au/installers/innerpod-dev-macos-unsigned.dmg) or
-  [zip](https://solidcommunity.au/installers/innerpod-dev-macos.zip);
+  [dmg](https://solidcommunity.au/installers/innerpod-macos.dmg) or
+  [zip](https://solidcommunity.au/installers/innerpod-macos.zip);
 + **Windows**
-  [zip](https://solidcommunity.au/installers/innerpod-dev-windows.zip) or
-  [inno](https://solidcommunity.au/installers/innerpod-dev-windows-inno.exe).
+  [zip](https://solidcommunity.au/installers/innerpod-windows.zip) or
+  [inno](https://solidcommunity.au/installers/innerpod-windows-inno.exe).
 
 Contributions are welcome. Visit
 [github](https://github.com/gjwgit/innerpod) to submit an issue or,
@@ -150,7 +150,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Tuesday 2026-02-17 07:36:49 +1100 Graham Williams>
+Time-stamp: <Monday 2026-06-08 10:35:10 +1000 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)

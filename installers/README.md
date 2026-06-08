@@ -31,13 +31,13 @@ you are comfortable with side loading the app then choose to do so.
 
 ### Zip Install
 
-Download [innerpod-dev-linux.zip](https://solidcommunity.au/installers/innerpod-dev-linux.zip)
+Download [innerpod-linux.zip](https://solidcommunity.au/installers/innerpod-linux.zip)
 
 To try it out:
 
 ```bash
-wget https://solidcommunity.au/installers/innerpod-dev-linux.zip -O innerpod-dev-linux.zip
-unzip innerpod-dev-linux.zip -d innerpod
+wget https://solidcommunity.au/installers/innerpod-linux.zip -O innerpod-linux.zip
+unzip innerpod-linux.zip -d innerpod
 ./innerpod/innerpod
 ```
 
@@ -46,7 +46,7 @@ with a desktop icon for their desktop, begin by downloading the **zip** and
 installing that into a local folder:
 
 ```bash
-unzip innerpod-dev-linux.zip -d ${HOME}/.local/share/innerpod
+unzip innerpod-linux.zip -d ${HOME}/.local/share/innerpod
 ```
 
 Then set up your local installation (only required once):
@@ -64,7 +64,7 @@ wget https://github.com/gjwgit/innerpod/raw/dev/installers/innerpod.png -O ${HOM
 To install for any user on the computer:
 
 ```bash
-sudo unzip innerpod-dev-linux.zip -d /opt/innerpod
+sudo unzip innerpod-linux.zip -d /opt/innerpod
 sudo ln -s /opt/innerpod/innerpod /usr/local/bin/
 ```
 
@@ -80,7 +80,7 @@ Alt-F2 and type `innerpod` then Enter.
 ## MacOS
 
 The zip file
-[innerpod-dev-macos.zip](https://solidcommunity.au/installers/innerpod-dev-macos.zip)
+[innerpod-macos.zip](https://solidcommunity.au/installers/innerpod-macos.zip)
 can be installed on MacOS. Download the file and open it on your
 Mac. Then, holding the Control key click on the app icon to display a
 menu. Choose `Open`. Then accept the warning to then run the app. The
@@ -99,5 +99,5 @@ the web-based app directly.
 ## Windows Installer
 
 Download and run the self extracting archive
-[innerpod-dev-windows-inno.exe](https://solidcommunity.au/installers/innerpod-dev-windows-inno.exe)
+[innerpod-windows-inno.exe](https://solidcommunity.au/installers/innerpod-windows-inno.exe)
 to self install the app on Windows.
