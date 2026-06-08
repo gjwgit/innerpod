@@ -261,8 +261,10 @@ class _HeatmapLegend extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
         children: [
-          Text('Less',
-              style: TextStyle(fontSize: 10, color: cs.onSurfaceVariant)),
+          Text(
+            'Less',
+            style: TextStyle(fontSize: 10, color: cs.onSurfaceVariant),
+          ),
           const SizedBox(width: 4),
           _swatch(cs.surfaceContainerHighest),
           _swatch(cs.primary.withValues(alpha: 0.45)),
