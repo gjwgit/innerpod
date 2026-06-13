@@ -1,8 +1,7 @@
 # Inner Pod Change Log
 
 Noted here are the high level changes for the app.  Each update
-includes a short user-oriented description.  The next release is 1.9
-following incremental updates through the 1.8.n series.
+includes a short user-oriented description.
 
 You can run the app in your browser from the
 [**web**](https://innerpod.solidcommunity.au) or else download and
@@ -33,7 +32,11 @@ We make this project available for free so if you appreciate the app
 then please show some ❤️ and tap on the star at
 [GitHub](https://github.com/gjwgit/innerpod) to support our work.
 
-## 1.9 Fine Tuning
+## 2.0 New and more secure key handling
+
++ Move the the latest solidui/solidpod/solidauth [2.0.0 20260613 gjw]
+
+## 1.8 Fine Tuning
 
 + Support offline logging [1.8.26 20260608 gjw]
 + Add visual history [1.8.25 20260608 gjw]
@@ -62,7 +65,7 @@ then please show some ❤️ and tap on the star at
 + Improved colour scheme [1.8.2 20260226 gjw]
 + Dong at half volume. Start timer with bells. [1.8.1 20260226 gjw]
 
-## 1.8 Save Sessions and Update UI
+## 1.7 Save Sessions and Update UI
 
 + Review and Incorporate outsanding PRs [1.8.0 20260226 gjw]
 + Bug fix - timer was resetting to default [1.7.13 20260223 amogh]
@@ -81,7 +84,7 @@ then please show some ❤️ and tap on the star at
 + Updated Tibetan bell from freesound.org [1.7.2 20241101 gjw]
 + Use markdown for About with active url links [1.7.1 20241101 gjw]
 
-## 1.7 Fine Tuning
+## 1.6 Fine Tuning
 
 + Move to mp3 rather than ogg for wider OS support [1.7.0 20241025 gjw]
 + Quotes -> Wisdom [1.6.4 20241024 gjw]
@@ -89,7 +92,7 @@ then please show some ❤️ and tap on the star at
 + Testing [1.6.2 20241023 gjw]
 + Review audio, quieten the bell. [1.6.1 20241023 gjw]
 
-## 1.6 UX Updates
+## 1.5 UX Updates
 
 + Improved tooltip style. [1.5.10]
 + Remove REST and RESUME - plan for them with PAUSE. [1.5.9]
@@ -102,7 +105,7 @@ then please show some ❤️ and tap on the star at
 + Configure for linux install and update install instructions [1.5.2]
 + Add quotes [1.5.1]
 
-## 1.5 Basic Funcationality
+## 1.4 Basic Funcationality
 
 + Add session length chooser [1.4.3]
 + Add Text page [1.4.2]
