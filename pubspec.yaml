@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: "none"
-version: 2.0.0+92
+version: 2.0.1+92
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -20,6 +20,7 @@ dependencies:
   audioplayers: ^6.1.0
   circular_countdown_timer: ^0.2.3
   cupertino_icons: ^1.0.2
+  file_picker: ^11.0.2
   flutter:
     sdk: flutter
   flutter_markdown_plus: ^1.0.7

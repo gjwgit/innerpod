@@ -30,7 +30,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
@@ -38,6 +38,9 @@ import 'package:innerpod/constants/colours.dart' as colours;
 import 'package:innerpod/constants/colours.dart';
 import 'package:innerpod/utils/local_session_store.dart';
 import 'package:innerpod/utils/session_logic.dart';
+import 'package:innerpod/widgets/edit_session_dialog.dart';
+import 'package:innerpod/widgets/history_backup.dart';
+import 'package:innerpod/widgets/history_format.dart';
 import 'package:innerpod/widgets/history_stats.dart';
 import 'package:innerpod/widgets/history_tile.dart';
 
@@ -82,60 +85,6 @@ class _HistoryState extends State<History> {
   /// Parse a date string tolerantly, handling both ISO 8601
   /// (e.g. "2026-05-25T14:30:22.000") and the legacy compact format
   /// (e.g. "20260525T143022") that older app versions wrote to the Pod.
-  DateTime _parseDate(String s) {
-    final trimmed = s.trim();
-    // Stored as literal "null" when end time was missing in old sessions.
-    if (trimmed == 'null' || trimmed.isEmpty) {
-      return DateTime.fromMillisecondsSinceEpoch(0);
-    }
-    try {
-      return DateTime.parse(trimmed);
-    } catch (_) {}
-    // Legacy format: yMMddTHHmmss → 20260525T143022
-    final compact = RegExp(r'^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$');
-    final m = compact.firstMatch(trimmed);
-    if (m != null) {
-      return DateTime(
-        int.parse(m.group(1)!),
-        int.parse(m.group(2)!),
-        int.parse(m.group(3)!),
-        int.parse(m.group(4)!),
-        int.parse(m.group(5)!),
-        int.parse(m.group(6)!),
-      );
-    }
-    debugPrint('[History] Unparseable date: $s');
-    return DateTime.fromMillisecondsSinceEpoch(0);
-  }
-
-  /// Convert a parsed raw session map into the display map used by the
-  /// session tiles. [local] marks sessions that live only in the local
-  /// device store (not yet synced to the Pod) so the UI can show a lock.
-  Map<String, String> _toDisplay(
-    Map<String, String> item, {
-    bool local = false,
-  }) {
-    final start = _parseDate(item['start']!);
-    final endRaw = item['end'] ?? 'null';
-    final end = _parseDate(endRaw);
-    final endStr = (endRaw.trim() == 'null' || endRaw.trim().isEmpty)
-        ? '--:--:--'
-        : DateFormat('HH:mm:ss').format(end);
-    return {
-      'rawStart': item['start']!,
-      'rawEnd': endRaw,
-      'date': DateFormat('yyyy-MM-dd').format(start),
-      'start': DateFormat('HH:mm:ss').format(start),
-      'end': endStr,
-      'type': item['type'] ?? 'bell',
-      'duration':
-          '${(int.parse(item['silenceDuration'] ?? '1200') / 60).round()}m',
-      'title': item['title'] ?? '',
-      'description': item['description'] ?? '',
-      'local': local ? 'true' : 'false',
-    };
-  }
-
   /// Promote a locally-stored session to the Pod: write it to sessions.ttl,
   /// then remove it from the local store. Triggered by tapping the lock icon.
   Future<void> _syncToPod(Map<String, String> session) async {
@@ -157,7 +106,7 @@ class _HistoryState extends State<History> {
         'end': session['rawEnd'],
         'type': session['type'],
         // Duration is shown as e.g. "20m"; convert back to seconds.
-        'silenceDuration': _durationToSeconds(session['duration']),
+        'silenceDuration': durationToSeconds(session['duration']),
         'title': session['title'],
         'description': session['description'],
       };
@@ -195,13 +144,6 @@ class _HistoryState extends State<History> {
   }
 
   /// Convert a display duration like "20m" back to seconds for storage.
-  int _durationToSeconds(String? duration) {
-    if (duration == null) return 1200;
-    final m = RegExp(r'(\d+)').firstMatch(duration);
-    if (m == null) return 1200;
-    return int.parse(m.group(1)!) * 60;
-  }
-
   Future<void> _loadSessions() async {
     if (mounted) {
       setState(() {
@@ -243,8 +185,8 @@ class _HistoryState extends State<History> {
 
       // Merge: Pod sessions (not local) + local sessions (tagged local).
       final sessions = <Map<String, String>>[
-        ...podRaw.map((item) => _toDisplay(item)),
-        ...localRaw.map((item) => _toDisplay(item, local: true)),
+        ...podRaw.map((item) => sessionToDisplay(item)),
+        ...localRaw.map((item) => sessionToDisplay(item, local: true)),
       ];
 
       // Sort newest first by raw start timestamp.
@@ -407,165 +349,128 @@ class _HistoryState extends State<History> {
   }
 
   Future<void> _editSession(Map<String, String> session) async {
-    final titleController = TextEditingController(text: session['title']);
-    final descriptionController =
-        TextEditingController(text: session['description']);
-
     // Parse current start/end into editable DateTime values. End may be
     // missing ("null") on old sessions — default it to the start time.
-    DateTime startDt = _parseDate(session['rawStart']!);
+    final startDt = parseSessionDate(session['rawStart']!);
     final rawEnd = session['rawEnd'] ?? 'null';
-    DateTime endDt = (rawEnd.trim() == 'null' || rawEnd.trim().isEmpty)
+    final endDt = (rawEnd.trim() == 'null' || rawEnd.trim().isEmpty)
         ? startDt
-        : _parseDate(rawEnd);
+        : parseSessionDate(rawEnd);
 
-    final updated = await showDialog<bool>(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setDialogState) {
-          Future<void> pickDateTime({required bool isStart}) async {
-            final current = isStart ? startDt : endDt;
-            final date = await showDatePicker(
-              context: context,
-              initialDate: current,
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2100),
-            );
-            if (date == null || !context.mounted) return;
-            final time = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay.fromDateTime(current),
-            );
-            if (time == null) return;
-            final combined = DateTime(
-              date.year,
-              date.month,
-              date.day,
-              time.hour,
-              time.minute,
-              isStart ? current.second : current.second,
-            );
-            setDialogState(() {
-              if (isStart) {
-                startDt = combined;
-              } else {
-                endDt = combined;
-              }
-            });
-          }
-
-          final fmt = DateFormat('yyyy-MM-dd HH:mm');
-          return AlertDialog(
-            title: const Text('Edit Session'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: titleController,
-                    decoration: InputDecoration(
-                      labelText: 'Title',
-                      hintText: 'Enter session title',
-                      prefixIcon: const Icon(Icons.label_outline),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: descriptionController,
-                    decoration: InputDecoration(
-                      labelText: 'Description',
-                      hintText: 'Enter session description',
-                      prefixIcon: const Icon(Icons.notes),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 16),
-                  // Start time — tap to edit.
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.play_arrow_outlined),
-                    title: const Text('Start'),
-                    subtitle: Text(fmt.format(startDt)),
-                    trailing: const Icon(Icons.edit_outlined, size: 18),
-                    onTap: () => pickDateTime(isStart: true),
-                  ),
-                  // End time — tap to edit.
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.stop_outlined),
-                    title: const Text('End'),
-                    subtitle: Text(fmt.format(endDt)),
-                    trailing: const Icon(Icons.edit_outlined, size: 18),
-                    onTap: () => pickDateTime(isStart: false),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (endDt.isBefore(startDt)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('End time must be after start time.'),
-                      ),
-                    );
-                    return;
-                  }
-                  Navigator.pop(context, true);
-                },
-                child: const Text('Save Changes'),
-              ),
-            ],
-          );
-        },
-      ),
+    final result = await showEditSessionDialog(
+      context,
+      session: session,
+      start: startDt,
+      end: endDt,
     );
+    if (result == null) return; // cancelled
 
-    if (updated == true) {
-      setState(() => _isLoading = true);
-      try {
-        final content = await readPod('sessions.ttl');
-        final newContent = updateSession(content, session['rawStart']!, {
-          'title': titleController.text,
-          'description': descriptionController.text,
-          'start': startDt.toIso8601String(),
-          'end': endDt.toIso8601String(),
-        });
-        await writePod(
-          'sessions.ttl',
-          newContent,
-          overwrite: true,
+    setState(() => _isLoading = true);
+    try {
+      final content = await readPod('sessions.ttl');
+      final newContent = updateSession(content, session['rawStart']!, {
+        'title': result.title,
+        'description': result.description,
+        'start': result.start.toIso8601String(),
+        'end': result.end.toIso8601String(),
+      });
+      await writePod('sessions.ttl', newContent, overwrite: true);
+      await _loadSessions();
+    } catch (e) {
+      if (e.toString().contains('You must first set the security key!')) {
+        debugPrint(
+          'Security key missing - cannot decrypt sessions.ttl for update',
         );
-        await _loadSessions();
-      } catch (e) {
-        if (e.toString().contains('You must first set the security key!')) {
-          debugPrint(
-            'Security key missing - cannot decrypt sessions.ttl for update',
-          );
-          if (mounted) {
-            await getKeyFromUserIfRequired(context, widget);
-
-            if (mounted) {
-              await _editSession(session);
-            }
-          }
-          return;
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) await _editSession(session);
         }
-      } finally {
-        if (mounted) setState(() => _isLoading = false);
+        return;
       }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
+  }
+
+  /// Export all sessions to a .ttl backup file, prompting for the location.
+  Future<void> _exportBackup() async {
+    if (!_isLoggedIn) {
+      _toast('Please log in first to back up your history.');
+      return;
+    }
+    setState(() => _isLoading = true);
+    try {
+      String content;
+      try {
+        content = await readPod('sessions.ttl');
+      } on ResourceNotExistException {
+        content = serializeSessions([]);
+      }
+      if (await saveTtlBackup(content)) _toast('History exported.');
+    } catch (e) {
+      if (e.toString().contains('You must first set the security key!')) {
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) await _exportBackup();
+        }
+        return;
+      }
+      debugPrint('[History] export failed: $e');
+      _toast('Could not export history. Try again.');
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  /// Import sessions from a .ttl backup file, merging them into the Pod.
+  /// Sessions whose start time already exists are skipped.
+  Future<void> _importBackup() async {
+    if (!_isLoggedIn) {
+      _toast('Please log in first to restore your history.');
+      return;
+    }
+    final importedContent = await pickTtlBackup();
+    if (importedContent == null) return; // cancelled / unreadable
+
+    setState(() => _isLoading = true);
+    try {
+      String content;
+      try {
+        content = await readPod('sessions.ttl');
+      } on ResourceNotExistException {
+        content = serializeSessions([]);
+      }
+
+      final merged = mergeBackup(content, importedContent);
+      await writePod('sessions.ttl', merged.content, overwrite: true);
+      await _loadSessions();
+      _toast(
+        merged.added == 0
+            ? 'No new sessions to import.'
+            : 'Imported ${merged.added} '
+                'session${merged.added == 1 ? '' : 's'}.',
+      );
+    } catch (e) {
+      if (e.toString().contains('You must first set the security key!')) {
+        if (mounted) {
+          await getKeyFromUserIfRequired(context, widget);
+          if (mounted) await _importBackup();
+        }
+        return;
+      }
+      debugPrint('[History] import failed: $e');
+      _toast('Could not import history. Try again.');
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  /// Show a brief message via a SnackBar.
+  void _toast(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -576,6 +481,26 @@ class _HistoryState extends State<History> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            MarkdownTooltip(
+              message: '**Export Backup**\n\n'
+                  'Save all your session history to a .ttl backup file. '
+                  'You will be prompted for where to save it.',
+              child: IconButton(
+                icon: const Icon(Icons.file_upload_outlined),
+                tooltip: 'Export Backup',
+                onPressed: _exportBackup,
+              ),
+            ),
+            MarkdownTooltip(
+              message: '**Import Backup**\n\n'
+                  'Restore sessions from a previously exported .ttl backup '
+                  'file. Existing sessions are kept; only new ones are added.',
+              child: IconButton(
+                icon: const Icon(Icons.file_download_outlined),
+                tooltip: 'Import Backup',
+                onPressed: _importBackup,
+              ),
+            ),
             if (_sessions.isNotEmpty)
               IconButton(
                 icon: const Icon(
@@ -628,7 +553,7 @@ class _HistoryState extends State<History> {
                         if (index == 0) {
                           return HistoryStats(
                             starts: _sessions
-                                .map((s) => _parseDate(s['rawStart']!))
+                                .map((s) => parseSessionDate(s['rawStart']!))
                                 .toList(),
                           );
                         }
