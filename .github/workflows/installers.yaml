@@ -1050,7 +1050,7 @@ jobs:
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build windows')
-    runs-on: windows-latest # randomly not working (choco fails) with inno 1.2.7
+    runs-on: windows-2022 # latest # randomly not working (choco fails) with inno 1.2.7
 
     steps:
       - name: Clone Repository
