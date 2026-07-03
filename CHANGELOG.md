@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.0 New and more secure key handling
 
++ Update solidui/solidpod dependencies [2.0.2 20260703 gjw]
 + Add export/import backup [2.0.1 20260614 gjw]
 + Move the the latest solidui/solidpod/solidauth [2.0.0 20260613 gjw]
 
