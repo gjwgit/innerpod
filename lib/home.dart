@@ -63,10 +63,10 @@ class InnerPod extends StatelessWidget {
       // registerButtonStyle: RegisterButtonStyle(visible: false),
       // infoButtonStyle: InfoButtonStyle(visible: true),
       link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
-      clientId: 'https://solidcommunity.au/apps/innerpod/client-profile.jsonld',
+      clientId: 'https://innerpod.solidcommunity.au/client-profile.jsonld',
       redirectUris: [
         'com.togaware.innerpod://redirect',
-        'http://localhost:4400/redirect',
+        'http://localhost:4400/redirect.html',
         'https://innerpod.solidcommunity.au/redirect.html',
       ],
       child: Home(),
