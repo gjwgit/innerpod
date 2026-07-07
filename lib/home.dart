@@ -67,7 +67,7 @@ class InnerPod extends StatelessWidget {
       redirectUris: [
         'com.togaware.innerpod://redirect',
         'http://localhost:4400/redirect',
-        'https://solidcommunity.au/apps/innerpod/redirect.html',
+        'https://innerpod.solidcommunity.au/redirect.html',
       ],
       child: Home(),
     );
