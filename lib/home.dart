@@ -64,7 +64,7 @@ class InnerPod extends StatelessWidget {
       // registerButtonStyle: RegisterButtonStyle(visible: false),
       // infoButtonStyle: InfoButtonStyle(visible: true),
       link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
-      clientId: 'https://dev.empwr.au/innerpod/client-profile.jsonld',
+      clientId: 'https://gjwgit.github.io/innerpod/client-profile.jsonld',
       // On web the redirect must be same-origin as where the app is served,
       // otherwise redirect.html's BroadcastChannel cannot hand the auth
       // response back and login hangs on the spinner. solidpod's

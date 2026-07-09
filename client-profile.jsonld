@@ -1,6 +1,6 @@
 {
   "@context": "https://www.w3.org/ns/solid/oidc-context.jsonld",
-  "client_id": "https://dev.empwr.au/innerpod/client-profile.jsonld",
+  "client_id": "https://gjwgit.github.io/innerpod/client-profile.jsonld",
   "client_name": "InnerPod",
   "application_type": "native",
   "redirect_uris": [
