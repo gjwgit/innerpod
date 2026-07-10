@@ -24,6 +24,7 @@
 /// Authors: Graham Williams
 library;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import 'package:package_info_plus/package_info_plus.dart';
@@ -46,16 +47,16 @@ class InnerPod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SolidLogin(
+    return SolidLogin(
       title: 'SIlence and Stillness',
       required: false,
-      image: AssetImage('assets/images/app_image.jpg'),
-      logo: AssetImage('assets/images/app_icon.png'),
-      continueButtonStyle: ContinueButtonStyle(
+      image: const AssetImage('assets/images/app_image.jpg'),
+      logo: const AssetImage('assets/images/app_icon.png'),
+      continueButtonStyle: const ContinueButtonStyle(
         text: 'Session',
         background: Colors.lightGreenAccent,
       ),
-      infoButtonStyle: InfoButtonStyle(
+      infoButtonStyle: const InfoButtonStyle(
         tooltip: 'Browse to the InnerPod home page.',
       ),
       // loginButtonStyle: LoginButtonStyle(visible: true),
@@ -63,13 +64,21 @@ class InnerPod extends StatelessWidget {
       // registerButtonStyle: RegisterButtonStyle(visible: false),
       // infoButtonStyle: InfoButtonStyle(visible: true),
       link: 'https://github.com/gjwgit/innerpod/blob/dev/README.md',
-      clientId: 'https://solidcommunity.au/apps/innerpod/client-profile.jsonld',
-      redirectUris: [
-        'com.togaware.innerpod://redirect',
-        'http://localhost:4400/redirect',
-        'https://solidcommunity.au/apps/innerpod/redirect.html',
-      ],
-      child: Home(),
+      clientId: 'https://gjwgit.github.io/innerpod/client-profile.jsonld',
+      // On web the redirect must be same-origin as where the app is served,
+      // otherwise redirect.html's BroadcastChannel cannot hand the auth
+      // response back and login hangs on the spinner. solidpod's
+      // pickRedirectUri simply takes the first https:// entry (it does not
+      // match on origin), so we derive the web entry from Uri.base.origin:
+      // the deployed https host in production, and http://localhost:4400
+      // under `flutter run -d chrome --web-port=4400`.
+      redirectUris: kIsWeb
+          ? ['${Uri.base.origin}/redirect.html']
+          : const [
+              'com.togaware.innerpod://redirect',
+              'http://localhost:4400/redirect.html',
+            ],
+      child: const Home(),
     );
   }
 }
