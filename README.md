@@ -43,7 +43,7 @@ repository:
   [zip](https://solidcommunity.au/installers/innerpod-macos.zip);
 + **Windows**
   [zip](https://solidcommunity.au/installers/innerpod-windows.zip) or
-  [inno](https://solidcommunity.au/installers/innerpod-windows-inno.exe).
+  [exe](https://solidcommunity.au/installers/innerpod-windows-inno.exe).
 
 Contributions are welcome. Visit
 [github](https://github.com/gjwgit/innerpod) to submit an issue or,

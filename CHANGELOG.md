@@ -19,7 +19,7 @@ AU](https://solidcommunity.au) or directly:
 [dmg](https://solidcommunity.au/installers/innerpod-macos.dmg) or
 [zip](https://solidcommunity.au/installers/innerpod-macos.zip);
 + **Windows** as
-[inno](https://solidcommunity.au/installers/innerpod-windows-inno.exe)
+[exe](https://solidcommunity.au/installers/innerpod-windows-inno.exe)
 or [zip](https://solidcommunity.au/installers/innerpod-windows.zip).
 
 Contributions are welcome. Visit
