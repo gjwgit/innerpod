@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.0 New and more secure key handling
 
++ New app icon and Gradle 9.3.1/Kotlin 2.4.0 [2.0.5 20260825 gjw]
 + Update snap for release of libcurl3t64-gnutls [2.0.4 20260823 gjw]
 + Update oidc for web/chrome [2.0.3 20260710 gjw]
 + Update solidui/solidpod dependencies [2.0.2 20260703 gjw]

@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: "none"
-version: 2.0.4+94
+version: 2.0.5+94
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -45,7 +45,6 @@ flutter:
   assets:
     - assets/images/app_icon.png
     - assets/images/app_image.jpg
-    - assets/icon/icon.png
     - assets/sounds/dong.mp3
     - assets/sounds/intro.mp3
     - assets/sounds/session_guide.mp3
@@ -61,20 +60,20 @@ flutter:
 # (gjw 20250429)
 
 flutter_launcher_icons:
-  image_path: "assets/icon/icon.png"
+  image_path: "assets/images/app_icon.png"
   android: "launcher_icon"
   min_sdk_android: 21 # android min sdk min:16, default 21  ios: true
   ios: true
   remove_alpha_ios: true
   web:
     generate: true
-    image_path: "assets/icon/icon.png"
+    image_path: "assets/images/app_icon.png"
     # background_color: "#hexcode"
     # theme_color: "#hexcode"
   windows:
     generate: true
-    image_path: "assets/icon/icon.png"
+    image_path: "assets/images/app_icon.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/icon/icon.png"
+    image_path: "assets/images/app_icon.png"
