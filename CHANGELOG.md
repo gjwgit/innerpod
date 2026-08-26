@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.0 New and more secure key handling
 
++ Reduce background noise in the guided audio [2.0.8 20260827 gjw]
 + Smoother end and better quality guided audio [2.0.7 20260827 gjw]
 + Choice of session bell [2.0.6 20260827 gjw]
 + New app icon and Gradle 9.3.1/Kotlin 2.4.0 [2.0.5 20260826 gjw]

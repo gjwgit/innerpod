@@ -1,5 +1,5 @@
 name: innerpod
-version: 2.0.7
+version: 2.0.8
 summary: A session timer with optional secure and private logging of your session
 description: |
   A session timer typically used for silent meditation.
