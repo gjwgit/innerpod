@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: "none"
-version: 2.0.5+95
+version: 2.0.6+95
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -45,7 +45,10 @@ flutter:
   assets:
     - assets/images/app_icon.png
     - assets/images/app_image.jpg
-    - assets/sounds/dong.mp3
+    - assets/sounds/bell_bowl.mp3
+    - assets/sounds/bell_deep.mp3
+    - assets/sounds/bell_original.mp3
+    - assets/sounds/bell_temple.mp3
     - assets/sounds/intro.mp3
     - assets/sounds/session_guide.mp3
     - assets/sounds/session_intro.mp3

@@ -33,10 +33,6 @@ import 'package:audioplayers/audioplayers.dart';
 // [AssetSource] objects from the audioplayers package, loaded fromt eh `assets`
 // folder.
 
-/// The dong usually consists of three dings.
-
-final dong = AssetSource('sounds/dong.mp3');
-
 /// The volume for the bells.
 //
 // For the Tibetan bell 0.5 is too quiet. 0.7 seems okay.

@@ -28,6 +28,7 @@ library;
 import 'package:audioplayers/audioplayers.dart';
 
 import 'package:innerpod/constants/audio.dart';
+import 'package:innerpod/utils/bell_prefs.dart';
 
 /// Encapsulate the playing of the dong into its own function because of the
 /// need for it to be async through the await and it is called upon multiple
@@ -38,5 +39,6 @@ Future<void> dingDong(AudioPlayer player) async {
   // playing.
   await player.stop();
   await player.setVolume(bellVolume);
-  await player.play(dong);
+  final bell = await BellPrefs.selected();
+  await player.play(AssetSource(bell.asset));
 }

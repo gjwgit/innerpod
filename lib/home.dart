@@ -32,6 +32,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart' show getWebId;
 import 'package:solidui/solidui.dart';
 
+import 'package:innerpod/widgets/bell_dialog.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
 import 'package:innerpod/widgets/timer.dart';
@@ -162,6 +163,15 @@ class HomeState extends State<Home> {
       showLogin: false,
       appBar: SolidAppBarConfig(
         title: 'Inner Pod',
+        actions: [
+          SolidAppBarAction(
+            icon: Icons.notifications_active_outlined,
+            tooltip: '**Session Bell**\n\nChoose which bell sounds the '
+                'beginning and end of a session. Each can be previewed '
+                'before choosing.',
+            onPressed: () => showBellDialog(context),
+          ),
+        ],
         versionConfig: _appVersion != '0.0.0'
             ? SolidVersionConfig(
                 changelogUrl: _changelogUrl,
