@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.0 New and more secure key handling
 
++ Louder session bells starting without delay [2.0.9 20260828 gjw]
 + Reduce background noise in the guided audio [2.0.8 20260827 gjw]
 + Smoother end and better quality guided audio [2.0.7 20260827 gjw]
 + Choice of session bell [2.0.6 20260827 gjw]
