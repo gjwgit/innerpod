@@ -121,7 +121,7 @@ String serializeSessions(List<Map<String, String>> sessions) {
 }
 
 /// Adds a new session to the existing TTL content.
-/// If currentContent is null or empty, initializes with prefixes.
+/// If currentContent is null or empty, initialises with prefixes.
 /// Returns the updated TTL content string.
 String addSession(String? currentContent, Map<String, dynamic> newSession) {
   List<Map<String, String>> sessions = parseSessions(currentContent);
