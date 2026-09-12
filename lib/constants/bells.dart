@@ -38,6 +38,18 @@ const List<Bell> bells = [
     description: 'The original Inner Pod bell, bright and clear.',
     asset: 'sounds/bell_original.mp3',
   ),
+  Bell(
+    id: 'small_bowl',
+    label: 'Small Bowl',
+    description: 'A small bowl tapped on the rim, clear and shimmering.',
+    asset: 'sounds/bell_small_bowl.mp3',
+  ),
+  Bell(
+    id: 'cup',
+    label: 'Cup',
+    description: 'The lightest bell — a cup tapped with a spoon.',
+    asset: 'sounds/bell_cup.mp3',
+  ),
 ];
 
 /// The bell sounded until the user chooses one.
