@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.0 New and more secure key handling
 
++ Apple updates. Refactor history code [2.0.12 20260913 tonypioneer]
 + Two brighter bells: Small Bowl and Cup [2.0.11 20260913 gjw]
 + Update templates, android, file picker [2.0.10 20260912 gjw]
 + Louder session bells starting without delay [2.0.9 20260828 gjw]

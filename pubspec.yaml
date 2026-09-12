@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: "none"
-version: 2.0.11+99
+version: 2.0.12+99
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -29,10 +29,26 @@ dependencies:
   markdown_tooltip: ^0.0.7
   package_info_plus: ^10.2.1
   shared_preferences: ^2.5.4
-  solidpod: ^1.0.20
+  solidpod: ^1.0.21
   solidui: ^1.0.39
   url_launcher: ^6.3.0
   wakelock_plus: ^1.1.4
+
+# 20260911 gjw TEMPORARY. The published solidpod and solid_auth clear the
+# session on every start, so the login page always appears — see
+# anusii/solidpod#717 and anusii/solid_auth#53. These overrides pick up the
+# fixes from the GitHub fix branches. Remove this section once both are
+# released.
+
+dependency_overrides:
+  solid_auth:
+    git:
+      url: https://github.com/anusii/solid_auth.git
+      ref: gjw/52_secure_token_store
+  solidpod:
+    git:
+      url: https://github.com/anusii/solidpod.git
+      ref: gjw/716_single_flight_session_restore
 
 dev_dependencies:
   flutter_launcher_icons: ^0.14.4
