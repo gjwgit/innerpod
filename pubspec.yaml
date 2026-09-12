@@ -29,8 +29,8 @@ dependencies:
   markdown_tooltip: ^0.0.7
   package_info_plus: ^10.2.1
   shared_preferences: ^2.5.4
-  solidpod: ^1.0.17
-  solidui: ^1.0.34
+  solidpod: ^1.0.20
+  solidui: ^1.0.39
   url_launcher: ^6.3.0
   wakelock_plus: ^1.1.4
 
