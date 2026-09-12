@@ -28,9 +28,6 @@
 library;
 
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 
 import 'package:file_picker/file_picker.dart';
 
@@ -49,34 +46,30 @@ String backupFileName() {
 ///
 /// Returns true if saved, false if the user cancelled.
 Future<bool> saveTtlBackup(String content) async {
-  final bytes = utf8.encode(content);
-  final savePath = await FilePicker.saveFile(
+  // From file_picker 12 the picker writes the bytes itself on every
+  // platform, so the web/native split is gone. 20260912 gjw
+
+  final saved = await FilePicker.saveFile(
     dialogTitle: 'Export History Backup',
     fileName: backupFileName(),
+    bytes: utf8.encode(content),
+    mimeType: 'text/turtle',
     type: FileType.custom,
     allowedExtensions: ['ttl'],
-    bytes: kIsWeb ? Uint8List.fromList(bytes) : null,
   );
-  if (savePath == null) return false;
-  if (!kIsWeb) {
-    await File(savePath).writeAsBytes(bytes);
-  }
-  return true;
+  return saved != null;
 }
 
 /// Prompt the user to pick a .ttl backup file and return its text content,
 /// or null if cancelled / unreadable.
 Future<String?> pickTtlBackup() async {
-  final result = await FilePicker.pickFiles(
+  final file = await FilePicker.pickFile(
     dialogTitle: 'Import History Backup',
     type: FileType.custom,
     allowedExtensions: ['ttl'],
-    withData: true,
   );
-  if (result == null || result.files.isEmpty) return null;
-  final bytes = result.files.first.bytes;
-  if (bytes == null) return null;
-  return utf8.decode(bytes);
+  if (file == null) return null;
+  return utf8.decode(await file.readAsBytes());
 }
 
 /// Merge the sessions in [importedContent] into [existingContent], skipping
