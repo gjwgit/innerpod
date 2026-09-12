@@ -46,15 +46,18 @@ String backupFileName() {
 ///
 /// Returns true if saved, false if the user cancelled.
 Future<bool> saveTtlBackup(String content) async {
-  final savedUri = await FilePicker.saveFile(
+  // From file_picker 12 the picker writes the bytes itself on every
+  // platform, so the web/native split is gone. 20260912 gjw
+
+  final saved = await FilePicker.saveFile(
     dialogTitle: 'Export History Backup',
     fileName: backupFileName(),
+    bytes: utf8.encode(content),
+    mimeType: 'text/turtle',
     type: FileType.custom,
     allowedExtensions: ['ttl'],
-    bytes: utf8.encode(content),
   );
-
-  return savedUri != null;
+  return saved != null;
 }
 
 /// Prompt the user to pick a .ttl backup file and return its text content,
@@ -66,7 +69,6 @@ Future<String?> pickTtlBackup() async {
     allowedExtensions: ['ttl'],
   );
   if (file == null) return null;
-
   return utf8.decode(await file.readAsBytes());
 }
 
