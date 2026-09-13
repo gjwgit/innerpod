@@ -343,21 +343,25 @@ audio may take a little time to download for the Web version.
             ),
           ),
           durationSlider,
+          // Flexible so a pair of buttons narrows to fit a panel too small
+          // for their natural 170 width — in landscape the panel is only
+          // half the window — rather than overflowing it. With space to
+          // spare each button still takes its full width. 20260913 gjw
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              introButton,
+              Flexible(child: introButton),
               const SizedBox(width: widthSpacer),
-              startButton,
+              Flexible(child: startButton),
             ],
           ),
           const SizedBox(height: heightSpacer),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              guidedButton,
+              Flexible(child: guidedButton),
               const SizedBox(width: widthSpacer),
-              pauseResumeButton,
+              Flexible(child: pauseResumeButton),
             ],
           ),
           const SizedBox(height: 32),
@@ -404,17 +408,29 @@ audio may take a little time to download for the Web version.
             ),
           );
         } else {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: Center(child: timerDisplay)),
-                  const SizedBox(width: 2 * widthSpacer),
-                  Expanded(child: Center(child: buttonsMatrix)),
-                ],
+          // The row is given the viewport height as a minimum so that
+          // CrossAxisAlignment.center centres the timer and the buttons
+          // top-to-bottom in the window, rather than against each other at
+          // the top of an unbounded scroll view. It still scrolls once the
+          // buttons need more height than the window has. 20260913 gjw
+
+          return LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(child: Center(child: timerDisplay)),
+                      const SizedBox(width: 2 * widthSpacer),
+                      Expanded(child: Center(child: buttonsMatrix)),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
