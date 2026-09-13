@@ -46,8 +46,8 @@ String backupFileName() {
 ///
 /// Returns true if saved, false if the user cancelled.
 Future<bool> saveTtlBackup(String content) async {
-  // From file_picker 12 the picker writes the bytes itself on every
-  // platform, so the web/native split is gone. 20260912 gjw
+  // 20260912 gjw From file_picker 12 the picker writes the bytes itself on
+  // every platform, so the web/native split is gone.
 
   final saved = await FilePicker.saveFile(
     dialogTitle: 'Export History Backup',
