@@ -29,12 +29,23 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solidui/solidui.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'package:innerpod/home.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SolidSecurityKeyCentralManager.instance;
+
+  // 20260913 gjw Open at the size the window was last left at, and keep that
+  // size up to date as it is resized. The user sets the size, and turns off
+  // remembering it, under Settings in the profile menu. Until a size has been
+  // remembered the window opens at the default in `linux/my_application.cc`.
+
+  if (isDesktop) {
+    await windowManager.ensureInitialized();
+    await SolidWindowSize.show(const WindowOptions());
+  }
 
   runApp(const InnerPodApp());
 }

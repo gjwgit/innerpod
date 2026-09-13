@@ -34,6 +34,8 @@ then please show some ❤️ and tap on the star at
 
 ## 2.0 New and more secure key handling
 
++ Update to solidpod 1.0.22 and solidui 1.0.41 [2.0.15 20260914 gjw]
++ Remember the window size between sessions [2.0.14 20260913 gjw]
 + Centre the timer in a wide window [2.0.13 20260913 gjw]
 + Apple updates. Refactor history code [2.0.12 20260913 tonypioneer]
 + Two brighter bells: Small Bowl and Cup [2.0.11 20260913 gjw]
