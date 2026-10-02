@@ -803,13 +803,40 @@ jobs:
   #
   # A failure here does not hold up the other installers, which are separate
   # jobs. Narrow this back to `build ios` alone if it becomes a nuisance.
+  #
+  # 20261002 gjw Skip the iOS build while the app has no iOS signing secrets,
+  # so a repository not yet set up for iOS shows a green tick rather than a
+  # red cross. A job-level `if:` cannot read `secrets`, so this small job
+  # tests for them and package-ios-ipa runs only when they are present. Add
+  # IOS_CERTIFICATE and IOS_PROVISION_PROFILE to the repository secrets and
+  # the build runs again with no change here.
 
-  package-ios-ipa:
+  check-ios-secrets:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build ios') ||
       contains(github.event.head_commit.message, 'upload ios')
+    runs-on: ubuntu-latest
+    outputs:
+      has_ios: ${{ steps.check.outputs.has_ios }}
+    steps:
+      - name: Check for iOS signing secrets
+        id: check
+        env:
+          IOS_CERTIFICATE: ${{ secrets.IOS_CERTIFICATE }}
+          IOS_PROVISION_PROFILE: ${{ secrets.IOS_PROVISION_PROFILE }}
+        run: |
+          if [ -n "$IOS_CERTIFICATE" ] && [ -n "$IOS_PROVISION_PROFILE" ]; then
+            echo "has_ios=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_ios=false" >> $GITHUB_OUTPUT
+            echo "::notice::iOS signing secrets are not set - skipping the iOS build"
+          fi
+
+  package-ios-ipa:
+    needs: check-ios-secrets
+    if: needs.check-ios-secrets.outputs.has_ios == 'true'
     runs-on: macos-latest
     env:
       IOS_APP_RELEASE_PATH: build/ios/ipa
