@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
++ Ensure version string tin toolbar [2.1.1 20261002 gjw]
 + Update to solidui 1.4.0 with skip Login [2.1.0 20261002 gjw]
 
 ## 2.0 New and more secure key handling

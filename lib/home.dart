@@ -27,7 +27,6 @@ library;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart' show getWebId;
 import 'package:solidui/solidui.dart';
@@ -101,9 +100,6 @@ class Home extends StatefulWidget {
 ///
 
 class HomeState extends State<Home> {
-  // We will populate the app version shortly.
-
-  var _appVersion = '0.0.0';
   String? _webId;
 
   // Persistent key ensures TimerState survives orientation changes and
@@ -122,17 +118,12 @@ class HomeState extends State<Home> {
   final String _changelogUrl =
       'https://github.com/gjwgit/innerpod/blob/dev/CHANGELOG.md';
 
-  // Helper function to load the app name and version.
+  // Helper function to load the user's WebID. The app version is loaded by
+  // SolidScaffold itself from the versionConfig.
 
   Future<void> _loadAppInfo() async {
-    final packageInfo = await PackageInfo.fromPlatform();
     final webId = await getWebId();
-    if (mounted) {
-      setState(() {
-        _appVersion = packageInfo.version;
-        _webId = webId;
-      });
-    }
+    if (mounted) setState(() => _webId = webId);
   }
 
   @override
@@ -173,11 +164,12 @@ class HomeState extends State<Home> {
             onPressed: () => showBellDialog(context),
           ),
         ],
-        versionConfig: _appVersion != '0.0.0'
-            ? SolidVersionConfig(
-                changelogUrl: _changelogUrl,
-              )
-            : null,
+        // 20261002 gjw Always supply the versionConfig. SolidScaffold loads the
+        // version only if it is present when the scaffold is first built, so
+        // passing null until our own version lookup finished meant the
+        // version never appeared.
+
+        versionConfig: SolidVersionConfig(changelogUrl: _changelogUrl),
       ),
       themeToggle: const SolidThemeToggleConfig(enabled: true),
       statusBar: SolidStatusBarConfig(
