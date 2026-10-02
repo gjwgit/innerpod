@@ -107,7 +107,6 @@ if [[ "${status}" == "completed" ]]; then
 	echo  "Archive as installers/ARCHIVE/${fname}"
 	mv -f ${fname} ARCHIVE/
 	echo  "Install locally from installers/ARCHIVE/${fname}"
-	printf '\a'
 	wajig install ARCHIVE/${fname}
     fi
 
