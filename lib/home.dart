@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Friday 2026-07-03 15:21:23 +1000 Graham Williams>
+// Time-stamp: <Friday 2026-10-02 20:40:39 +1000 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -49,8 +49,9 @@ class InnerPod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SolidLogin(
-      title: 'SIlence and Stillness',
+      title: 'Silence and Stillness',
       required: false,
+      skipLogin: true,
       image: const AssetImage('assets/images/app_image.jpg'),
       logo: const AssetImage('assets/images/app_icon.png'),
       continueButtonStyle: const ContinueButtonStyle(

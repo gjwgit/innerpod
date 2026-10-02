@@ -32,6 +32,10 @@ We make this project available for free so if you appreciate the app
 then please show some ❤️ and tap on the star at
 [GitHub](https://github.com/gjwgit/innerpod) to support our work.
 
+## 2.1 Skip Login by default
+
++ Update to solidui 1.4.0 with skip Login [2.1.0 20261002 gjw]
+
 ## 2.0 New and more secure key handling
 
 + Update to solidui 1.1.3 [2.0.17 20260924 gjw]
