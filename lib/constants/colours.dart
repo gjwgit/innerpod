@@ -94,19 +94,6 @@ final startBackgroundColor = Colors.lightGreenAccent.shade100;
 
 //final durationTextColor = Colors.grey[600];
 
-/// Colour for the background of the funcation area.
-///
-/// This is the area where the function and duration buttons are.
-//
-// 20260220 gjw Choosing a darker background for the active button area
-// distringuishes it from the above timer display to more clearly distinguish
-// the buttons matrix from the app background. Another option is to have the
-// same background as the title bar and timer central. The white with alpha 1.0
-// gives it the same as the time white. Could probably use the same color for
-// both.
-
-final functionsBackgroundColor = Colors.white;
-
 const instructionsUnselectedColor = Colors.grey;
 
 // const border = Color(0xFFF5E0C8);

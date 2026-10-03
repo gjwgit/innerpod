@@ -166,6 +166,9 @@ class TimerState extends State<Timer> {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     ////////////////////////////////////
     // APP BUTTONS
     ////////////////////////////////////
@@ -237,7 +240,11 @@ of the Resume button.
           }
         });
       },
-      backgroundColor: pauseBackgroundColor,
+      // 20261003 gjw White in light mode, so Pause stays distinct on the sand
+      // of the buttons panel, where its light grey all but disappeared. Dark
+      // mode keeps the grey, which AppButton darkens to stand out there.
+
+      backgroundColor: isDark ? pauseBackgroundColor : appBackgroundColor,
     );
 
     final introButton = AppButton(
@@ -326,18 +333,26 @@ audio may take a little time to download for the Web version.
       timerKey: _countdownKey,
     );
 
-    final cs = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    // 20261003 gjw The buttons panel takes the theme's sand in both modes. It
+    // was white in light mode, against a near-white page, so it barely stood
+    // out and the session area looked washed out. Dark mode already used the
+    // theme colour and looked right.
+
+    // 20261004 gjw The slider and text fields stretch to whatever width the
+    // panel is given, so in a very wide window the panel filled half the
+    // screen. Cap it a little wider than the two rows of buttons at their
+    // natural width; it stays centred in its half of the window.
 
     final buttonsMatrix = Container(
+      constraints: const BoxConstraints(maxWidth: 440),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
-        color: isDark ? cs.surfaceContainerHighest : functionsBackgroundColor,
+        color: cs.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(32),
         border: Border.all(
           color: isDark
               ? cs.outlineVariant.withValues(alpha: 0.3)
-              : functionsBackgroundColor,
+              : cs.surfaceContainerHighest,
         ),
       ),
       child: Column(
@@ -412,7 +427,12 @@ audio may take a little time to download for the Web version.
                   const SizedBox(height: 2 * heightSpacer),
                   timerDisplay,
                   const SizedBox(height: 2 * heightSpacer),
-                  buttonsMatrix,
+
+                  // 20261004 gjw Center fills the width, so the column spans
+                  // the window rather than shrinking to the capped panel and
+                  // sitting at the left, and the panel and timer centre in it.
+
+                  Center(child: buttonsMatrix),
                 ],
               ),
             ),

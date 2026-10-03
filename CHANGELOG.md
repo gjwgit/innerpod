@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
++ Session panel stands out, sized and centred, solidui 1.4.1 [2.1.4 20261004 gjw]
 + Cloud icon to save a local session to Pod, tidier tooltips [2.1.3 20261003 gjw]
 + Make the timer circle clearer in light mode [2.1.2 20261003 gjw]
 + Ensure version string tin toolbar [2.1.1 20261002 gjw]

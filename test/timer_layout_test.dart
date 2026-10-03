@@ -41,6 +41,15 @@ Future<(Rect timer, Rect window)> _layout(
   );
 }
 
+/// The buttons panel, the nearest Container around its heading.
+
+final _panel = find
+    .ancestor(
+      of: find.text('Select duration (1-30 minutes)'),
+      matching: find.byType(Container),
+    )
+    .first;
+
 void main() {
   testWidgets('wide layout centres the timer top to bottom', (tester) async {
     // Landscape: the timer sits beside the taller buttons panel, and must
@@ -63,6 +72,24 @@ void main() {
     final (timer, window) = await _layout(tester, const Size(600, 1000));
 
     expect(timer.center.dy, lessThan(window.center.dy));
+  });
+
+  testWidgets('tall layout centres the timer and the buttons panel',
+      (tester) async {
+    // The panel is capped in width, so in a window wider than the cap the
+    // column must still span the window, not shrink to the panel at the left.
+
+    final (timer, window) = await _layout(tester, const Size(600, 1000));
+    final panel = tester.getRect(_panel);
+
+    expect((timer.center.dx - window.center.dx).abs(), lessThan(1.0));
+    expect((panel.center.dx - window.center.dx).abs(), lessThan(1.0));
+  });
+
+  testWidgets('a very wide window caps the buttons panel', (tester) async {
+    await _layout(tester, const Size(2000, 860));
+
+    expect(tester.getRect(_panel).width, lessThanOrEqualTo(440));
   });
 
   testWidgets('a narrow window keeps the buttons on screen', (tester) async {

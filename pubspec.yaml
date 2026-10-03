@@ -1,7 +1,7 @@
 name: innerpod
 description: "A session timer with session logged to your Solid Pod."
 publish_to: "none"
-version: 2.1.3+101
+version: 2.1.4+101
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
@@ -29,7 +29,7 @@ dependencies:
   markdown_tooltip: ^0.0.7
   shared_preferences: ^2.5.4
   solidpod: ^1.1.0
-  solidui: ^1.4.0
+  solidui: ^1.4.1
   window_manager: ^0.5.2
   url_launcher: ^6.3.0
   wakelock_plus: ^1.1.4
