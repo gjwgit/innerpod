@@ -65,7 +65,13 @@ final appShadowColor = Colors.black.withValues(alpha: 0.05);
 
 const spinColor = Color(0xFFC0895D);
 
-const spinBackgroundColor = Colors.white;
+// 20261003 gjw The ring behind the spin bar was white, the same as the page
+// and nearly the same as the centre, so in light mode the circle could not be
+// seen until the spin bar drew it. A pale tint of spinColor makes the whole
+// circle visible against white (contrast 1.5) while the spin bar still stands
+// out clearly against it (contrast 2.0). Colors.white was the original.
+
+const spinBackgroundColor = Color(0xFFE3CDB4);
 
 const timerCentralColor = Color(0xFFFDFBF9);
 
