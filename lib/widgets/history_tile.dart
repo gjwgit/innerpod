@@ -30,6 +30,8 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:markdown_tooltip/markdown_tooltip.dart';
+
 import 'package:innerpod/constants/colours.dart';
 
 /// Displays a single session entry in the history list.
@@ -137,28 +139,59 @@ class HistorySessionTile extends StatelessWidget {
               const SizedBox(width: 8),
               Column(
                 children: [
+                  // 20261003 gjw A cloud upload rather than a lock. The lock read
+                  // as private or encrypted, when the point is that the session
+                  // is not yet on the Pod and a tap sends it there.
+
                   if (onSync != null)
-                    IconButton(
-                      icon: Icon(
-                        Icons.lock_outline,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.primary,
+                    MarkdownTooltip(
+                      message: '''
+
+                      **Save to your Pod**
+
+                      This session is saved on this device only. Tap to save
+                      it to your Solid Pod as well.
+
+                      ''',
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.cloud_upload_outlined,
+                          size: 20,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        onPressed: onSync,
                       ),
-                      tooltip: 'Saved on this device only — '
-                          'tap to save to your Pod',
-                      onPressed: onSync,
                     ),
-                  IconButton(
-                    icon: const Icon(Icons.edit_outlined, size: 20),
-                    onPressed: onEdit,
+                  MarkdownTooltip(
+                    message: '''
+
+                    **Edit Session**
+
+                    Change the title, description or times of this session.
+
+                    ''',
+                    child: IconButton(
+                      icon: const Icon(Icons.edit_outlined, size: 20),
+                      onPressed: onEdit,
+                    ),
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete_outline,
-                      size: 20,
-                      color: historyDeleteColor,
+                  MarkdownTooltip(
+                    message: '''
+
+                    **Delete Session**
+
+                    Remove this session from your history. You will be asked
+                    to confirm first, as this cannot be undone.
+
+                    ''',
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        size: 20,
+                        color: historyDeleteColor,
+                      ),
+                      onPressed: onDelete,
                     ),
-                    onPressed: onDelete,
                   ),
                 ],
               ),

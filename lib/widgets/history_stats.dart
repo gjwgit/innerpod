@@ -16,6 +16,7 @@ library;
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+import 'package:markdown_tooltip/markdown_tooltip.dart';
 
 /// Number of sessions expected per day (morning + evening).
 const int kExpectedSessionsPerDay = 2;
@@ -214,22 +215,32 @@ class _Heatmap extends StatelessWidget {
         final key = DateFormat('yyyy-MM-dd').format(day);
         final count = perDay[key] ?? 0;
         final isFuture = day.isAfter(today);
-        cells.add(
-          Tooltip(
-            message: isFuture
-                ? ''
-                : '${DateFormat('EEE d MMM').format(day)}: '
-                    '$count session${count == 1 ? '' : 's'}',
-            child: Container(
-              width: 14,
-              height: 14,
-              margin: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: isFuture ? Colors.transparent : _cellColor(count),
-                borderRadius: BorderRadius.circular(3),
-              ),
-            ),
+        final cell = Container(
+          width: 14,
+          height: 14,
+          margin: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            color: isFuture ? Colors.transparent : _cellColor(count),
+            borderRadius: BorderRadius.circular(3),
           ),
+        );
+
+        // 20261003 gjw A future day has nothing to say, so it has no tooltip
+        // rather than an empty one.
+
+        cells.add(
+          isFuture
+              ? cell
+              : MarkdownTooltip(
+                  message: '''
+
+                  **${DateFormat('EEE d MMM').format(day)}**
+
+                  $count session${count == 1 ? '' : 's'}
+
+                  ''',
+                  child: cell,
+                ),
         );
       }
       columns.add(Column(children: cells));

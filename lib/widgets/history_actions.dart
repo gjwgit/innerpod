@@ -62,7 +62,6 @@ class HistoryActions extends StatelessWidget {
               'You will be prompted for where to save it.',
           child: IconButton(
             icon: const Icon(Icons.file_upload_outlined),
-            tooltip: 'Export Backup',
             onPressed: onExport,
           ),
         ),
@@ -72,23 +71,40 @@ class HistoryActions extends StatelessWidget {
               'file. Existing sessions are kept; only new ones are added.',
           child: IconButton(
             icon: const Icon(Icons.file_download_outlined),
-            tooltip: 'Import Backup',
             onPressed: onImport,
           ),
         ),
         if (onDeleteAll != null)
-          IconButton(
-            icon: const Icon(
-              Icons.delete_sweep_outlined,
-              color: colours.error,
+          MarkdownTooltip(
+            message: '''
+
+            **Delete All Sessions**
+
+            Remove every session saved to your Pod. You will be asked to
+            confirm first, as this cannot be undone.
+
+            ''',
+            child: IconButton(
+              icon: const Icon(
+                Icons.delete_sweep_outlined,
+                color: colours.error,
+              ),
+              onPressed: onDeleteAll,
             ),
-            tooltip: 'Delete all sessions',
-            onPressed: onDeleteAll,
           ),
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          tooltip: 'Refresh',
-          onPressed: onRefresh,
+        MarkdownTooltip(
+          message: '''
+
+          **Refresh**
+
+          Reload your session history, picking up any sessions saved from
+          another device.
+
+          ''',
+          child: IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: onRefresh,
+          ),
         ),
         const SizedBox(width: 8),
       ],

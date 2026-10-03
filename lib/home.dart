@@ -58,7 +58,13 @@ class InnerPod extends StatelessWidget {
         background: Colors.lightGreenAccent,
       ),
       infoButtonStyle: const InfoButtonStyle(
-        tooltip: 'Browse to the InnerPod home page.',
+        tooltip: '''
+
+**Support**
+
+Browse to the InnerPod home page for help and information about the app.
+
+''',
       ),
       // loginButtonStyle: LoginButtonStyle(visible: true),
       // continueButtonStyle: ContinueButtonStyle(visible: true),
