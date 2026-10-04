@@ -34,7 +34,8 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
-+ Update solidui 1.4.3 to indicate if logged in [1.3.2 20261004 gjw]
++ History heatmap shows as many weeks as fit the width [2.1.6 20261004 gjw]
++ Update solidui 1.4.3 to indicate if logged in [2.1.5 20261004 gjw]
 + Session panel stands out, sized and centred, solidui 1.4.1 [2.1.4 20261004 gjw]
 + Cloud icon to save a local session to Pod, tidier tooltips [2.1.3 20261003 gjw]
 + Make the timer circle clearer in light mode [2.1.2 20261003 gjw]

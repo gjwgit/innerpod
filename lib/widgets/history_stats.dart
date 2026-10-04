@@ -104,15 +104,6 @@ class HistoryStats extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           // ── Heatmap ──────────────────────────────────────────────────────
-          Text(
-            'Last 8 weeks',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: cs.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: 8),
           _Heatmap(perDay: perDay, cs: cs),
           const SizedBox(height: 8),
           _HeatmapLegend(cs: cs),
@@ -178,12 +169,16 @@ class _CompletionBar extends StatelessWidget {
   }
 }
 
-// ── Calendar heatmap (8 weeks, week columns) ─────────────────────────────────
+// ── Calendar heatmap (as many weeks as fit, week columns) ────────────────────
 
 class _Heatmap extends StatelessWidget {
   final Map<String, int> perDay;
   final ColorScheme cs;
   const _Heatmap({required this.perDay, required this.cs});
+
+  /// The width of one cell, including its margin, and so of one week column.
+
+  static const double _cellExtent = 18;
 
   Color _cellColor(int count) {
     // 0 → faint, 1 → half, 2+ → full primary.
@@ -192,9 +187,36 @@ class _Heatmap extends StatelessWidget {
     return cs.primary;
   }
 
+  // 20261004 gjw As many weeks as the width allows, rather than a fixed 8,
+  // so a wide window shows a longer history. The heading names the count.
+
   @override
-  Widget build(BuildContext context) {
-    const weeks = 8;
+  Widget build(BuildContext context) => LayoutBuilder(
+        builder: (context, constraints) {
+          final fit = (constraints.maxWidth / _cellExtent).floor();
+          final weeks = fit < 1 ? 1 : fit;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                weeks == 1 ? 'This week' : 'Last $weeks weeks',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: cs.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 8),
+              _grid(weeks),
+            ],
+          );
+        },
+      );
+
+  /// The grid of [weeks] week columns, ending with the week containing today.
+
+  Widget _grid(int weeks) {
     const days = 7;
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -203,7 +225,7 @@ class _Heatmap extends StatelessWidget {
     // then step back (weeks - 1) weeks for the first column's Monday.
     final mondayOfThisWeek = today.subtract(Duration(days: today.weekday - 1));
     final start = mondayOfThisWeek.subtract(
-      const Duration(days: days * (weeks - 1)),
+      Duration(days: days * (weeks - 1)),
     );
 
     // Build columns = weeks, rows = weekdays Mon..Sun.
@@ -246,12 +268,9 @@ class _Heatmap extends StatelessWidget {
       columns.add(Column(children: cells));
     }
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: columns,
-      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: columns,
     );
   }
 }
