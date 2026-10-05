@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
++ Timer bar stands out more from its ring in light mode [2.1.7 20261005 gjw]
 + History heatmap shows as many weeks as fit the width [2.1.6 20261004 gjw]
 + Update solidui 1.4.3 to indicate if logged in [2.1.5 20261004 gjw]
 + Session panel stands out, sized and centred, solidui 1.4.1 [2.1.4 20261004 gjw]

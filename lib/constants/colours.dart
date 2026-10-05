@@ -70,8 +70,14 @@ const spinColor = Color(0xFFC0895D);
 // seen until the spin bar drew it. A pale tint of spinColor makes the whole
 // circle visible against white (contrast 1.5) while the spin bar still stands
 // out clearly against it (contrast 2.0). Colors.white was the original.
+//
+// 20261005 gjw Lightened from 0xFFE3CDB4, where the spin bar did not stand
+// out from the ring enough when viewed. The spin bar against the ring is now
+// 2.3, and the ring against the page 1.25, still more than the buttons panel
+// (1.15), which reads clearly. 0xFFECDDCB (1.3) was tried first;
+// 0xFFF0E5D8 (1.2) would begin to lose the ring in the page.
 
-const spinBackgroundColor = Color(0xFFE3CDB4);
+const spinBackgroundColor = Color(0xFFEEE1D1);
 
 const timerCentralColor = Color(0xFFFDFBF9);
 
