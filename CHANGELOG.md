@@ -34,7 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
-+ Restore the earlier app icon, a single teardrop without side dots [2.1.8 20261006 gjw]
++ Restore app icon single teardrop no side dots [2.1.8 20261006 gjw]
 + Timer bar stands out more from its ring in light mode [2.1.7 20261005 gjw]
 + History heatmap shows as many weeks as fit the width [2.1.6 20261004 gjw]
 + Update solidui 1.4.3 to indicate if logged in [2.1.5 20261004 gjw]
