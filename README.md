@@ -121,7 +121,7 @@ a Pull Request. The app is implemented in
 
 ## Using the App
 
-![Pod Login Screen](screenshots/pod_login_screen.png)
+![Pod Login Screen](assets/screenshots/pod_login_screen.png)
 
 A login screen is displayed on startup. Logging in is optional and
 only required if you wish to record your session to your Solid Pod. To
@@ -148,7 +148,7 @@ timer and buttons to interact and manage the session. As the timer
 progresses, the circular progress bar is empties of the blue bar,
 providing a visual cue that the session and audio are active.
 
-![App Home Screen](screenshots/app_home_screen.png)
+![App Home Screen](assets/screenshots/innerpod_home_light.png)
 
 A silent meditation session begins with the sounding of a bell and
 finishes with the same bell.
@@ -166,6 +166,11 @@ following by a short musical chant as you prepare yourself for the
 meditation session. At the conclusion another short musical interlude
 is played as you emerge from the silence of your meditation. This is
 particularly handy in a group meditation session.
+
+![App Home Screen](assets/screenshots/innerpod_home_narrow.png)
+
+The interface is fully adaptive to the screen size and works just as
+well on mobile devices.
 
 ## The App Itself
 
@@ -210,7 +215,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Thursday 2026-10-08 09:10:45 +1100 Graham Williams>
+Time-stamp: <Thursday 2026-10-08 09:28:00 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
