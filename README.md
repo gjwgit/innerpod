@@ -71,7 +71,6 @@ many more apps using the Solid ecosystem.
 + **Dark/Light** modes are supported.
 + Runs on **Android, iOS, GNU/Linux, macOS, Windows and the web**.
 
-
 ## Privacy
 
 InnerPod is built to protect your privacy. The app maintains a history
@@ -211,7 +210,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Thursday 2026-10-08 08:57:51 +1100 Graham Williams>
+Time-stamp: <Thursday 2026-10-08 09:10:45 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
