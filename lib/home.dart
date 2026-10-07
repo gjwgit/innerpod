@@ -1,6 +1,6 @@
 // A session timer with session logged to your Solid Pod.
 //
-// Time-stamp: <Friday 2026-10-02 20:40:39 +1000 Graham Williams>
+// Time-stamp: <Thursday 2026-10-08 09:05:06 +1100 Graham Williams>
 //
 // Copyright (C) 2024-2025, Togaware Pty Ltd
 //
@@ -31,6 +31,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solidpod/solidpod.dart' show getWebId;
 import 'package:solidui/solidui.dart';
 
+import 'package:innerpod/constants/app.dart';
 import 'package:innerpod/widgets/bell_dialog.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
@@ -160,7 +161,7 @@ class HomeState extends State<Home> {
       showLogout: false,
       showLogin: false,
       appBar: SolidAppBarConfig(
-        title: 'Inner Pod',
+        title: appName,
         actions: [
           SolidAppBarAction(
             icon: Icons.notifications_active_outlined,
@@ -188,7 +189,8 @@ class HomeState extends State<Home> {
         ),
       ),
       aboutConfig: SolidAboutConfig(
-        applicationName: 'Inner Pod',
+        // applicationName: appName,
+        applicationName: appTitle.replaceAll(' - ', '\n'),
         applicationIcon: Image.asset(
           'assets/images/app_icon.png',
           width: 64,

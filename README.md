@@ -1,4 +1,4 @@
-# InnerPod - Privacy-First Meditation and Session Timer
+# InnerPod - Privacy-First Session Timer
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
@@ -14,15 +14,84 @@
 
 [![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/innerpod)
 
-InnerPod is an app to guide and time your regular mediation. The app
-was developed by [Togaware](https://togaware.com) and written by
-[Graham Williams](https://togaware.com/Graham.Williams.html).
+Privacy-first: your data is encrypted for secure and private storage
+in your Pod on a Solid server of your choice. You choose, not us.
 
-If you appreciate the app then please show some ❤️ and star the GitHub
-Repository to support the project.  You can install the released
-version of the app from different repositories including [Google Play
+[InnerPod](https://gjwgit.github.io/radiopod/) provides a timer for
+your sessions. It has been designed to support meditation session but
+can support any regular timed session. Tap **Start** for a session to
+start and end with three bells. Tap **Intro** for a short audio intro
+to the session before the bells. Tap **Guided** for instructions on
+meditation, and then some soothing music for before and after the
+bells.
+
+Your history of sessions are stored locally by default. Once you are
+ready the history data can be encrypted and privately stored in your
+own personal online data store ([Pod](https://solidproject.org/about))
+within a Data Vault hosted by a Solid Server of your choice.
+Pod-stored data is available on any of your devices to share your
+history while being protected against server administrator access and
+server breaches.
+
+Solid Pods are a new approach to handling your personal data on the
+World Wide Web and is the latest innovation from the inventor of the
+WWW, Sir Tim Berners-Lee. Obtain a Pod for yourself on any Solid
+server and link it to your app. **You do not need a Solid Pod to use
+this app in local-only mode.** If you would like to register for a new
+Pod on a Solid server, choose a server and tap the **Register** button
+on the **Login** screen (tap Logged Out in the footer or in the top
+left menu drawer). You will be prompted for an email address (username) a
+password, and a pod name. On logging in to your Pod for the first time
+you will be asked for a security key to protect your data on the
+server.
+
+The app is supported by [Togaware](https://togaware.com) and and
+implemented by [Graham
+Williams](https://togaware.com/Graham.Williams.html) using
+[Flutter](https://flutter.dev)'s
+[SolidUI](https://github.com/anusii/solidui) package for cross
+platform development..
+
+We make this project available for free so if you appreciate the app
+then please show some ❤️ and tap on the star at
+[GitHub](https://github.com/gjwgit/radiopod) to support our work. See
+the [AU Solid Community](https://solidcommunity.au) **showcase** for
+many more apps using the Solid ecosystem.
+
+## Features
+
++ An audio **Guide** to meditation.
++ A mediation session is begun and concluded with three **Bells**. You
+  have a choice of appropriate **Bells**.
++ A **Countdown Timer** defaults to 20 minutes with a choice of any
+  time up to 30 minutes.
++ Session **History** with title and notes is recorded. If conencted
+  to your Solid server the history is securely and privately shared
+  between your app running on any device.
++ **Dark/Light** modes are supported.
++ Runs on **Android, iOS, GNU/Linux, macOS, Windows and the web**.
+
+
+## Privacy
+
+InnerPod is built to protect your privacy. The app maintains a history
+of your sessions. In **local-only** mode (default) all data remains on
+your device. When you **Login** to a Solid server hosting your Pod,
+your history is stored in your Pod and is accessible to your app running
+on any device through your security key. The security key is used to
+decrypt the data on your device so it is not accessible by anyone on
+the server. Your Solid server of choice may collect your login
+timestamp and other standard server logging of meta data.
+
+## Installation
+
+You can install the released version of the app from different
+repositories including:
+
++ [Google Play
 Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-for Android and [SnapCraft](https://snapcraft.io/innerpod) for Linux.
+for Android;
++ [SnapCraft](https://snapcraft.io/innerpod) for Linux.
 
 The latest version of the app can be run online at
 [innerpod.solidcommunity.au](https://innerpod.solidcommunity.au) with
@@ -50,11 +119,6 @@ Contributions are welcome. Visit
 even better, fork the repository yourself, update the code, and submit
 a Pull Request. The app is implemented in
 [Flutter](https://flutter.dev). Thanks.
-
-## Introduction
-
-InnerPod is a meditation guide and timer. Using a countdown timer
-(defaults to 20 minutes) a bell will begin and end the meditation.
 
 ## Using the App
 
@@ -135,10 +199,7 @@ was generated using ElevenLabs text to speech.
 The instructions for meditating by John Main are from
 [WCCM](https://wccm.org).
 
-The bell is Tibetan bowl_left hit.wav by
-[dersinnsspace](https://freesound.org/people/dersinnsspace/sounds/417117/).
-License: Creative
-Commons 0
+The bells were generated by Anthropic's Claude.
 
 ## Contributing
 
@@ -150,7 +211,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Tuesday 2026-10-06 07:28:51 +1100 Graham Williams>
+Time-stamp: <Thursday 2026-10-08 08:57:51 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)

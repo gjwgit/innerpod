@@ -31,6 +31,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:solidui/solidui.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'package:innerpod/constants/app.dart';
 import 'package:innerpod/home.dart';
 
 void main() async {
@@ -44,7 +45,7 @@ void main() async {
 
   if (isDesktop) {
     await windowManager.ensureInitialized();
-    await SolidWindowSize.show(const WindowOptions());
+    await SolidWindowSize.show(const WindowOptions(title: appTitle));
   }
 
   runApp(const InnerPodApp());
@@ -79,7 +80,7 @@ class _InnerPodAppState extends State<InnerPodApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Inner Pod',
+      title: appTitle,
       theme: _lightTheme(),
       darkTheme: _darkTheme(),
       themeMode: solidThemeNotifier.themeMode,

@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
++ Clean up titles and updated README [2.1.10 20261008 gjw]
 + Update to solidui 1.4.5 to avoid login flash [2.1.9 20261008 gjw]
 + Restore app icon single teardrop no side dots [2.1.8 20261006 gjw]
 + Timer bar stands out more from its ring in light mode [2.1.7 20261005 gjw]
