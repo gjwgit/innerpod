@@ -172,6 +172,14 @@ particularly handy in a group meditation session.
 The interface is fully adaptive to the screen size and works just as
 well on mobile devices.
 
+![Text Guide](assets/screenshots/innerpod_text_guide.png)
+
+The **Text** tab collects the written material for reading at your
+own pace. The **Guide** explains how to meditate, in the words of
+John Main. **Opening** and **Closing** hold prayers for the start and
+end of a session, and **Wisdom** gathers short quotations for
+reflection.
+
 ## The App Itself
 
 The app is written in
