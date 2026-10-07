@@ -44,11 +44,18 @@ on:
 env:
   APP: innerpod
   RELEASE: dev
+  # 20260925 gjw media_kit/media_kit_video add two Linux build
+  # dependencies. volume_controller (pulled in by media_kit_video) does
+  # find_package(ALSA) in its CMakeLists, which fails the build with
+  # "Could NOT find ALSA (missing: ALSA_LIBRARY ALSA_INCLUDE_DIR)"
+  # unless libasound2-dev is present. media_kit itself links against
+  # libmpv, so libmpv-dev is needed too - otherwise the build gets past
+  # ALSA and then fails looking for mpv.
   LINUX_PKGS: libsecret-1-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
   MACOS_APP_RELEASE_UNSIGNED_PATH: build/macos/Build/Products/Release-unsigned
   MACOS_APP_RELEASE_STAGING_PATH: build/macos/Build/Products/Release-staging
   MACOS_APP_RELEASE_DEV_PATH: build/macos/Build/Products/Release-dev
-  FLUTTER_VERSION: "3.47.5"
+  FLUTTER_VERSION: "3.47.6"
 
 jobs:
 
@@ -150,6 +157,12 @@ jobs:
           echo "Section: utils" >> build/${{env.APP}}_${VERSION}_amd64/DEBIAN/control
           echo "Priority: optional"  >> build/${{env.APP}}_${VERSION}_amd64/DEBIAN/control
           echo "Architecture: amd64" >> build/${{env.APP}}_${VERSION}_amd64/DEBIAN/control
+          # 20260925 gjw Add libmpv2 below for the runtime half of libmpv-dev,
+          # needed by media_kit for video playback. The name is the
+          # Ubuntu 24.04 one (22.04 ships libmpv1, which is too old for
+          # media_kit). It also pulls in libasound2t64 which
+          # volume_controller needs so ALSA is not named here. The
+          # t64 rename makes that name unportable across releases.
           echo "Depends: libgtk-3-0, libblkid1, liblzma5" >> build/${{env.APP}}_${VERSION}_amd64/DEBIAN/control
           echo "Maintainer: Graham Williams <graham.williams@togaware.com>" >> build/${{env.APP}}_${VERSION}_amd64/DEBIAN/control
           echo "Description: DESCRIPTION" >> build/${{env.APP}}_${VERSION}_amd64/DEBIAN/control
