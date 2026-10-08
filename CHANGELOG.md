@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
++ Update to solidui 1.5.0 to skip login flash [2.1.12 20261009 gjw]
 + Add make snapstore to publish to the Snap Store [2.1.11 20261008 gjw]
 + Clean up titles and updated README [2.1.10 20261008 gjw]
 + Update to solidui 1.4.5 to avoid login flash [2.1.9 20261008 gjw]
