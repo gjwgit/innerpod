@@ -41,7 +41,7 @@ this app in local-only mode.** If you would like to register for a new
 Pod on a Solid server, choose a server and tap the **Register** button
 on the **Login** screen (tap Not Logged In in the footer or in the top
 left menu drawer). You will be prompted for an email address
-(username) a password, and a pod name. On logging in to your Pod for
+(username), a password, and a pod name. On logging in to your Pod for
 the first time you will be asked for a security key to protect your
 data on the server.
 
@@ -223,7 +223,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Friday 2026-10-09 15:37:56 +1100 Graham Williams>
+Time-stamp: <Friday 2026-10-09 19:20:49 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
