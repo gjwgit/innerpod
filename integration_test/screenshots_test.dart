@@ -14,10 +14,10 @@ library;
 
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:circular_countdown_timer/custom_timer_painter.dart';
 import 'package:solidui/solidui.dart' show solidThemeNotifier;
 
 import 'package:innerpod/main.dart' as app;
@@ -79,9 +79,8 @@ Future<void> _seedHistory() async {
 /// first argument is the interval between pumps, and its timeout is the
 /// third, defaulting to ten minutes.
 ///
-/// Only for a screen at rest. Once a session is running the countdown
-/// animates without end and pumpAndSettle would always time out, so the
-/// session shots use [_elapse] instead.
+/// Only for a screen at rest, which a session is too once [_holdAt] has
+/// stopped the countdown.
 
 Future<void> _settle(WidgetTester tester) => tester.pumpAndSettle(
       const Duration(milliseconds: 100),
@@ -89,21 +88,33 @@ Future<void> _settle(WidgetTester tester) => tester.pumpAndSettle(
       const Duration(seconds: 30),
     );
 
-/// 20261010 gjw Let [span] of SESSION time pass, sixty times faster than
-/// real time.
+/// 20261010 gjw Stop a running session's countdown with [remaining] left.
 ///
-/// timeDilation scales the clock every Ticker reads, so the countdown's
-/// AnimationController believes [span] has gone by after only a sixtieth of
-/// it. A shot at four minutes to go of a twenty minute session takes sixteen
-/// seconds, not sixteen minutes. The countdown is the only thing animating,
-/// and its text is read from the same controller, so the ring and the time
-/// shown agree.
+/// The first run sped the clock up with timeDilation instead, and it was not
+/// reliable on a live device: the iPad advanced only on the first step and
+/// Android overshot and then undershot. Setting the position is exact, and
+/// with nothing left animating the screen settles like any other.
+///
+/// The countdown's AnimationController is private to the package, but its
+/// painter is handed the controller itself (the app sets isReverse and
+/// isReverseAnimation, so no Tween sits in between), and the painter's
+/// animation is public. The ring and the time shown both read it.
+///
+/// The app still believes the session is running, so Pause stays Pause.
+/// [remaining] must not be zero: reaching the end fires onComplete, which
+/// rings the closing bells and saves the session.
 
-Future<void> _elapse(WidgetTester tester, Duration span) async {
-  timeDilation = 1 / 60;
-  await tester.pump(span ~/ 60);
-  timeDilation = 1.0;
-  await tester.pump();
+Future<void> _holdAt(WidgetTester tester, Duration remaining) async {
+  final painter = tester
+      .widgetList<CustomPaint>(find.byType(CustomPaint))
+      .map((p) => p.painter)
+      .whereType<CustomTimerPainter>()
+      .first;
+  final countdown = painter.animation! as AnimationController;
+
+  countdown.stop();
+  countdown.value = remaining.inSeconds / countdown.duration!.inSeconds;
+  await _settle(tester);
 }
 
 Future<void> _shot(
@@ -112,9 +123,10 @@ Future<void> _shot(
   String name,
 ) async {
   // A beat for anything that settles outside the widget tree, such as a font
-  // arriving. Pumps rather than settles, so it also suits a running session.
+  // arriving.
 
   await tester.pump(const Duration(seconds: 2));
+  await _settle(tester);
   await binding.takeScreenshot(name);
 }
 
@@ -169,21 +181,21 @@ void main() {
 
     await _openMenu(tester, Icons.timer_outlined);
 
-    // From here a session is running, so nothing settles again. Start only
-    // rings the bell and starts the countdown; there is no audio to wait on.
+    // Start rings the bell without waiting on it, and starts the countdown,
+    // which _holdAt then stops at each moment wanted.
 
     await tester.tap(find.text('Start'));
     await tester.pump();
 
-    await _elapse(tester, const Duration(seconds: 40));
+    await _holdAt(tester, const Duration(minutes: 19, seconds: 20));
     await _shot(binding, tester, 'session_light');
 
     solidThemeNotifier.setThemeMode(ThemeMode.dark);
-    await _elapse(tester, const Duration(seconds: 30));
+    await _holdAt(tester, const Duration(minutes: 18, seconds: 45));
     await _shot(binding, tester, 'session_dark');
 
     solidThemeNotifier.setThemeMode(ThemeMode.light);
-    await _elapse(tester, const Duration(minutes: 14, seconds: 40));
+    await _holdAt(tester, const Duration(minutes: 4));
     await _shot(binding, tester, 'session_advanced');
 
     // Filled through the controllers rather than enterText, so no keyboard
@@ -195,11 +207,7 @@ void main() {
     tester.widget<PremiumTextField>(fields.at(1)).controller.text =
         'And we can describe the session here.';
 
-    // Stop just short of the end. Reaching it starts the closing bells and
-    // the save, which clears these fields — and on a runner whose audio
-    // never reports completion, would leave the save waiting for good.
-
-    await _elapse(tester, const Duration(minutes: 3, seconds: 54));
+    await _holdAt(tester, const Duration(seconds: 1));
     await _shot(binding, tester, 'session_finished_title_description');
   });
 }
