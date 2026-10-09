@@ -1,0 +1,283 @@
+name: Store Screenshots
+
+# 20261010 gjw Ported from radiopod's screenshots.yaml. Captures the App
+# Store screenshots on a macOS runner, so no Mac and no iPad are needed to
+# produce them, and the Play Store set on an Android emulator.
+#
+# WHY IT EXISTS. Apple requires screenshots at each device's exact pixel
+# dimensions, and will not accept an iPhone-only set for an app whose
+# TARGETED_DEVICE_FAMILY is "1,2" — which InnerPod's is, in three places in
+# project.pbxproj. Screenshots taken by hand off a debug build carry the
+# DEBUG ribbon and are rejected; this job runs with the banner already off
+# (see lib/main.dart).
+#
+# HOW IT WORKS. integration_test/screenshots_test.dart seeds a session
+# history, walks the screens, runs a session and calls the binding's
+# takeScreenshot at each one. On iOS that renders every visible window over
+# the whole screen at native scale, so the PNG is already the size Apple
+# wants. test_driver/integration_test.dart receives the bytes on the host and
+# writes them to SCREENSHOT_DIR. Nothing here parses output or races a timer.
+#
+# The desktop shots in assets/screenshots are not produced here:
+# takeScreenshot is not implemented for the Linux desktop.
+#
+# Manual only. Screenshots are wanted a few times a year, not on every push,
+# and the trigger vocabulary in installers.yaml is crowded enough already.
+
+on:
+  workflow_dispatch:
+    inputs:
+      # 20260930 gjw These track the runner's Xcode and WILL go stale. The
+      # first run wanted an M4 iPad and a 16 Pro Max; the runner had an M5
+      # and a 17 Pro Max, and the job stopped. The step below now falls back
+      # to a pattern when the exact name is missing, so a bump in Xcode is
+      # survivable without editing anything — but correcting the default
+      # here is still the tidier fix.
+      ipad:
+        description: 'iPad simulator name'
+        default: 'iPad Pro 13-inch (M5)'
+      iphone:
+        description: 'iPhone simulator name'
+        default: 'iPhone 17 Pro Max'
+
+env:
+  FLUTTER_VERSION: "3.47.6"
+
+jobs:
+
+  screenshots:
+    runs-on: macos-latest
+
+    strategy:
+      # Keep going, so a wrong simulator name for one device still yields the
+      # other device's set rather than nothing at all.
+      fail-fast: false
+      matrix:
+        include:
+          # `prefix` names the files the way assets/screenshots already does
+          # — innerpod_android_history.png — so a fresh set can be copied
+          # straight over the hand-taken ones rather than starting a second
+          # naming scheme. The test supplies only the screen; it cannot tell
+          # an iPad from an iPhone.
+          - slug: ipad-13
+            device: ipad
+            prefix: innerpod_ipad
+          - slug: iphone-69
+            device: iphone
+            prefix: innerpod_ios
+
+    steps:
+
+      - name: Clone Repository
+        uses: actions/checkout@v6
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Install Flutter Project Dependencies
+        run: flutter pub get
+
+      # The simulator names available depend on the runner's Xcode, and they
+      # change without warning. Print the list before choosing, so a failure
+      # names the alternatives instead of just saying the device is unknown.
+
+      - name: List the available simulators
+        run: xcrun simctl list devices available
+
+      - name: Boot the simulator
+        id: sim
+        env:
+          NAME: >-
+            ${{ matrix.device == 'ipad'
+                && inputs.ipad
+                || inputs.iphone }}
+          # Matches any generation, for when the exact name has moved on.
+          # Both keep the screen size the App Store listing needs: a 13-inch
+          # iPad, and a Pro Max iPhone, which is the 6.9-inch class.
+          FALLBACK: >-
+            ${{ matrix.device == 'ipad'
+                && 'iPad Pro 13-inch'
+                || 'iPhone .* Pro Max' }}
+        run: |
+          DEVICES=$(xcrun simctl list devices available)
+
+          echo "Wanted: $NAME"
+
+          pick() {
+            printf '%s\n' "$DEVICES" \
+              | grep -E "$1" \
+              | head -n 1 \
+              | sed -E 's/.*\(([0-9A-Fa-f-]{36})\).*/\1/'
+          }
+
+          UDID=$(pick "^ *$(printf '%s' "$NAME" | sed 's/[][\.*^$()+?{}|]/\\&/g') \(")
+
+          if [ -z "$UDID" ]; then
+            echo "::warning::No simulator called '$NAME'; \
+              falling back to /$FALLBACK/."
+            UDID=$(pick "$FALLBACK")
+          fi
+
+          if [ -z "$UDID" ]; then
+            echo "::error::No simulator matching '$NAME' or /$FALLBACK/."
+            echo "::error::See the step above for what this runner has."
+            exit 1
+          fi
+
+          printf '%s\n' "$DEVICES" | grep -F "$UDID" | sed 's/^ */Using /'
+          echo "UDID=$UDID" >> "$GITHUB_OUTPUT"
+
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+
+          # A tidy status bar, as Apple's own screenshots have. The binding
+          # captures the status bar along with everything else, so a real
+          # battery percentage and carrier name would date the images.
+
+          xcrun simctl status_bar "$UDID" override \
+            --time "9:41" \
+            --batteryState charged \
+            --batteryLevel 100 \
+            --cellularMode active \
+            --cellularBars 4 \
+            --wifiBars 3 || true
+
+      - name: Walk the app and capture
+        env:
+          SCREENSHOT_DIR: screenshots/${{ matrix.slug }}
+          SCREENSHOT_PREFIX: ${{ matrix.prefix }}
+        timeout-minutes: 30
+        run: |
+          flutter drive \
+            --driver=test_driver/integration_test.dart \
+            --target=integration_test/screenshots_test.dart \
+            -d "${{ steps.sim.outputs.UDID }}"
+
+      - name: Note what was captured
+        if: ${{ always() }}
+        run: |
+          DIR="screenshots/${{ matrix.slug }}"
+          ls -lh "$DIR" 2>/dev/null || { echo "nothing captured"; exit 0; }
+
+          # Apple rejects a set whose dimensions are not exactly right, so
+          # print them here rather than finding out at upload time.
+          for f in "$DIR"/*.png; do
+            [ -e "$f" ] || continue
+            printf '%-24s ' "$(basename "$f")"
+            sips -g pixelWidth -g pixelHeight "$f" \
+              | awk '/pixel/ {printf "%s ", $2} END {print ""}'
+          done
+
+      - name: Upload the screenshots
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: innerpod-screenshots-${{ matrix.slug }}
+          path: screenshots/${{ matrix.slug }}
+          if-no-files-found: warn
+
+  # 20261001 gjw The Play Store leg. A separate job rather than another
+  # matrix entry because almost nothing is shared: Linux instead of macOS, an
+  # emulator instead of a simulator, and a JDK to build with.
+  #
+  # Play wants at least TWO phone screenshots and the repository had one, so
+  # this is what closes that gap. Sides must be between 320 and 3840 pixels,
+  # which an ordinary phone AVD satisfies without any coaxing.
+  #
+  # The same screenshots_test.dart drives it. The one Android difference is
+  # in the test, not here: takeScreenshot needs
+  # convertFlutterSurfaceToImage() first.
+
+  android:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clone Repository
+        uses: actions/checkout@v6
+
+      # The emulator will not start without hardware acceleration, and the
+      # runner's /dev/kvm is not writable by the runner user until this is
+      # done. The failure without it is a timeout rather than a clear error.
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      # android/app/build.gradle.kts compiles against JVM 17.
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Install Flutter Project Dependencies
+        run: flutter pub get
+
+      # 20261001 gjw The release build signs with the upload key, which this
+      # runner does not have, and there are deliberately no keystore secrets
+      # in GitHub. An integration test runs in DEBUG,
+      # so it signs with the debug key and never touches that config. Nothing
+      # here can produce a shippable artefact, which is as intended.
+
+      - name: Walk the app and capture
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          SCREENSHOT_DIR: screenshots/android-phone
+          SCREENSHOT_PREFIX: innerpod_android
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          # 20261001 gjw `>-` FOLDS these lines into ONE, which matters.
+          # android-emulator-runner hands `script` to `sh -c`, and a literal
+          # block with backslash continuations arrived mangled:
+          #
+          #   Target file "\" not found.
+          #
+          # One line, no continuations, is what this action wants.
+          script: >-
+            flutter drive
+            --driver=test_driver/integration_test.dart
+            --target=integration_test/screenshots_test.dart
+            -d emulator-5554
+
+      - name: Note what was captured
+        if: ${{ always() }}
+        run: |
+          DIR=screenshots/android-phone
+          ls -lh "$DIR" 2>/dev/null || { echo "nothing captured"; exit 0; }
+
+          # Play refuses a side outside 320..3840, so print them here rather
+          # than finding out at upload.
+          python3 - "$DIR" <<'PY'
+          import sys, pathlib, struct
+          for f in sorted(pathlib.Path(sys.argv[1]).glob('*.png')):
+              head = f.read_bytes()[16:24]
+              w, h = struct.unpack('>II', head)
+              ok = all(320 <= s <= 3840 for s in (w, h))
+              print(f'{f.name:24} {w} x {h}  {"ok" if ok else "OUT OF RANGE"}')
+          PY
+
+      - name: Upload the screenshots
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: innerpod-screenshots-android-phone
+          path: screenshots/android-phone
+          if-no-files-found: warn

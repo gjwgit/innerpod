@@ -41,6 +41,8 @@ dev_dependencies:
   ubuntu_lints: any
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
 
 flutter:
   assets:

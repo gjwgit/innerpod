@@ -13,6 +13,11 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+// 20261010 gjw Whether this machine can sign a release at all. A CI runner
+// cannot, and must still be able to build DEBUG for the screenshots job.
+
+val hasUploadKey = keystorePropertiesFile.exists()
+
 android {
     namespace = "com.togaware.innerpod"
     compileSdk = flutter.compileSdkVersion
@@ -40,12 +45,20 @@ android {
         ))
     }
 
+    // 20261010 gjw Created ONLY when key.properties is there. Gradle
+    // evaluates this block during CONFIGURATION, for every task, so casting a
+    // missing property here broke `assembleDebug` too, and with it the
+    // Android screenshots job. The guard below keeps the loud failure for a
+    // release build, and nowhere else. Same fix as radiopod.
+
     signingConfigs {
-        create("release") {
-            keyAlias = keystoreProperties["keyAlias"] as String
-            keyPassword = keystoreProperties["keyPassword"] as String
-            storeFile = keystoreProperties["storeFile"]?.let { file(it) }
-            storePassword = keystoreProperties["storePassword"] as String
+        if (hasUploadKey) {
+            create("release") {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = keystoreProperties["storeFile"]?.let { file(it) }
+                storePassword = keystoreProperties["storePassword"] as String
+            }
         }
     }
 
@@ -53,7 +66,23 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.findByName("release")
+        }
+    }
+}
+
+// 20261010 gjw Refuse a RELEASE build with no upload key, and only then.
+// Checked against the task graph rather than at configuration, so a debug
+// build and the integration_test run in .github/workflows/screenshots.yaml
+// work on a machine that has no keystore.
+
+if (!hasUploadKey) {
+    gradle.taskGraph.whenReady {
+        if (allTasks.any { it.name.contains("Release") }) {
+            throw GradleException(
+                "android/key.properties is missing, so a release build " +
+                    "cannot be signed with the upload key.",
+            )
         }
     }
 }
