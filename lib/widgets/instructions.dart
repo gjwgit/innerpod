@@ -1,6 +1,6 @@
 /// Text instructions and support.
 //
-// Time-stamp: <Saturday 2026-02-28 09:53:49 +1100 Graham Williams>
+// Time-stamp: <Friday 2026-10-09 20:28:48 +1100 Graham Williams>
 //
 /// Copyright (C) 2024-2025, Togaware Pty Ltd
 ///
@@ -83,7 +83,7 @@ class Instructions extends StatelessWidget {
                         'The way to a stillness of spirit is to learn to say silently '
                         'in the depth of your spirit a word or a short phrase. '
                         'To repeat that word over and over again. '
-                        'The recommended word is the Aramaic word Maranatha.'
+                        'The recommended word is the Aramaic word Maranatha. '
                         'Say it slowly in four equally stressed syllables. \n'
                         '  \n'
                         'Ma, Ra, Na, Tha.  \n'
