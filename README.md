@@ -18,16 +18,16 @@ Privacy-first: your data is encrypted for secure and private storage
 in your Pod on a Solid server of your choice. You choose, not us.
 
 [InnerPod](https://gjwgit.github.io/radiopod/) provides a timer for
-your sessions. It has been designed to support meditation session but
+your sessions. It has been designed to support meditation sessions but
 can support any regular timed session. Tap **Start** for a session to
 start and end with three bells. Tap **Intro** for a short audio intro
 to the session before the bells. Tap **Guided** for instructions on
-meditation, and then some soothing music for before and after the
+meditation and then some soft music for before and after the
 bells.
 
-Your history of sessions are stored locally by default. Once you are
-ready the history data can be encrypted and privately stored in your
-own personal online data store ([Pod](https://solidproject.org/about))
+Your history of sessions are stored locally by default. If you prefer
+the history data can be encrypted and privately stored in your own
+personal online data store ([Pod](https://solidproject.org/about))
 within a Data Vault hosted by a Solid Server of your choice.
 Pod-stored data is available on any of your devices to share your
 history while being protected against server administrator access and
@@ -39,18 +39,18 @@ WWW, Sir Tim Berners-Lee. Obtain a Pod for yourself on any Solid
 server and link it to your app. **You do not need a Solid Pod to use
 this app in local-only mode.** If you would like to register for a new
 Pod on a Solid server, choose a server and tap the **Register** button
-on the **Login** screen (tap Logged Out in the footer or in the top
-left menu drawer). You will be prompted for an email address (username) a
-password, and a pod name. On logging in to your Pod for the first time
-you will be asked for a security key to protect your data on the
-server.
+on the **Login** screen (tap Not Logged In in the footer or in the top
+left menu drawer). You will be prompted for an email address
+(username) a password, and a pod name. On logging in to your Pod for
+the first time you will be asked for a security key to protect your
+data on the server.
 
-The app is supported by [Togaware](https://togaware.com) and and
+The app is supported by [Togaware](https://togaware.com) and is
 implemented by [Graham
 Williams](https://togaware.com/Graham.Williams.html) using
 [Flutter](https://flutter.dev)'s
 [SolidUI](https://github.com/anusii/solidui) package for cross
-platform development..
+platform development.
 
 We make this project available for free so if you appreciate the app
 then please show some ❤️ and tap on the star at
@@ -223,7 +223,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Thursday 2026-10-08 09:28:00 +1100 Graham Williams>
+Time-stamp: <Friday 2026-10-09 15:37:56 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
