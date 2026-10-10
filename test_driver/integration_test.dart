@@ -35,7 +35,7 @@ Future<void> main() async {
 
   await integrationDriver(
     onScreenshot: (String name, List<int> bytes,
-        [Map<String, Object?>? args]) async {
+        [Map<String, Object?>? args,]) async {
       final file = File('$dir/${prefix}_$name.png')
         ..createSync(recursive: true)
         ..writeAsBytesSync(bytes);

@@ -15,9 +15,9 @@ library;
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 
+import 'package:circular_countdown_timer/custom_timer_painter.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:circular_countdown_timer/custom_timer_painter.dart';
 import 'package:solidui/solidui.dart' show solidThemeNotifier;
 
 import 'package:innerpod/main.dart' as app;
