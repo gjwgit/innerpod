@@ -34,6 +34,8 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
++ Keep the security key after a Session Expired login [2.1.17 20261013 gjw]
++ Bump solidui 1.5.4 [2.1.16 20261011 gjw]
 + Update solidui 1.5.3 for snapstore [2.1.15 20261011 gjw]
 + Really remove LOGIN on startup [2.1.14 20261009 gjw]
 + Update to solidui 1.5.0 to skip login flash [2.1.12 20261009 gjw]
