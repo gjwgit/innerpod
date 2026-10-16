@@ -34,8 +34,11 @@ Future<void> main() async {
   final prefix = env['SCREENSHOT_PREFIX'] ?? 'innerpod';
 
   await integrationDriver(
-    onScreenshot: (String name, List<int> bytes,
-        [Map<String, Object?>? args,]) async {
+    onScreenshot: (
+      String name,
+      List<int> bytes, [
+      Map<String, Object?>? args,
+    ]) async {
       final file = File('$dir/${prefix}_$name.png')
         ..createSync(recursive: true)
         ..writeAsBytesSync(bytes);
