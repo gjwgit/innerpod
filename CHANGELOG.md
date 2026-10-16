@@ -34,6 +34,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.1 Skip Login by default
 
++ Bump solidui 1.5.10 for the side menu on a phone in landscape [2.1.19 20261017 gjw]
 + Keep the timer in view on a phone in landscape [2.1.18 20261017 gjw]
 + Keep the security key after a Session Expired login [2.1.17 20261013 gjw]
 + Bump solidui 1.5.4 [2.1.16 20261011 gjw]
