@@ -2,7 +2,7 @@
 #
 # Generic Makefile
 #
-# Time-stamp: <Sunday 2026-09-20 13:13:38 +1000 Graham Williams>
+# Time-stamp: <Saturday 2026-10-17 09:29:12 +1100 Graham Williams>
 #
 # Copyright (c) Graham.Williams@togaware.com
 #
@@ -58,6 +58,14 @@ endif
 
 INC_BASE=$(HOME)/.local/share/make
 INC_BASE=support
+
+# 20261016 gjw Obfuscate release builds, so for example, the
+# scrambled Podcast Index secret in radiopod is harder to find in
+# the binary. Read by support/flutter.mk to optionally obfuscate.
+
+ifeq ($(APP),radiopod)
+  OBFUSCATE = --obfuscate --split-debug-info=build/symbols
+endif
 
 # Specific Makefiles will be loaded if they are found in
 # INC_BASE. Sometimes the INC_BASE is shared by multiple local

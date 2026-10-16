@@ -39,6 +39,7 @@ class AppCircularCountDownTimer extends StatelessWidget {
     required this.onComplete,
     required this.controller,
     this.timerKey,
+    this.size = 250,
     super.key,
   });
 
@@ -57,6 +58,10 @@ class AppCircularCountDownTimer extends StatelessWidget {
   /// Optional key for [CircularCountDownTimer] to survive tree moves.
   final Key? timerKey;
 
+  /// The width and height of the dial; the text scales with it.
+
+  final double size;
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -64,18 +69,18 @@ class AppCircularCountDownTimer extends StatelessWidget {
 
     return CircularCountDownTimer(
       key: timerKey,
-      width: 250,
-      height: 250,
+      width: size,
+      height: size,
       duration: duration,
       controller: controller,
       autoStart: false,
       backgroundColor: isDark ? cs.surfaceContainerHighest : timerCentralColor,
       ringColor: isDark ? cs.surfaceContainerHighest : spinBackgroundColor,
       fillColor: isDark ? cs.primary : spinColor,
-      strokeWidth: 20.0,
+      strokeWidth: size * 0.08,
       textStyle: TextStyle(
         color: isDark ? cs.onSurface : timerTextColor,
-        fontSize: 55,
+        fontSize: size * 0.22,
       ),
       onComplete: onComplete,
       isReverse: true,

@@ -323,15 +323,16 @@ audio may take a little time to download for the Web version.
       ],
     );
 
-    final timerDisplay = AppCircularCountDownTimer(
-      duration: _duration,
-      controller: _controller,
-      onComplete: () async {
-        await _complete();
-        if (mounted) setState(_reset);
-      },
-      timerKey: _countdownKey,
-    );
+    Widget timerDisplay([double size = 250]) => AppCircularCountDownTimer(
+          size: size,
+          duration: _duration,
+          controller: _controller,
+          onComplete: () async {
+            await _complete();
+            if (mounted) setState(_reset);
+          },
+          timerKey: _countdownKey,
+        );
 
     // 20261003 gjw The buttons panel takes the theme's sand in both modes. It
     // was white in light mode, against a near-white page, so it barely stood
@@ -425,7 +426,7 @@ audio may take a little time to download for the Web version.
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 2 * heightSpacer),
-                  timerDisplay,
+                  timerDisplay(),
                   const SizedBox(height: 2 * heightSpacer),
 
                   // 20261004 gjw Center fills the width, so the column spans
@@ -444,23 +445,37 @@ audio may take a little time to download for the Web version.
           // top of an unbounded scroll view. It still scrolls once the buttons
           // need more height than the window has.
 
+          // 20261017 gjw Only the buttons scroll. On a phone in landscape the
+          // buttons are taller than the window, so a timer centred against
+          // them sat below the fold and its time was cut off. The timer now
+          // stays put, centred in the window, shrunk to fit its height.
+
           return LayoutBuilder(
-            builder: (context, constraints) => SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(child: Center(child: timerDisplay)),
-                      const SizedBox(width: 2 * widthSpacer),
-                      Expanded(child: Center(child: buttonsMatrix)),
-                    ],
+            builder: (context, constraints) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: timerDisplay(
+                        (constraints.maxHeight - 40).clamp(120, 250),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 2 * widthSpacer),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints:
+                            BoxConstraints(minHeight: constraints.maxHeight),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Center(child: buttonsMatrix),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
