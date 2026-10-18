@@ -63,12 +63,12 @@ many more apps using the Solid ecosystem.
 
 InnerPod is built to protect your privacy. The app maintains a history
 of your sessions. In **local** mode (the default) all data remains on
-your device. When you **Login** to a Solid server hosting your Pod,
-your history is stored in your Pod and is accessible to your app
-running on any device through your security key. The security key is
-used to decrypt the data on your device so it is not accessible by
-anyone on the Solid server. Your Solid server of choice may collect
-your login timestamp and other standard server logging of meta data.
+your device. If ou choose, you can connect to a Solid server of you
+choice where your history can be stored securely and privately in your
+Pod and so become accessible to your app running on any of your
+devices. A security key is used to encrypt the data at reset in your
+Pod. The Solid server may collect your login timestamp and other
+standard meta data.
 
 ## Installation
 
@@ -82,8 +82,8 @@ for Android;
 
 The latest version of the app can be run online at
 [innerpod.solidcommunity.au](https://innerpod.solidcommunity.au) with
-no installation required, or downloaded and installed for your
-platform from the [Solid Community AU](https://solidcommunity.au)
+no installation required or else downloaded and installed for your
+device from the [Solid Community AU](https://solidcommunity.au)
 repository:
 
 + **Web**
@@ -193,7 +193,7 @@ project.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 08:11:20 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 08:15:02 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
