@@ -91,8 +91,8 @@ repository:
 + **Android**
   [apk](https://solidcommunity.au/installers/innerpod.apk);
 + **GNU/Linux**
-  [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
   [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
+  [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
   [zip](https://solidcommunity.au/installers/innerpod-linux.zip);
 + **macOS**
   [dmg](https://solidcommunity.au/installers/innerpod-macos.dmg) or
@@ -174,7 +174,7 @@ Flutter.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 08:25:18 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 08:26:54 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
