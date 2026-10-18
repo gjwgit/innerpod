@@ -80,26 +80,8 @@ Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 for Android;
 + [SnapCraft](https://snapcraft.io/innerpod) for Linux.
 
-The latest version of the app can be run online at
-[innerpod.solidcommunity.au](https://innerpod.solidcommunity.au) with
-no installation required or else downloaded and installed for your
-device from the [Solid Community AU](https://solidcommunity.au)
-repository:
-
-+ **Web**
-  [solidcommunity](https://innerpod.solidcommunity.au/);
-+ **Android**
-  [apk](https://solidcommunity.au/installers/innerpod.apk);
-+ **GNU/Linux**
-  [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
-  [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
-  [zip](https://solidcommunity.au/installers/innerpod-linux.zip);
-+ **macOS**
-  [dmg](https://solidcommunity.au/installers/innerpod-macos.dmg) or
-  [zip](https://solidcommunity.au/installers/innerpod-macos.zip);
-+ **Windows**
-  [exe](https://solidcommunity.au/installers/innerpod-windows-inno.exe) or
-  [zip](https://solidcommunity.au/installers/innerpod-windows.zip).
+See [INSTALL](https://gjwgit.github.io/innerpod/INSTALL.html) for installation
+instructions.
 
 ## Using the App
 
@@ -117,7 +99,7 @@ for the meditation.
 The purple **Guided** button plays an introductory guide to meditating
 following by a short piece of music to prepare yourself for the
 meditation session. At the conclusion another short musical interlude
-is played as you emerge from the silence. This is commonlyused in a
+is played as you emerge from the silence. This is commonly used in a
 group meditation session.
 
 ![App Home Screen](assets/screenshots/innerpod_home_narrow.png)
@@ -174,7 +156,7 @@ Flutter.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 08:36:22 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 10:52:43 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
