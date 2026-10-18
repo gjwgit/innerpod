@@ -80,8 +80,9 @@ Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 for Android;
 + [SnapCraft](https://snapcraft.io/innerpod) for Linux.
 
-See [INSTALL](https://gjwgit.github.io/innerpod/INSTALL.html) for installation
-instructions.
+See the [Install
+Guide](https://gjwgit.github.io/innerpod/INSTALL.html) for
+installation instructions.
 
 ## Using the App
 
@@ -156,7 +157,7 @@ Flutter.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 10:52:43 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 10:55:19 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
