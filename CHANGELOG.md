@@ -3,25 +3,6 @@
 Noted here are the high level changes for the app.  Each update
 includes a short user-oriented description.
 
-You can run the app in your browser from the
-[**web**](https://innerpod.solidcommunity.au) or else download and
-install locally the latest version from the [Solid Community
-AU](https://solidcommunity.au) or directly:
-
-+ **Android** as
-[aab](https://solidcommunity.au/installers/innerpod.apk) or
-[apk](https://solidcommunity.au/installers/innerpod.apk);
-+ **GNU/Linux** as
-[deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
-[snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
-[zip](https://solidcommunity.au/installers/innerpod-linux.zip);
-+ **macOS** as
-[dmg](https://solidcommunity.au/installers/innerpod-macos.dmg) or
-[zip](https://solidcommunity.au/installers/innerpod-macos.zip);
-+ **Windows** as
-[exe](https://solidcommunity.au/installers/innerpod-windows-inno.exe)
-or [zip](https://solidcommunity.au/installers/innerpod-windows.zip).
-
 Contributions are welcome. Visit
 [github](https://github.com/gjwgit/innerpod) to submit an issue or, even
 better, fork the repository yourself, update the code, and submit a
