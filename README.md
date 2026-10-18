@@ -14,36 +14,24 @@
 
 [![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/innerpod)
 
-Privacy-first: your data is encrypted for secure and private storage
-in your Pod on a Solid server of your choice. You choose, not us.
-
 [InnerPod](https://gjwgit.github.io/radiopod/) provides a timer for
-your sessions. It has been designed to support meditation sessions but
-can support any regular timed session. Tap **Start** for a session to
-start and end with three bells. Tap **Intro** for a short audio intro
-to the session before the bells. Tap **Guided** for instructions on
-meditation and then some soft music for before and after the
-bells.
+contemplative and mindfulness meditation sessions, although any kind
+of regular timed session is supported. Tap **Start** for a session of
+silence to start and end with three bells. Tap **Intro** for a short
+audio intro to the session before the bells. Tap **Guided** for
+instructions on meditation and then music for before and after the
+session.
 
-Your history of sessions are stored locally by default. If you prefer
-the history data can be encrypted and privately stored in your own
-personal online data store ([Pod](https://solidproject.org/about))
-within a Data Vault hosted by a Solid Server of your choice.
-Pod-stored data is available on any of your devices to share your
-history while being protected against server administrator access and
-server breaches.
+A history of your sessions is stored locally. Your history can also be
+encrypted and privately stored in your own personal online data store
+(Pod) of your choice.  In this way your secure and private data is
+available on any of your devices where the app is installed.
 
-Solid Pods are a new approach to handling your personal data on the
-World Wide Web and is the latest innovation from the inventor of the
-WWW, Sir Tim Berners-Lee. Obtain a Pod for yourself on any Solid
-server and link it to your app. **You do not need a Solid Pod to use
-this app in local-only mode.** If you would like to register for a new
-Pod on a Solid server, choose a server and tap the **Register** button
-on the **Login** screen (tap Not Logged In in the footer or in the top
-left menu drawer). You will be prompted for an email address
-(username), a password, and a pod name. On logging in to your Pod for
-the first time you will be asked for a security key to protect your
-data on the server.
+Pods are an innovation from the inventor of the World Wide Web, Sir
+Tim Berners-Lee. Independent of this app you can obtain a Pod for
+yourself on any Solid server. On logging in to your Pod for the first
+time you will be asked for a security key to protect your app
+data. **You do not need a Solid Pod to use this app.**
 
 The app is supported by [Togaware](https://togaware.com) and is
 implemented by [Graham
@@ -65,22 +53,23 @@ many more apps using the Solid ecosystem.
   have a choice of appropriate **Bells**.
 + A **Countdown Timer** defaults to 20 minutes with a choice of any
   time up to 30 minutes.
-+ Session **History** with title and notes is recorded. If conencted
-  to your Solid server the history is securely and privately shared
-  between your app running on any device.
++ Session **History** with title and notes is recorded. If connected
+  to a Solid server the history is securely and privately stored in
+  your Pod and can be shared between your app running on any device.
 + **Dark/Light** modes are supported.
-+ Runs on **Android, iOS, GNU/Linux, macOS, Windows and the web**.
++ Runs on **Android, Android Auto, iOS, Apple CarPlay, GNU/Linux,
+  macOS, Windows and the web**.
 
 ## Privacy
 
 InnerPod is built to protect your privacy. The app maintains a history
-of your sessions. In **local-only** mode (default) all data remains on
+of your sessions. In **local** mode (the default) all data remains on
 your device. When you **Login** to a Solid server hosting your Pod,
-your history is stored in your Pod and is accessible to your app running
-on any device through your security key. The security key is used to
-decrypt the data on your device so it is not accessible by anyone on
-the server. Your Solid server of choice may collect your login
-timestamp and other standard server logging of meta data.
+your history is stored in your Pod and is accessible to your app
+running on any device through your security key. The security key is
+used to decrypt the data on your device so it is not accessible by
+anyone on the Solid server. Your Solid server of choice may collect
+your login timestamp and other standard server logging of meta data.
 
 ## Installation
 
@@ -121,51 +110,22 @@ a Pull Request. The app is implemented in
 
 ## Using the App
 
-![Pod Login Screen](assets/screenshots/pod_login_screen.png)
-
-A login screen is displayed on startup. Logging in is optional and
-only required if you wish to record your session to your Solid Pod. To
-continue without capturing any data simply tap **SESSION**. The
-session timer is fully functional without a connection and no data is
-collected or stored.
-
-To record your sessions the tap on **LOGIN** to connect to your Solid
-Pod., If you yet to have a WebID and a Solid Pod then you can
-**REGISTER** to sign up for your personally private Solid Pod hosted,
-for example, on [Solid Community AU
-Pods](https://pods.solidcommunity.au). All data is encrypted on the
-Pod and only you have access to the data on your device, unless you
-explicitly share the data.
-
-After tapping on **LOGIN** the app will establish a connection to your
-Solid Pod. Once a connection is made then the session will be logged
-and previous sessions will be available for visualising.
-
-Tap on the **INFO** button to review this guide.
-
-Once you connect to the app the session manager displays a countdown
-timer and buttons to interact and manage the session. As the timer
-progresses, the circular progress bar is empties of the blue bar,
-providing a visual cue that the session and audio are active.
-
 ![App Home Screen](assets/screenshots/innerpod_home_light.png)
 
-A silent meditation session begins with the sounding of a bell and
-finishes with the same bell.
+A silent meditation session begins with the sounding of three bells and
+finishes with the same bells.
 
-Pushing the green **Start** button will simply initiate a 20 minute session
-(or however long you have chosen using the Chips at the bottom of the
-screen).
+The green **Start** button initiates a 20 minute (the default)
+session.Change the duration using the slider.
 
-Pushing the blue **Intro** button plays a short opening in preparation
+The blue **Intro** button plays a short opening in preparation
 for the meditation.
 
-Pushing the purple **Guided** button plays an introductory guide to
-meditating from [John Main](https://en.wikipedia.org/wiki/John_Main),
-following by a short musical chant as you prepare yourself for the
+The purple **Guided** button plays an introductory guide to meditating
+following by a short piece of music to prepare yourself for the
 meditation session. At the conclusion another short musical interlude
-is played as you emerge from the silence of your meditation. This is
-particularly handy in a group meditation session.
+is played as you emerge from the silence. This is commonlyused in a
+group meditation session.
 
 ![App Home Screen](assets/screenshots/innerpod_home_narrow.png)
 
@@ -174,11 +134,21 @@ well on mobile devices.
 
 ![Text Guide](assets/screenshots/innerpod_text_guide.png)
 
-The **Text** tab collects the written material for reading at your
-own pace. The **Guide** explains how to meditate, in the words of
-John Main. **Opening** and **Closing** hold prayers for the start and
-end of a session, and **Wisdom** gathers short quotations for
-reflection.
+The **Text** tab presents written material for reading at your own
+pace. Included are the **Guide** which explains how to meditate,
+**Opening** and **Closing** prayers for the start and end of a
+session, and traditional **Wisdom** for reflection.
+
+![Pod Login Screen](assets/screenshots/pod_login_screen.png)
+
+A login screen is displayed on tapping the Not Logged In text bottom
+left of the the top right navigation menu. This allows optional access
+for sharing your history securely andprivately through your Solid
+Pod. You choose a Solid server of your choice, from free but as-is
+servers like [Solid Community AU](https://pods.solidcommunity.au) or
+any one of the supported servers. All data is encrypted on the Pod and
+only you have access to the data on your device, unless you explicitly
+share the data.
 
 ## The App Itself
 
@@ -223,7 +193,7 @@ under out guidance.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Friday 2026-10-09 19:20:49 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 07:48:33 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
