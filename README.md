@@ -11,7 +11,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/gjwgit/innerpod)](https://github.com/gjwgit/innerpod/issues)
 
 [![Google Play Store](https://img.shields.io/badge/Google%20Play-Available-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-[![Snap Sore](https://img.shields.io/snapcraft/v/innerpod?track=latest&risk=stable)](https://snapcraft.io/innerpod)
+[![Snap Sore](https://img.shields.io/snapcraft/v/innerpod/latest/stable)](https://snapcraft.io/innerpod)
 
 [InnerPod](https://gjwgit.github.io/radiopod/) provides a timer for
 contemplative and mindfulness meditation sessions, although any kind
@@ -193,7 +193,7 @@ project.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 08:00:44 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 08:03:51 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
