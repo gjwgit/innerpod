@@ -15,14 +15,14 @@
 
 [InnerPod](https://gjwgit.github.io/innerpod/) provides a timer for
 contemplative and mindfulness meditation sessions, although any kind
-of regular timed session is supported. Tap **Start** for a session of
-silence to start and end with three bells. Tap **Intro** for a short
-audio intro to the session before the bells. Tap **Guided** for
-instructions on meditation and then music for before and after the
-session.
+of regular timed session is supported. Tap **Start** for a timed
+session of silence to start and end with three bells. Tap **Intro**
+for a short audio intro to the session before the bells. Tap
+**Guided** for instructions on meditation and then music before and
+after the session.
 
 A history of your sessions is stored locally. Your history can also be
-encrypted and privately stored in your own personal online data store
+securely and privately stored in your own personal online data store
 (Pod) of your choice.  In this way your secure and private data is
 available on any of your devices where the app is installed.
 
@@ -174,7 +174,7 @@ Flutter.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 08:26:54 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 08:36:22 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
