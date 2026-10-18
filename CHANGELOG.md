@@ -32,6 +32,10 @@ We make this project available for free so if you appreciate the app
 then please show some ❤️ and tap on the star at
 [GitHub](https://github.com/gjwgit/innerpod) to support our work.
 
+## 2.2 Review and consolidate
+
++ Review documentation and update to clarify storage [2.2.0 20261019 gjw]
+
 ## 2.1 Skip Login by default
 
 + Bump solidui 1.5.10 side menu on phone in landscape [2.1.19 20261017 gjw]
