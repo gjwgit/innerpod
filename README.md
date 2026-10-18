@@ -13,7 +13,7 @@
 [![Google Play Store](https://img.shields.io/badge/Google%20Play-Available-green?logo=google-play)](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
 [![Snap Sore](https://img.shields.io/snapcraft/v/innerpod/latest/stable)](https://snapcraft.io/innerpod)
 
-[InnerPod](https://gjwgit.github.io/radiopod/) provides a timer for
+[InnerPod](https://gjwgit.github.io/innerpod/) provides a timer for
 contemplative and mindfulness meditation sessions, although any kind
 of regular timed session is supported. Tap **Start** for a session of
 silence to start and end with three bells. Tap **Intro** for a short
@@ -41,7 +41,7 @@ platform development.
 
 We make this project available for free so if you appreciate the app
 then please show some ❤️ and tap on the star at
-[GitHub](https://github.com/gjwgit/radiopod) to support our work. See
+[GitHub](https://github.com/gjwgit/innerpod) to support our work. See
 the [AU Solid Community](https://solidcommunity.au) **showcase** for
 many more apps using the Solid ecosystem.
 
@@ -193,7 +193,7 @@ project.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 08:03:51 +1100 Graham Williams>
+Time-stamp: <Monday 2026-10-19 08:11:20 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
