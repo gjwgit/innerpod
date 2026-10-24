@@ -13,7 +13,28 @@ import 'package:innerpod/models/bell.dart';
 /// Every bell sounds three strikes over the same 27 seconds, so the choice
 /// changes only the tone and never the timing of a session.
 
+// 20261024 gjw The id 'original' is kept for the Bright bell so a saved
+// preference from before the rename still selects it.
+
 const List<Bell> bells = [
+  Bell(
+    id: 'small_bowl',
+    label: 'Small Bowl',
+    description: 'A small bowl tapped on the rim, clear and shimmering.',
+    asset: 'sounds/bell_small_bowl.mp3',
+  ),
+  Bell(
+    id: 'deep',
+    label: 'Deep',
+    description: 'The lowest and softest of the bells.',
+    asset: 'sounds/bell_deep.mp3',
+  ),
+  Bell(
+    id: 'original',
+    label: 'Bright',
+    description: 'The original Inner Pod bell, bright and clear.',
+    asset: 'sounds/bell_original.mp3',
+  ),
   Bell(
     id: 'temple',
     label: 'Temple',
@@ -27,24 +48,6 @@ const List<Bell> bells = [
     asset: 'sounds/bell_bowl.mp3',
   ),
   Bell(
-    id: 'deep',
-    label: 'Deep',
-    description: 'The lowest and softest of the bells.',
-    asset: 'sounds/bell_deep.mp3',
-  ),
-  Bell(
-    id: 'original',
-    label: 'Original',
-    description: 'The original Inner Pod bell, bright and clear.',
-    asset: 'sounds/bell_original.mp3',
-  ),
-  Bell(
-    id: 'small_bowl',
-    label: 'Small Bowl',
-    description: 'A small bowl tapped on the rim, clear and shimmering.',
-    asset: 'sounds/bell_small_bowl.mp3',
-  ),
-  Bell(
     id: 'cup',
     label: 'Cup',
     description: 'The lightest bell — a cup tapped with a spoon.',
@@ -54,7 +57,7 @@ const List<Bell> bells = [
 
 /// The bell sounded until the user chooses one.
 
-const String defaultBellId = 'temple';
+const String defaultBellId = 'small_bowl';
 
 /// The bell known by [id], falling back to the default for a missing or
 /// unrecognised value so a stale preference can never leave the app silent.

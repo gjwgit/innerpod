@@ -15,6 +15,7 @@ then please show some ❤️ and tap on the star at
 
 ## 2.2 Review and consolidate
 
++ Reorder bells, rename Original to Bright, Small Bowl default [2.2.1 20261024 gjw]
 + Review documentation and update to clarify storage [2.2.0 20261019 gjw]
 
 ## 2.1 Skip Login by default
