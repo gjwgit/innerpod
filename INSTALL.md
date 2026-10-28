@@ -14,13 +14,13 @@ repository. The choice is yours:
 + **Android**
   [Google Play Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod) or
   [apk](https://solidcommunity.au/installers/innerpod.apk) or
-  [aab](https://solidcommunity.au/installers/innerpod.aab);;
+  [aab](https://solidcommunity.au/installers/innerpod.aab);
 + **iOS**
-  Apple App Store - coming soon or
-  [ipa](https://solidcommunity.au/installers/innerpod.ipa);
+  Apple App Store - coming soon;
 + **Linux**
   [Snap Store](https://snapcraft.io/innerpod) or
   [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or
+  [flatpak](https://solidcommunity.au/installers/innerpod_amd64.flatpak) or
   [snap](https://solidcommunity.au/installers/innerpod_amd64.snap) or
   [zip](https://solidcommunity.au/installers/innerpod-linux.zip);
 + **macOS**

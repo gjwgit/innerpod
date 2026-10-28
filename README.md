@@ -45,6 +45,19 @@ then please show some ❤️ and tap on the star at
 the [AU Solid Community](https://solidcommunity.au) **showcase** for
 our apps using the Solid ecosystem.
 
+## Installation
+
+You can install the released version of the app from different
+repositories including:
+
++ Android [Google Play
+Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod);
++ Linux [Snap Store](https://snapcraft.io/innerpod).
+
+See the [Install
+Guide](https://gjwgit.github.io/innerpod/INSTALL.html) for
+installation instructions for any platform.
+
 ## Features
 
 + An audio **Guide** to meditation.
@@ -69,20 +82,6 @@ Pod and so become accessible to your app running on any of your
 devices. A security key is used to encrypt the data at reset in your
 Pod. The Solid server may collect your login timestamp and other
 standard meta data.
-
-## Installation
-
-You can install the released version of the app from different
-repositories including:
-
-+ [Google Play
-Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod)
-for Android;
-+ [SnapCraft](https://snapcraft.io/innerpod) for Linux.
-
-See the [Install
-Guide](https://gjwgit.github.io/innerpod/INSTALL.html) for
-installation instructions.
 
 ## Using the App
 
@@ -157,7 +156,7 @@ Flutter.
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Thursday 2026-10-29 08:29:01 +1100 Graham Williams>
+Time-stamp: <Thursday 2026-10-29 08:32:42 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)

@@ -47,15 +47,15 @@ String backupFileName() {
 /// Returns true if saved, false if the user cancelled.
 Future<bool> saveTtlBackup(String content) async {
   // 20260912 gjw From file_picker 12 the picker writes the bytes itself on
-  // every platform, so the web/native split is gone.
+  // every platform, so the web/native split is gone. 20261029 gjw No type or
+  // allowedExtensions: file_picker 13.3 deprecates both as never used by
+  // saveFile. The .ttl in the file name and the mime type carry it instead.
 
   final saved = await FilePicker.saveFile(
     dialogTitle: 'Export History Backup',
     fileName: backupFileName(),
     bytes: utf8.encode(content),
     mimeType: 'text/turtle',
-    type: FileType.custom,
-    allowedExtensions: ['ttl'],
   );
   return saved != null;
 }
