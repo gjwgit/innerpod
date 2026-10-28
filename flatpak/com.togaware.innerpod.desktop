@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=InnerPod
+Comment=A session timer with session logged to your Solid Pod
+Exec=innerpod
+Icon=com.togaware.innerpod
+Terminal=false
+Type=Application
+Categories=Utility;Clock;
+Keywords=meditation;timer;session;bell;solid;pod;

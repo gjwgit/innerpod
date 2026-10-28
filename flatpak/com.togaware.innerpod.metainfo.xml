@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 20261029 gjw AppStream metadata: what GNOME Software, KDE Discover and
+     Flathub show for the app. The description follows the snap's. -->
+<component type="desktop-application">
+  <id>com.togaware.innerpod</id>
+  <name>InnerPod</name>
+  <summary>A session timer with private logging to your Solid Pod</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer id="com.togaware">
+    <name>Togaware</name>
+  </developer>
+  <url type="homepage">https://github.com/gjwgit/innerpod</url>
+  <url type="bugtracker">https://github.com/gjwgit/innerpod/issues</url>
+  <launchable type="desktop-id">com.togaware.innerpod.desktop</launchable>
+
+  <description>
+    <p>
+      InnerPod is a session timer, typically used for silent meditation.
+      Choose a length and a bell, and the bell marks the start and the end
+      of the session. A guided session is also available.
+    </p>
+    <p>
+      Sessions can be logged, encrypted, to your own Solid Pod, so nobody,
+      not even the server administrator, can see them. Without a login the
+      timer simply runs and nothing is sent anywhere.
+    </p>
+  </description>
+
+  <categories>
+    <category>Utility</category>
+  </categories>
+
+  <keywords>
+    <keyword>meditation</keyword>
+    <keyword>timer</keyword>
+    <keyword>solid</keyword>
+  </keywords>
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="2.2.1" date="2026-10-24"/>
+  </releases>
+</component>

@@ -29,6 +29,19 @@ you are comfortable with side loading the app then choose to do so.
 
 ## Linux
 
+### Flatpak Install
+
+Download
+[innerpod_amd64.flatpak](https://solidcommunity.au/installers/innerpod_amd64.flatpak)
+and install for yourself. The GNOME runtime it needs is fetched from
+Flathub if it is not already installed:
+
+```bash
+wget https://solidcommunity.au/installers/innerpod_amd64.flatpak -O innerpod_amd64.flatpak
+flatpak install --user innerpod_amd64.flatpak
+flatpak run com.togaware.innerpod
+```
+
 ### Zip Install
 
 Download [innerpod-linux.zip](https://solidcommunity.au/installers/innerpod-linux.zip)

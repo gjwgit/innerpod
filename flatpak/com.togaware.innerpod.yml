@@ -1,0 +1,61 @@
+# InnerPod as a Flatpak.
+#
+# 20261029 gjw Wraps the Flutter release bundle built on the host (`make
+# flatpak` builds it first, as the workflow does) in the GNOME runtime.
+# Unlike radiopod nothing is built from source: audioplayers plays the
+# bells through GStreamer, which the runtime ships with the mp3 decoder.
+#
+# Build with `make flatpak`, which builds outside the project (see the
+# Makefile), then run with `flatpak run com.togaware.innerpod`.
+
+id: com.togaware.innerpod
+runtime: org.gnome.Platform
+runtime-version: '49'
+sdk: org.gnome.Sdk
+command: innerpod
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  # The Pod, and the fonts google_fonts fetches.
+  - --share=network
+  # The bells and the guided sessions.
+  - --socket=pulseaudio
+  # solidpod keeps the security key through flutter_secure_storage, which
+  # on GNU/Linux is libsecret talking to the keyring over this name, as the
+  # snap's password-manager-service plug allows.
+  - --talk-name=org.freedesktop.secrets
+  # wakelock_plus keeps the screen on through a session by asking the
+  # screensaver over this name.
+  - --talk-name=org.freedesktop.ScreenSaver
+
+modules:
+
+  # The app: the Flutter bundle as built, under /app/innerpod, since the
+  # executable finds its lib/ and data/ beside itself.
+
+  - name: innerpod
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/innerpod /app/bin
+      - cp -r bundle/. /app/innerpod/
+      - ln -s /app/innerpod/innerpod /app/bin/innerpod
+      - install -Dm644 com.togaware.innerpod.desktop
+          /app/share/applications/com.togaware.innerpod.desktop
+      - install -Dm644 com.togaware.innerpod.metainfo.xml
+          /app/share/metainfo/com.togaware.innerpod.metainfo.xml
+      - install -Dm644 icon_square.png
+          /app/share/icons/hicolor/512x512/apps/com.togaware.innerpod.png
+    sources:
+      - type: dir
+        path: ../build/linux/x64/release/bundle
+        dest: bundle
+      - type: file
+        path: com.togaware.innerpod.desktop
+      - type: file
+        path: com.togaware.innerpod.metainfo.xml
+      # Not the snap's icon, which is 479x466: a Flatpak icon must be square.
+      - type: file
+        path: ../installers/icon_square.png
