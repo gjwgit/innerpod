@@ -68,28 +68,17 @@ apps:
 #      - libgstreamer-plugins-good1.0-0
 #      - gstreamer1.0-plugins-good
 #      - gstreamer1.0-plugins-base
+#
+# 20261029 gjw The app is NOT built here, as for radiopod. The installers
+# workflow builds the Flutter Linux release once for the deb, zip, snap
+# and flatpak alike, and this part dumps that bundle, so the build
+# packages above are no longer needed, only the stage packages. To pack a
+# snap locally, `flutter build linux --release` first.
 
 parts:
   innerpod:
-    source: .
-    plugin: flutter
-    flutter-target: lib/main.dart
-    build-packages:
-      - binutils
-      - clang
-      - cmake
-      - libblkid-dev
-      - libgstreamer-plugins-base1.0-dev
-      - libgstreamer-plugins-good1.0-dev
-      - libgstreamer1.0-dev
-      - libgtk-3-dev
-      - libjsoncpp-dev
-      - liblzma-dev
-      - libsecret-1-dev
-      - libssl-dev
-      - lld
-      - llvm
-      - ninja-build
+    source: build/linux/x64/release/bundle
+    plugin: dump
     stage-packages:
       - gstreamer1.0-plugins-base
       - gstreamer1.0-plugins-good

@@ -81,14 +81,28 @@ jobs:
   # tacked onto the ZIP build. By being separate it is easier to test
   # separately or to build separately as required.
 
-  package-linux-deb:
+  # 20261029 gjw BUILT ONCE, as for radiopod. The Flutter Linux release is
+  # built by build-linux alone and handed to the deb, zip, snap and flatpak
+  # jobs as a one day artifact, so every Linux installer carries the same
+  # binary and Flutter is built once rather than four times. Each packaging
+  # job keeps its own commit message trigger, and build-linux runs for any
+  # of them.
+  #
+  # Pinned to ubuntu-24.04 rather than ubuntu-latest: the binary links
+  # against the libraries it is built with, and the snap's core24 base and
+  # the deb's Depends are both 24.04. A newer runner would build a binary
+  # the snap cannot run.
+
+  build-linux:
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build linux') ||
-      contains(github.event.head_commit.message, 'build deb')
+      contains(github.event.head_commit.message, 'build deb') ||
+      contains(github.event.head_commit.message, 'build snap') ||
+      contains(github.event.head_commit.message, 'build flatpak')
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
 
@@ -129,6 +143,44 @@ jobs:
 
       - name: Build Flutter Linux app
         run: flutter build linux --release
+
+      # A tarball, because an artifact does not keep the executable bit.
+
+      - name: Pack the bundle
+        run: tar -C build/linux/x64/release -cf bundle.tar bundle
+
+      - name: Upload the bundle
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{env.APP}}-linux-bundle
+          path: bundle.tar
+          retention-days: 1
+
+  package-linux-deb:
+    needs: build-linux
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build linux') ||
+      contains(github.event.head_commit.message, 'build deb')
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clone Repository
+        uses: actions/checkout@v6
+
+      - name: Download the bundle
+        uses: actions/download-artifact@v6
+        with:
+          name: ${{env.APP}}-linux-bundle
+
+      - name: Unpack the bundle
+        run: |
+          mkdir -p build/linux/x64/release
+          tar -C build/linux/x64/release -xf bundle.tar
+          rm bundle.tar
 
       # Package as DEB
 
@@ -207,6 +259,7 @@ jobs:
           path: build/${{env.APP}}_${{env.VERSION}}_amd64.deb
 
   package-linux-zip:
+    needs: build-linux
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
@@ -216,43 +269,16 @@ jobs:
 
     steps:
 
-      - name: Clone Repository
-        uses: actions/checkout@v6
-
-      - name: Install OS Dependencies
-        run: |
-          sudo apt-get update -y
-          printf '#%.0s' {1..72}; printf '\nninja-build\n'
-          sudo apt-get install -y ninja-build
-          printf '#%.0s' {1..72}; printf '\nlibgtk-3-dev\n'
-          sudo apt-get install -y libgtk-3-dev
-          printf '#%.0s' {1..72}; printf '\nclang cmake\n'
-          sudo apt-get install -y clang cmake
-
-      - name: Install extra Linux packages
-        if: env.LINUX_PKGS != ''
-        run: |
-          printf '#%.0s' {1..72}; printf '\n${{env.LINUX_PKGS}}\n'
-          sudo apt-get install -y ${{env.LINUX_PKGS}}
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - name: Download the bundle
+        uses: actions/download-artifact@v6
         with:
-          channel: stable
-          architecture: x64
-          flutter-version: ${{env.FLUTTER_VERSION}}
+          name: ${{env.APP}}-linux-bundle
 
-      - name: Confirm Flutter Version
-        run: flutter --version
-
-      - name: Install Flutter Project Dependencies
-        run: flutter pub get
-
-      - name: Enable Linux Build
-        run: flutter config --enable-linux-desktop
-
-      - name: Build Flutter Linux app
-        run: flutter build linux --release
+      - name: Unpack the bundle
+        run: |
+          mkdir -p build/linux/x64/release
+          tar -C build/linux/x64/release -xf bundle.tar
+          rm bundle.tar
 
       # Package as ZIP
 
@@ -269,7 +295,12 @@ jobs:
           name: ${{env.APP}}-linux-zip
           path: build/linux/x64/release/bundle/${{env.APP}}-linux.zip
 
+  # 20261029 gjw The snap wraps the shared bundle too: snap/snapcraft.yaml
+  # dumps build/linux/x64/release/bundle rather than building with
+  # snapcraft's flutter plugin, which compiled the app a fourth time.
+
   package-linux-snap:
+    needs: build-linux
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
@@ -283,19 +314,16 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v6
 
-      - name: Install OS Dependencies
-        run: |
-          sudo apt-get update -y
+      - name: Download the bundle
+        uses: actions/download-artifact@v6
+        with:
+          name: ${{env.APP}}-linux-bundle
 
-      # 20260311 gjw be sure to add dependencies into the snapcraft
-      # file rather than here, including llvm, lld, libsecret-1-dev,
-      # libjsoncpp-dev, for flutter_secure_storage
-
-      - name: Install extra Linux packages
-        if: env.LINUX_PKGS != ''
+      - name: Unpack the bundle
         run: |
-          printf '#%.0s' {1..72}; printf '\n${{env.LINUX_PKGS}}\n'
-          sudo apt-get install -y ${{env.LINUX_PKGS}}
+          mkdir -p build/linux/x64/release
+          tar -C build/linux/x64/release -xf bundle.tar
+          rm bundle.tar
 
       - name: Build snap
         if: hashFiles('snap/**') != ''
@@ -309,82 +337,25 @@ jobs:
           name: ${{ env.APP }}-linux-snap
           path: ${{ steps.build.outputs.snap }}
 
-  # 20261029 gjw The Flatpak, as `make flatpak` builds it locally, and as
-  # radiopod builds it: the Flutter bundle is wrapped by
-  # flatpak/com.togaware.innerpod.yml in the GNOME runtime. The bundle names
-  # Flathub as its runtime repository, so `flatpak install` fetches the
-  # runtime when it is missing.
+  # 20261029 gjw The Flatpak, as `make flatpak` builds it locally:
+  # flatpak/com.togaware.innerpod.yml wraps the shared bundle in the GNOME
+  # runtime, whose GStreamer plays the bells. The bundle names Flathub as
+  # its runtime repository, so `flatpak install` fetches the GNOME runtime
+  # when it is missing.
   #
-  # TWO JOBS, because neither tool will run where the other does. The
-  # runner has Flutter but Ubuntu's flatpak-builder is too old, and
-  # Flathub's org.flatpak.Builder asks the host for the SDK over a session
-  # bus the runner does not have. Flathub's build container has the SDK
-  # and a current flatpak-builder, and no Flutter. So the bundle is built
-  # on the runner and handed over as a one day artifact.
+  # IN FLATHUB'S CONTAINER, because the plain runner will not do it, as
+  # radiopod found: Ubuntu's flatpak-builder is too old, and Flathub's
+  # org.flatpak.Builder asks the host for the SDK over a session bus the
+  # runner does not have. The container has the SDK and a
+  # current flatpak-builder, and no Flutter, hence the shared bundle.
 
-  package-linux-flatpak-bundle:
+  package-linux-flatpak:
+    needs: build-linux
     if: |
       contains(github.event.head_commit.message, 'bump version') ||
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build linux') ||
       contains(github.event.head_commit.message, 'build flatpak')
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Clone Repository
-        uses: actions/checkout@v6
-
-      - name: Install OS Dependencies
-        run: |
-          sudo apt-get update -y
-          printf '#%.0s' {1..72}; printf '\nninja-build\n'
-          sudo apt-get install -y ninja-build
-          printf '#%.0s' {1..72}; printf '\nlibgtk-3-dev\n'
-          sudo apt-get install -y libgtk-3-dev
-          printf '#%.0s' {1..72}; printf '\nclang cmake\n'
-          sudo apt-get install -y clang cmake
-
-      - name: Install extra Linux packages
-        if: env.LINUX_PKGS != ''
-        run: |
-          printf '#%.0s' {1..72}; printf '\n${{env.LINUX_PKGS}}\n'
-          sudo apt-get install -y ${{env.LINUX_PKGS}}
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          architecture: x64
-          flutter-version: ${{env.FLUTTER_VERSION}}
-
-      - name: Confirm Flutter Version
-        run: flutter --version
-
-      - name: Install Flutter Project Dependencies
-        run: flutter pub get
-
-      - name: Enable Linux Build
-        run: flutter config --enable-linux-desktop
-
-      - name: Build Flutter Linux app
-        run: flutter build linux --release
-
-      # A tarball, because an artifact does not keep the executable bit.
-
-      - name: Pack the bundle
-        run: tar -C build/linux/x64/release -cf bundle.tar bundle
-
-      - name: Upload the bundle
-        uses: actions/upload-artifact@v6
-        with:
-          name: ${{env.APP}}-flatpak-bundle
-          path: bundle.tar
-          retention-days: 1
-
-  package-linux-flatpak:
-    needs: package-linux-flatpak-bundle
 
     runs-on: ubuntu-latest
 
@@ -400,7 +371,7 @@ jobs:
       - name: Download the bundle
         uses: actions/download-artifact@v6
         with:
-          name: ${{env.APP}}-flatpak-bundle
+          name: ${{env.APP}}-linux-bundle
 
       # Where the manifest looks for it, as after a local build.
 
