@@ -55,6 +55,9 @@ env:
   MACOS_APP_RELEASE_UNSIGNED_PATH: build/macos/Build/Products/Release-unsigned
   MACOS_APP_RELEASE_STAGING_PATH: build/macos/Build/Products/Release-staging
   MACOS_APP_RELEASE_DEV_PATH: build/macos/Build/Products/Release-dev
+  # 20261029 gjw Every subosito/flutter-action step sets cache: true, so
+  # the Flutter SDK and the pub packages are kept between runs, keyed on
+  # this version, rather than downloaded again by every job.
   FLUTTER_VERSION: "3.47.7"
 
 jobs:
@@ -131,6 +134,7 @@ jobs:
           channel: stable
           architecture: x64
           flutter-version: ${{env.FLUTTER_VERSION}}
+          cache: true
 
       - name: Confirm Flutter Version
         run: flutter --version
@@ -479,6 +483,7 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
+          cache: true
 
       - name: Confirm Flutter Version
         run: flutter --version
@@ -950,6 +955,7 @@ jobs:
         with:
           channel: "stable"
           flutter-version: ${{env.FLUTTER_VERSION}}
+          cache: true
 
       - name: Confirm Flutter Version
         run: flutter --version
@@ -1210,6 +1216,7 @@ jobs:
         with:
           channel: stable
           flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
 
       - name: Confirm Flutter Version
         run: flutter --version
@@ -1293,6 +1300,7 @@ jobs:
           channel: 'stable'
           architecture: x64
           flutter-version: ${{env.FLUTTER_VERSION}}
+          cache: true
 
       - name: Confirm Flutter Version
         run: flutter --version
