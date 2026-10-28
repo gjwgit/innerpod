@@ -151,13 +151,13 @@ The app is written in
 source code. We utilise the
 [solidui](https://pub.dev/packages/solidui),
 [solidpod](https://pub.dev/packages/solidpod), and
-[solid_auth](https://pub.dev/packages/solidu_auth) packages for
+[solid_auth](https://pub.dev/packages/solid_auth) packages for
 Flutter.
 
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-Time-stamp: <Monday 2026-10-19 10:55:19 +1100 Graham Williams>
+Time-stamp: <Thursday 2026-10-29 08:29:01 +1100 Graham Williams>
 
 <!-- markdownlint-disable MD053 -->
 [comment]: # (Local Variables:)
