@@ -15,6 +15,11 @@ if (keystorePropertiesFile.exists()) {
 
 // 20261010 gjw Whether this machine can sign a release at all. A CI runner
 // cannot, and must still be able to build DEBUG for the screenshots job.
+//
+// 20261029 gjw Except package-android in .github/workflows/installers.yaml,
+// which writes key.properties and the keystore from the ANDROID_* secrets
+// before it builds, as radiopod does. `make appbundle` still builds and
+// signs locally.
 
 val hasUploadKey = keystorePropertiesFile.exists()
 

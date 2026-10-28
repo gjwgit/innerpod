@@ -1171,6 +1171,134 @@ jobs:
       # method.
 
   ########################################################################
+  # ANDROID
+  #
+  # 20261029 gjw The apk and aab are built and signed here rather than on
+  # Graham's machine, as for radiopod. The upload key reaches the runner as
+  # four secrets:
+  #
+  #   ANDROID_KEYSTORE       the .jks, base64 encoded
+  #   ANDROID_KEYSTORE_PWD   storePassword
+  #   ANDROID_KEY_PWD        keyPassword
+  #   ANDROID_KEY_ALIAS      keyAlias (upload)
+  #
+  # The job writes android/key.properties and android/app/upload-keystore.jks
+  # from them, and android/app/build.gradle.kts reads them exactly as it does
+  # on a developer machine. Both are removed at the end, pass or fail.
+  #
+  # Skipped, with a notice, while the secrets are absent, as iOS is: a
+  # release build without the key fails by design (build.gradle.kts) and
+  # would only show a red cross.
+
+  check-android-secrets:
+    if: |
+      contains(github.event.head_commit.message, 'bump version') ||
+      contains(github.event.head_commit.message, 'build installers') ||
+      contains(github.event.head_commit.message, 'build android') ||
+      contains(github.event.head_commit.message, 'build apk') ||
+      contains(github.event.head_commit.message, 'build aab')
+    runs-on: ubuntu-latest
+    outputs:
+      has_android: ${{ steps.check.outputs.has_android }}
+    steps:
+      - name: Check for Android signing secrets
+        id: check
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          ANDROID_KEYSTORE_PWD: ${{ secrets.ANDROID_KEYSTORE_PWD }}
+          ANDROID_KEY_PWD: ${{ secrets.ANDROID_KEY_PWD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          if [ -n "$ANDROID_KEYSTORE" ] && [ -n "$ANDROID_KEYSTORE_PWD" ] \
+             && [ -n "$ANDROID_KEY_PWD" ] && [ -n "$ANDROID_KEY_ALIAS" ]; then
+            echo "has_android=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_android=false" >> $GITHUB_OUTPUT
+            echo "::notice::Android signing secrets are not set - skipping the Android build"
+          fi
+
+  package-android:
+    needs: check-android-secrets
+    if: needs.check-android-secrets.outputs.has_android == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v6
+
+      # android/app/build.gradle.kts compiles against JVM 17.
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Confirm Flutter Version
+        run: flutter --version
+
+      - name: Install Flutter Project Dependencies
+        run: flutter pub get
+
+      # storeFile is resolved by file() in the app module, so a bare name is
+      # android/app/upload-keystore.jks. The .gitignore excludes **/*.jks.
+
+      - name: Install the upload key
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+          ANDROID_KEYSTORE_PWD: ${{ secrets.ANDROID_KEYSTORE_PWD }}
+          ANDROID_KEY_PWD: ${{ secrets.ANDROID_KEY_PWD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          echo -n "$ANDROID_KEYSTORE" | base64 --decode > android/app/upload-keystore.jks
+          {
+            echo "storePassword=$ANDROID_KEYSTORE_PWD"
+            echo "keyPassword=$ANDROID_KEY_PWD"
+            echo "keyAlias=$ANDROID_KEY_ALIAS"
+            echo "storeFile=upload-keystore.jks"
+          } > android/key.properties
+
+      - name: Build Flutter Android apk and aab
+        run: |
+          flutter build apk --release
+          flutter build appbundle --release
+          mkdir -p installers
+          cp build/app/outputs/flutter-apk/app-release.apk installers/${{ env.APP }}.apk
+          cp build/app/outputs/bundle/release/app-release.aab installers/${{ env.APP }}.aab
+
+      # A debug-signed artefact is unshippable and looks fine until Play
+      # refuses it, so say whose key signed it and fail on the debug one.
+
+      - name: Check the apk signature
+        run: |
+          apksigner=$(ls $ANDROID_HOME/build-tools/*/apksigner | sort -V | tail -1)
+          $apksigner verify --print-certs installers/${{ env.APP }}.apk | tee signer.txt
+          ! grep -q "CN=Android Debug" signer.txt
+          keytool -printcert -jarfile installers/${{ env.APP }}.aab | head -5
+
+      - name: Remove the upload key
+        if: ${{ always() }}
+        run: rm -f android/key.properties android/app/upload-keystore.jks
+
+      - name: Upload apk artefact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ env.APP }}-android-apk
+          path: installers/${{ env.APP }}.apk
+
+      - name: Upload aab artefact
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ env.APP }}-android-aab
+          path: installers/${{ env.APP }}.aab
+
+  ########################################################################
   # WINDOWS
 
   package-windows-zip-exe:

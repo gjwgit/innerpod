@@ -228,10 +228,10 @@ jobs:
         run: flutter pub get
 
       # 20261001 gjw The release build signs with the upload key, which this
-      # runner does not have, and there are deliberately no keystore secrets
-      # in GitHub. An integration test runs in DEBUG,
-      # so it signs with the debug key and never touches that config. Nothing
-      # here can produce a shippable artefact, which is as intended.
+      # runner does not have: only package-android in installers.yaml is
+      # given the keystore secrets. An integration test runs in DEBUG, so it
+      # signs with the debug key and never touches that config. Nothing here
+      # can produce a shippable artefact, which is as intended.
 
       - name: Walk the app and capture
         uses: reactivecircus/android-emulator-runner@v2
