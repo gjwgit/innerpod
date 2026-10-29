@@ -459,6 +459,15 @@ if [[ "${status}" == "completed" ]]; then
 	ssh ${HOST} "cd ${FLDR}; chmod 0644 ${fname}"
 	echo  "Archive as installers/ARCHIVE/${APP}_${version}_windows_inno.exe"
 	mv ${fname} ARCHIVE/${APP}_${version}_windows_inno.exe
+
+	# 20261030 gjw A winget manifest pins the installer's SHA256, so
+	# it needs a URL whose file never changes. Keep each version on
+	# the server under its archive name, beside the latest above.
+
+	VTARGET="${APP}_${version}_windows_inno.exe"
+	echo  "Installing as ${DEST}${VTARGET}"
+	rsync -avzh ARCHIVE/${VTARGET} ${DEST}${VTARGET}
+	ssh ${HOST} "cd ${FLDR}; chmod 0644 ${VTARGET}"
     fi
 
     echo ""

@@ -1334,6 +1334,10 @@ jobs:
       - name: Check the DLLs for Inclusion in the .iss script
         run: dir D:\a\${{ env.APP }}\${{ env.APP }}\build\windows\x64\runner\Release\
 
+      # 20261030 gjw installers/app-windows.iss reads APP_VERSION as
+      # the installer's AppVersion, which winget matches against the
+      # manifest's PackageVersion. The .iss fails without it.
+
       - name: Get Version from pubspec.yaml
         run: |
           $version = (Get-Content pubspec.yaml | Select-String '^version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim().Split("+")[0].Trim() })

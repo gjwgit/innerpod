@@ -2,10 +2,20 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "InnerPod"
-#define MyAppVersion "windows-inno"
 #define MyAppPublisher "Togaware Pty Ltd"
-#define MyAppURL "https://github.com/gjwgit/innerpod
+#define MyAppURL "https://github.com/gjwgit/innerpod"
 #define MyAppExeName "innerpod.exe"
+
+; 20261030 gjw The version is the one the workflow reads from
+; pubspec.yaml into APP_VERSION. It becomes the DisplayVersion in
+; Apps & Features, which winget compares against the PackageVersion of
+; its manifest, so it must be the real version and not a label. Fail
+; the build rather than ship an installer without it.
+
+#define MyAppVersion GetEnv("APP_VERSION")
+#if MyAppVersion == ""
+  #error APP_VERSION is not set. See the workflow's Get Version step.
+#endif
 
 [Setup]
 ;
@@ -20,6 +30,12 @@
 AppId={{e847c732-5892-4b4c-bf15-80b4bfd0f0c2}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+;
+; 20261030 gjw Without this Apps & Features lists "InnerPod version
+; 2.2.1", and winget matches installed apps by a DisplayName that does
+; not change from one version to the next.
+;
+UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -43,7 +59,11 @@ LicenseFile=..\LICENSE
 ;
 PrivilegesRequiredOverridesAllowed=commandline
 OutputDir=installers
-OutputBaseFilename=innerpod-{#MyAppVersion}
+;
+; 20261030 gjw A fixed name, now that MyAppVersion is the real version,
+; since the workflow uploads innerpod-windows-inno.exe.
+;
+OutputBaseFilename=innerpod-windows-inno
 SetupIconFile=..\windows\runner\resources\app_icon.ico
 Compression=lzma
 SolidCompression=yes
