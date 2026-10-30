@@ -10,8 +10,8 @@ owner: gjwgit
 copyright: 2026, Togaware Pty Ltd
 publisher: Togaware Pty Ltd
 name: InnerPod
-summary: A session timer with private logging to your Solid Pod
-comment: A session timer with session logged to your Solid Pod
+summary: A privacy-first meditation timer
+comment: You can optionally store logs securely and privately on your Solid Pod
 categories:
 - Utility
 - Clock
@@ -53,10 +53,13 @@ stores:
   play: true
   snap: true
 description: |
-  InnerPod is a session timer, typically used for silent meditation.
-  Choose a length and a bell, and the bell marks the start and the end
-  of the session. A guided session is also available.
+  InnerPod is a session timer typically used for silent meditation.
+  Choose a length and a bell. The bell marks the start and the end
+  of the session. A guided session is also available with a spoken
+  word introduction.
 
-  Sessions can be logged, encrypted, to your own Solid Pod, so nobody,
-  not even the server administrator, can see them. Without a login the
-  timer simply runs and nothing is sent anywhere.
+  Sessions can be logged locally. On your say so, the log can instead
+  be encrypted and stored on your own Solid Pod, so nobody, not even
+  the server administrator, can see them. If you choose not to share
+  the log on your Solid Pod then the timer simply runs and nothing is
+  sent anywhere.
