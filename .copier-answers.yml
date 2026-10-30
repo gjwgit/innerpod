@@ -49,6 +49,9 @@ install:
   host: solidcommunity.au
   prod: true
   url: https://solidcommunity.au/installers/
+stores:
+  play: true
+  snap: true
 description: |
   InnerPod is a session timer, typically used for silent meditation.
   Choose a length and a bell, and the bell marks the start and the end

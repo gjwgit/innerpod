@@ -13,8 +13,7 @@ repository. The choice is yours:
   [solidcommunity](https://innerpod.solidcommunity.au/);
 + **Android**
   [Google Play Store](https://play.google.com/store/apps/details?id=com.togaware.innerpod) or
-  [apk](https://solidcommunity.au/installers/innerpod.apk) or
-  [aab](https://solidcommunity.au/installers/innerpod.aab);
+  [apk](https://solidcommunity.au/installers/innerpod.apk);
 + **iOS**
   Apple App Store - coming soon;
 + **Linux**
