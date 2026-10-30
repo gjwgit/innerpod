@@ -137,9 +137,10 @@ apk::
 	rm -f installers/$(APP).apk
 	@echo ''
 
+# 20261031 gjw The aab is for the Play Store only, so it is archived
+# but not uploaded for download.
+
 appbundle::
-	rsync -avzh installers/$(APP).aab $(REPO):$(RLOC)
-	ssh $(REPO) chmod a+r $(RLOC)$(APP).aab
 	mv -f installers/$(APP)-*.aab installers/ARCHIVE/
 	rm -f installers/$(APP).aab
 	@echo ''

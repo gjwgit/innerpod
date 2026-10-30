@@ -23,6 +23,7 @@ Williams](https://togaware.com/Graham.Williams.html).
 
 ## 2.3 Migrate to using Copier for Templates
 
++ Install Guide store links, no aab or ipa downloads [2.3.1 20261031 gjw]
 + Move to copier [2.3.0 20261030 gjw]
 
 ## 2.2 Review and consolidate

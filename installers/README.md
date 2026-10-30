@@ -17,8 +17,7 @@ Run the app online: [**web**](https://innerpod.solidcommunity.au).
 Download the latest version:
 
 + **Android**
-  [apk](https://solidcommunity.au/installers/innerpod.apk) or
-  [aab](https://solidcommunity.au/installers/innerpod.aab);
+  [apk](https://solidcommunity.au/installers/innerpod.apk);
 
 + **GNU/Linux**
   [deb](https://solidcommunity.au/installers/innerpod_amd64.deb) or

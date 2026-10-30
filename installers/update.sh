@@ -189,9 +189,16 @@ if [[ "${status}" == "completed" ]]; then
 	    fname=$(unzip -l artifact.zip | awk 'NR==4 {print $4}')
 	    touch ${fname} # Timestamp with current date/time
 	    rm -f artifact.zip
-	    echo  "Installing as ${DEST}${TARGET}"
-	    rsync -avzh ${fname} ${DEST}${TARGET}
-	    ssh ${HOST} "cd ${FLDR}; chmod 0644 ${TARGET}"
+
+	    # 20261031 gjw The aab is for the Play Store (make
+	    # upload_android) and is only archived, not offered for
+	    # download.
+
+	    if [[ "${ext}" == "apk" ]]; then
+		echo  "Installing as ${DEST}${TARGET}"
+		rsync -avzh ${fname} ${DEST}${TARGET}
+		ssh ${HOST} "cd ${FLDR}; chmod 0644 ${TARGET}"
+	    fi
 	    echo  "Archive as installers/ARCHIVE/${APP}-${version}.${ext}"
 	    mv -f ${fname} ARCHIVE/${APP}-${version}.${ext}
 	fi
@@ -421,7 +428,9 @@ if [[ "${status}" == "completed" ]]; then
 
     echo ""
 
-    echo '******************** UPLOAD iOS IPA'
+    # 20261031 gjw The ipa is only archived, not offered for download.
+
+    echo '******************** ARCHIVE iOS IPA'
 
     artifactId=$(gh api -H "Accept: application/vnd.github+json" /repos/${REP}/${APP}/actions/artifacts \
 		    --jq '.artifacts[] | select(.name | endswith("-ipa")) | .id' | head -n 1)
@@ -435,9 +444,6 @@ if [[ "${status}" == "completed" ]]; then
 	fname=$(unzip -l artifact.zip | awk 'NR==4 {print $4}')
 	touch ${fname} # Timestamp with current date/time
 	rm -f artifact.zip
-	echo  "Installing as ${DEST}${fname}"
-	rsync -avzh ${fname} ${DEST}
-	ssh ${HOST} "cd ${FLDR}; chmod 0644 ${fname}"
 	echo  "Archive as installers/ARCHIVE/${APP}_${version}.ipa"
 	mv ${fname} ARCHIVE/${APP}_${version}.ipa
     fi
