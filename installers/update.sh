@@ -11,6 +11,10 @@
 APP=$(basename "$(dirname "$(pwd)")")
 REP=$(git remote get-url origin | sed -E 's#.*[/:]([^/]+)/[^/]+(\.git)?$#\1#')
 
+# 20261030 gjw The installer host and folder are the app's install.host
+# and install.folder in .copier-answers.yml, rendered here by the
+# gjwgit/fluttertmpl Copier template.
+
 HOST=solidcommunity.au
 FLDR=/var/www/html/web/installers/
 DEST=${HOST}:${FLDR}
@@ -136,7 +140,7 @@ if [[ "${status}" == "completed" ]]; then
 
     echo ""
 
-    # 20261029 gjw The Flatpak built by the workflow, as for radiopod.
+    # 20261028 gjw The Flatpak is now built by the workflow too.
     # Archived as <app>_<version>_amd64.flatpak beside the deb.
 
     echo '******************** UPLOAD LINUX FLATPAK'
@@ -163,8 +167,8 @@ if [[ "${status}" == "completed" ]]; then
 
     echo ""
 
-    # 20261029 gjw The apk and aab are now built and signed by the
-    # workflow, as for radiopod. Archived as <app>-<version>.apk/.aab, the names `make
+    # 20261028 gjw The apk and aab are now built and signed by the
+    # workflow. Archived as <app>-<version>.apk/.aab, the names `make
     # upload_android` looks for.
 
     for ext in apk aab; do

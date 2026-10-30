@@ -1,0 +1,59 @@
+# Changes here will be overwritten by Copier. Change a value with
+# `copier update --data key=value` or by editing it here and running
+# `copier update`.
+_commit: v0.7.0
+_src_path: gh:gjwgit/fluttertmpl
+kind: app
+android: true
+app: innerpod
+owner: gjwgit
+copyright: 2026, Togaware Pty Ltd
+publisher: Togaware Pty Ltd
+name: InnerPod
+summary: A session timer with private logging to your Solid Pod
+comment: A session timer with session logged to your Solid Pod
+categories:
+- Utility
+- Clock
+keywords:
+- meditation
+- timer
+- session
+- bell
+- solid
+- pod
+build: {}
+deb:
+  section: utils
+snap:
+  plugs:
+  - audio-playback
+  - network-bind
+  - pulseaudio
+  - screen-inhibit-control
+  stage-packages:
+  - gstreamer1.0-plugins-base
+  - gstreamer1.0-plugins-good
+  - libgstreamer-plugins-base1.0-0
+  - libgstreamer-plugins-good1.0-0
+  - libgstreamer1.0-0
+flatpak:
+  finish-args:
+  - --socket=pulseaudio
+  - --talk-name=org.freedesktop.ScreenSaver
+  icon: installers/icon_square.png
+windows:
+  appid: e847c732-5892-4b4c-bf15-80b4bfd0f0c2
+install:
+  folder: /var/www/html/web/installers/
+  host: solidcommunity.au
+  prod: true
+  url: https://solidcommunity.au/installers/
+description: |
+  InnerPod is a session timer, typically used for silent meditation.
+  Choose a length and a bell, and the bell marks the start and the end
+  of the session. A guided session is also available.
+
+  Sessions can be logged, encrypted, to your own Solid Pod, so nobody,
+  not even the server administrator, can see them. Without a login the
+  timer simply runs and nothing is sent anywhere.

@@ -1,7 +1,12 @@
-# Inner Pod Change Log
+# InnerPod Change Log
 
 Noted here are the high level changes for the app.  Each update
-includes a short user-oriented description.
+includes a short user-oriented description, version number, date, and
+developer.
+
+See the [Install
+Guide](https://gjwgit.github.io/innerpod/INSTALL.html) for
+installation instructions on any platform.
 
 Contributions are welcome. Visit
 [github](https://github.com/gjwgit/innerpod) to submit an issue or, even
@@ -12,6 +17,13 @@ Pull Request. Coding documentation is
 We make this project available for free so if you appreciate the app
 then please show some ❤️ and tap on the star at
 [GitHub](https://github.com/gjwgit/innerpod) to support our work.
+
+This app is implemented by [Graham
+Williams](https://togaware.com/Graham.Williams.html).
+
+## 2.3 Migrate to using Copier for Templates
+
++ Move to copier [2.3.0 20261030 gjw]
 
 ## 2.2 Review and consolidate
 

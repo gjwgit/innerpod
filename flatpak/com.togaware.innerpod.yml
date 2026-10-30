@@ -1,12 +1,16 @@
 # InnerPod as a Flatpak.
 #
+# From the gjwgit/fluttertmpl Copier template. Values come from
+# .copier-answers.yml. Local edits are kept by `copier update`, which
+# merges template changes in.
+#
 # 20261029 gjw Wraps the Flutter release bundle built on the host (`make
-# flatpak` builds it first, as the workflow does) in the GNOME runtime.
+# flatpak` builds it first, as the installers workflow does) in the GNOME
+# runtime. Build with `make flatpak`, which builds outside the project
+# (see the Makefile), then run with `flatpak run com.togaware.innerpod`.
+#
 # Unlike radiopod nothing is built from source: audioplayers plays the
 # bells through GStreamer, which the runtime ships with the mp3 decoder.
-#
-# Build with `make flatpak`, which builds outside the project (see the
-# Makefile), then run with `flatpak run com.togaware.innerpod`.
 
 id: com.togaware.innerpod
 runtime: org.gnome.Platform
@@ -19,22 +23,36 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --device=dri
+
   # The Pod, and the fonts google_fonts fetches.
+
   - --share=network
-  # The bells and the guided sessions.
-  - --socket=pulseaudio
+
   # solidpod keeps the security key through flutter_secure_storage, which
-  # on GNU/Linux is libsecret talking to the keyring over this name, as the
-  # snap's password-manager-service plug allows.
+  # on GNU/Linux is libsecret talking to the keyring over this name. The
+  # snap needs password-manager-service connected by hand; here it is
+  # granted by the manifest.
+
   - --talk-name=org.freedesktop.secrets
+
+  # From .copier-answers.yml flatpak.finish-args.
+  #
+  # The bells and the guided sessions.
+
+  - --socket=pulseaudio
+
   # wakelock_plus keeps the screen on through a session by asking the
   # screensaver over this name.
+
   - --talk-name=org.freedesktop.ScreenSaver
 
 modules:
 
   # The app: the Flutter bundle as built, under /app/innerpod, since the
   # executable finds its lib/ and data/ beside itself.
+  #
+  # 20261030 gjw The AppStream release is the pubspec version, written in
+  # at build time, so it cannot go stale as a hand-kept one did.
 
   - name: innerpod
     buildsystem: simple
@@ -44,9 +62,12 @@ modules:
       - ln -s /app/innerpod/innerpod /app/bin/innerpod
       - install -Dm644 com.togaware.innerpod.desktop
           /app/share/applications/com.togaware.innerpod.desktop
-      - install -Dm644 com.togaware.innerpod.metainfo.xml
+      - sed -e "s/@VERSION@/$(grep '^version:' pubspec.yaml | cut -d' ' -f2 | cut -d+ -f1)/"
+          -e "s/@DATE@/$(date +%F)/" com.togaware.innerpod.metainfo.xml
+          > com.togaware.innerpod.metainfo.xml.new
+      - install -Dm644 com.togaware.innerpod.metainfo.xml.new
           /app/share/metainfo/com.togaware.innerpod.metainfo.xml
-      - install -Dm644 icon_square.png
+      - install -Dm644 icon.png
           /app/share/icons/hicolor/512x512/apps/com.togaware.innerpod.png
     sources:
       - type: dir
@@ -56,6 +77,12 @@ modules:
         path: com.togaware.innerpod.desktop
       - type: file
         path: com.togaware.innerpod.metainfo.xml
-      # Not the snap's icon, which is 479x466: a Flatpak icon must be square.
+      - type: file
+        path: ../pubspec.yaml
+
+      # A Flatpak icon must be square, and no larger than the 512x512
+      # folder it installs into.
+
       - type: file
         path: ../installers/icon_square.png
+        dest-filename: icon.png

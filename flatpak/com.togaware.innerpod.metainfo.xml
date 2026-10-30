@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 20261029 gjw AppStream metadata: what GNOME Software, KDE Discover and
-     Flathub show for the app. The description follows the snap's. -->
+<!-- AppStream metadata: what GNOME Software, KDE Discover and Flathub show
+     for the app. From the gjwgit/fluttertmpl Copier template, with the
+     summary and description from .copier-answers.yml. @VERSION@ and
+     @DATE@ are filled in from pubspec.yaml when the Flatpak is built. -->
 <component type="desktop-application">
   <id>com.togaware.innerpod</id>
   <name>InnerPod</name>
@@ -29,17 +31,21 @@
 
   <categories>
     <category>Utility</category>
+    <category>Clock</category>
   </categories>
 
   <keywords>
     <keyword>meditation</keyword>
     <keyword>timer</keyword>
+    <keyword>session</keyword>
+    <keyword>bell</keyword>
     <keyword>solid</keyword>
+    <keyword>pod</keyword>
   </keywords>
 
   <content_rating type="oars-1.1"/>
 
   <releases>
-    <release version="2.2.1" date="2026-10-24"/>
+    <release version="@VERSION@" date="@DATE@"/>
   </releases>
 </component>
