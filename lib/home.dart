@@ -1,4 +1,4 @@
-// A session timer with session logged to your Solid Pod.
+// A privacy-first meditation timer.
 //
 // Time-stamp: <Friday 2026-10-09 10:16:48 +1100 Graham Williams>
 //
