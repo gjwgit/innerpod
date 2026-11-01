@@ -1,5 +1,5 @@
 name: innerpod
-description: "A session timer with session logged to your Solid Pod."
+description: "A privacy-first meditation timer."
 publish_to: "none"
 version: 2.3.1+120
 

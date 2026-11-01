@@ -3,15 +3,18 @@
 # merges template changes in.
 
 name: innerpod
-summary: A session timer with private logging to your Solid Pod.
+summary: A privacy-first meditation timer.
 description: |
-  InnerPod is a session timer, typically used for silent meditation.
-  Choose a length and a bell, and the bell marks the start and the end
-  of the session. A guided session is also available.
+  InnerPod is a session timer typically used for silent meditation.
+  Choose a length and a bell. The bell marks the start and the end
+  of the session. A guided session is also available with a spoken
+  word introduction.
 
-  Sessions can be logged, encrypted, to your own Solid Pod, so nobody,
-  not even the server administrator, can see them. Without a login the
-  timer simply runs and nothing is sent anywhere.
+  Sessions can be logged locally. On your say so, the log can instead
+  be encrypted and stored on your own Solid Pod, so nobody, not even
+  the server administrator, can see them. If you choose not to share
+  the log on your Solid Pod then the timer simply runs and nothing is
+  sent anywhere.
 
 # 20260924 gjw Named explicitly rather than relying on snapcraft finding
 # snap/gui/icon.png by convention. This is the icon the Snap Store shows

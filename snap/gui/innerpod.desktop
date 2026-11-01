@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=InnerPod
-Comment=A session timer with session logged to your Solid Pod
+Comment=You can optionally store logs securely and privately on your Solid Pod
 Exec=innerpod
 Icon=${SNAP}/meta/gui/icon.png
 Terminal=false
