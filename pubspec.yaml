@@ -1,7 +1,7 @@
 name: innerpod
 description: "A privacy-first meditation timer."
 publish_to: "none"
-version: 2.3.1+120
+version: 2.3.1+121
 
 environment:
   sdk: ">=3.2.5 <4.0.0"
