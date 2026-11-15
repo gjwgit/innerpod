@@ -35,6 +35,7 @@ import 'package:innerpod/constants/app.dart';
 import 'package:innerpod/widgets/bell_dialog.dart';
 import 'package:innerpod/widgets/history.dart';
 import 'package:innerpod/widgets/instructions.dart';
+import 'package:innerpod/widgets/session_expired_dialog.dart';
 import 'package:innerpod/widgets/timer.dart';
 
 /// The primary widget for the app.
@@ -130,6 +131,11 @@ class HomeState extends State<Home> {
   Future<void> _loadAppInfo() async {
     final webId = await getWebId();
     if (mounted) setState(() => _webId = webId);
+
+    // 20261115 gjw As in RadioPod, note at start up when a previous login has
+    // since expired, rather than leave the user to discover it later.
+
+    if (mounted) await noteExpiredSession(context);
   }
 
   @override

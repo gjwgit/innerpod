@@ -232,17 +232,12 @@ extension TimerStateLogic on TimerState {
     // Determine whether we can reach the Pod. If not logged in, save the
     // session to the local device store instead; it can be promoted to the
     // Pod later from the History view.
-    bool loggedIn = false;
-    try {
-      final webId = await getWebId();
-      loggedIn = webId != null && webId.isNotEmpty;
-    } catch (_) {
-      // getWebId can throw if the keyring is locked — treat as logged out
-      // and fall back to local storage so the session is never lost.
-      loggedIn = false;
-    }
 
-    if (!loggedIn) {
+    // 20261115 gjw Ask for a live session, not just a stored WebID, so a
+    // session whose login has expired goes straight to the device. A locked
+    // keyring still counts as logged out — see hasPodSession.
+
+    if (!await hasPodSession()) {
       await _saveSessionLocally(session);
       return;
     }

@@ -30,11 +30,11 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
 import 'package:innerpod/constants/colours.dart' as colours;
 import 'package:innerpod/utils/local_session_store.dart';
+import 'package:innerpod/utils/pod_session.dart';
 import 'package:innerpod/utils/session_logic.dart';
 import 'package:innerpod/widgets/edit_session_dialog.dart';
 import 'package:innerpod/widgets/history_actions.dart';
@@ -75,10 +75,10 @@ class _HistoryState extends State<History> {
   }
 
   Future<void> _initHistory() async {
-    final webId = await getWebId();
-    if (mounted) {
-      setState(() => _isLoggedIn = webId != null && webId.isNotEmpty);
-    }
+    // 20261115 gjw A stored WebID whose login has expired is logged out.
+
+    final loggedIn = await hasPodSession();
+    if (mounted) setState(() => _isLoggedIn = loggedIn);
     await _loadSessions();
   }
 
