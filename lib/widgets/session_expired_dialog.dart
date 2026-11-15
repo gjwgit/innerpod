@@ -45,11 +45,17 @@ Future<void> noteExpiredSession(BuildContext context) async {
           Expanded(child: Text('Your Pod session has expired')),
         ],
       ),
-      content: const Text(
-        'You were previously logged in to your Pod, but are not logged in '
-        'now. Sessions you complete will be saved on this device until you '
-        'log in again, and can be copied to your Pod from History.\n\n'
-        'Log in again from the profile menu to reconnect to your Pod.',
+      // 20261115 gjw Keep lines under about 80 characters so the message is
+      // comfortable to read on a wide window, rather than one long line.
+
+      content: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 480),
+        child: const Text(
+          'You were previously logged in to your Pod, but are not logged in '
+          'now. Sessions you complete will be saved on this device until you '
+          'log in again, and can be copied to your Pod from History.\n\n'
+          'Log in again from the profile menu to reconnect to your Pod.',
+        ),
       ),
       actions: [
         TextButton(

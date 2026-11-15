@@ -23,6 +23,7 @@ Williams](https://togaware.com/Graham.Williams.html).
 
 ## 2.3 Migrate to using Copier for Templates
 
++ Narrower expired Pod login popup [2.3.4 20261115 gjw]
 + Note an expired Pod login and save to device [2.3.3 20261115 gjw]
 + Rebuild for snap library updates [2.3.2 20261113 gjw]
 + Install Guide store links, no aab or ipa downloads [2.3.1 20261031 gjw]
