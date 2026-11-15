@@ -162,9 +162,11 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // final dateStr = DateFormat('dd MMMM yyyy').format(DateTime.now());
 
+    // 20261116 gjw No showLogin/showLogout: false. They once hid the app bar
+    // login buttons, which solidui now leaves out whenever the profile menu
+    // is on, and only hid Login and Logout from the profile menu.
+
     return SolidScaffold(
-      showLogout: false,
-      showLogin: false,
       appBar: SolidAppBarConfig(
         title: appName,
         actions: [
