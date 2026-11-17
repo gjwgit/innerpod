@@ -41,7 +41,6 @@ flatpak:
   finish-args:
   - --socket=pulseaudio
   - --talk-name=org.freedesktop.ScreenSaver
-  icon: installers/icon_square.png
 windows:
   appid: e847c732-5892-4b4c-bf15-80b4bfd0f0c2
 install:

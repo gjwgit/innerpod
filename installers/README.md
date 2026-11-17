@@ -114,8 +114,8 @@ Then set up your local installation (only required once):
 ln -s ${HOME}/.local/share/innerpod/innerpod ${HOME}/.local/bin/
 wget https://raw.githubusercontent.com/gjwgit/innerpod/dev/installers/app.desktop -O ${HOME}/.local/share/applications/innerpod.desktop
 sed -i "s/USER/$(whoami)/g" ${HOME}/.local/share/applications/innerpod.desktop
-mkdir -p ${HOME}/.local/share/icons/hicolor/256x256/apps/
-wget https://github.com/gjwgit/innerpod/raw/dev/installers/app.png -O ${HOME}/.local/share/icons/hicolor/256x256/apps/innerpod.png
+mkdir -p ${HOME}/.local/share/icons/hicolor/512x512/apps/
+wget https://github.com/gjwgit/innerpod/raw/dev/assets/images/app_icon_square.png -O ${HOME}/.local/share/icons/hicolor/512x512/apps/innerpod.png
 ```
 
 To install for any user on the computer:
@@ -124,7 +124,7 @@ To install for any user on the computer:
 sudo unzip innerpod-linux.zip -d /opt/innerpod
 sudo ln -s /opt/innerpod/innerpod /usr/local/bin/
 wget https://raw.githubusercontent.com/gjwgit/innerpod/dev/installers/app.desktop -O ${HOME}/usr/local/share/applications/innerpod.desktop
-wget https://github.com/gjwgit/innerpod/raw/dev/installers/app.png -O ${HOME}/use/local/share/icons/innerpod.png
+wget https://github.com/gjwgit/innerpod/raw/dev/assets/images/app_icon_square.png -O ${HOME}/use/local/share/icons/innerpod.png
 ```
 
 Once installed you can run the app from the GNOME desktop through

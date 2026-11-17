@@ -84,5 +84,5 @@ modules:
       # folder it installs into.
 
       - type: file
-        path: ../../installers/icon_square.png
+        path: ../../assets/images/app_icon_square.png
         dest-filename: icon.png
